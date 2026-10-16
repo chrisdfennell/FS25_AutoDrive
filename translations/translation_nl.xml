@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Producten lossen..." />
 		<text name="AD_vehicleMenu_enter"							 text="Voertuig instappen" />
 		<text name="AD_fleet_unloadOnly"							 text="lost alleen %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Pallets: zet &quot;Autoload: Los positie&quot; in de voertuiginstellingen op links, achter of rechts, anders neemt het verkooppunt alle pallets" />
 		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
 		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
 		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />

@@ -44,11 +44,16 @@ function ADBestPrice.getSellableLoad(vehicle)
     return load
 end
 
--- the load on board: fill type -> litres, without the vehicles' own tanks
+-- the load on board: fill type -> litres, without the vehicles' own tanks; pallets of Universal Autoload too
 function ADBestPrice.getLoad(vehicle)
     local load = {}
     local units = AutoDrive.getAllUnits(vehicle)
     for _, unit in ipairs(units or {}) do
+        if ADUnloadFilter ~= nil then
+            for fillType, litres in pairs(ADUnloadFilter.getALLoad(unit)) do
+                load[fillType] = (load[fillType] or 0) + litres
+            end
+        end
         if unit.getFillUnits ~= nil then
             for index, _ in ipairs(unit:getFillUnits()) do
                 local fillType = unit:getFillUnitFillType(index)

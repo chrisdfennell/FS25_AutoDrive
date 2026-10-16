@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Rozładuj produkty..." />
 		<text name="AD_vehicleMenu_enter"							 text="Wsiądź do pojazdu" />
 		<text name="AD_fleet_unloadOnly"							 text="rozładowuje tylko %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Palety: w ustawieniach pojazdu ustaw &quot;Auto Ładowanie: Pozycja rozładowywania&quot; na lewo, tył lub prawo, inaczej punkt sprzedaży zabierze wszystkie palety" />
 		<text name="AD_routeCheck_loose"								 text="Luźny punkt trasy bez żadnego połączenia" />
 		<text name="AD_routeCheck_deadEnd"							 text="Ślepa uliczka: z tego punktu trasy nie ma dalszej drogi" />
 		<text name="AD_routeCheck_trap"								 text="Pułapka jednokierunkowa: punkty trasy, do których można wjechać, ale nie można wyjechać: %s" />

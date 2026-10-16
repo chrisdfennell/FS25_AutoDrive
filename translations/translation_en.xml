@@ -545,6 +545,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Unload products..." />
 		<text name="AD_vehicleMenu_enter"							 text="Enter vehicle" />
 		<text name="AD_fleet_unloadOnly"							 text="unloads only %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Pallets: set &quot;Autoload: Unload Position&quot; to left, behind or right in the vehicle settings, otherwise the selling point takes all pallets" />
 		<text name="AD_routeCheck_loose"								 text="Loose waypoint without any connection" />
 		<text name="AD_routeCheck_deadEnd"							 text="Dead end: no way on from this waypoint" />
 		<text name="AD_routeCheck_trap"								 text="One-way trap: %s waypoints you can drive into but not out of" />

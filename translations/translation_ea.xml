@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Descargar productos..." />
 		<text name="AD_vehicleMenu_enter"							 text="Subir al vehículo" />
 		<text name="AD_fleet_unloadOnly"							 text="descarga solo %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Palés: en los ajustes del vehículo pon &quot;Autocarga: Posición de descarga&quot; en izquierda, detrás o derecha, si no el punto de venta se lleva todos los palés" />
 		<text name="AD_routeCheck_loose"								 text="Punto de ruta suelto sin ninguna conexión" />
 		<text name="AD_routeCheck_deadEnd"							 text="Callejón sin salida: no hay forma de seguir desde este punto de ruta" />
 		<text name="AD_routeCheck_trap"								 text="Trampa de sentido único: %s puntos de ruta en los que se puede entrar pero no salir" />

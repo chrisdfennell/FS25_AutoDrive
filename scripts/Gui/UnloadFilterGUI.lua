@@ -52,6 +52,13 @@ end
 
 function ADUnloadFilterGui:refreshItems()
     self.rows = ADUnloadFilter.getRows(self:getChoices(), self:getSet())
+    -- pallets can only be chosen when Universal Autoload sets them down (left / behind / right)
+    if self.marker == nil and self.vehicle ~= nil then
+        local hasPallets, canChoose = ADUnloadFilter.getPalletState(self.vehicle)
+        if hasPallets and not canChoose then
+            table.insert(self.rows, 1, {note = "AD_unloadFilter_palletPosition"})
+        end
+    end
     self.list:reloadData()
 end
 
@@ -85,7 +92,10 @@ end
 function ADUnloadFilterGui:populateCellForItemInSection(list, section, index, cell)
     if list == self.list then
         local row = self.rows[index]
-        if row == nil then
+        if row ~= nil and row.note ~= nil then
+            cell.attributes.listItemIcon:setImageSlice(nil, "ad_gui.warn_icon")
+            cell.attributes.listItemText:setText(g_i18n:getText(row.note))
+        elseif row == nil then
             -- nothing to choose from
             cell.attributes.listItemIcon:setImageSlice(nil, "ad_gui.warn_icon")
             cell.attributes.listItemText:setText(g_i18n:getText(self.marker ~= nil and "AD_unloadFilter_noneTarget" or "AD_unloadFilter_noneVehicle"))
@@ -110,7 +120,7 @@ end
 
 function ADUnloadFilterGui:toggle(index)
     local row = self.rows[index]
-    if row == nil then
+    if row == nil or row.note ~= nil then
         return
     end
     local set = ADUnloadFilter.copy(self:getSet())

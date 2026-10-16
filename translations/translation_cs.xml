@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="卸载产品..." />
 		<text name="AD_vehicleMenu_enter"							 text="进入车辆" />
 		<text name="AD_fleet_unloadOnly"							 text="只卸载 %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="托盘：请在车辆设置中把“自动装载：卸载位置”设为左侧、后方或右侧，否则出售点会收走所有托盘" />
 		<text name="AD_routeCheck_loose"								 text="没有任何连接的孤立航点" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：从此航点无法继续前进" />
 		<text name="AD_routeCheck_trap"								 text="单向陷阱：%s 个航点只能驶入无法驶出" />

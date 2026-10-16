@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Aflæs produkter..." />
 		<text name="AD_vehicleMenu_enter"							 text="Stig ind i maskinen" />
 		<text name="AD_fleet_unloadOnly"							 text="aflæsser kun %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Paller: sæt &quot;AutoLoad: Aflæsposition&quot; til venstre, bagved eller højre i maskinindstillingerne, ellers tager salgsstedet alle paller" />
 		<text name="AD_routeCheck_loose"								 text="Løst vejpunkt uden nogen forbindelse" />
 		<text name="AD_routeCheck_deadEnd"							 text="Blindgyde: ingen vej videre fra dette vejpunkt" />
 		<text name="AD_routeCheck_trap"								 text="Ensrettet fælde: %s vejpunkter, man kan køre ind i, men ikke ud af" />

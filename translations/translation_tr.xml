@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Ürünleri boşalt..." />
 		<text name="AD_vehicleMenu_enter"							 text="Araca bin" />
 		<text name="AD_fleet_unloadOnly"							 text="yalnızca %s boşaltıyor" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Paletler: araç ayarlarında &quot;AutoLoad: Unload Position&quot; seçeneğini sol, arka veya sağ yapın, yoksa satış noktası tüm paletleri alır" />
 		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
 		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
 		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />

@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Vyložit produkty..." />
 		<text name="AD_vehicleMenu_enter"							 text="Nastoupit do vozidla" />
 		<text name="AD_fleet_unloadOnly"							 text="vykládá jen %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Palety: v nastavení vozidla nastavte &quot;Automatické nakládání: Poloha vykládání&quot; na vlevo, vzadu nebo vpravo, jinak prodejní místo vezme všechny palety" />
 		<text name="AD_routeCheck_loose"								 text="Osamocený bod trasy bez jakéhokoli spojení" />
 		<text name="AD_routeCheck_deadEnd"							 text="Slepá ulice: z tohoto bodu trasy nevede žádná cesta dál" />
 		<text name="AD_routeCheck_trap"								 text="Jednosměrná past: počet bodů trasy, do kterých lze vjet, ale ne vyjet: %s" />

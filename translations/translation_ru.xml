@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Разгрузка продуктов..." />
 		<text name="AD_vehicleMenu_enter"							 text="Сесть в технику" />
 		<text name="AD_fleet_unloadOnly"							 text="выгружает только %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Поддоны: в настройках техники установите &quot;Автозагрузка: положение разгрузки&quot; влево, сзади или вправо, иначе точка продажи заберёт все поддоны" />
 		<text name="AD_routeCheck_loose"								 text="Одиночная путевая точка без соединений" />
 		<text name="AD_routeCheck_deadEnd"							 text="Тупик: от этой путевой точки дальше пути нет" />
 		<text name="AD_routeCheck_trap"								 text="Односторонняя ловушка: путевых точек, куда можно въехать, но нельзя выехать: %s" />

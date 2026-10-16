@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Décharger les produits..." />
 		<text name="AD_vehicleMenu_enter"							 text="Monter dans le véhicule" />
 		<text name="AD_fleet_unloadOnly"							 text="ne décharge que %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Palettes : dans les réglages du véhicule, mettez &quot;AutoLoad: Position de déchargement&quot; sur gauche, derrière ou droite, sinon le point de vente prend toutes les palettes" />
 		<text name="AD_routeCheck_loose"								 text="Point de passage isolé sans aucune connexion" />
 		<text name="AD_routeCheck_deadEnd"							 text="Impasse : aucun chemin à partir de ce point de passage" />
 		<text name="AD_routeCheck_trap"								 text="Piège à sens unique : %s points de passage où l'on peut entrer mais d'où l'on ne peut pas sortir" />

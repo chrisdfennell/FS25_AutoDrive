@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Termékek lerakodása..." />
 		<text name="AD_vehicleMenu_enter"							 text="Beszállás a járműbe" />
 		<text name="AD_fleet_unloadOnly"							 text="csak ezt rakja le: %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Raklapok: a járműbeállításokban állítsd az &quot;Autoload: Kirakodási pozíció&quot; értékét balra, hátra vagy jobbra, különben az értékesítési pont minden raklapot átvesz" />
 		<text name="AD_routeCheck_loose"								 text="Különálló útpont, semmilyen kapcsolat nélkül" />
 		<text name="AD_routeCheck_deadEnd"							 text="Zsákutca: ebből az útpontból nincs továbbhaladás" />
 		<text name="AD_routeCheck_trap"								 text="Egyirányú csapda: %s útpont, ahová be lehet hajtani, de kijutni nem" />

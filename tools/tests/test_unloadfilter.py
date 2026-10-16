@@ -164,4 +164,58 @@ s.execute("""
 """)
 rows = [(s.eval("ROWS[%d].name" % i), s.eval("ROWS[%d].litres" % i), s.eval("ROWS[%d].selected" % i)) for i in range(1, s.eval("#ROWS") + 1)]
 assert rows == [("WHEAT", 8000, False), ("BARLEY", 0, False), ("CANOLA", 0, True)], rows  # no diesel
-print("OK: unload products (vehicle and target lists, best price, finish guard, savegame, event, rename, dialog rows)")
+# --- pallets on a Universal Autoload trailer
+s.execute("""
+    function pallet(fillType, litres) return {getFillUnits = function() return {{}} end, getFillUnitFillType = function() return fillType end,
+        getFillUnitFillLevel = function() return litres end} end
+    MILK, CHEESE1, CHEESE2 = pallet(1, 5000), pallet(2, 2500), pallet(2, 2500)
+    BELTS = {}
+    UALTRAILER = {spec_universalAutoload = {loadedObjects = {[MILK] = 1, [CHEESE1] = 1, [CHEESE2] = 1}},
+        setAllTensionBeltsActive = function(self, active) table.insert(BELTS, active) end}
+    DELETED = 0; delete = function() DELETED = DELETED + 1 end
+    UNLOADED = {}
+    UniversalAutoload = {
+        addPalletsToPhysicsForVehicle = function(trailer) end,
+        buildObjectsToUnloadTable = function(trailer, position)
+            trailer.spec_universalAutoload.objectsToUnload = {}
+            for object, _ in pairs(trailer.spec_universalAutoload.loadedObjects) do
+                trailer.spec_universalAutoload.objectsToUnload[object] = {node = 1, position = position}
+            end
+        end,
+        unloadObject = function(trailer, object, place)
+            table.insert(UNLOADED, object); trailer.spec_universalAutoload.loadedObjects[object] = nil; return true
+        end}
+    PT = makeTruck({UALTRAILER}, ADGraphManager.mapMarkers[2])
+    PT.settings.ALUnload = 1   -- center: belts only
+    UF.targetFilters = {}
+""")
+# the list shows the pallets (this was empty before)
+s.execute("PROWS = UF.getRows(UF.getVehicleChoices(PT), {})")
+prows = [(s.eval("PROWS[%d].name" % i), s.eval("PROWS[%d].litres" % i)) for i in range(1, s.eval("#PROWS") + 1)]
+assert sorted(prows) == [("BARLEY", 5000), ("WHEAT", 5000)], prows
+# best price counts the pallets
+assert s.eval("ADBestPrice.getLoad(PT)[2]") == 5000
+# center position: hint in the dialog
+assert list(s.eval("{UF.getPalletState(PT)}").values()) == [True, False]
+s.execute("PT.settings.ALUnload = 3")
+assert list(s.eval("{UF.getPalletState(PT)}").values()) == [True, True]
+# no limit: Universal Autoload unloads everything itself
+assert s.eval("UF.unloadALSelected(UALTRAILER, PT, 'behind')") is False and s.eval("#UNLOADED") == 0
+# only barley (the cheese pallets): the milk pallet stays and is strapped again
+s.execute("UF.setVehicleFilter(PT, {BARLEY = true})")
+assert s.eval("UF.unloadALSelected(UALTRAILER, PT, 'behind')") is True
+assert s.eval("#UNLOADED") == 2 and s.eval("UALTRAILER.spec_universalAutoload.loadedObjects[MILK]") == 1
+assert list(s.eval("BELTS").values()) == [False, True] and s.eval("DELETED") == 1  # the unused place of the milk pallet
+# the finish guard also covers pallet trailers with a limit, after 10 s
+s.execute("PT.ad.trailerModule = {getHasAL = function() return true end}; g_time = 100000")
+assert s.eval("UF.finishesUnloadEarly(PT)") is False
+s.execute("for i = 1, 650 do g_time = g_time + 16; LAST = UF.finishesUnloadEarly(PT) end")
+assert s.eval("LAST") is True
+# an unknown Universal Autoload: nothing is unloaded rather than everything
+s.execute("""
+    WARNINGS = {}; local originalWarning = Logging.warning; Logging.warning = function(fmt, ...) table.insert(WARNINGS, fmt) end
+    UNLOADED = {}; UniversalAutoload = {}; RESULT = UF.unloadALSelected(UALTRAILER, PT, 'behind')
+    Logging.warning = originalWarning
+""")
+assert s.eval("RESULT") is True and s.eval("#UNLOADED") == 0 and "not supported" in s.eval("WARNINGS[1]")
+print("OK: unload products (vehicle and target lists, best price, finish guard, savegame, event, rename, dialog rows, pallets)")

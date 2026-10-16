@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Scarica prodotti..." />
 		<text name="AD_vehicleMenu_enter"							 text="Sali sul veicolo" />
 		<text name="AD_fleet_unloadOnly"							 text="scarica solo %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Pallet: nelle impostazioni del veicolo imposta &quot;Autoload: Posizione di scarico&quot; su sinistra, dietro o destra, altrimenti il punto vendita prende tutti i pallet" />
 		<text name="AD_routeCheck_loose"								 text="Nodo isolato senza alcun collegamento" />
 		<text name="AD_routeCheck_deadEnd"							 text="Vicolo cieco: nessuna via per proseguire da questo nodo" />
 		<text name="AD_routeCheck_trap"								 text="Trappola a senso unico: %s nodi in cui si può entrare ma da cui non si può uscire" />

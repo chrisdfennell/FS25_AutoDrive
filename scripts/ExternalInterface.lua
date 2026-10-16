@@ -800,7 +800,10 @@ function AutoDrive:unloadAL(object)
                     AutoDrive.debugPrint(object, AutoDrive.DC_EXTERNALINTERFACEINFO, "AutoDrive:unloadAL spec_universalAutoload ualUnload")
                     if object.ualSetUnloadPosition and object.ualUnload then
                         object:ualSetUnloadPosition(unloadPosition)
-                        object:ualUnload()
+                        -- Overdrive: unload products, only the pallets of the chosen products
+                        if not ADUnloadFilter.unloadALSelected(object, rootVehicle, unloadPosition) then
+                            object:ualUnload()
+                        end
                     end
                 end
             end

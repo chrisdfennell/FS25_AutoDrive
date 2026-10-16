@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Produkte abladen..." />
 		<text name="AD_vehicleMenu_enter"							 text="Einsteigen" />
 		<text name="AD_fleet_unloadOnly"							 text="lädt nur %s ab" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Paletten: in den Fahrzeugeinstellungen &quot;Autoload: Abladeposition&quot; auf links, hinten oder rechts stellen, sonst nimmt die Verkaufsstelle alle Paletten" />
 		<text name="AD_routeCheck_loose"								 text="Loser Wegpunkt ohne jede Verbindung" />
 		<text name="AD_routeCheck_deadEnd"							 text="Sackgasse: von diesem Wegpunkt geht es nicht weiter" />
 		<text name="AD_routeCheck_trap"								 text="Einbahn-Falle: %s Wegpunkte, in die man hinein-, aber nicht wieder herausfahren kann" />

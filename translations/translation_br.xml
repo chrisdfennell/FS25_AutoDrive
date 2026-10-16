@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Descarregar produtos..." />
 		<text name="AD_vehicleMenu_enter"							 text="Entrar no veículo" />
 		<text name="AD_fleet_unloadOnly"							 text="descarrega apenas %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Paletes: em Configurações do veículo, defina &quot;Carga automática: Posição de descarga&quot; como esquerda, atrás ou direita, senão o ponto de venda leva todos os paletes" />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem nenhuma conexão" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há como seguir a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de mão única: %s waypoints onde é possível entrar, mas não sair" />

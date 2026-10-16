@@ -542,6 +542,7 @@
 		<text name="AD_vehicleMenu_unload"							 text="Розвантаження продуктів..." />
 		<text name="AD_vehicleMenu_enter"							 text="Сісти в техніку" />
 		<text name="AD_fleet_unloadOnly"							 text="вивантажує лише %s" />
+		<text name="AD_unloadFilter_palletPosition"							 text="Палети: у налаштуваннях техніки встановіть &quot;Автозавантаження: положення розвантаження&quot; вліво, позаду або вправо, інакше точка продажу забере всі палети" />
 		<text name="AD_routeCheck_loose"								 text="Окрема точка шляху без з'єднань" />
 		<text name="AD_routeCheck_deadEnd"							 text="Глухий кут: від цієї точки шляху далі немає шляху" />
 		<text name="AD_routeCheck_trap"								 text="Одностороння пастка: точок шляху, куди можна заїхати, але не можна виїхати: %s" />

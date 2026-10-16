@@ -146,19 +146,139 @@ end
 -- UnloadAtDestinationTask: the stop is done when nothing has been tipped for SETTLE_TIME, even with something
 -- left on board (a product that is not unloaded here). Without a limit or best price, AutoDrive waits as before.
 function ADUnloadFilter.finishesUnloadEarly(vehicle)
-    if vehicle == nil or vehicle.ad == nil or (vehicle.ad.trailerModule ~= nil and vehicle.ad.trailerModule:getHasAL() == true) then
+    if vehicle == nil or vehicle.ad == nil then
         return false
     end
-    if not (ADUnloadFilter.isFiltering(vehicle) or ADBestPrice.finishesUnloadEarly(vehicle)) then
+    local hasAL = vehicle.ad.trailerModule ~= nil and vehicle.ad.trailerModule:getHasAL() == true
+    if hasAL then
+        -- pallets: AutoDrive waits its AL wait time; with a limit the pallets left on board must not keep it there
+        if not ADUnloadFilter.isFiltering(vehicle) then
+            return false
+        end
+    elseif not (ADUnloadFilter.isFiltering(vehicle) or ADBestPrice.finishesUnloadEarly(vehicle)) then
         return false
     end
+    local settleTime = hasAL and ADUnloadFilter.AL_SETTLE_TIME or ADUnloadFilter.SETTLE_TIME
     local ad = vehicle.ad
     -- the check runs every frame while nothing is tipped; a gap means something was tipped in between
     if ad.unloadIdleLast == nil or g_time - ad.unloadIdleLast > 500 then
         ad.unloadIdleSince = g_time
     end
     ad.unloadIdleLast = g_time
-    return g_time - ad.unloadIdleSince >= ADUnloadFilter.SETTLE_TIME
+    return g_time - ad.unloadIdleSince >= settleTime
+end
+
+-------------------------------------------------------------------------------
+-- pallets and bales of Universal Autoload trailers
+-------------------------------------------------------------------------------
+
+-- a pallet stops being waited for this long after the unload started (AutoDrive's AL wait time 0)
+ADUnloadFilter.AL_SETTLE_TIME = 10000
+
+-- fill type and litres of a loaded object (pallet: fill units, bale: fill type and level)
+function ADUnloadFilter.getObjectProduct(object)
+    if object == nil then
+        return nil, 0
+    end
+    if object.getFillUnits ~= nil and object.getFillUnitFillType ~= nil then
+        local bestType, bestLevel = nil, 0
+        for index, _ in ipairs(object:getFillUnits()) do
+            local fillType = object:getFillUnitFillType(index)
+            local level = object:getFillUnitFillLevel(index) or 0
+            if fillType ~= nil and fillType ~= FillType.UNKNOWN and (bestType == nil or level > bestLevel) then
+                bestType, bestLevel = fillType, level
+            end
+        end
+        return bestType, bestLevel
+    end
+    if object.getFillType ~= nil then
+        return object:getFillType(), object.getFillLevel ~= nil and object:getFillLevel() or 0
+    end
+    return object.fillType, object.fillLevel or 0
+end
+
+-- what is loaded on a Universal Autoload trailer: fill type -> litres
+function ADUnloadFilter.getALLoad(trailer)
+    local load = {}
+    local spec = trailer ~= nil and trailer.spec_universalAutoload or nil
+    if spec == nil or spec.loadedObjects == nil then
+        return load
+    end
+    for object, _ in pairs(spec.loadedObjects) do
+        local fillType, litres = ADUnloadFilter.getObjectProduct(object)
+        if fillType ~= nil and fillType ~= FillType.UNKNOWN then
+            load[fillType] = (load[fillType] or 0) + litres
+        end
+    end
+    return load
+end
+
+-- may the vehicle unload this product at its current target? (vehicle list, target list, best price stop)
+function ADUnloadFilter.allowsProduct(vehicle, fillType)
+    if not ADUnloadFilter.allowsFillType(vehicle, ADUnloadFilter.getUnloadMarker(vehicle), fillType) then
+        return false
+    end
+    local products = vehicle.ad.bestPriceProducts
+    if vehicle.ad.bestPriceActive == true and products ~= nil then
+        return products[fillType] == true
+    end
+    return true
+end
+
+-- does the vehicle carry pallets of Universal Autoload, and is the unload position one that can choose
+-- (left / behind / right set them down; off / center only open the belts, the selling point takes everything)
+function ADUnloadFilter.getPalletState(vehicle)
+    local hasPallets = false
+    for _, unit in ipairs(AutoDrive.getAllUnits(vehicle) or {}) do
+        if unit.spec_universalAutoload ~= nil then
+            hasPallets = true
+        end
+    end
+    local position = AutoDrive.getSetting("ALUnload", vehicle) or 0
+    return hasPallets, position >= 2
+end
+
+-- AutoDrive:unloadAL (Universal Autoload, unload position left / behind / right): like Universal Autoload's own
+-- unloading, but only the pallets of allowed products are set down; the rest stays and is strapped again.
+-- Returns true if it handled the unloading (a limit is set), false to let Universal Autoload unload everything.
+function ADUnloadFilter.unloadALSelected(trailer, vehicle, unloadPosition)
+    if vehicle == nil or vehicle.ad == nil or not ADUnloadFilter.isFiltering(vehicle) then
+        return false
+    end
+    local ual = UniversalAutoload
+    local spec = trailer.spec_universalAutoload
+    if ual == nil or spec == nil or spec.loadedObjects == nil or ual.buildObjectsToUnloadTable == nil or ual.unloadObject == nil then
+        -- an unknown Universal Autoload version: better unload nothing than everything
+        Logging.warning("[AD] Unload products: this Universal Autoload version is not supported, nothing is unloaded")
+        return true
+    end
+    local ok, err = pcall(function()
+        trailer:setAllTensionBeltsActive(false)
+        if ual.addPalletsToPhysicsForVehicle ~= nil then
+            ual.addPalletsToPhysicsForVehicle(trailer)
+        end
+        ual.buildObjectsToUnloadTable(trailer, unloadPosition)
+        local unloaded = 0
+        for object, unloadPlace in pairs(spec.objectsToUnload or {}) do
+            local fillType = ADUnloadFilter.getObjectProduct(object)
+            if fillType ~= nil and ADUnloadFilter.allowsProduct(vehicle, fillType) then
+                if ual.unloadObject(trailer, object, unloadPlace) then
+                    unloaded = unloaded + 1
+                end
+            elseif unloadPlace.node ~= nil then
+                delete(unloadPlace.node)
+            end
+        end
+        spec.objectsToUnload = {}
+        -- what stays on the trailer is strapped again
+        if next(spec.loadedObjects) ~= nil then
+            trailer:setAllTensionBeltsActive(true)
+        end
+    end)
+    if not ok then
+        Logging.warning("[AD] Unload products: unloading with Universal Autoload failed: %s", tostring(err))
+    end
+    return true
 end
 
 -------------------------------------------------------------------------------
@@ -183,6 +303,12 @@ function ADUnloadFilter.getVehicleChoices(vehicle)
                     choices[fillType] = (choices[fillType] or 0) + unit:getFillUnitFillLevel(index)
                 end
             end
+        end
+    end
+    -- pallets and bales on Universal Autoload trailers
+    for _, unit in ipairs(AutoDrive.getAllUnits(vehicle) or {}) do
+        for fillType, litres in pairs(ADUnloadFilter.getALLoad(unit)) do
+            choices[fillType] = (choices[fillType] or 0) + litres
         end
     end
     -- the vehicles' own tanks are no products
