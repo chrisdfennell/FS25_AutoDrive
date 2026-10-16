@@ -1,0 +1,52 @@
+name: CI
+
+# checks every push and pull request, and is reused by the release workflow
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Check and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Lua 5.1 and lupa
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q lua5.1
+          pip install lupa==2.8
+
+      # the game runs Lua 5.1, newer syntax would stop the mod from loading
+      - name: Lua 5.1 syntax check
+        run: |
+          find scripts -name '*.lua' -print0 | xargs -0 -n 1 luac5.1 -p
+          luac5.1 -p register.lua
+
+      - name: Static checks (XML, translations, scripts)
+        run: python tools/ci_checks.py
+
+      - name: Undo / redo tests
+        run: python tools/tests/run_all.py 100
+
+      - name: Build test zip
+        run: |
+          base=$(python -c "import xml.etree.ElementTree as ET; print(ET.parse('modDesc.xml').getroot().findtext('version').strip())")
+          python tools/build_mod.py --version "${base}-dev.${GITHUB_SHA::7}" --out dist/FS25_AutoDrive.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FS25_AutoDrive-test-build-${{ github.sha }}
+          path: dist/FS25_AutoDrive.zip
+          retention-days: 14

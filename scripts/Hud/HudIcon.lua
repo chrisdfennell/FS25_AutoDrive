@@ -55,7 +55,7 @@ end
 
 function ADHudIcon:renderDefaultText(vehicle, fontSize, posX, posY)
     local textHeight = getTextHeight(fontSize, "text")
-    local textToShow = "AutoDrive"
+    local textToShow = "AutoDrive Overdrive"
     textToShow = textToShow .. " - " .. AutoDrive.version
     textToShow = textToShow .. " - " .. AutoDriveHud:getModeName(vehicle)
     textToShow = self:addVehicleDriveTimeString(vehicle, textToShow)

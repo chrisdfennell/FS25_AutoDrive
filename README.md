@@ -1,9 +1,18 @@
-# FS25_AutoDrive (chrisdfennell edition)
+# AutoDrive Overdrive
 
-This is a personal fork of [AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive) by the AutoDrive Team (Stephan-S, Axel32019, TyKonKet and [many contributors](credits.txt)), released under the [MIT licence](LICENSE).
-It is based on AutoDrive 3.0.1.4 and adds route editor improvements. It is not the official release: for the official mod, downloads and support, see the original README below.
+[![CI](https://github.com/chrisdfennell/FS25_AutoDrive/actions/workflows/ci.yml/badge.svg)](https://github.com/chrisdfennell/FS25_AutoDrive/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/chrisdfennell/FS25_AutoDrive?label=release)](https://github.com/chrisdfennell/FS25_AutoDrive/releases/latest)
 
-## Added in this edition
+AutoDrive Overdrive is an unofficial edition of [AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive) for Farming Simulator 25, by the AutoDrive Team (Stephan-S, Axel32019, TyKonKet and [many contributors](credits.txt)), released under the [MIT licence](LICENSE).
+It is based on AutoDrive 3.0.1.4 and adds route editor improvements. For the official mod and its support, see the original README below.
+
+## Download
+Get **FS25_AutoDrive.zip** from the [latest release](https://github.com/chrisdfennell/FS25_AutoDrive/releases/latest) and put it into your mods folder (`Documents/My Games/FarmingSimulator2025/mods`), replacing the official AutoDrive zip.
+Keep the file name: the mod only loads as `FS25_AutoDrive.zip`, and that is also what keeps your savegames, routes and settings working.
+
+Versions are `<AutoDrive version>-od.<build>`, e.g. `3.0.1.4-od.1` is the first Overdrive build based on AutoDrive 3.0.1.4. The version shows in the header of the AutoDrive HUD.
+
+## What Overdrive adds
 
 ### Undo and redo in the route editor
 With the editor turned on, **Ctrl+Z** undoes and **Ctrl+Y** redoes your last change to the route network.
@@ -52,7 +61,18 @@ All key bindings can be changed in the game's control settings.
 - The mod keeps the name `FS25_AutoDrive`, so it replaces the official AutoDrive mod: install either one, not both. Savegames, routes and settings of the official version keep working.
 - In multiplayer, all players need the same version of the mod.
 - The new texts are translated into all languages of the mod. Corrections from native speakers are welcome.
-- The mod zip contains `drawing`, `gui`, `scripts`, `sounds`, `textures`, `translations`, `icon_AutoDrive.dds`, `modDesc.xml` and `register.lua`. The `tools` folder is for development and not part of the mod.
+## For developers
+Every push and pull request runs the [CI workflow](.github/workflows/ci.yml):
+- a Lua 5.1 syntax check, the Lua version the game uses
+- static checks: XML files, translation placeholders, every script loaded by `register.lua` exists ([tools/ci_checks.py](tools/ci_checks.py))
+- the undo / redo tests ([tools/tests](tools/tests)), which run the mod code outside the game with stubs for the game API
+- a test build of the mod zip, attached to the workflow run
+
+Run the same locally with `pip install lupa`, then `python tools/ci_checks.py` and `python tools/tests/run_all.py`.
+
+**Releasing:** push a tag like `v3.0.1.4-od.2`, or start the [Release workflow](.github/workflows/release.yml) from the Actions tab and enter the version (with "dry run" it only builds). The workflow runs all checks, builds `FS25_AutoDrive.zip` with [tools/build_mod.py](tools/build_mod.py), writes the release notes and publishes the release. The version must start with the version in `modDesc.xml`.
+
+The mod zip contains `drawing`, `gui`, `scripts`, `sounds`, `textures`, `translations`, `icon_AutoDrive.dds`, `modDesc.xml`, `register.lua`, `LICENSE` and `credits.txt`. The `tools` and `.github` folders are for development and not part of the mod.
 
 ---
 

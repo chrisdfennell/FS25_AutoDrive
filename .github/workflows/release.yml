@@ -1,0 +1,89 @@
+name: Release
+
+# Publishes AutoDrive Overdrive as a GitHub release.
+# Two ways to start it:
+#   - push a tag:  git tag v3.0.1.4-od.1 && git push origin v3.0.1.4-od.1
+#   - Actions tab > Release > Run workflow, enter the version (the tag is created for the selected branch)
+# Versions are <AutoDrive version from modDesc.xml>-od.<Overdrive build>, e.g. 3.0.1.4-od.1
+on:
+  push:
+    tags: ["v*-od.*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, e.g. 3.0.1.4-od.2"
+        required: true
+      dry_run:
+        description: "Only build, do not publish"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  checks:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    name: Build and publish
+    needs: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # full history and tags for the release notes
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Work out the version
+        id: version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            version="${INPUT_VERSION#v}"
+          else
+            version="${GITHUB_REF_NAME#v}"
+          fi
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+-od\.[0-9]+$ ]]; then
+            echo "::error::Version '$version' must look like 3.0.1.4-od.1"
+            exit 1
+          fi
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+            echo "::error::Tag v$version exists already"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Build FS25_AutoDrive.zip
+        run: |
+          python tools/build_mod.py --version "${{ steps.version.outputs.version }}" --out dist/FS25_AutoDrive.zip
+          (cd dist && sha256sum FS25_AutoDrive.zip > FS25_AutoDrive.zip.sha256)
+
+      - name: Release notes
+        run: python tools/release_notes.py "${{ steps.version.outputs.version }}" > dist/notes.md
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AutoDrive-Overdrive-${{ steps.version.outputs.version }}
+          path: dist/
+
+      - name: Publish the release
+        if: ${{ !inputs.dry_run }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            dist/FS25_AutoDrive.zip dist/FS25_AutoDrive.zip.sha256 \
+            --target "$GITHUB_SHA" \
+            --title "AutoDrive Overdrive ${{ steps.version.outputs.version }}" \
+            --notes-file dist/notes.md

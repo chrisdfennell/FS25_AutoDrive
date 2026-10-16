@@ -3,3 +3,5 @@
 /venv
 *.zip
 *.gsp* # Giants Software Project
+/dist
+__pycache__/
