@@ -354,7 +354,8 @@ local function check()
 
     if mods then
         for _, activemod in pairs(mods) do
-            if activemod.title == "AutoDrive" then
+            -- Overdrive changes the title, the mod name stays FS25_AutoDrive
+            if activemod.modName == "FS25_AutoDrive" or activemod.title == "AutoDrive" or activemod.title == "AutoDrive Overdrive" then
                 foundMod = true
                 break
             end

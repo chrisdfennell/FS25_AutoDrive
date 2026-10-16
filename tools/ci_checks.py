@@ -4,6 +4,7 @@
 - modDesc.xml has a numeric version (x.x.x.x), as the game expects
 - translations: placeholders (%s) match the English text, no stray % (would break string.format in game)
 - every script loaded by register.lua exists
+- the startup check in register.lua accepts the English title of modDesc.xml (otherwise the mod disables itself)
 - Lua files have no UTF-8 BOM (Lua 5.1 can not read it)
 
 The Lua 5.1 syntax check itself is done with luac5.1 in the workflow.
@@ -64,6 +65,14 @@ def check_sources():
     return len(scripts)
 
 
+def check_title():
+    title = ET.parse(os.path.join(ROOT, "modDesc.xml")).getroot().findtext("title/en")
+    source = open(os.path.join(ROOT, "register.lua"), encoding="utf-8").read()
+    if 'activemod.title == "%s"' % title not in source:
+        errors.append('register.lua: the startup check does not accept the modDesc title "%s", the mod would not load' % title)
+    return title
+
+
 def check_lua_bom():
     files = glob.glob(os.path.join(ROOT, "scripts", "**", "*.lua"), recursive=True) + [os.path.join(ROOT, "register.lua")]
     for path in files:
@@ -78,6 +87,7 @@ if __name__ == "__main__":
     print("modDesc version:  %s" % check_mod_desc())
     print("translations:     %d" % check_translations())
     print("register sources: %d" % check_sources())
+    print("startup title:    %s" % check_title())
     print("Lua files:        %d" % check_lua_bom())
     if errors:
         print("\n%d problem(s):" % len(errors))
