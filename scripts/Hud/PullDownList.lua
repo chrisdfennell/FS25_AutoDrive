@@ -66,6 +66,8 @@ function ADPullDownList:initReusableOverlaysOnlyOnce()
     ADPullDownList.ovFilter = overlayReuseOrNew(ADPullDownList.ovFilter, self.imageFilter)
     ADPullDownList.ovCollapseAll = overlayReuseOrNew(ADPullDownList.ovCollapseAll, self.imageCollapseAll)
     ADPullDownList.ovRename = overlayReuseOrNew(ADPullDownList.ovRename, self.imageRename)
+    -- Overdrive: fill types on board
+    ADPullDownList.ovOnBoard = overlayReuseOrNew(ADPullDownList.ovOnBoard, "ad_gui.tipper_load")
 end
 
 function ADPullDownList:new(posX, posY, width, height, type, selected)
@@ -226,6 +228,10 @@ function ADPullDownList:onDraw(vehicle, uiScale)
                     text = string.rep(ADPullDownList.INDENT, depth) .. text
                 end
 
+                if listEntry.onBoard ~= nil then
+                    text = string.format("%s (%d l)", text, math.floor(listEntry.onBoard + 0.5))
+                end
+
                 local textTargetWidth
                 local showRenameIcon = self.type ~= ADPullDownList.TYPE_FILLTYPE and AutoDrive.isEditorModeEnabled()
 
@@ -235,7 +241,7 @@ function ADPullDownList:onDraw(vehicle, uiScale)
                     else
                         textTargetWidth = math.abs(self.rightIconPos3.x - self.position.x) - AutoDrive.Hud.gapWidth
                     end
-                elseif showRenameIcon then
+                elseif showRenameIcon or listEntry.onBoard ~= nil then
                     textTargetWidth = math.abs(self.rightIconPos.x - self.position.x) - AutoDrive.Hud.gapWidth
                 else
                     textTargetWidth = math.abs(self.rightIconPos.x - self.position.x) + AutoDrive.Hud.gapWidth
@@ -280,6 +286,9 @@ function ADPullDownList:onDraw(vehicle, uiScale)
                 elseif showRenameIcon then
                     -- icon for renaming the map marker
                     renderOverlay(ADPullDownList.ovRename.overlayId, self.rightIconPos.x, textPosition.y, self.iconSize.width, self.iconSize.height)
+                elseif listEntry.onBoard ~= nil and ADPullDownList.ovOnBoard ~= nil then
+                    -- Overdrive: loaded on the vehicle
+                    renderOverlay(ADPullDownList.ovOnBoard.overlayId, self.rightIconPos.x, textPosition.y, self.iconSize.width, self.iconSize.height)
                 end
 
                 local makeBold = listEntry.isFolder
@@ -381,7 +390,7 @@ function ADPullDownList:getListElementByIndex(vehicle, index)
     else
         local entry = self.options[1][index]
         if entry ~= nil then
-            return {displayName = entry.displayName, returnValue = entry.returnValue, isFolder = false}
+            return {displayName = entry.displayName, returnValue = entry.returnValue, isFolder = false, onBoard = entry.onBoard}
         end
     end
     return nil
@@ -922,6 +931,9 @@ function ADPullDownList:expand(vehicle)
         self.ovTop = g_overlayManager:createOverlay(self.imageBGTop, self.position.x, self.expandedBottom + self.expandedSize.height - self.size.height / 2, self.size.width, self.size.height / 2)
         self.ovStretch = g_overlayManager:createOverlay(self.imageBGStretch, self.position.x, self.expandedBottom + self.size.height / 2, self.size.width, self.expandedSize.height - self.size.height)
         self.ovBottom = g_overlayManager:createOverlay(self.imageBGBottom, self.position.x, self.expandedBottom, self.size.width, self.size.height / 2)
+        if self.type == ADPullDownList.TYPE_FILLTYPE then
+            self:markOnBoard(vehicle)
+        end
         self:setSelected(vehicle)
     end
 end
@@ -1039,12 +1051,36 @@ function ADPullDownList:sortCurrentItems()
     end
 end
 
+-- Overdrive: what is on board (also pallets of Universal Autoload) comes first, right after "all", most first
+function ADPullDownList:markOnBoard(vehicle)
+    local options = self.options and self.options[1]
+    if options == nil or vehicle == nil then
+        return
+    end
+    local load = ADBestPrice.getLoad(vehicle)
+    for _, entry in ipairs(options) do
+        local litres = load[entry.returnValue]
+        if litres ~= nil and litres > 0 then
+            entry.onBoard = litres
+        else
+            entry.onBoard = nil
+        end
+    end
+    self:sortFillTypes()
+end
+
 function ADPullDownList:sortFillTypes()
     local sort_func = function(a, b)
         if a.returnValue == AutoDrive.UAL_FILLTYPE_ALL then
             return true
         elseif b.returnValue == AutoDrive.UAL_FILLTYPE_ALL then
             return false
+        end
+        -- Overdrive: on board first, most first
+        if (a.onBoard ~= nil) ~= (b.onBoard ~= nil) then
+            return a.onBoard ~= nil
+        elseif a.onBoard ~= nil and a.onBoard ~= b.onBoard then
+            return a.onBoard > b.onBoard
         end
         a = string.lower(tostring(a.displayName))
         b = string.lower(tostring(b.displayName))

@@ -218,4 +218,20 @@ s.execute("""
     Logging.warning = originalWarning
 """)
 assert s.eval("RESULT") is True and s.eval("#UNLOADED") == 0 and "not supported" in s.eval("WARNINGS[1]")
-print("OK: unload products (vehicle and target lists, best price, finish guard, savegame, event, rename, dialog rows, pallets)")
+# --- the HUD "what to load" list: on board first (most first), right after "all", then by name
+s.execute(t.read(os.path.join(t.MOD, "scripts", "Hud", "GenericHudElement.lua")))
+s.execute("AutoDrive.UAL_FILLTYPE_ALL = -1")
+# Lua 5.5 does not allow assigning the loop variable (an upstream line, fine in the game's Lua 5.1)
+s.execute(t.read(os.path.join(t.MOD, "scripts", "Hud", "PullDownList.lua")).replace("i = i - 1", "local _ = i - 1"))
+s.execute("""
+    LIST = setmetatable({type = ADPullDownList.TYPE_FILLTYPE, options = {{
+        {displayName = "All", returnValue = -1}, {displayName = "Apple", returnValue = 9}, {displayName = "Barley", returnValue = 2},
+        {displayName = "Wheat", returnValue = 1}, {displayName = "Zucchini", returnValue = 8}}}}, {__index = ADPullDownList})
+    LISTTRUCK = makeTruck({unit({{1, 3000}}), unit({{2, 9000}})})
+    LIST:markOnBoard(LISTTRUCK)
+""")
+order = [(s.eval("LIST.options[1][%d].displayName" % i), s.eval("LIST.options[1][%d].onBoard" % i)) for i in range(1, 6)]
+assert order == [("All", None), ("Barley", 9000), ("Wheat", 3000), ("Apple", None), ("Zucchini", None)], order
+s.execute("LISTTRUCK.units = {}; LIST:markOnBoard(LISTTRUCK)")  # unloaded: back to the name order
+assert [s.eval("LIST.options[1][%d].displayName" % i) for i in range(1, 6)] == ["All", "Apple", "Barley", "Wheat", "Zucchini"]
+print("OK: unload products (vehicle and target lists, best price, finish guard, savegame, event, rename, dialog rows, pallets, load list order)")
