@@ -72,7 +72,12 @@ function ADHudIcon:renderDefaultText(vehicle, fontSize, posX, posY)
         end
     end
 
-    local lines = self:splitTextByLength(textToShow, fontSize, self.size.width - 4 * AutoDrive.Hud.gapWidth - 3 * AutoDrive.Hud.headerIconWidth)
+    local reservedWidth = 4 * AutoDrive.Hud.gapWidth + 3 * AutoDrive.Hud.headerIconWidth
+    if AutoDrive.isEditorModeEnabled() then
+        -- undo / redo icons
+        reservedWidth = 8 * AutoDrive.Hud.gapWidth + 5 * AutoDrive.Hud.headerIconWidth
+    end
+    local lines = self:splitTextByLength(textToShow, fontSize, self.size.width - reservedWidth)
 
     if #lines ~= self.lastLineCount and self.ov ~= nil then
         self.ov:setDimension(nil, self.size.height + (textHeight + AutoDrive.Hud.gapHeight) * (#lines - 1))        
@@ -100,12 +105,13 @@ function ADHudIcon:renderEditorTips(textHeight, fontSize, posX, posY)
     table.insert(editorTips, g_i18n:getText("gui_ad_editorTip_3"))
     table.insert(editorTips, g_i18n:getText("gui_ad_editorTip_2"))
     table.insert(editorTips, g_i18n:getText("gui_ad_editorTip_1"))
+    table.insert(editorTips, g_i18n:getText("gui_ad_editorTip_12"))
 
     for tipId, tip in pairs(editorTips) do
         if AutoDrive.pullDownListExpanded == 0 then
             renderText(posX, posY, fontSize, tip)
             posY = posY + textHeight + AutoDrive.Hud.gapHeight
-            if tipId == 3 or tipId == 6 then
+            if tipId == 3 or tipId == 6 or tipId == 11 then
                 posY = posY + textHeight + AutoDrive.Hud.gapHeight
             end
         end

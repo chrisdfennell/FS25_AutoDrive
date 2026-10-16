@@ -99,5 +99,9 @@
         <slice id="4xlongBorderBottomFilled" uvs="0px 1064px 512px 16px"/>
         <slice id="4xlongBorderStretchFilled" uvs="516px 1064px 512px 16px"/>
         <slice id="4xlongBorderTopFilled" uvs="1032px 1064px 512px 16px"/>
+        <slice id="input_undo_1" uvs="0px 1088px 64px 64px"/>
+        <slice id="input_undo_2" uvs="68px 1088px 64px 64px"/>
+        <slice id="input_redo_1" uvs="136px 1088px 64px 64px"/>
+        <slice id="input_redo_2" uvs="204px 1088px 64px 64px"/>
     </slices>
 </texture>

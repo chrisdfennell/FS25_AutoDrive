@@ -28,8 +28,15 @@ function ADEnterTargetNameGui:onOpen()
     self.editId = nil
     self.edit = false
     local controlledVehicle = AutoDrive.getControlledVehicle()
+    if AutoDrive.editMapMarkerId ~= nil then
+        -- edit the map marker clicked in the pull down list
+        if ADGraphManager:getMapMarkerById(AutoDrive.editMapMarkerId) ~= nil then
+            self.editId = AutoDrive.editMapMarkerId
+            self.editName = ADGraphManager:getMapMarkerById(self.editId).name
+        end
+        AutoDrive.editMapMarkerId = nil
     -- If editSelectedMapMarker is true, we have to edit the map marker selected on the pull down list otherwise we can go for closest waypoint
-    if controlledVehicle then
+    elseif controlledVehicle then
         if AutoDrive.editSelectedMapMarker ~= nil and AutoDrive.editSelectedMapMarker == true then
             self.editId = controlledVehicle.ad.stateModule:getFirstMarkerId()
             self.editName = ADGraphManager:getMapMarkerById(self.editId).name

@@ -98,6 +98,10 @@ function AutoDrive:onRegisterActionEvents(_, isOnActiveVehicle)
         registerEvents = registerEvents or self == AutoDrive.getControlledVehicle()
     end
 
+    -- the key release is lost when the action events are removed while the key is held
+    AutoDrive.moveNodeKeyPressed = false
+    ADUndoManager:stopPreview()
+
     -- only in active vehicle
     if registerEvents then
         -- attach our actions
@@ -116,6 +120,29 @@ function AutoDrive:onRegisterActionEvents(_, isOnActiveVehicle)
                 g_inputBinding:setActionEventTextVisibility(eventName, false)
             end
         end
+
+        -- editor: key to hold for moving a waypoint with left mouse drag, needs press and release
+        _, eventName = InputBinding.registerActionEvent(g_inputBinding, "ADMoveNode", self, AutoDrive.onMoveNodeKeyAction, true, true, false, true)
+        g_inputBinding:setActionEventTextVisibility(eventName, false)
+
+        -- editor: hold to show what the next undo changes
+        _, eventName = InputBinding.registerActionEvent(g_inputBinding, "ADUndoPreview", self, AutoDrive.onUndoPreviewKeyAction, true, true, false, true)
+        g_inputBinding:setActionEventTextVisibility(eventName, false)
+    end
+end
+
+function AutoDrive:onMoveNodeKeyAction(actionName, inputValue)
+    AutoDrive.moveNodeKeyPressed = inputValue ~= nil and inputValue > 0
+end
+
+function AutoDrive:onUndoPreviewKeyAction(actionName, inputValue)
+    local pressed = inputValue ~= nil and inputValue > 0
+    if pressed and AutoDrive.isEditorModeEnabled() then
+        if ADUndoManager.previewWanted == nil then
+            ADUndoManager:requestPreview(true)
+        end
+    elseif not pressed then
+        ADUndoManager:stopPreview()
     end
 end
 
@@ -543,6 +570,7 @@ function AutoDrive:onDrawUIInfo()
     if (AutoDrive.isEditorModeEnabled() or AutoDrive.isEditorShowEnabled()) then
         self:onDrawEditorMode()
         self:onDrawPreviews()
+        ADUndoManager:drawHighlights(self)
     end
 
     local x, y, z = getWorldTranslation(self.components[1].node)

@@ -54,6 +54,8 @@
 		<text name="input_ADSetParkDestination"						text="AD: 1. Ziel als Parkplatz setzen" />
 		<text name="input_ADRefuelVehicle"								text="AD: Fahrzeug tanken" />
 		<text name="input_ADRepairVehicle"								text="AD: Fahrzeug reparieren" />
+		<text name="input_ADUndo"										text="AD: Routenänderung rückgängig" />
+		<text name="input_ADRedo"										text="AD: Routenänderung wiederholen" />
 		<text name="input_ADSwapTargets"								text="AD: Ziele tauschen" />
 		<text name="input_ADStartHelper"								text="AD: Übergabe an AI/CP" />
 		<text name="input_ADToggleUsedHelper"							text="AD: AI/CP umschalten" />
@@ -64,6 +66,11 @@
 		<text name="hud_avoidFruit"									text="AD: Fruchtumfahrung" />
 		<text name="hud_startHelper"									text="AD: Starte AI/CP Fahrer am Zielpunkt" />
 		<text name="AD_parkVehicle_noPosSet"							text="Kein Parkplatz zugewiesen." />
+		<text name="AD_undo_done"										text="Rückgängig: %s (noch %s rückgängig, %s wiederholbar)" />
+		<text name="AD_redo_done"										text="Wiederholt: %s (noch %s rückgängig, %s wiederholbar)" />
+		<text name="AD_undo_empty"										text="Nichts zum Rückgängigmachen" />
+		<text name="AD_redo_empty"										text="Nichts zum Wiederholen" />
+		<text name="AD_undo_blocked"									text="Wiederholen ist während der Aufzeichnung nicht möglich" />
 		<text name="AD_parkVehicle_selected"							text="Als Parkplatz zugewiesen: " />
 		<text name="AD_parkVehicle_deleted"							text="Parkplatz gelöscht!" />
 		<text name="AD_Driver_of"										text="Der Fahrer von" />
@@ -396,5 +403,44 @@
 		<text name="gui_ad_editorTip_9"								text="Erster Punkt ist Kreuzungspunkt, zweiter Nachbar:" />
 		<text name="gui_ad_editorTip_10"								text="LSTRG: Streckentyp wechseln" />
 		<text name="gui_ad_editorTip_11"								text="LSHIFT = Nebenstrecke wechseln" />
+		<text name="gui_ad_editorTip_12"								 text="LCTRL + Z / LCTRL + Y = Rückgängig / Wiederholen, LALT + Z halten = Vorschau" />
+		<text name="AD_undoStep_wpCreated_1"							 text="Wegpunkt erstellt" />
+		<text name="AD_undoStep_wpCreated"							 text="%s Wegpunkte erstellt" />
+		<text name="AD_undoStep_wpDeleted_1"							 text="Wegpunkt gelöscht" />
+		<text name="AD_undoStep_wpDeleted"							 text="%s Wegpunkte gelöscht" />
+		<text name="AD_undoStep_wpMoved_1"							 text="Wegpunkt verschoben" />
+		<text name="AD_undoStep_wpMoved"								 text="%s Wegpunkte verschoben" />
+		<text name="AD_undoStep_sideRoad_1"							 text="Nebenstrecke umgeschaltet" />
+		<text name="AD_undoStep_sideRoad"							 text="Nebenstrecke an %s Wegpunkten umgeschaltet" />
+		<text name="AD_undoStep_connection_1"						 text="Verbindung geändert" />
+		<text name="AD_undoStep_connection"							 text="%s Verbindungen geändert" />
+		<text name="AD_undoStep_markerCreated_1"						 text="Ziel &quot;%s&quot; erstellt" />
+		<text name="AD_undoStep_markerCreated"						 text="%s Ziele erstellt" />
+		<text name="AD_undoStep_markerDeleted_1"						 text="Ziel &quot;%s&quot; gelöscht" />
+		<text name="AD_undoStep_markerDeleted"						 text="%s Ziele gelöscht" />
+		<text name="AD_undoStep_markerRenamed"						 text="Ziel &quot;%s&quot; umbenannt in &quot;%s&quot;" />
+		<text name="AD_undoStep_markerFolder"						 text="Ziel &quot;%s&quot; in Ordner &quot;%s&quot; verschoben" />
+		<text name="AD_undoStep_edit"								 text="Routenänderung" />
+		<text name="input_ADUndoPreview"								 text="AD: Halten für Vorschau auf Rückgängig" />
+		<text name="AD_undo_conflict"								 text="Noch nicht rückgängig möglich: %s hat das Routennetz nach deiner letzten Änderung geändert" />
+		<text name="AD_undo_name"									 text="%s" />
+		<text name="AD_undo_otherPlayer"								 text="ein anderer Spieler" />
+		<text name="AD_undo_recordingStart"							 text="Anfang der Aufzeichnung erreicht - Aufzeichnung beenden, um sie ganz rückgängig zu machen" />
+		<text name="AD_undo_recording"								 text="Aufzeichnung: %s entfernt, es geht am markierten Punkt weiter" />
+		<text name="AD_undoStep_recordedPoints_1"					 text="der letzte aufgezeichnete Punkt" />
+		<text name="AD_undoStep_recordedPoints"						 text="die letzten %s aufgezeichneten Punkte" />
+		<text name="AD_undo_preview"									 text="Nächstes Rückgängig: %s" />
+		<text name="AD_undo_cleared"									 text="Rückgängig-Verlauf gelöscht: %s" />
+		<text name="AD_undo_reason_network"							 text="Routennetz ersetzt" />
+		<text name="AD_undo_reason_debug"							 text="Debug-Markierungen geändert" />
+		<text name="AD_undo_reason_colors"							 text="Farbauswahl-Punkte verwendet" />
+		<text name="AD_undo_reason_other"							 text="Routennetz außerhalb des Editors geändert" />
+		<text name="AD_undoStep_folderCreated_1"						 text="Ordner &quot;%s&quot; erstellt" />
+		<text name="AD_undoStep_folderCreated"						 text="%s Ordner erstellt" />
+		<text name="AD_undoStep_folderDeleted_1"						 text="Ordner &quot;%s&quot; gelöscht" />
+		<text name="AD_undoStep_folderDeleted"						 text="%s Ordner gelöscht" />
+		<text name="AD_undoStep_folderRenamed"						 text="Ordner &quot;%s&quot; umbenannt in &quot;%s&quot;" />
+		<text name="AD_undoStep_folderColor"							 text="Farbe von Ordner &quot;%s&quot; geändert" />
+		<text name="AD_undoStep_network"								 text="Routen geladen" />
 	</texts>
 </l10n>

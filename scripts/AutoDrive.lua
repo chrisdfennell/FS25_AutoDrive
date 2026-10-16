@@ -716,6 +716,7 @@ function AutoDrive:update(dt)
 	ADMessagesManager:update(dt)
 	ADTriggerManager:update(dt)
 	ADRoutesManager:update(dt)
+	ADUndoManager:update(dt)
 
     if AutoDrive.devOnUpdate then
         AutoDrive.devOnUpdate(dt)

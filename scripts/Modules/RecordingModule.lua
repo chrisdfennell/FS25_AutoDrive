@@ -50,6 +50,10 @@ function ADRecordingModule:start(dual, subPrio, twoWay)
         end
     end
 
+    -- the whole recording drive is undone at once, while recording an undo removes the last points
+    ADUndoManager:endGroup(self.undoGroup)
+    self.undoGroup = ADUndoManager:beginGroup(self.vehicle, self)
+
     local startNodeId, _ = self.vehicle:getClosestWayPoint()
     local startNode = ADGraphManager:getWayPointById(startNodeId)
 
@@ -101,6 +105,8 @@ function ADRecordingModule:stop()
             end
         end
     end
+    ADUndoManager:endGroup(self.undoGroup)
+    self.undoGroup = nil
     self:reset()
 end
 
@@ -128,6 +134,10 @@ function ADRecordingModule:updateTick(dt, isActiveForInput, isActiveForInputIgno
         self.drivingReverse = true
     end
 
+    -- the points recorded in this tick can be removed again by an undo while recording
+    local undoOpCount = ADUndoManager:getGroupOpCount(self.undoGroup)
+    local undoState = self:getUndoState()
+
     if self.isTwoWay then
         if self.drivingReverse or (self.wasRecordingTwoRoads and math.abs(AutoDrive.getSetting("RecordDriveDirectionOffset") - AutoDrive.getSetting("RecordOppositeDriveDirectionOffset")) < 0.1) then
             -- no 2 road recording in reverse driving, changed offsets improper or distance set to 0 - stop recording
@@ -143,6 +153,27 @@ function ADRecordingModule:updateTick(dt, isActiveForInput, isActiveForInputIgno
         self:singleRecording()
     end
     self.wasRecordingTwoRoads = self.isTwoWay
+
+    ADUndoManager:addGroupMark(self.undoGroup, undoOpCount, undoState)
+end
+
+-- the last recorded points, an undo while recording goes back to such a state
+function ADRecordingModule:getUndoState()
+    return {
+        lastWp = self.lastWp,
+        secondLastWp = self.secondLastWp,
+        lastWp2 = self.lastWp2,
+        secondLastWp2 = self.secondLastWp2,
+        isRecordingReverse = self.isRecordingReverse
+    }
+end
+
+function ADRecordingModule:restoreUndoState(state)
+    self.lastWp = state.lastWp
+    self.secondLastWp = state.secondLastWp
+    self.lastWp2 = state.lastWp2
+    self.secondLastWp2 = state.secondLastWp2
+    self.isRecordingReverse = state.isRecordingReverse
 end
 
 function ADRecordingModule:singleRecording()

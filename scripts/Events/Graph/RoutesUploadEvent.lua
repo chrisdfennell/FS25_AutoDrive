@@ -8,48 +8,39 @@ function AutoDriveRoutesUploadEvent.emptyNew()
 	return self
 end
 
-function AutoDriveRoutesUploadEvent.new(wayPoints, mapMarkers, groups)
+function AutoDriveRoutesUploadEvent.new(wayPoints, mapMarkers, groups, groupColors)
 	local self = AutoDriveRoutesUploadEvent.emptyNew()
 	self.wayPoints = wayPoints
 	self.mapMarkers = mapMarkers
 	self.groups = groups
+	self.groupColors = groupColors
 	return self
 end
 
 function AutoDriveRoutesUploadEvent:writeStream(streamId, connection)
-	AutoDriveSync.streamWriteGraph(streamId, self.wayPoints, self.mapMarkers, self.groups)
+	AutoDriveSync.streamWriteGraph(streamId, self.wayPoints, self.mapMarkers, self.groups, self.groupColors)
 end
 
 function AutoDriveRoutesUploadEvent:readStream(streamId, connection)
-	self.wayPoints, self.mapMarkers, self.groups = AutoDriveSync.streamReadGraph(streamId)
+	self.wayPoints, self.mapMarkers, self.groups, self.groupColors = AutoDriveSync.streamReadGraph(streamId)
 	self:run(connection)
 end
 
 function AutoDriveRoutesUploadEvent:run(connection)
 	if g_server ~= nil and connection:getIsServer() == false then
 		-- If the event is coming from a client, server have only to broadcast
-		AutoDriveRoutesUploadEvent.sendEvent(self.wayPoints, self.mapMarkers, self.groups)
+		AutoDriveRoutesUploadEvent.sendEvent(self.wayPoints, self.mapMarkers, self.groups, self.groupColors)
 	else
 		-- If the event is coming from the server, both clients and server have to delete the way point
-		ADGraphManager:setWayPoints(self.wayPoints)
-		ADGraphManager:setMapMarkers(self.mapMarkers)
-		AutoDrive:notifyDestinationListeners()
-		ADGraphManager:setGroups(self.groups, true)
-
-		if g_server ~= nil then
-			for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
-				if vehicle ~= nil and vehicle.ad ~= nil and vehicle.ad.stateModule ~= nil then
-					vehicle.ad.stateModule:resetMarkersOnReload()
-				end
-			end
-		end
-
-		AutoDrive.Hud.lastUIScale = 0
+		-- loading routes replaces the whole network, one undo brings the old one back
+		ADUndoManager:beginStep()
+		ADGraphManager:replaceNetwork(self.wayPoints, self.mapMarkers, self.groups, self.groupColors)
+		ADUndoManager:endStep()
 	end
 end
 
-function AutoDriveRoutesUploadEvent.sendEvent(wayPoints, mapMarkers, groups)
-	local event = AutoDriveRoutesUploadEvent.new(wayPoints, mapMarkers, groups)
+function AutoDriveRoutesUploadEvent.sendEvent(wayPoints, mapMarkers, groups, groupColors)
+	local event = AutoDriveRoutesUploadEvent.new(wayPoints, mapMarkers, groups, groupColors)
 	if g_server ~= nil then
 		-- Server have to broadcast to all clients and himself
 		g_server:broadcastEvent(event, true)

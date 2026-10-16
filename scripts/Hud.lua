@@ -180,6 +180,12 @@ function AutoDriveHud:createHudAt(hudX, hudY)
 	posX = posX - closeWidth - self.gapWidth
 	table.insert(self.hudElements, ADHudButton:new(posX, posY, closeWidth, closeHeight, "input_toggleHudExtension", nil, nil, nil, nil, nil, nil, nil, "", 1, true))
 
+	-- editor: undo / redo, right click on undo shows what it would change
+	posX = posX - closeWidth - 3 * self.gapWidth
+	table.insert(self.hudElements, ADHudButton:new(posX, posY, closeWidth, closeHeight, "input_redo", nil, nil, nil, nil, nil, nil, nil, "input_ADRedo", 1, false))
+	posX = posX - closeWidth - self.gapWidth
+	table.insert(self.hudElements, ADHudButton:new(posX, posY, closeWidth, closeHeight, "input_undo", nil, nil, nil, nil, nil, nil, nil, "input_ADUndo", 1, false))
+
 	
 	table.insert(self.hudElements, ADHudButton:new(self.posX + self.gapWidth, self.row4, self.iconWidth, self.iconHeight, "input_toggleAutomaticPickupTarget", nil, nil, nil, nil, nil, nil, nil, "input_ADToggleAutomaticPickupTarget", 1, true))
 
@@ -650,7 +656,8 @@ function AutoDriveHud:mouseEventMoveNode(vehicle)
     if vehicle.ad.nodeToMoveId ~= nil then
         -- move point at mouse position
         AutoDriveHud.debugMsg(vehicle, "AutoDriveHud:mouseEvent moveNodeToMousePos nodeToMoveId %d", vehicle.ad.nodeToMoveId)
-        AutoDrive.moveNodeToMousePos(vehicle.ad.nodeToMoveId)
+        -- the move key (default LSHIFT) is held for the whole drag, so LSHIFT must not mean "keep height" there
+        AutoDrive.moveNodeToMousePos(vehicle.ad.nodeToMoveId, vehicle.ad.keyDragNodeId ~= nil)
     end
 end
 
@@ -669,6 +676,51 @@ function AutoDriveHud:mouseEventFinishMovingNode(vehicle, isUp, button)
             vehicle.ad.nodeToMoveId = nil
         end
     end
+end
+
+-- holding the ADMoveNode key (default LSHIFT) + left mouse drag on a waypoint moves it
+-- (the game consumes right mouse presses for the camera)
+-- a click below the threshold is still handled as normal click, i.e. LSHIFT + left click toggles the priority
+AutoDriveHud.KEY_DRAG_THRESHOLD = 0.005
+
+function AutoDriveHud:mouseEventStartKeyDrag(vehicle, isDown, button)
+    if
+        button == 1
+        and isDown
+        and AutoDrive.moveNodeKeyPressed
+        and not AutoDrive.leftCTRLmodifierKeyPressed
+        and not AutoDrive.leftALTmodifierKeyPressed
+        and not AutoDrive.rightSHIFTmodifierKeyPressed
+        and vehicle.ad.nodeToMoveId == nil
+        and g_lastMousePosX ~= nil
+        then
+        vehicle.ad.keyDragNodeId = vehicle.ad.hoveredNodeId
+        vehicle.ad.keyDragStartX = g_lastMousePosX
+        vehicle.ad.keyDragStartY = g_lastMousePosY
+    end
+end
+
+function AutoDriveHud:mouseEventUpdateKeyDrag(vehicle)
+    if vehicle.ad.keyDragNodeId ~= nil and vehicle.ad.nodeToMoveId == nil and g_lastMousePosX ~= nil then
+        local distance = MathUtil.vector2Length(g_lastMousePosX - vehicle.ad.keyDragStartX, g_lastMousePosY - vehicle.ad.keyDragStartY)
+        if distance > AutoDriveHud.KEY_DRAG_THRESHOLD then
+            -- mouse moved far enough with left button held - start moving the waypoint
+            vehicle.ad.nodeToMoveId = vehicle.ad.keyDragNodeId
+        end
+    end
+end
+
+function AutoDriveHud:mouseEventFinishKeyDrag(vehicle, isUp, button)
+    -- returns true if a drag move was finished, so the release is not handled as a click
+    if button == 1 and isUp and vehicle.ad.keyDragNodeId ~= nil then
+        vehicle.ad.keyDragNodeId = nil
+        if vehicle.ad.nodeToMoveId ~= nil then
+            ADGraphManager:changeWayPointPosition(vehicle.ad.nodeToMoveId)
+            vehicle.ad.nodeToMoveId = nil
+            return true
+        end
+    end
+    return false
 end
 
 function AutoDriveHud:mouseEventToggleWaypointPriority(vehicle, isUp, button, adjustedPaths)
@@ -814,20 +866,24 @@ function AutoDriveHud:mouseEvent(vehicle, posX, posY, isDown, isUp, button)
             self:mouseEventHandleSelection(vehicle, isUp, button)
             self:mouseEventResetSelectedNode(vehicle)
             self:mouseEventFindHoveredNode(vehicle)
+            self:mouseEventUpdateKeyDrag(vehicle)
             self:mouseEventMoveNode(vehicle)
 
-			if vehicle.ad.hoveredNodeId ~= nil then
-                -- mouse is hovering over a waypoint
-                self:mouseEventCreateSplineInterpolation(vehicle)
-                adjustedPaths = self:mouseEventSelectOrConnectWaypoint(vehicle, isUp, button)
-                self:mouseEventStartMovingNode(vehicle, isDown, button)
-			end
-            self:mouseEventFinishMovingNode(vehicle, isUp, button)
-            self:mouseEventSetupAutoConnection(vehicle, isUp, button)
-            self:mouseEventToggleWaypointPriority(vehicle, isUp, button, adjustedPaths)
-            self:mouseEventCreateWaypoint(vehicle, isUp, button)
-            self:mouseEventDeleteWaypoint(vehicle, isUp, button, adjustedPaths)
-            AutoDrive.handleWayPointSection(vehicle, button, isUp)
+            if not self:mouseEventFinishKeyDrag(vehicle, isUp, button) then
+                if vehicle.ad.hoveredNodeId ~= nil then
+                    -- mouse is hovering over a waypoint
+                    self:mouseEventCreateSplineInterpolation(vehicle)
+                    adjustedPaths = self:mouseEventSelectOrConnectWaypoint(vehicle, isUp, button)
+                    self:mouseEventStartMovingNode(vehicle, isDown, button)
+                    self:mouseEventStartKeyDrag(vehicle, isDown, button)
+                end
+                self:mouseEventFinishMovingNode(vehicle, isUp, button)
+                self:mouseEventSetupAutoConnection(vehicle, isUp, button)
+                self:mouseEventToggleWaypointPriority(vehicle, isUp, button, adjustedPaths)
+                self:mouseEventCreateWaypoint(vehicle, isUp, button)
+                self:mouseEventDeleteWaypoint(vehicle, isUp, button, adjustedPaths)
+                AutoDrive.handleWayPointSection(vehicle, button, isUp)
+            end
 		else
 			AutoDrive.resetMouseSelections(vehicle)
 		end
@@ -842,6 +898,7 @@ function AutoDrive.resetMouseSelections(vehicle)
 	if vehicle ~= nil and vehicle.ad ~= nil then
 		vehicle.ad.selectedNodeId = nil
 		vehicle.ad.nodeToMoveId = nil
+		vehicle.ad.keyDragNodeId = nil
 		vehicle.ad.hoveredNodeId = nil
 		vehicle.ad.newcreated = nil
 		vehicle.ad.sectionWayPoints = {}
@@ -902,15 +959,19 @@ function AutoDrive.handleWayPointSection(vehicle, button, isUp)
     end
 end
 
-function AutoDrive.moveNodeToMousePos(nodeID)
+function AutoDrive.moveNodeToMousePos(nodeID, alwaysFollowTerrain)
 	local node = ADGraphManager:getWayPointById(nodeID)
 
 	-- First I use project to get a proper depth value for the unproject funtion
 	local _, _, depth = project(node.x, node.y + AutoDrive.drawHeight + AutoDrive.getSetting("lineHeight"), node.z)
 
 	if node ~= nil and g_lastMousePosX ~= nil and g_lastMousePosY ~= nil then
+		if node.undoOrigin == nil then
+			-- position before the drag, needed by the undo history as the node is moved locally before the move event is sent
+			node.undoOrigin = {x = node.x, y = node.y, z = node.z}
+		end
 		node.x, _, node.z = unProject(g_lastMousePosX, g_lastMousePosY, depth)
-		if not AutoDrive.leftLSHIFTmodifierKeyPressed then
+		if alwaysFollowTerrain or not AutoDrive.leftLSHIFTmodifierKeyPressed then
 			node.y = AutoDrive:getTerrainHeightAtWorldPos(node.x, node.z)
 		end
 		ADGraphManager:markChanges()

@@ -105,7 +105,9 @@ function CreatePlaceableEvent:run(connection)
         CreatePlaceableEvent.sendEvent(self.wayPoints, self.mapMarkers)
     else
         -- If the event is coming from the server, both clients and server have to create the way point
+        ADUndoManager:beginStep()
         AutoDrivePlaceableData:createPlaceable(self.wayPoints, self.mapMarkers, false)
+        ADUndoManager:endStep()
     end
 end
 

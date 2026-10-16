@@ -10,8 +10,11 @@ function ADGraphManager:load()
     self.mapMarkers = {}
     self.groups = {}
     self.groups["All"] = 1
+    -- custom text color per folder: groupName -> {r, g, b}, folders without entry use the HUD default color
+    self.groupColors = {}
     self.changes = false
     self.preparedWayPoints = false
+    ADUndoManager:load()
 end
 
 function ADGraphManager:markChanges()
@@ -42,11 +45,13 @@ end
 
 function ADGraphManager:resetWayPoints()
     self.wayPoints = {}
+    ADUndoManager:onUntrackedChange(ADUndoManager.REASON_NETWORK)
     self:markChanges()
 end
 
 function ADGraphManager:setWayPoints(wayPoints)
     self.wayPoints = wayPoints
+    ADUndoManager:onUntrackedChange(ADUndoManager.REASON_NETWORK)
     self:markChanges()
 end
 
@@ -56,6 +61,19 @@ end
 
 function ADGraphManager:setWayPoint(newPoint)
     self.wayPoints[newPoint.id] = newPoint
+    ADUndoManager:onUntrackedChange(ADUndoManager.REASON_OTHER)
+    self:markChanges()
+end
+
+-- adds a waypoint created by an editor action, only waypoints added at the end of the list can be undone
+function ADGraphManager:addNewWayPoint(newPoint)
+    local isAppend = newPoint.id == #self.wayPoints + 1
+    self.wayPoints[newPoint.id] = newPoint
+    if isAppend and ADUndoManager:isRecording() then
+        ADUndoManager:recordAppendWayPoint(newPoint)
+    else
+        ADUndoManager:onUntrackedChange(ADUndoManager.REASON_OTHER)
+    end
     self:markChanges()
 end
 
@@ -113,10 +131,12 @@ end
 
 function ADGraphManager:resetMapMarkers()
     self.mapMarkers = {}
+    ADUndoManager:onUntrackedChange(ADUndoManager.REASON_NETWORK)
 end
 
 function ADGraphManager:setMapMarkers(mapMarkers)
     self.mapMarkers = mapMarkers
+    ADUndoManager:onUntrackedChange(ADUndoManager.REASON_NETWORK)
     -- create debug markers, debug markers are not saved, so no need to delete them or update map hotspots required
     -- notifyDestinationListeners is called from caller function -> argument is false
     self:createDebugMarkers(false)
@@ -125,6 +145,7 @@ end
 
 function ADGraphManager:setMapMarker(mapMarker)
     self.mapMarkers[mapMarker.markerIndex] = mapMarker
+    ADUndoManager:onUntrackedChange(ADUndoManager.REASON_DEBUG)
     self:markChanges()
 end
 
@@ -243,78 +264,154 @@ function ADGraphManager:removeWayPoint(wayPointId, sendEvent)
             -- Propagating way point deletion all over the network
             AutoDriveDeleteWayPointsEvent.sendEvent({wayPointId})
         else
-            -- Deleting map marker if there is one on this waypoint, 'sendEvent' must be false because the event propagation has already happened
-            self:removeMapMarkerByWayPoint(wayPointId, false)
-
-            local wayPoint = self.wayPoints[wayPointId]
-
-            -- Removing incoming node reference on all out nodes
-            for _, id in pairs(wayPoint.out) do
-                if self.wayPoints[id] ~= nil and self.wayPoints[id].incoming ~= nil and wayPoint.id ~= nil then
-                    local incomingId = table.indexOf(self.wayPoints[id].incoming, wayPoint.id)
-                    if incomingId ~= nil then
-                        table.remove(self.wayPoints[id].incoming, incomingId)
-                    end
+            ADUndoManager:beginStep()
+            -- Deleting all map markers on this waypoint, highest index first so the indices stay valid
+            -- 'sendEvent' must be false because the event propagation has already happened
+            for markerId = #self.mapMarkers, 1, -1 do
+                if self.mapMarkers[markerId].id == wayPointId then
+                    self:removeMapMarker(markerId, false)
                 end
             end
-
-            -- Removing out node reference on all incoming nodes
-            for _, id in pairs(wayPoint.incoming) do
-                if self.wayPoints[id] ~= nil and self.wayPoints[id].out ~= nil and wayPoint.id ~= nil then
-                    local outId = table.indexOf(self.wayPoints[id].out, wayPoint.id)
-                    if outId ~= nil then
-                        table.remove(self.wayPoints[id].out, outId)
-                    end
-                end
-            end
-
-            if #wayPoint.incoming == 0 then
-                -- This is a reverse node, so we can't rely on the incoming table
-                for _, wp in pairs(self.wayPoints) do
-                    if wp.out ~= nil and wayPoint.id ~= nil then
-                        if table.contains(wp.out, wayPoint.id) then
-                            table.removeValue(wp.out, wayPoint.id)
-                        end
-                    end
-                end
-            end
-
-            -- Removing waypoint from waypoints array and invalidate it by setting id to -1
-            local wp = table.remove(self.wayPoints, wayPoint.id)
-            if wp ~= nil then
-                wp.id = -1
-            end
-
-            -- Adjusting ids for all succesive nodes :(
-            for _, wp in pairs(self.wayPoints) do
-                if wp.id > wayPointId then
-                    wp.id = wp.id - 1
-                end
-                for i, outId in pairs(wp.out) do
-                    if outId > wayPointId then
-                        wp.out[i] = outId - 1
-                    end
-                end
-                for i, incomingId in pairs(wp.incoming) do
-                    if incomingId > wayPointId then
-                        wp.incoming[i] = incomingId - 1
-                    end
-                end
-            end
-
-            -- Adjusting way point id in markers
-            for _, marker in pairs(self.mapMarkers) do
-                if marker.id > wayPointId then
-                    marker.id = marker.id - 1
-                end
-            end
-
-            -- Resetting HUD
-            AutoDrive.Hud.lastUIScale = 0
-
-            self:markChanges()
+            self:rawRemoveWayPoint(wayPointId)
+            ADUndoManager:endStep()
         end
     end
+end
+
+-- removes the waypoint and all references to it, the ids of all successive waypoints are shifted down
+function ADGraphManager:rawRemoveWayPoint(wayPointId)
+    local wayPoint = self.wayPoints[wayPointId]
+    if wayPoint == nil then
+        return
+    end
+    local data = ADUndoManager.wayPointData(wayPoint)
+    -- positions of the removed references, to restore them on undo
+    local refs = {}
+
+    -- Removing all references to the waypoint and adjusting ids for all succesive nodes
+    for _, wp in pairs(self.wayPoints) do
+        if wp ~= wayPoint then
+            for i = #wp.out, 1, -1 do
+                local outId = wp.out[i]
+                if outId == wayPointId then
+                    table.remove(wp.out, i)
+                    table.insert(refs, {nodeId = wp.id, isOut = true, pos = i})
+                elseif outId > wayPointId then
+                    wp.out[i] = outId - 1
+                end
+            end
+            for i = #wp.incoming, 1, -1 do
+                local incomingId = wp.incoming[i]
+                if incomingId == wayPointId then
+                    table.remove(wp.incoming, i)
+                    table.insert(refs, {nodeId = wp.id, isOut = false, pos = i})
+                elseif incomingId > wayPointId then
+                    wp.incoming[i] = incomingId - 1
+                end
+            end
+            if wp.id > wayPointId then
+                wp.id = wp.id - 1
+            end
+        end
+    end
+
+    -- Removing waypoint from waypoints array and invalidate it by setting id to -1
+    table.remove(self.wayPoints, wayPointId)
+    wayPoint.id = -1
+
+    -- Adjusting way point id in markers
+    -- removeWayPoint deletes the markers on the waypoint first, any left over now point to the next waypoint and undo has to know them
+    local markersOnWayPoint = {}
+    for markerIndex, marker in pairs(self.mapMarkers) do
+        if marker.id > wayPointId then
+            marker.id = marker.id - 1
+        elseif marker.id == wayPointId then
+            table.insert(markersOnWayPoint, markerIndex)
+        end
+    end
+
+    if ADUndoManager:isRecording() then
+        ADUndoManager:recordRemoveWayPoint(data, refs, markersOnWayPoint)
+    elseif wayPoint.colors ~= nil then
+        ADUndoManager:onUntrackedChange(ADUndoManager.REASON_COLORS)
+    else
+        ADUndoManager:onUntrackedChange(ADUndoManager.REASON_OTHER)
+    end
+
+    -- Resetting HUD
+    AutoDrive.Hud.lastUIScale = 0
+
+    self:markChanges()
+end
+
+-- exact inverse of rawRemoveWayPoint
+function ADGraphManager:rawInsertWayPoint(wayPointId, data, refs, markersOnWayPoint)
+    if wayPointId < 1 or wayPointId > #self.wayPoints + 1 then
+        Logging.warning("[AutoDrive] Undo: can not insert waypoint %s, network has %s waypoints", tostring(wayPointId), tostring(#self.wayPoints))
+        return
+    end
+    for _, wp in pairs(self.wayPoints) do
+        if wp.id >= wayPointId then
+            wp.id = wp.id + 1
+        end
+        for i, outId in pairs(wp.out) do
+            if outId >= wayPointId then
+                wp.out[i] = outId + 1
+            end
+        end
+        for i, incomingId in pairs(wp.incoming) do
+            if incomingId >= wayPointId then
+                wp.incoming[i] = incomingId + 1
+            end
+        end
+    end
+    local keepMarker = {}
+    for _, markerIndex in ipairs(markersOnWayPoint or {}) do
+        keepMarker[markerIndex] = true
+    end
+    for markerIndex, marker in pairs(self.mapMarkers) do
+        if marker.id >= wayPointId and not keepMarker[markerIndex] then
+            marker.id = marker.id + 1
+        end
+    end
+
+    local wayPoint = self:createNode(wayPointId, data.x, data.y, data.z, ADUndoManager.copyIds(data.out), ADUndoManager.copyIds(data.incoming), data.flags)
+    table.insert(self.wayPoints, wayPointId, wayPoint)
+
+    -- refs were collected from the end of each list, so restore them in reverse order
+    for r = #refs, 1, -1 do
+        local ref = refs[r]
+        local wp = self.wayPoints[ref.nodeId]
+        if wp ~= nil then
+            local ids = ref.isOut and wp.out or wp.incoming
+            table.insert(ids, math.min(ref.pos, #ids + 1), wayPointId)
+        end
+    end
+
+    AutoDrive.Hud.lastUIScale = 0
+    self:markChanges()
+end
+
+function ADGraphManager:rawAppendWayPoint(data)
+    if data.id ~= #self.wayPoints + 1 then
+        Logging.warning("[AutoDrive] Undo: can not append waypoint %s, network has %s waypoints", tostring(data.id), tostring(#self.wayPoints))
+        return
+    end
+    self.wayPoints[data.id] = self:createNode(data.id, data.x, data.y, data.z, ADUndoManager.copyIds(data.out), ADUndoManager.copyIds(data.incoming), data.flags)
+    AutoDrive.Hud.lastUIScale = 0
+    self:markChanges()
+end
+
+-- exact inverse of rawAppendWayPoint, references from other waypoints are left as they were before the append
+function ADGraphManager:rawPopWayPoint(wayPointId)
+    if wayPointId ~= #self.wayPoints then
+        Logging.warning("[AutoDrive] Undo: waypoint %s is not the last one, network has %s waypoints", tostring(wayPointId), tostring(#self.wayPoints))
+        return
+    end
+    local wayPoint = table.remove(self.wayPoints)
+    wayPoint.id = -1
+    AutoDrive.Hud.lastUIScale = 0
+    self:markChanges()
 end
 
 function ADGraphManager:renameMapMarker(newName, markerId, sendEvent)
@@ -328,10 +425,12 @@ function ADGraphManager:renameMapMarker(newName, markerId, sendEvent)
             -- Propagating marker rename all over the network
             AutoDriveRenameMapMarkerEvent.sendEvent(newName, markerId)
         else
+            ADUndoManager:beginStep()
             -- Saving old map marker name
             local oldName = self.mapMarkers[markerId].name
             -- Renaming map marker
             self.mapMarkers[markerId].name = newName
+            ADUndoManager:recordMarkerData(markerId, oldName, mapMarker.group, newName, mapMarker.group)
 
             -- Calling external interop listeners
             AutoDrive:notifyDestinationListeners()
@@ -340,6 +439,7 @@ function ADGraphManager:renameMapMarker(newName, markerId, sendEvent)
             AutoDrive.Hud.lastUIScale = 0
 
             self:markChanges()
+            ADUndoManager:endStep()
         end
     end
 end
@@ -360,6 +460,7 @@ function ADGraphManager:createMapMarker(markerId, markerName, sendEvent)
             -- Propagating marker creation all over the network
             AutoDriveCreateMapMarkerEvent.sendEvent(markerId, markerName)
         else
+            ADUndoManager:beginStep()
             -- Creating the new map marker
             self.mapMarkers[#self.mapMarkers + 1] = {
                 id = markerId,
@@ -367,6 +468,7 @@ function ADGraphManager:createMapMarker(markerId, markerName, sendEvent)
                 name = markerName,
                 group = "All"
             }
+            ADUndoManager:recordAppendMarker(#self.mapMarkers, self.mapMarkers[#self.mapMarkers])
 
             -- Calling external interop listeners
             AutoDrive:notifyDestinationListeners()
@@ -375,8 +477,49 @@ function ADGraphManager:createMapMarker(markerId, markerName, sendEvent)
             AutoDrive.Hud.lastUIScale = 0
 
             self:markChanges()
+            ADUndoManager:endStep()
         end
     end
+end
+
+-- sub folders are stored as path style group names, i.e. "Farm/Silos" is the folder "Silos" inside "Farm"
+ADGraphManager.GROUP_SEPARATOR = "/"
+
+function ADGraphManager:getParentGroupName(groupName)
+    if groupName == nil then
+        return nil
+    end
+    local parentName = string.match(groupName, "^(.+)" .. ADGraphManager.GROUP_SEPARATOR .. "[^" .. ADGraphManager.GROUP_SEPARATOR .. "]+$")
+    return parentName
+end
+
+function ADGraphManager:getGroupDisplayName(groupName)
+    if groupName == nil then
+        return nil
+    end
+    return string.match(groupName, "([^" .. ADGraphManager.GROUP_SEPARATOR .. "]+)$") or groupName
+end
+
+function ADGraphManager:getGroupDepth(groupName)
+    local depth = 0
+    local parentName = self:getParentGroupName(groupName)
+    while parentName ~= nil do
+        depth = depth + 1
+        parentName = self:getParentGroupName(parentName)
+    end
+    return depth
+end
+
+function ADGraphManager:normalizeGroupName(groupName)
+    -- trim each path part and drop empty parts, so "Farm / /Silos/" becomes "Farm/Silos"
+    local parts = {}
+    for part in string.gmatch(groupName, "[^" .. ADGraphManager.GROUP_SEPARATOR .. "]+") do
+        local trimmedPart = string.match(part, "^%s*(.-)%s*$")
+        if trimmedPart:len() >= 1 then
+            table.insert(parts, trimmedPart)
+        end
+    end
+    return table.concat(parts, ADGraphManager.GROUP_SEPARATOR)
 end
 
 function ADGraphManager:addGroup(groupName, sendEvent)
@@ -385,21 +528,48 @@ function ADGraphManager:addGroup(groupName, sendEvent)
             -- Propagating group creation all over the network
             AutoDriveGroupsEvent.sendEvent(groupName, AutoDriveGroupsEvent.TYPE_ADD)
         else
-            self.groups[groupName] = table.count(self.groups) + 1
-            for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
-                if (vehicle.ad ~= nil and vehicle.ad.groups ~= nil) then
-                    if vehicle.ad.groups[groupName] == nil then
-                        vehicle.ad.groups[groupName] = false
-                    end
-                end
+            -- the debug folder comes and goes with the debug markers, it is not part of the undo history
+            local isDebugGroup = groupName == ADGraphManager.debugGroupName
+            if not isDebugGroup then
+                ADUndoManager:beginStep()
             end
-            -- Resetting HUD
-            if AutoDrive.Hud ~= nil then
-                AutoDrive.Hud.lastUIScale = 0
+            -- parent folders of a sub folder have to exist as well
+            local parentName = self:getParentGroupName(groupName)
+            if parentName ~= nil and self.groups[parentName] == nil then
+                self:addGroup(parentName, false)
             end
-            self:markChanges()
+            local groupId = table.count(self.groups) + 1
+            self:rawInsertGroup(groupName, groupId)
+            if isDebugGroup then
+                ADUndoManager:onUntrackedChange(ADUndoManager.REASON_DEBUG)
+            else
+                ADUndoManager:recordGroupAdd(groupName, groupId)
+                ADUndoManager:endStep()
+            end
         end
     end
+end
+
+-- adds the folder with the given id, the ids of the folders from there on are shifted up
+function ADGraphManager:rawInsertGroup(groupName, groupId)
+    for gName, gId in pairs(self.groups) do
+        if gId >= groupId then
+            self.groups[gName] = gId + 1
+        end
+    end
+    self.groups[groupName] = groupId
+    for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
+        if (vehicle.ad ~= nil and vehicle.ad.groups ~= nil) then
+            if vehicle.ad.groups[groupName] == nil then
+                vehicle.ad.groups[groupName] = false
+            end
+        end
+    end
+    -- Resetting HUD
+    if AutoDrive.Hud ~= nil then
+        AutoDrive.Hud.lastUIScale = 0
+    end
+    self:markChanges()
 end
 
 function ADGraphManager:removeGroup(groupName, sendEvent)
@@ -408,34 +578,231 @@ function ADGraphManager:removeGroup(groupName, sendEvent)
             -- Propagating group creation all over the network
             AutoDriveGroupsEvent.sendEvent(groupName, AutoDriveGroupsEvent.TYPE_REMOVE)
         else
+            local isDebugGroup = groupName == ADGraphManager.debugGroupName
+            if not isDebugGroup then
+                ADUndoManager:beginStep()
+            end
+            -- undo restores the folder, its color and the markers in it
             local groupId = self.groups[groupName]
-            -- Removing group from the groups list
-            self.groups[groupName] = nil
-            -- Removing group from the vehicles groups list
-            for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
-                if (vehicle.ad ~= nil and vehicle.ad.groups ~= nil) then
-                    if vehicle.ad.groups[groupName] ~= nil then
-                        vehicle.ad.groups[groupName] = nil
-                    end
-                end
+            local color = self.groupColors[groupName]
+            if color ~= nil then
+                color = {color[1], color[2], color[3]}
             end
-            -- Moving all markers in the deleted group to default group
-            for markerID, mapMarker in pairs(self:getMapMarkers()) do
+            local markers = {}
+            for markerIndex, mapMarker in pairs(self:getMapMarkers()) do
                 if mapMarker.group == groupName then
-                    mapMarker.group = "All"
+                    table.insert(markers, {index = markerIndex, name = mapMarker.name})
                 end
             end
-            -- Resetting other goups id
-            for gName, gId in pairs(self.groups) do
-                if groupId <= gId then
-                    self.groups[gName] = gId - 1
-                end
+            self:rawRemoveGroup(groupName)
+            if isDebugGroup then
+                ADUndoManager:onUntrackedChange(ADUndoManager.REASON_DEBUG)
+            else
+                ADUndoManager:recordGroupRemove(groupName, groupId, color, markers)
+                ADUndoManager:endStep()
             end
-            -- Resetting HUD
-            AutoDrive.Hud.lastUIScale = 0
-            self:markChanges()
         end
     end
+end
+
+function ADGraphManager:rawRemoveGroup(groupName)
+    local groupId = self.groups[groupName]
+    if groupId == nil then
+        return
+    end
+    -- Removing group from the groups list
+    self.groups[groupName] = nil
+    -- Removing group from the vehicles groups list
+    for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
+        if (vehicle.ad ~= nil and vehicle.ad.groups ~= nil) then
+            if vehicle.ad.groups[groupName] ~= nil then
+                vehicle.ad.groups[groupName] = nil
+            end
+        end
+    end
+    self.groupColors[groupName] = nil
+    -- Moving all markers in the deleted group to default group
+    for markerID, mapMarker in pairs(self:getMapMarkers()) do
+        if mapMarker.group == groupName then
+            mapMarker.group = "All"
+        end
+    end
+    -- Resetting other goups id
+    for gName, gId in pairs(self.groups) do
+        if groupId <= gId then
+            self.groups[gName] = gId - 1
+        end
+    end
+    -- Resetting HUD
+    AutoDrive.Hud.lastUIScale = 0
+    self:markChanges()
+end
+
+-- returns the name groupName gets if oldName is renamed to newName, nil if groupName is not oldName or one of its sub folders
+function ADGraphManager:getRenamedGroupName(groupName, oldName, newName)
+    if groupName == oldName then
+        return newName
+    end
+    local prefix = oldName .. ADGraphManager.GROUP_SEPARATOR
+    if groupName ~= nil and string.sub(groupName, 1, string.len(prefix)) == prefix then
+        return newName .. string.sub(groupName, string.len(oldName) + 1)
+    end
+    return nil
+end
+
+function ADGraphManager:canRenameGroup(oldName, newName)
+    if oldName == "All" or oldName == ADGraphManager.debugGroupName or self.groups[oldName] == nil then
+        return false
+    end
+    if newName == nil or newName:len() < 1 or newName == oldName or newName == "All" or newName == ADGraphManager.debugGroupName then
+        return false
+    end
+    -- a folder can not be moved into itself
+    if self:getRenamedGroupName(newName, oldName, newName) ~= nil then
+        return false
+    end
+    -- the renamed folder and its sub folders must not clash with other folders
+    for groupName, _ in pairs(self.groups) do
+        local renamed = self:getRenamedGroupName(groupName, oldName, newName)
+        if renamed ~= nil and self.groups[renamed] ~= nil and self:getRenamedGroupName(renamed, oldName, newName) == nil then
+            return false
+        end
+    end
+    return true
+end
+
+-- renames a folder including all its sub folders, the map markers move with them
+function ADGraphManager:renameGroup(oldName, newName, sendEvent)
+    if self:canRenameGroup(oldName, newName) then
+        if sendEvent == nil or sendEvent == true then
+            -- Propagating group rename all over the network
+            AutoDriveGroupsEvent.sendEvent(oldName, AutoDriveGroupsEvent.TYPE_RENAME, newName)
+        else
+            ADUndoManager:beginStep()
+            -- the folder itself first, then its sub folders
+            local renamePairs = {{from = oldName, to = newName}}
+            for groupName, _ in pairs(self.groups) do
+                local renamed = self:getRenamedGroupName(groupName, oldName, newName)
+                if renamed ~= nil and groupName ~= oldName then
+                    table.insert(renamePairs, {from = groupName, to = renamed})
+                end
+            end
+            self:rawRenameGroups(renamePairs)
+            ADUndoManager:recordGroupRename(renamePairs)
+
+            -- parent folders of the new name have to exist as well
+            local parentName = self:getParentGroupName(newName)
+            if parentName ~= nil and self.groups[parentName] == nil then
+                self:addGroup(parentName, false)
+            end
+            ADUndoManager:endStep()
+        end
+    end
+end
+
+-- renamePairs: {{from, to}}, the folders, their colors, markers and the expanded state in the vehicles are renamed
+function ADGraphManager:rawRenameGroups(renamePairs)
+    local renamed = {}
+    for _, pair in ipairs(renamePairs) do
+        renamed[pair.from] = pair.to
+    end
+
+    -- the tables are changed in place, an undo of a routes import keeps references to them
+    local function renameKeys(t)
+        local renamedEntries = {}
+        for name, value in pairs(t) do
+            renamedEntries[renamed[name] or name] = value
+        end
+        for name, _ in pairs(t) do
+            t[name] = nil
+        end
+        for name, value in pairs(renamedEntries) do
+            t[name] = value
+        end
+    end
+    renameKeys(self.groups)
+    renameKeys(self.groupColors)
+
+    for _, mapMarker in pairs(self:getMapMarkers()) do
+        if mapMarker.group ~= nil and renamed[mapMarker.group] ~= nil then
+            mapMarker.group = renamed[mapMarker.group]
+        end
+    end
+
+    -- keep the expanded / collapsed state of the folders
+    for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
+        if vehicle.ad ~= nil and vehicle.ad.groups ~= nil then
+            local newVehicleGroups = {}
+            for groupName, expanded in pairs(vehicle.ad.groups) do
+                newVehicleGroups[renamed[groupName] or groupName] = expanded
+            end
+            vehicle.ad.groups = newVehicleGroups
+        end
+    end
+
+    -- Resetting HUD
+    if AutoDrive.Hud ~= nil then
+        AutoDrive.Hud.lastUIScale = 0
+    end
+    self:markChanges()
+end
+
+-- returns {r, g, b} or nil if the folder uses the default color
+function ADGraphManager:getGroupColor(groupName)
+    return self.groupColors[groupName]
+end
+
+function ADGraphManager:getGroupColors()
+    return self.groupColors
+end
+
+function ADGraphManager:setGroupColors(groupColors)
+    self.groupColors = groupColors or {}
+    if AutoDrive.Hud ~= nil then
+        AutoDrive.Hud.lastUIScale = 0
+    end
+end
+
+-- color: {r, g, b} or nil to reset the folder to the default color
+function ADGraphManager:setGroupColor(groupName, color, sendEvent)
+    if self.groups[groupName] ~= nil then
+        if sendEvent == nil or sendEvent == true then
+            -- Propagating folder color all over the network
+            AutoDriveGroupsEvent.sendEvent(groupName, AutoDriveGroupsEvent.TYPE_SET_COLOR, nil, color)
+        else
+            local oldColor = self.groupColors[groupName]
+            if oldColor ~= nil then
+                oldColor = {oldColor[1], oldColor[2], oldColor[3]}
+            end
+            local newColor = nil
+            if color ~= nil then
+                newColor = {color[1], color[2], color[3]}
+            end
+            ADUndoManager:beginStep()
+            self:rawSetGroupColor(groupName, newColor)
+            local changed = (oldColor == nil) ~= (newColor == nil)
+            if oldColor ~= nil and newColor ~= nil then
+                changed = oldColor[1] ~= newColor[1] or oldColor[2] ~= newColor[2] or oldColor[3] ~= newColor[3]
+            end
+            if changed then
+                ADUndoManager:recordGroupColor(groupName, oldColor, newColor)
+            end
+            ADUndoManager:endStep()
+        end
+    end
+end
+
+-- color: {r, g, b} or nil for the default color
+function ADGraphManager:rawSetGroupColor(groupName, color)
+    if color ~= nil then
+        self.groupColors[groupName] = {color[1], color[2], color[3]}
+    else
+        self.groupColors[groupName] = nil
+    end
+    if AutoDrive.Hud ~= nil then
+        AutoDrive.Hud.lastUIScale = 0
+    end
+    self:markChanges()
 end
 
 function ADGraphManager:changeMapMarkerGroup(groupName, markerId, sendEvent)
@@ -447,9 +814,15 @@ function ADGraphManager:changeMapMarkerGroup(groupName, markerId, sendEvent)
             -- Propagating marker group change all over the network
             AutoDriveChangeMapMarkerGroupEvent.sendEvent(groupName, markerId)
         else
+            ADUndoManager:beginStep()
             -- Changing the group name of the marker
-            self.mapMarkers[markerId].group = groupName
+            local mapMarker = self.mapMarkers[markerId]
+            if mapMarker ~= nil then
+                ADUndoManager:recordMarkerData(markerId, mapMarker.name, mapMarker.group, mapMarker.name, groupName)
+                mapMarker.group = groupName
+            end
             self:markChanges()
+            ADUndoManager:endStep()
         end
     end
 end
@@ -460,6 +833,7 @@ end
 
 function ADGraphManager:setGroups(groups, updateVehicles)
     self.groups = groups
+    ADUndoManager:onUntrackedChange(ADUndoManager.REASON_NETWORK)
     if updateVehicles then
         for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
             if vehicle.ad ~= nil then
@@ -480,70 +854,153 @@ function ADGraphManager:getGroupByName(groupName)
     return self.groups[groupName]
 end
 
+-- replaces the whole network, e.g. routes loaded with the routes manager, can be undone
+function ADGraphManager:replaceNetwork(wayPoints, mapMarkers, groups, groupColors)
+    -- debug markers are added to the markers, the replaced markers would not be the original ones anymore
+    local canUndo = ADUndoManager:isRecording() and not AutoDrive.getDebugChannelIsSet(AutoDrive.DC_ROADNETWORKINFO)
+    local old = {wayPoints = self.wayPoints, mapMarkers = self.mapMarkers, groups = self.groups, groupColors = self.groupColors}
+
+    ADUndoManager.suppressUntracked = true
+    self:setWayPoints(wayPoints)
+    self:setMapMarkers(mapMarkers)
+    AutoDrive:notifyDestinationListeners()
+    self:setGroups(groups, true)
+    self:setGroupColors(groupColors)
+    ADUndoManager.suppressUntracked = false
+
+    if g_server ~= nil then
+        for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
+            if vehicle ~= nil and vehicle.ad ~= nil and vehicle.ad.stateModule ~= nil then
+                vehicle.ad.stateModule:resetMarkersOnReload()
+            end
+        end
+    end
+    if AutoDrive.Hud ~= nil then
+        AutoDrive.Hud.lastUIScale = 0
+    end
+
+    if canUndo then
+        -- the replaced tables are not used anymore, so they can be kept as they are
+        ADUndoManager:recordReplaceNetwork(old, {wayPoints = self.wayPoints, mapMarkers = self.mapMarkers, groups = self.groups, groupColors = self.groupColors})
+    else
+        ADUndoManager:onUntrackedChange(ADUndoManager.REASON_NETWORK)
+    end
+end
+
 function ADGraphManager:removeMapMarker(markerId, sendEvent)
     if markerId ~= nil and markerId >= 0 then
         if sendEvent == nil or sendEvent == true then
             -- Propagating marker deletion all over the network
             AutoDriveDeleteMapMarkerEvent.sendEvent(markerId)
         else
-            if self.mapMarkers[markerId] ~= nil then
-                -- remove deleted marker from vehicle destinations
-                ADGraphManager:checkResetVehicleDestinations(markerId)
+            ADUndoManager:beginStep()
+            local mapMarker = self.mapMarkers[markerId]
+            if mapMarker ~= nil then
+                ADUndoManager:recordRemoveMarker(markerId, mapMarker)
+            end
+            self:rawRemoveMapMarker(markerId)
+            ADUndoManager:endStep()
+        end
+    end
+end
 
-                table.remove(self.mapMarkers, markerId)
-                --Readjust stored markerIndex values to point to corrected ID
-                for markerID, marker in pairs(self.mapMarkers) do
-                    marker.markerIndex = markerID
-                end
+function ADGraphManager:rawRemoveMapMarker(markerId)
+    if self.mapMarkers[markerId] ~= nil then
+        -- remove deleted marker from vehicle destinations
+        ADGraphManager:checkResetVehicleDestinations(markerId)
 
-                if g_server ~= nil then
-                    -- Removing references to it on all vehicles
-                    for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
-                        if
-                            vehicle.ad ~= nil and vehicle.ad.stateModule ~= nil and
-                                vehicle.ad.stateModule.getParkDestinationAtJobFinished ~= nil
-                         then
-                            local parkDestinationAtJobFinished =
-                                vehicle.ad.stateModule:getParkDestinationAtJobFinished()
-                            if parkDestinationAtJobFinished ~= nil and parkDestinationAtJobFinished >= markerId then
-                                if parkDestinationAtJobFinished == markerId then
-                                    vehicle.ad.stateModule:setParkDestinationAtJobFinished(-1)
-                                else
-                                    vehicle.ad.stateModule:setParkDestinationAtJobFinished(
-                                        math.max(parkDestinationAtJobFinished - 1, 1)
-                                    )
-                                end
-                            end
-                        end
-                    end
-                    -- handle all vehicles and tools park destination
-                    for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
-                        if
-                            vehicle.advd ~= nil and vehicle.advd.getParkDestination ~= nil and
-                                vehicle.advd.setParkDestination ~= nil
-                         then
-                            local parkDestination = vehicle.advd:getParkDestination(vehicle)
-                            if parkDestination ~= nil and parkDestination >= markerId then
-                                if parkDestination == markerId then
-                                    vehicle.advd:setParkDestination(vehicle, -1)
-                                else
-                                    vehicle.advd:setParkDestination(vehicle, math.max(parkDestination - 1, 1))
-                                end
-                            end
+        table.remove(self.mapMarkers, markerId)
+        --Readjust stored markerIndex values to point to corrected ID
+        for markerID, marker in pairs(self.mapMarkers) do
+            marker.markerIndex = markerID
+        end
+
+        if g_server ~= nil then
+            -- Removing references to it on all vehicles
+            for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
+                if
+                    vehicle.ad ~= nil and vehicle.ad.stateModule ~= nil and
+                        vehicle.ad.stateModule.getParkDestinationAtJobFinished ~= nil
+                 then
+                    local parkDestinationAtJobFinished =
+                        vehicle.ad.stateModule:getParkDestinationAtJobFinished()
+                    if parkDestinationAtJobFinished ~= nil and parkDestinationAtJobFinished >= markerId then
+                        if parkDestinationAtJobFinished == markerId then
+                            vehicle.ad.stateModule:setParkDestinationAtJobFinished(-1)
+                        else
+                            vehicle.ad.stateModule:setParkDestinationAtJobFinished(
+                                math.max(parkDestinationAtJobFinished - 1, 1)
+                            )
                         end
                     end
                 end
             end
-
-            -- Calling external interop listeners
-            AutoDrive:notifyDestinationListeners()
-
-            -- Resetting HUD
-            AutoDrive.Hud.lastUIScale = 0
-
-            self:markChanges()
+            -- handle all vehicles and tools park destination
+            for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
+                if
+                    vehicle.advd ~= nil and vehicle.advd.getParkDestination ~= nil and
+                        vehicle.advd.setParkDestination ~= nil
+                 then
+                    local parkDestination = vehicle.advd:getParkDestination(vehicle)
+                    if parkDestination ~= nil and parkDestination >= markerId then
+                        if parkDestination == markerId then
+                            vehicle.advd:setParkDestination(vehicle, -1)
+                        else
+                            vehicle.advd:setParkDestination(vehicle, math.max(parkDestination - 1, 1))
+                        end
+                    end
+                end
+            end
         end
     end
+
+    -- Calling external interop listeners
+    AutoDrive:notifyDestinationListeners()
+
+    -- Resetting HUD
+    AutoDrive.Hud.lastUIScale = 0
+
+    self:markChanges()
+end
+
+-- inverse of rawRemoveMapMarker, vehicles which had the marker as destination keep their new destination
+function ADGraphManager:rawInsertMapMarker(markerIndex, data)
+    markerIndex = math.max(1, math.min(markerIndex, #self.mapMarkers + 1))
+    local group = data.group
+    if group == nil or self.groups[group] == nil then
+        -- folder was deleted in the meantime
+        group = "All"
+    end
+    table.insert(self.mapMarkers, markerIndex, {id = data.id, markerIndex = markerIndex, name = data.name, group = group, isADDebug = (data.isADDebug == true) or nil})
+    for markerID, marker in pairs(self.mapMarkers) do
+        marker.markerIndex = markerID
+    end
+
+    if g_server ~= nil then
+        -- keep the park destinations on the same markers
+        for _, vehicle in pairs(AutoDrive.getAllVehicles()) do
+            if vehicle.ad ~= nil and vehicle.ad.stateModule ~= nil and vehicle.ad.stateModule.getParkDestinationAtJobFinished ~= nil then
+                local parkDestinationAtJobFinished = vehicle.ad.stateModule:getParkDestinationAtJobFinished()
+                if parkDestinationAtJobFinished ~= nil and parkDestinationAtJobFinished >= markerIndex then
+                    vehicle.ad.stateModule:setParkDestinationAtJobFinished(parkDestinationAtJobFinished + 1)
+                end
+            end
+            if vehicle.advd ~= nil and vehicle.advd.getParkDestination ~= nil and vehicle.advd.setParkDestination ~= nil then
+                local parkDestination = vehicle.advd:getParkDestination(vehicle)
+                if parkDestination ~= nil and parkDestination >= markerIndex then
+                    vehicle.advd:setParkDestination(vehicle, parkDestination + 1)
+                end
+            end
+        end
+    end
+
+    -- Calling external interop listeners
+    AutoDrive:notifyDestinationListeners()
+
+    -- Resetting HUD
+    AutoDrive.Hud.lastUIScale = 0
+
+    self:markChanges()
 end
 
 function ADGraphManager:removeMapMarkerByWayPoint(wayPointId, sendEvent)
@@ -570,6 +1027,8 @@ function ADGraphManager:toggleConnectionBetween(startNode, endNode, reverseDirec
         -- Propagating connection toggling all over the network
         AutoDriveToggleConnectionEvent.sendEvent(startNode, endNode, reverseDirection, dualConnection)
     else
+        ADUndoManager:beginStep()
+        local links = ADUndoManager:captureLinks(startNode, endNode)
         if table.contains(startNode.out, endNode.id) or table.contains(endNode.incoming, startNode.id) then
             table.removeValue(startNode.out, endNode.id)
             table.removeValue(endNode.incoming, startNode.id)
@@ -583,8 +1042,10 @@ function ADGraphManager:toggleConnectionBetween(startNode, endNode, reverseDirec
                 end
             end
         end
+        ADUndoManager:recordLinks(links)
 
         self:markChanges()
+        ADUndoManager:endStep()
     end
 end
 
@@ -602,6 +1063,8 @@ function ADGraphManager:setConnectionBetween(startNode, endNode, direction, send
         -- Propagating connection toggling all over the network
         AutoDriveSetConnectionEvent.sendEvent(startNode, endNode, direction)
     else
+        ADUndoManager:beginStep()
+        local links = ADUndoManager:captureLinks(startNode, endNode)
         -- remove all connections between the 2 nodes
         if table.contains(startNode.out, endNode.id) then
             table.removeValue(startNode.out, endNode.id)
@@ -633,7 +1096,9 @@ function ADGraphManager:setConnectionBetween(startNode, endNode, direction, send
             -- reverse
             table.insert(startNode.out, endNode.id)
         end
+        ADUndoManager:recordLinks(links)
         self:markChanges()
+        ADUndoManager:endStep()
     end
 end
 
@@ -642,6 +1107,7 @@ function ADGraphManager:createWayPointWithConnections(x, y, z, out, incoming, fl
         -- Propagating waypoint creation all over the network
         AutoDriveCreateWayPointEvent.sendEvent(x, y, z, out, incoming, flags, connect, reverseDirection, dualConnection)
     else
+        ADUndoManager:beginStep()
         local newId = self:getWayPointsCount() + 1
         local incomingConnect = incoming
         local outConnect = out
@@ -651,13 +1117,14 @@ function ADGraphManager:createWayPointWithConnections(x, y, z, out, incoming, fl
             outConnect = {}
         end
         local newWp = self:createNode(newId, x, y, z, outConnect, incomingConnect, flags)
-        self:setWayPoint(newWp)
+        self:addNewWayPoint(newWp)
 
         if connect then
             self:toggleConnectionBetween(self:getWayPointById(incoming[1]), newWp, reverseDirection, dualConnection, sendEvent)
         end
 
         self:markChanges()
+        ADUndoManager:endStep()
         return newWp
     end
 end
@@ -666,6 +1133,7 @@ function ADGraphManager:createWayPointColored(x, y, z, colors)
     local prevId = self:getWayPointsCount()
     local newId = prevId + 1
     local newWp = self:createNode(newId, x, y, z, {}, {}, 0, colors)
+    ADUndoManager:onUntrackedChange(ADUndoManager.REASON_COLORS)
     self:setWayPoint(newWp)
     self:markChanges()
 
@@ -686,11 +1154,20 @@ function ADGraphManager:moveWayPoint(wayPointId, x, y, z, flags, sendEvent)
             -- Propagating waypoint moving all over the network
             AutoDriveMoveWayPointEvent.sendEvent(wayPointId, x, y, z, flags)
         else
+            ADUndoManager:beginStep()
+            local old = {x = wayPoint.x, y = wayPoint.y, z = wayPoint.z, flags = wayPoint.flags}
+            if wayPoint.undoOrigin ~= nil then
+                -- the waypoint was already moved locally while dragging it with the mouse
+                old.x, old.y, old.z = wayPoint.undoOrigin.x, wayPoint.undoOrigin.y, wayPoint.undoOrigin.z
+                wayPoint.undoOrigin = nil
+            end
             wayPoint.x = x
             wayPoint.y = y
             wayPoint.z = z
             wayPoint.flags = flags
+            ADUndoManager:recordWayPointData(wayPointId, old, {x = x, y = y, z = z, flags = flags})
             self:markChanges()
+            ADUndoManager:endStep()
         end
     end
 end
@@ -725,14 +1202,16 @@ function ADGraphManager:recordWayPoint(x, y, z, connectPrevious, dual, isReverse
         end
     end
 
+    ADUndoManager:beginStep()
     local newId = self:getWayPointsCount() + 1
     local newWp = self:createNode(newId, x, y, z, {}, {}, flags)
-    self:setWayPoint(newWp)
+    self:addNewWayPoint(newWp)
     if connectPrevious then
         self:toggleConnectionBetween(previous, newWp, isReverse, dual, false)
     end
 
     self:markChanges()
+    ADUndoManager:endStep()
     return newWp
 end
 
@@ -1136,6 +1615,8 @@ function ADGraphManager:removeDebugMarkers()
     end
     --Readjust stored markerIndex values to point to corrected ID
     if foundDebugMarker == true then
+        -- marker indices changed outside of the undo history
+        ADUndoManager:onUntrackedChange(ADUndoManager.REASON_DEBUG)
         if #self:getMapMarkers() > 0 then
             for markerID, marker in pairs(self.mapMarkers) do
                 marker.markerIndex = markerID
@@ -1437,14 +1918,15 @@ end
 function ADGraphManager:toggleWayPointAsSubPrio(wayPointId)
     local wayPoint = self:getWayPointById(wayPointId)
     if wayPoint ~= nil then
+        -- the flags are set by the event only, the undo history needs the old flags
+        local flags = wayPoint.flags
         if self:getIsPointSubPrio(wayPointId) then
-            wayPoint.flags = wayPoint.flags - AutoDrive.FLAG_SUBPRIO
+            flags = flags - AutoDrive.FLAG_SUBPRIO
         else
-            wayPoint.flags = wayPoint.flags + AutoDrive.FLAG_SUBPRIO
+            flags = flags + AutoDrive.FLAG_SUBPRIO
         end
+        self:moveWayPoint(wayPointId, wayPoint.x, wayPoint.y, wayPoint.z, flags)
     end
-
-    self:moveWayPoint(wayPointId, wayPoint.x, wayPoint.y, wayPoint.z, wayPoint.flags)
 
     self:markChanges()
 end
@@ -1662,6 +2144,7 @@ function ADGraphManager:setConnectionBetweenWayPointsInSection(startNodeId, next
             -- Propagating way point deletion all over the network
             AutoDriveSectionEvent.sendEvent(AutoDriveSectionEvent.OPERATION_CONNECTION_DIRECTION, startNodeId, nextNodeId, wayPointsDirection)
         else
+            ADUndoManager:beginStep()
             local sectionWayPoints = ADGraphManager:getWayPointsInSection(startNodeId, nextNodeId, wayPointsDirection)
 
             if sectionWayPoints ~= nil and #sectionWayPoints > 2 then
@@ -1674,6 +2157,7 @@ function ADGraphManager:setConnectionBetweenWayPointsInSection(startNodeId, next
                     )
                 end
             end
+            ADUndoManager:endStep()
         end
     end
 end
@@ -1683,6 +2167,7 @@ function ADGraphManager:setWayPointsFlagsInSection(startNodeId, nextNodeId, flag
         -- Propagating way point deletion all over the network
         AutoDriveSectionEvent.sendEvent(AutoDriveSectionEvent.OPERATION_CONNECTION_FLAGS, startNodeId, nextNodeId, flags)
     else
+        ADUndoManager:beginStep()
         local wayPointsDirection = ADGraphManager:getIsWayPointJunction(startNodeId, nextNodeId)
         local sectionWayPoints = ADGraphManager:getWayPointsInSection(startNodeId, nextNodeId, wayPointsDirection)
         if sectionWayPoints ~= nil and #sectionWayPoints > 2 then
@@ -1691,6 +2176,7 @@ function ADGraphManager:setWayPointsFlagsInSection(startNodeId, nextNodeId, flag
                 ADGraphManager:setWayPointFlags(sectionWayPoints[i], flags, false)
             end
         end
+        ADUndoManager:endStep()
     end
 end
 
@@ -1699,6 +2185,7 @@ function ADGraphManager:deleteWayPointsInSection(startNodeId, nextNodeId, sendEv
         -- Propagating way point deletion all over the network
         AutoDriveSectionEvent.sendEvent(AutoDriveSectionEvent.OPERATION_CONNECTION_DELETE, startNodeId, nextNodeId)
     else
+        ADUndoManager:beginStep()
         local wayPointsDirection = ADGraphManager:getIsWayPointJunction(startNodeId, nextNodeId)
         local sectionWayPoints = ADGraphManager:getWayPointsInSection(startNodeId, nextNodeId, wayPointsDirection)
         if sectionWayPoints ~= nil and #sectionWayPoints > 2 then
@@ -1734,6 +2221,7 @@ function ADGraphManager:deleteWayPointsInSection(startNodeId, nextNodeId, sendEv
                 ADGraphManager:removeWayPoint(pointsToDelete[i], false)
             end
         end
+        ADUndoManager:endStep()
     end
 end
 
@@ -1798,6 +2286,7 @@ function ADGraphManager:createSplineConnection(start, waypoints, target, dualCon
         -- Propagating connection toggling all over the network
         CreateSplineConnectionEvent.sendEvent(start, waypoints, target, dualConnection)
     else
+        ADUndoManager:beginStep()
         local lastId = start
         local lastHeight = ADGraphManager:getWayPointById(start).y
         local subPrio = self:getIsPointSubPrio(start) or self:getIsPointSubPrio(target)
@@ -1825,6 +2314,7 @@ function ADGraphManager:createSplineConnection(start, waypoints, target, dualCon
 
         local wp = self:getWayPointById(lastId)
         self:toggleConnectionBetween(wp, self:getWayPointById(target), false, dualConnection, false)
+        ADUndoManager:endStep()
     end
 end
 

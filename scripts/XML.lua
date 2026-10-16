@@ -150,6 +150,27 @@ function AutoDrive.readFromXML(xmlFile)
 	end
 	-- done loading Map Markers
 
+	-- load folder colors
+	local groupColors = {}
+	local groupColorIndex = 0
+	while true do
+		local key = string.format("AutoDrive.groupColors.g(%d)", groupColorIndex)
+		if not hasXMLProperty(xmlFile, key) then
+			break
+		end
+		local groupName = getXMLString(xmlFile, key .. "#name")
+		local color = AutoDrive.groupColorFromString(getXMLString(xmlFile, key .. "#color"))
+		if groupName ~= nil and groupName ~= "" and color ~= nil then
+			-- a colored folder is kept, even if it is empty
+			if ADGraphManager:getGroupByName(groupName) == nil then
+				ADGraphManager:addGroup(groupName)
+			end
+			groupColors[groupName] = color
+		end
+		groupColorIndex = groupColorIndex + 1
+	end
+	ADGraphManager:setGroupColors(groupColors)
+
 	ADGraphManager:resetWayPoints()
 
 	local idTable = string.split(idString, ",")
@@ -356,6 +377,17 @@ function AutoDrive.saveToXML(xmlFile)
 		end
 	end
 
+	-- folder colors
+	local groupColorIndex = 0
+	for groupName, color in pairs(ADGraphManager:getGroupColors()) do
+		if ADGraphManager:getGroupByName(groupName) ~= nil then
+			local key = string.format("AutoDrive.groupColors.g(%d)", groupColorIndex)
+			setXMLString(xmlFile, key .. "#name", groupName)
+			setXMLString(xmlFile, key .. "#color", AutoDrive.groupColorToString(color))
+			groupColorIndex = groupColorIndex + 1
+		end
+	end
+
 	saveXMLFile(xmlFile)
 	if g_client == nil then
 		Logging.info("[AD] AutoDrive.saveToXML waypoints: %s", tostring(ADGraphManager:getWayPointsCount()))
@@ -364,7 +396,24 @@ function AutoDrive.saveToXML(xmlFile)
 	end
 end
 
-function AutoDrive.writeGraphToXml(xmlId, rootNode, waypoints, markers, groups)
+-- folder color {r, g, b} as "r g b" string
+function AutoDrive.groupColorToString(color)
+	return string.format("%.3f %.3f %.3f", color[1], color[2], color[3])
+end
+
+function AutoDrive.groupColorFromString(colorString)
+	if colorString == nil or colorString == "" then
+		return nil
+	end
+	local parts = string.split(colorString, " ")
+	local r, g, b = tonumber(parts[1]), tonumber(parts[2]), tonumber(parts[3])
+	if r == nil or g == nil or b == nil then
+		return nil
+	end
+	return {r, g, b}
+end
+
+function AutoDrive.writeGraphToXml(xmlId, rootNode, waypoints, markers, groups, groupColors)
 	-- writing waypoints
 	removeXMLProperty(xmlId, rootNode .. ".waypoints")
 	do
@@ -420,6 +469,9 @@ function AutoDrive.writeGraphToXml(xmlId, rootNode, waypoints, markers, groups)
 				local key = string.format("%s.groups.g(%d)", rootNode, i)
 				setXMLString(xmlId, key .. "#n", name)
 				setXMLInt(xmlId, key .. "#i", id)
+				if groupColors ~= nil and groupColors[name] ~= nil then
+					setXMLString(xmlId, key .. "#c", AutoDrive.groupColorToString(groupColors[name]))
+				end
 				i = i + 1
 			end
 		end
@@ -430,6 +482,7 @@ function AutoDrive.readGraphFromXml(xmlId, rootNode)
 	local wayPoints = {}
 	local mapMarkers = {}
 	local groups = {}
+	local groupColors = {}
 	-- reading waypoints
 	do
 		local key = string.format("%s.waypoints", rootNode)
@@ -503,6 +556,7 @@ function AutoDrive.readGraphFromXml(xmlId, rootNode)
 			local groupName = getXMLString(xmlId, key .. "#n")
 			local groupNameId = Utils.getNoNil(getXMLInt(xmlId, key .. "#i"), i + 1)
 			groups[groupName] = groupNameId
+			groupColors[groupName] = AutoDrive.groupColorFromString(getXMLString(xmlId, key .. "#c"))
 			i = i + 1
 		end
 	end
@@ -520,7 +574,7 @@ function AutoDrive.readGraphFromXml(xmlId, rootNode)
 		groups = newGroups
 	end
 
-	return wayPoints, mapMarkers, groups
+	return wayPoints, mapMarkers, groups, groupColors
 end
 
 function AutoDrive.readLocalSettingsFromXML()

@@ -60,7 +60,9 @@ ADInputManager.actionsToInputs = {
     {"ADToggleAutomaticUnloadTarget", "input_toggleAutomaticUnloadTarget", true, true},
     {"ADToggleAutomaticPickupTarget", "input_toggleAutomaticPickupTarget", true, true},
     {"ADToggleLoadByFillLevel", "input_toggleLoadByFillLevel", true, true},
-    {"ADRepairVehicle", "input_repairVehicle", false, true}
+    {"ADRepairVehicle", "input_repairVehicle", false, true},
+    {"ADUndo", "input_undo", false, false},
+    {"ADRedo", "input_redo", false, false}
 }
 
 --[[
@@ -166,6 +168,20 @@ function ADInputManager:input_removeWaypoint(vehicle)
             -- This can be triggered both from 'Remove Waypoint' keyboard shortcut and left click on 'Remove Waypoint' hud button
             ADGraphManager:removeWayPoint(closestWayPoint)
         end
+    end
+end
+
+function ADInputManager:input_undo(vehicle)
+    if AutoDrive.isEditorModeEnabled() then
+        AutoDrive.resetMouseSelections(vehicle)
+        ADUndoManager:requestUndo()
+    end
+end
+
+function ADInputManager:input_redo(vehicle)
+    if AutoDrive.isEditorModeEnabled() then
+        AutoDrive.resetMouseSelections(vehicle)
+        ADUndoManager:requestRedo()
     end
 end
 

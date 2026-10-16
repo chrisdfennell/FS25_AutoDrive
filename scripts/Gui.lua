@@ -135,8 +135,9 @@ function AutoDrive.onOpenEnterTargetName()
 	end
 end
 
-function AutoDrive.onOpenEnterGroupName()
+function AutoDrive.onOpenEnterGroupName(parentGroupName, renameGroupName)
 	if not AutoDrive.gui.ADEnterGroupNameGui.isOpen then
+		AutoDrive.gui.ADEnterGroupNameGui:setGroupNames(parentGroupName, renameGroupName)
 		g_gui:showDialog("ADEnterGroupNameGui")
 	end
 end

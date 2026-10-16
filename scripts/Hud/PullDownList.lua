@@ -21,6 +21,31 @@ ADPullDownList.ICON_CREATE_FOLDER = 3
 -- folder icons
 -- ADPullDownList.ICON_EXPAND_COLLAPS = 1
 ADPullDownList.ICON_DELETE_FOLDER = 1
+ADPullDownList.ICON_ADD_SUBFOLDER = 2
+ADPullDownList.ICON_RENAME_FOLDER = 3
+ADPullDownList.ICON_FOLDER_COLOR = 4
+
+-- colors a folder cycles through by clicking its color icon, after the last one it is back to the default color
+ADPullDownList.FOLDER_COLORS = {
+    {1.00, 0.25, 0.25}, -- red
+    {1.00, 0.55, 0.10}, -- orange
+    {1.00, 0.90, 0.20}, -- yellow
+    {0.55, 1.00, 0.20}, -- lime
+    {0.15, 0.80, 0.30}, -- green
+    {0.20, 0.90, 0.90}, -- cyan
+    {0.40, 0.70, 1.00}, -- light blue
+    {0.30, 0.40, 1.00}, -- blue
+    {0.70, 0.40, 1.00}, -- purple
+    {1.00, 0.45, 0.80}, -- pink
+    {0.70, 0.50, 0.30}, -- brown
+    {1.00, 1.00, 1.00}, -- white
+}
+
+-- map marker icons
+ADPullDownList.ICON_RENAME_MARKER = 1
+
+-- indentation per folder level
+ADPullDownList.INDENT = "   "
 
 
 function ADPullDownList:initReusableOverlaysOnlyOnce()
@@ -38,6 +63,7 @@ function ADPullDownList:initReusableOverlaysOnlyOnce()
     ADPullDownList.ovMinus = overlayReuseOrNew(ADPullDownList.ovMinus, self.imageMinus)
     ADPullDownList.ovFilter = overlayReuseOrNew(ADPullDownList.ovFilter, self.imageFilter)
     ADPullDownList.ovCollapseAll = overlayReuseOrNew(ADPullDownList.ovCollapseAll, self.imageCollapseAll)
+    ADPullDownList.ovRename = overlayReuseOrNew(ADPullDownList.ovRename, self.imageRename)
 end
 
 function ADPullDownList:new(posX, posY, width, height, type, selected)
@@ -74,6 +100,7 @@ function ADPullDownList:new(posX, posY, width, height, type, selected)
     o.imagePlus = "ad_gui.plusSign"
     o.imageMinus = "ad_gui.minusSign"
     o.imageFilter = "ad_gui.zoom"
+    o.imageRename = "ad_gui.input_editMapMarker_1"
 
     o.ovBG = g_overlayManager:createOverlay(o.imageBG, o.position.x, o.position.y, o.size.width, o.size.height)
     o.ovExpand = g_overlayManager:createOverlay(o.imageExpand, o.rightIconPos.x, o.rightIconPos.y, o.iconSize.width, o.iconSize.height)
@@ -183,20 +210,31 @@ function ADPullDownList:onDraw(vehicle, uiScale)
             local listEntry = self:getListElementByDisplayIndex(vehicle, i)
             if listEntry ~= nil then
                 local text = listEntry.displayName
-                if text == "All" and listEntry.isFolder then
+                if listEntry.returnValue == "All" and listEntry.isFolder then
                     text = g_i18n:getText("gui_ad_default")
                     if vehicle.ad.destinationFilterText ~= "" then
                         text = text .. " " .. g_i18n:getText("gui_ad_filter") .. ": " .. vehicle.ad.destinationFilterText
                     end
                 end
-                if listEntry.isFolder == false and self.type ~= ADPullDownList.TYPE_FILLTYPE and useFolders then
-                    text = "   " .. text
+                if self.type ~= ADPullDownList.TYPE_FILLTYPE and useFolders then
+                    local depth = listEntry.depth or 0
+                    if listEntry.isFolder == false then
+                        depth = depth + 1
+                    end
+                    text = string.rep(ADPullDownList.INDENT, depth) .. text
                 end
 
                 local textTargetWidth
+                local showRenameIcon = self.type ~= ADPullDownList.TYPE_FILLTYPE and AutoDrive.isEditorModeEnabled()
 
                 if listEntry.isFolder then
-                    textTargetWidth = math.abs(self.rightIconPos3.x - self.position.x) - AutoDrive.Hud.gapWidth
+                    if showRenameIcon then
+                        textTargetWidth = math.abs(self.rightIconPos4.x - self.position.x) - AutoDrive.Hud.gapWidth
+                    else
+                        textTargetWidth = math.abs(self.rightIconPos3.x - self.position.x) - AutoDrive.Hud.gapWidth
+                    end
+                elseif showRenameIcon then
+                    textTargetWidth = math.abs(self.rightIconPos.x - self.position.x) - AutoDrive.Hud.gapWidth
                 else
                     textTargetWidth = math.abs(self.rightIconPos.x - self.position.x) + AutoDrive.Hud.gapWidth
                 end
@@ -215,11 +253,31 @@ function ADPullDownList:onDraw(vehicle, uiScale)
 ]]
 
                     if AutoDrive.isEditorModeEnabled() then
-                        if (listEntry.displayName ~= "All") and self:getItemCountForGroup(listEntry.displayName) <= 0 then
+                        if self:canDeleteFolder(listEntry.returnValue) then
                             -- icon minus for delete folder only for empty folders and not standard folder
                             renderOverlay(ADPullDownList.ovMinus.overlayId, self.rightIconPos.x, textPosition.y, self.iconSize.width, self.iconSize.height)
                         end
+                        if self:canAddSubFolder(listEntry.returnValue) then
+                            -- icon plus for creating a sub folder
+                            renderOverlay(ADPullDownList.ovPlus.overlayId, self.rightIconPos2.x, textPosition.y, self.iconSize.width, self.iconSize.height)
+                        end
+                        if self:canRenameFolder(listEntry.returnValue) then
+                            -- icon for renaming the folder
+                            renderOverlay(ADPullDownList.ovRename.overlayId, self.rightIconPos3.x, textPosition.y, self.iconSize.width, self.iconSize.height)
+                            -- color swatch for changing the folder color, faded if the folder uses the default color
+                            local swatchColor = ADGraphManager:getGroupColor(listEntry.returnValue)
+                            local swatchAlpha = 1
+                            if swatchColor == nil then
+                                swatchColor = AutoDrive.currentColors.ad_color_hudTextSpecial
+                                swatchAlpha = 0.35
+                            end
+                            local swatchInset = self.iconSize.width * 0.2
+                            drawFilledRect(self.rightIconPos4.x + swatchInset, textPosition.y + swatchInset, self.iconSize.width - 2 * swatchInset, self.iconSize.height - 2 * swatchInset, swatchColor[1], swatchColor[2], swatchColor[3], swatchAlpha)
+                        end
                     end
+                elseif showRenameIcon then
+                    -- icon for renaming the map marker
+                    renderOverlay(ADPullDownList.ovRename.overlayId, self.rightIconPos.x, textPosition.y, self.iconSize.width, self.iconSize.height)
                 end
 
                 local makeBold = listEntry.isFolder
@@ -241,7 +299,13 @@ function ADPullDownList:onDraw(vehicle, uiScale)
                     end
                 else
                     -- other element
-                    if makeSpecial then
+                    local folderColor = nil
+                    if listEntry.isFolder and self.type ~= ADPullDownList.TYPE_FILLTYPE then
+                        folderColor = ADGraphManager:getGroupColor(listEntry.returnValue)
+                    end
+                    if folderColor ~= nil then
+                        setTextColor(folderColor[1], folderColor[2], folderColor[3], 1)
+                    elseif makeSpecial then
                         setTextColor(unpack(AutoDrive.currentColors.ad_color_hudTextSpecial))
                     else
                         setTextColor(unpack(AutoDrive.currentColors.ad_color_hudTextDefault))
@@ -286,18 +350,22 @@ function ADPullDownList:getListElementByIndex(vehicle, index)
     local counter = 1
     if self.type ~= ADPullDownList.TYPE_FILLTYPE then
         local useFolders = AutoDrive.getSetting("useFolders")
-        for groupID, entries in pairs(self.options) do
-            if useFolders then
+        for groupID, entries in ipairs(self.options) do
+            local groupName = self.groupNames[groupID]
+            -- a sub folder is only shown if all its parent folders are expanded
+            local folderVisible = (not useFolders) or self:isFolderVisible(vehicle, groupName)
+            local depth = ADGraphManager:getGroupDepth(groupName)
+            if useFolders and folderVisible then
                 if counter == index then
-                    return {displayName = self:groupIDToGroupName(self.fakeGroupIDs[groupID]), returnValue = self:groupIDToGroupName(self.fakeGroupIDs[groupID]), isFolder = true}
+                    return {displayName = ADGraphManager:getGroupDisplayName(groupName), returnValue = groupName, isFolder = true, depth = depth}
                 end
                 counter = counter + 1
             end
-            if vehicle.ad.groups[self:groupIDToGroupName(self.fakeGroupIDs[groupID])] == true or (not useFolders) then
+            if (folderVisible and vehicle.ad.groups[groupName] == true) or (not useFolders) then
                 for _, entry in pairs(entries) do
                     if vehicle.ad.destinationFilterText == "" or string.match(string.lower(entry.displayName), string.lower(vehicle.ad.destinationFilterText)) then
                         if counter == index then
-                            return {displayName = entry.displayName, returnValue = entry.returnValue, isFolder = false}
+                            return {displayName = entry.displayName, returnValue = entry.returnValue, isFolder = false, depth = depth}
                         end
                         counter = counter + 1
                     end
@@ -407,8 +475,8 @@ function ADPullDownList:updateVisibility(vehicle)
 end
 
 function ADPullDownList:createSelection()
-    self.fakeGroupIDs = {}
-    self.fakeGroupIDs[1] = 1
+    -- full group name per entry in self.options
+    self.groupNames = {"All"}
     if self.type == ADPullDownList.TYPE_TARGET then
         self:createSelection_Target()
         self:sortCurrentItems()
@@ -438,7 +506,7 @@ function ADPullDownList:createSelection_Target()
 
     for markerID, marker in pairs(ADGraphManager:getMapMarkers()) do
         if useFolders then
-            table.insert(self.options[self.groups[marker.group]], {displayName = marker.name, returnValue = markerID})
+            table.insert(self.options[self.groups[marker.group] or 1], {displayName = marker.name, returnValue = markerID})
         else
             table.insert(self.options[1], {displayName = marker.name, returnValue = markerID})
         end
@@ -460,28 +528,100 @@ function ADPullDownList:sortGroups()
         return a < b
     end
 
-    local inverseTable = {}
-    for groupName, groupID in pairs(ADGraphManager:getGroups()) do
-        inverseTable[groupID] = groupName
+    -- sub folders follow their parent folder, each level sorted on its own
+    local path_sort_func = function(a, b)
+        local partsA = string.split(a, ADGraphManager.GROUP_SEPARATOR)
+        local partsB = string.split(b, ADGraphManager.GROUP_SEPARATOR)
+        for i = 1, math.min(#partsA, #partsB) do
+            if string.lower(partsA[i]) ~= string.lower(partsB[i]) then
+                return sort_func(partsA[i], partsB[i])
+            end
+        end
+        return #partsA < #partsB
     end
 
-    table.sort(inverseTable, sort_func)
+    local groupNames = {}
+    local listed = {}
+    local function addGroupName(groupName)
+        if not listed[groupName] then
+            listed[groupName] = true
+            table.insert(groupNames, groupName)
+        end
+    end
+    for groupName, _ in pairs(ADGraphManager:getGroups()) do
+        if groupName ~= "All" then
+            -- parent folders are always listed, even if they are no group of their own
+            local parentName = ADGraphManager:getParentGroupName(groupName)
+            while parentName ~= nil do
+                addGroupName(parentName)
+                parentName = ADGraphManager:getParentGroupName(parentName)
+            end
+            addGroupName(groupName)
+        end
+    end
+
+    table.sort(groupNames, path_sort_func)
 
     self.options[1] = {}
     self.groups = {}
     self.groups["All"] = 1
-    self.fakeGroupIDs = {}
-    self.fakeGroupIDs[1] = 1
+    self.groupNames = {"All"}
 
-    local i = 2
-    for _, groupName in pairs(inverseTable) do
-        if groupName ~= "All" then
-            self.options[i] = {}
-            self.groups[groupName] = i
-            self.fakeGroupIDs[i] = ADGraphManager:getGroupByName(groupName)
-            i = i + 1
+    for i, groupName in ipairs(groupNames) do
+        self.options[i + 1] = {}
+        self.groups[groupName] = i + 1
+        self.groupNames[i + 1] = groupName
+    end
+end
+
+function ADPullDownList:isFolderVisible(vehicle, groupName)
+    local parentName = ADGraphManager:getParentGroupName(groupName)
+    while parentName ~= nil do
+        if vehicle.ad.groups[parentName] ~= true then
+            return false
+        end
+        parentName = ADGraphManager:getParentGroupName(parentName)
+    end
+    return true
+end
+
+function ADPullDownList:hasSubFolders(groupName)
+    local prefix = groupName .. ADGraphManager.GROUP_SEPARATOR
+    for _, name in pairs(self.groupNames) do
+        if string.sub(name, 1, string.len(prefix)) == prefix then
+            return true
         end
     end
+    return false
+end
+
+function ADPullDownList:canDeleteFolder(groupName)
+    return groupName ~= "All"
+        and ADGraphManager:getGroupByName(groupName) ~= nil
+        and self:getItemCountForGroup(groupName) <= 0
+        and not self:hasSubFolders(groupName)
+end
+
+function ADPullDownList:canAddSubFolder(groupName)
+    return AutoDrive.isEditorModeEnabled() and groupName ~= "All" and groupName ~= ADGraphManager.debugGroupName
+end
+
+-- returns the palette color after currentColor, nil (default color) after the last one
+function ADPullDownList:getNextFolderColor(currentColor)
+    if currentColor == nil then
+        return ADPullDownList.FOLDER_COLORS[1]
+    end
+    for i, color in ipairs(ADPullDownList.FOLDER_COLORS) do
+        if math.abs(color[1] - currentColor[1]) < 0.01 and math.abs(color[2] - currentColor[2]) < 0.01 and math.abs(color[3] - currentColor[3]) < 0.01 then
+            return ADPullDownList.FOLDER_COLORS[i + 1]
+        end
+    end
+    -- a color not in the palette, i.e. from an imported route
+    return ADPullDownList.FOLDER_COLORS[1]
+end
+
+function ADPullDownList:canRenameFolder(groupName)
+    return AutoDrive.isEditorModeEnabled() and groupName ~= "All" and groupName ~= ADGraphManager.debugGroupName and ADGraphManager:getGroupByName(groupName) ~= nil
 end
 
 function ADPullDownList:createSelection_FillType()
@@ -640,6 +780,10 @@ function ADPullDownList:act(vehicle, posX, posY, isDown, isUp, button)
             elseif self.state == ADPullDownList.STATE_COLLAPSED and AutoDrive.pullDownListExpanded <= 0 then
                 -- expand the collapsed list
                 self:expand(vehicle)
+            elseif self.state == ADPullDownList.STATE_EXPANDED and self.type ~= ADPullDownList.TYPE_FILLTYPE and hitElement ~= nil and not hitElement.isFolder and hitIcon == ADPullDownList.ICON_RENAME_MARKER and AutoDrive.isEditorModeEnabled() then
+                -- rename the clicked map marker
+                AutoDrive.editMapMarkerId = hitElement.returnValue
+                AutoDrive.onOpenEnterTargetName()
             elseif self.state == ADPullDownList.STATE_EXPANDED and (hitElement ~=nil and not hitElement.isFolder) then
                 -- clicked outside -> collaps complete list
                 self:collapse(vehicle, true)
@@ -657,6 +801,10 @@ function ADPullDownList:act(vehicle, posX, posY, isDown, isUp, button)
                 for groupId,_ in pairs(vehicle.ad.groups) do
                     vehicle.ad.groups[groupId] = true
                 end
+                -- parent folders without a group of their own are not in vehicle.ad.groups
+                for _, groupName in pairs(self.groupNames) do
+                    vehicle.ad.groups[groupName] = true
+                end
                 self.selected = 1
                 self.hovered = 1
             elseif self.state == ADPullDownList.STATE_EXPANDED and self.type ~= ADPullDownList.TYPE_FILLTYPE and hitIcon ~= nil and hitIcon == ADPullDownList.ICON_CREATE_FOLDER and hitIndex ~= nil and hitIndex == 0 and AutoDrive.isEditorModeEnabled() then
@@ -665,18 +813,25 @@ function ADPullDownList:act(vehicle, posX, posY, isDown, isUp, button)
                 AutoDrive.onOpenEnterGroupName()
             elseif self.state == ADPullDownList.STATE_EXPANDED and hitElement ~= nil then
                 -- clicked in element list, not top icon
-                if (hitIcon ~= nil and hitIcon ~= ADPullDownList.ICON_DELETE_FOLDER) and hitElement.isFolder then
+                if hitElement.isFolder and hitIcon == ADPullDownList.ICON_ADD_SUBFOLDER and self:canAddSubFolder(hitElement.returnValue) then
+                    -- create new sub folder in the clicked folder
+                    AutoDrive.onOpenEnterGroupName(hitElement.returnValue)
+                elseif hitElement.isFolder and hitIcon == ADPullDownList.ICON_RENAME_FOLDER and self:canRenameFolder(hitElement.returnValue) then
+                    -- rename the clicked folder
+                    AutoDrive.onOpenEnterGroupName(nil, hitElement.returnValue)
+                elseif hitElement.isFolder and hitIcon == ADPullDownList.ICON_FOLDER_COLOR and self:canRenameFolder(hitElement.returnValue) then
+                    -- switch the clicked folder to the next color
+                    ADGraphManager:setGroupColor(hitElement.returnValue, self:getNextFolderColor(ADGraphManager:getGroupColor(hitElement.returnValue)))
+                elseif (hitIcon ~= nil and hitIcon ~= ADPullDownList.ICON_DELETE_FOLDER) and hitElement.isFolder then
                     -- clicked folder, but not icon delete
                     if hitElement.isFolder then
                         vehicle.ad.groups[hitElement.returnValue] = not vehicle.ad.groups[hitElement.returnValue]
                     end
                 elseif self.state == ADPullDownList.STATE_EXPANDED and hitIcon ~= nil and hitIcon == ADPullDownList.ICON_DELETE_FOLDER and AutoDrive.isEditorModeEnabled() then
-                    -- remove empty folder
-                    if hitElement.isFolder and (hitElement.displayName ~= "All") then
-                        if self:getItemCountForGroup(hitElement.displayName) <= 0 then
-                            -- AutoDrive.pullDownListExpanded = 0
-                            ADGraphManager:removeGroup(hitElement.returnValue)
-                        end
+                    -- remove empty folder without sub folders
+                    if hitElement.isFolder and self:canDeleteFolder(hitElement.returnValue) then
+                        -- AutoDrive.pullDownListExpanded = 0
+                        ADGraphManager:removeGroup(hitElement.returnValue)
                     end
                 end
             end
@@ -805,54 +960,31 @@ end
 function ADPullDownList:setSelected(vehicle)
     self.selected = 1
     self.hovered = 1
-    if self.type == ADPullDownList.TYPE_TARGET then
-        local index = 1
-        local useFolders = AutoDrive.getSetting("useFolders")
-        for groupID, entries in pairs(self.options) do
-            if useFolders then
-                index = index + 1
-            end
-
-            if vehicle.ad.groups[self:groupIDToGroupName(self.fakeGroupIDs[groupID])] == true or (not useFolders) then
-
-                for _, entry in pairs(entries) do
-                    if entry.returnValue == vehicle.ad.stateModule:getFirstMarkerId() then
-                        self.selected = index
-                        self.hovered = self.selected
-                        if not vehicle.ad.groups[self:groupIDToGroupName(self.fakeGroupIDs[groupID])] then
-                            vehicle.ad.groups[self:groupIDToGroupName(self.fakeGroupIDs[groupID])] = true
-                        end
-                        break
-                    end
-                    index = index + 1
+    if self.type == ADPullDownList.TYPE_TARGET or self.type == ADPullDownList.TYPE_UNLOAD then
+        local markerId = vehicle.ad.stateModule:getFirstMarkerId()
+        if self.type == ADPullDownList.TYPE_UNLOAD then
+            markerId = vehicle.ad.stateModule:getSecondMarkerId()
+            -- open the folder of the selected unload marker, including its parent folders
+            local marker = ADGraphManager:getMapMarkerById(markerId)
+            if marker ~= nil and AutoDrive.getSetting("useFolders") then
+                local groupName = marker.group
+                while groupName ~= nil do
+                    vehicle.ad.groups[groupName] = true
+                    groupName = ADGraphManager:getParentGroupName(groupName)
                 end
-            end
-            if self.selected ~= 1 then
-                break
             end
         end
-    elseif self.type == ADPullDownList.TYPE_UNLOAD then
+        -- select the marker if it is shown in the list
         local index = 1
-        local useFolders = AutoDrive.getSetting("useFolders")
-        for groupID, entries in pairs(self.options) do
-            if useFolders then
-                index = index + 1
-            end
-            for _, entry in pairs(entries) do
-                if entry.returnValue == vehicle.ad.stateModule:getSecondMarkerId() then
-                    self.selected = index
-                    self.hovered = self.selected
-                    if not vehicle.ad.groups[self:groupIDToGroupName(self.fakeGroupIDs[groupID])] then
-                        vehicle.ad.groups[self:groupIDToGroupName(self.fakeGroupIDs[groupID])] = true
-                    end
-                    break
-                end
-                index = index + 1
-            end
-
-            if self.selected ~= 1 then
+        local entry = self:getListElementByIndex(vehicle, index)
+        while entry ~= nil do
+            if not entry.isFolder and entry.returnValue == markerId then
+                self.selected = index
+                self.hovered = self.selected
                 break
             end
+            index = index + 1
+            entry = self:getListElementByIndex(vehicle, index)
         end
     elseif self.type == ADPullDownList.TYPE_FILLTYPE then
         local index = 1
@@ -881,15 +1013,6 @@ function ADPullDownList:setSelected(vehicle)
             reachedTop = true
         end
     end
-end
-
-function ADPullDownList:groupIDToGroupName(id)
-    for groupName, groupId in pairs(ADGraphManager:getGroups()) do
-        if groupId == id then
-            return groupName
-        end
-    end
-    return nil
 end
 
 function ADPullDownList:sortCurrentItems()
@@ -987,8 +1110,8 @@ function ADPullDownList:sortDraggedInGroup(draggedElement, hitElement)
     else
         targetGroupName = ADGraphManager:getMapMarkerById(hitElement.returnValue).group
     end
-    if targetGroupName == ADGraphManager.debugGroupName then
-        -- do not drag elements in debug group
+    if targetGroupName == ADGraphManager.debugGroupName or ADGraphManager:getGroupByName(targetGroupName) == nil then
+        -- do not drag elements in debug group or in a parent folder without a group of its own
         return
     end
     for _, entries in pairs(self.options) do

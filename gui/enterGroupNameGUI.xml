@@ -8,7 +8,7 @@
         <ThreePartBitmap profile="fs25_dialogBgBottom"/>
 
         <BoxLayout profile="ad_common_dialogContentContainer">
-            <Text profile="ad_common_dialogTitle" text="$l10n_gui_ad_enterGroupNameTitle" />
+            <Text profile="ad_common_dialogTitle" id="titleElement" text="$l10n_gui_ad_enterGroupNameTitle" />
 
             <ThreePartBitmap profile="ad_common_dialogTitleLineSeparator" />
 

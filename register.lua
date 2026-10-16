@@ -56,6 +56,7 @@ source(Utils.getFilename("scripts/Events/Graph/SectionEvent.lua", g_currentModDi
 source(Utils.getFilename("scripts/Events/Graph/SetConnectionEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/CreateSplineConnectionEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/CreatePlaceableEvent.lua", g_currentModDirectory))
+source(Utils.getFilename("scripts/Events/Graph/UndoRedoEvent.lua", g_currentModDirectory))
 
 source(Utils.getFilename("scripts/Utils/AutoDriveTON.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Utils/TrailerUtil.lua", g_currentModDirectory))
@@ -77,6 +78,7 @@ source(Utils.getFilename("scripts/Manager/RoutesManager.lua", g_currentModDirect
 source(Utils.getFilename("scripts/Manager/DrawingManager.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Manager/MessagesManager.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Manager/GraphManager.lua", g_currentModDirectory))
+source(Utils.getFilename("scripts/Manager/UndoManager.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Manager/TriggerManager.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Manager/HarvestManager.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Manager/InputManager.lua", g_currentModDirectory))

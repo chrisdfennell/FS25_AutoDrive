@@ -106,7 +106,11 @@ Changelog: Необходимые корректировки для FS25, нас
 		<action name="ADToggleAutomaticUnloadTarget"/>
 		<action name="ADToggleAutomaticPickupTarget"/>
 		<action name="ADToggleLoadByFillLevel"/>
-		<action name="ADRepairVehicle"/>		
+		<action name="ADRepairVehicle"/>
+		<action name="ADUndo"/>
+		<action name="ADRedo"/>
+		<action name="ADUndoPreview"/>
+		<action name="ADMoveNode"/>
 	</actions>
 
 	<inputBinding>
@@ -167,6 +171,18 @@ Changelog: Необходимые корректировки для FS25, нас
 		</actionBinding>
 		<actionBinding action="ADSilomode">
 			<binding device="0_XINPUT_GAMEPAD" input="BUTTON_5 BUTTON_6 AXIS_4+" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADMoveNode">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lshift" />
+		</actionBinding>
+		<actionBinding action="ADUndo">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_z" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADRedo">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_y" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADUndoPreview">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_z" />
 		</actionBinding>
 		<actionBinding action="AD_open_notification_history">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_m" axisComponent="+" neutralInput="0" index="1" />

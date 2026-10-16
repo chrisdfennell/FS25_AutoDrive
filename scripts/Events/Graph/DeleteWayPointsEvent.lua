@@ -43,9 +43,12 @@ function AutoDriveDeleteWayPointsEvent:run(connection)
 		-- If the event is coming from the server, both clients and server have to delete the way point
         local wayPointsCount = #self.wayPointIDs
         if wayPointsCount > 0 then
+            -- all deleted way points are restored with one undo
+            ADUndoManager:beginStep()
             for i = 1, wayPointsCount do
                 ADGraphManager:removeWayPoint(self.wayPointIDs[i], false)
             end
+            ADUndoManager:endStep()
         end
 	end
 end

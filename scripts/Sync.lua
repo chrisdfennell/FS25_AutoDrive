@@ -23,17 +23,18 @@ function AutoDriveSync:delete()
 end
 
 function AutoDriveSync:writeStream(streamId, connection)
-    AutoDriveSync.streamWriteGraph(streamId, ADGraphManager:getWayPoints(), ADGraphManager:getMapMarkers(), ADGraphManager:getGroups())
+    AutoDriveSync.streamWriteGraph(streamId, ADGraphManager:getWayPoints(), ADGraphManager:getMapMarkers(), ADGraphManager:getGroups(), ADGraphManager:getGroupColors())
     AutoDriveSync:superClass().writeStream(self, streamId, connection)
 end
 
-function AutoDriveSync:readStream(streamId, connection) 
+function AutoDriveSync:readStream(streamId, connection)
     if connection:getIsServer() then
-        local wayPoints, mapMarkers, groups = AutoDriveSync.streamReadGraph(streamId)
+        local wayPoints, mapMarkers, groups, groupColors = AutoDriveSync.streamReadGraph(streamId)
         ADGraphManager:setWayPoints(wayPoints)
         ADGraphManager:setMapMarkers(mapMarkers)
         AutoDrive:notifyDestinationListeners()
         ADGraphManager:setGroups(groups)
+        ADGraphManager:setGroupColors(groupColors)
         AutoDrive.Hud.lastUIScale = 0
         AutoDriveSync:superClass().readStream(self, streamId, connection)
     end
@@ -75,7 +76,7 @@ function AutoDriveSync:mouseEvent(posX, posY, isDown, isUp, button)
     AutoDriveSync:superClass().mouseEvent(self, posX, posY, isDown, isUp, button)
 end
 
-function AutoDriveSync.streamWriteGraph(streamId, wayPoints, mapMarkers, groups)
+function AutoDriveSync.streamWriteGraph(streamId, wayPoints, mapMarkers, groups, groupColors)
     local self = AutoDriveSync
     local paramsXZ = g_currentMission.vehicleXZPosCompressionParams
     local paramsY = g_currentMission.vehicleYPosCompressionParams
@@ -138,6 +139,16 @@ function AutoDriveSync.streamWriteGraph(streamId, wayPoints, mapMarkers, groups)
     for gName, gId in pairs(groups) do
         streamWriteUIntN(streamId, gId, self.GC_SEND_NUM_BITS)
         AutoDrive.streamWriteStringOrEmpty(streamId, gName)
+    end
+
+    -- writing the folder colors
+    local colorsCount = table.count(groupColors or {})
+    streamWriteUIntN(streamId, colorsCount, self.GC_SEND_NUM_BITS)
+    for gName, color in pairs(groupColors or {}) do
+        AutoDrive.streamWriteStringOrEmpty(streamId, gName)
+        streamWriteFloat32(streamId, color[1])
+        streamWriteFloat32(streamId, color[2])
+        streamWriteFloat32(streamId, color[3])
     end
 
     offset = streamGetWriteOffset(streamId) - offset
@@ -226,9 +237,20 @@ function AutoDriveSync.streamReadGraph(streamId)
         end
     end
 
+    -- reading the folder colors
+    local groupColors = {}
+    local colorsCount = streamReadUIntN(streamId, self.GC_SEND_NUM_BITS)
+    for i = 1, colorsCount do
+        local gName = AutoDrive.streamReadStringOrEmpty(streamId)
+        local color = {streamReadFloat32(streamId), streamReadFloat32(streamId), streamReadFloat32(streamId)}
+        if gName ~= nil and gName ~= "" then
+            groupColors[gName] = color
+        end
+    end
+
     offset = streamGetReadOffset(streamId) - offset
     self.print("[AutoDriveSync] Read %s bits (%s bytes) in %s ms", offset, offset / 8, netGetTime() - time)
-    return wayPoints, mapMarkers, groups
+    return wayPoints, mapMarkers, groups, groupColors
 end
 
 function AutoDriveSync.print(text, ...)

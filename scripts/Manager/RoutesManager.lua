@@ -96,9 +96,9 @@ function ADRoutesManager:import(name)
     if route ~= nil then
         if fileExists(self.routesFolder .. route.fileName) then
             local loadXml = loadXMLFile("routeImport_xml", self.routesFolder .. route.fileName)
-            local wayPoints, mapMarkers, groups = AutoDrive.readGraphFromXml(loadXml, "routeExport")
+            local wayPoints, mapMarkers, groups, groupColors = AutoDrive.readGraphFromXml(loadXml, "routeExport")
             delete(loadXml)
-            AutoDriveRoutesUploadEvent.sendEvent(wayPoints, mapMarkers, groups)
+            AutoDriveRoutesUploadEvent.sendEvent(wayPoints, mapMarkers, groups, groupColors)
         end
     end
 end
@@ -136,7 +136,7 @@ function ADRoutesManager:export(name)
         saveXml = createXMLFile("routeExport_xml", self.routesFolder .. fileName, "routeExport")
     end
 
-    AutoDrive.writeGraphToXml(saveXml, "routeExport", ADGraphManager:getWayPoints(), ADGraphManager:getMapMarkers(), ADGraphManager:getGroups())
+    AutoDrive.writeGraphToXml(saveXml, "routeExport", ADGraphManager:getWayPoints(), ADGraphManager:getMapMarkers(), ADGraphManager:getGroups(), ADGraphManager:getGroupColors())
 
     saveXMLFile(saveXml)
     delete(saveXml)
@@ -223,7 +223,7 @@ function ADRoutesManager:exportRoutesAsExternalMod()
     delete(mdXml)
 
     local rXml = createXMLFile("modDesc_xml", exportRoutesFolder .. mapName .. ".xml", "defaultRoutes")
-    AutoDrive.writeGraphToXml(rXml, "defaultRoutes", ADGraphManager:getWayPoints(), ADGraphManager:getMapMarkers(), ADGraphManager:getGroups())
+    AutoDrive.writeGraphToXml(rXml, "defaultRoutes", ADGraphManager:getWayPoints(), ADGraphManager:getMapMarkers(), ADGraphManager:getGroups(), ADGraphManager:getGroupColors())
     saveXMLFile(rXml)
     delete(rXml)
 

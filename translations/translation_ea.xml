@@ -396,5 +396,51 @@
 		<text name="gui_ad_editorTip_9"								text="1. nodo es intersección, segundo es vecino:" />
 		<text name="gui_ad_editorTip_10"								text="Alternar tipo de segmento (normal/dual)" />
 		<text name="gui_ad_editorTip_11"								text="LSHIFT = Alternar a carretera secundaria" />
+		<text name="input_ADUndo"									 text="AD: Undo route edit" />
+		<text name="input_ADRedo"									 text="AD: Redo route edit" />
+		<text name="AD_undo_done"									 text="Undone: %s (%s more to undo, %s to redo)" />
+		<text name="AD_redo_done"									 text="Redone: %s (%s more to undo, %s to redo)" />
+		<text name="AD_undo_empty"									 text="Nothing to undo" />
+		<text name="AD_redo_empty"									 text="Nothing to redo" />
+		<text name="AD_undo_blocked"									 text="Redo is not possible while recording" />
+		<text name="gui_ad_editorTip_12"								 text="LCTRL + Z / LCTRL + Y = Undo / Redo, hold LALT + Z = preview" />
+		<text name="AD_undoStep_wpCreated_1"							 text="waypoint created" />
+		<text name="AD_undoStep_wpCreated"							 text="%s waypoints created" />
+		<text name="AD_undoStep_wpDeleted_1"							 text="waypoint deleted" />
+		<text name="AD_undoStep_wpDeleted"							 text="%s waypoints deleted" />
+		<text name="AD_undoStep_wpMoved_1"							 text="waypoint moved" />
+		<text name="AD_undoStep_wpMoved"								 text="%s waypoints moved" />
+		<text name="AD_undoStep_sideRoad_1"							 text="side road toggled" />
+		<text name="AD_undoStep_sideRoad"							 text="side road toggled on %s waypoints" />
+		<text name="AD_undoStep_connection_1"						 text="connection changed" />
+		<text name="AD_undoStep_connection"							 text="%s connections changed" />
+		<text name="AD_undoStep_markerCreated_1"						 text="target &quot;%s&quot; created" />
+		<text name="AD_undoStep_markerCreated"						 text="%s targets created" />
+		<text name="AD_undoStep_markerDeleted_1"						 text="target &quot;%s&quot; deleted" />
+		<text name="AD_undoStep_markerDeleted"						 text="%s targets deleted" />
+		<text name="AD_undoStep_markerRenamed"						 text="target &quot;%s&quot; renamed to &quot;%s&quot;" />
+		<text name="AD_undoStep_markerFolder"						 text="target &quot;%s&quot; moved to folder &quot;%s&quot;" />
+		<text name="AD_undoStep_edit"								 text="route edit" />
+		<text name="input_ADUndoPreview"								 text="AD: Hold to preview the next undo" />
+		<text name="AD_undo_conflict"								 text="Can't undo yet: %s changed the route network after your last edit" />
+		<text name="AD_undo_name"									 text="%s" />
+		<text name="AD_undo_otherPlayer"								 text="another player" />
+		<text name="AD_undo_recordingStart"							 text="Start of the recording reached - stop recording to undo it completely" />
+		<text name="AD_undo_recording"								 text="Recording: removed %s, continuing from the highlighted point" />
+		<text name="AD_undoStep_recordedPoints_1"					 text="the last recorded point" />
+		<text name="AD_undoStep_recordedPoints"						 text="the last %s recorded points" />
+		<text name="AD_undo_preview"									 text="Next undo: %s" />
+		<text name="AD_undo_cleared"									 text="Undo history cleared: %s" />
+		<text name="AD_undo_reason_network"							 text="route network replaced" />
+		<text name="AD_undo_reason_debug"							 text="debug markers changed" />
+		<text name="AD_undo_reason_colors"							 text="colour selection points used" />
+		<text name="AD_undo_reason_other"							 text="route network changed outside the editor" />
+		<text name="AD_undoStep_folderCreated_1"						 text="folder &quot;%s&quot; created" />
+		<text name="AD_undoStep_folderCreated"						 text="%s folders created" />
+		<text name="AD_undoStep_folderDeleted_1"						 text="folder &quot;%s&quot; deleted" />
+		<text name="AD_undoStep_folderDeleted"						 text="%s folders deleted" />
+		<text name="AD_undoStep_folderRenamed"						 text="folder &quot;%s&quot; renamed to &quot;%s&quot;" />
+		<text name="AD_undoStep_folderColor"							 text="colour of folder &quot;%s&quot; changed" />
+		<text name="AD_undoStep_network"								 text="routes loaded" />
 	</texts>
 </l10n>

@@ -106,6 +106,21 @@ function ADHudButton:getNewState(vehicle)
         self.isVisible = AutoDrive.isEditorModeEnabled()
     end
 
+    if self.primaryAction == "input_undo" or self.primaryAction == "input_redo" then
+        self.isVisible = AutoDrive.isEditorModeEnabled()
+        local canUndo, canRedo = ADUndoManager:getClientAvailability()
+        local available = canRedo
+        if self.primaryAction == "input_undo" then
+            available = canUndo
+        end
+        if available then
+            newState = 1
+        else
+            -- greyed out
+            newState = 2
+        end
+    end
+
     if self.primaryAction == "input_start_stop" then
         if vehicle.ad.stateModule:isActive() then
             newState = 2
@@ -265,6 +280,12 @@ function ADHudButton:act(vehicle, posX, posY, isDown, isUp, button)
         if self.primaryAction == "input_toggleAutomaticUnloadTarget" or self.primaryAction == "input_toggleAutomaticPickupTarget" then
             self:actOnIcons(vehicle, posX, posY, isDown, isUp, button)
             return
+        end
+
+        if self.primaryAction == "input_undo" and (button == 3 or button == 2) and isUp then
+            -- right click: show what the next undo would change
+            ADUndoManager:requestPreview(false)
+            return true
         end
 
         if button == 1 and isUp and not AutoDrive.leftLSHIFTmodifierKeyPressed and not AutoDrive.leftCTRLmodifierKeyPressed then
