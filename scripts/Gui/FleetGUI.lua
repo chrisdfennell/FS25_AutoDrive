@@ -249,3 +249,22 @@ function ADFleetGui:onClickStartStop()
         ADInputManager:onInputCall(vehicle, "input_start_stop", farmId)
     end
 end
+
+-- the fleet overview key also works on foot; in a vehicle it is one of the vehicle's AutoDrive keys
+function ADFleetGui.onFleetKey()
+    AutoDrive.onOpenFleet()
+end
+
+function ADFleetGui.registerPlayerActionEvents(playerInputComponent, controlling)
+    if controlling == "VEHICLE" or InputAction.ADFleet == nil then
+        return
+    end
+    local _, eventId = g_inputBinding:registerActionEvent(InputAction.ADFleet, ADFleetGui, ADFleetGui.onFleetKey, false, true, false, true)
+    if eventId ~= nil then
+        g_inputBinding:setActionEventTextVisibility(eventId, false)
+    end
+end
+
+if PlayerInputComponent ~= nil and PlayerInputComponent.registerGlobalPlayerActionEvents ~= nil then
+    PlayerInputComponent.registerGlobalPlayerActionEvents = Utils.appendedFunction(PlayerInputComponent.registerGlobalPlayerActionEvents, ADFleetGui.registerPlayerActionEvents)
+end

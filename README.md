@@ -66,7 +66,7 @@ The route between the two waypoints is the shortest chain of connections. Only w
 **Show** (or a double click) marks the problem with a pulsing red beacon. If it is out of sight, a red arrow at your vehicle points the way. The check only reads the network, it changes nothing. It also looks at things the road network debug markers can't see, like whole parts of the network that can't be left, and it doesn't add debug targets to your map.
 
 ### Fleet overview
-**Ctrl+Alt+I** lists every AutoDrive vehicle of your farm: name, mode, destination, load, fuel, work schedule and what it is doing. A stopped vehicle shows its latest warning or error from the notifications. **Enter vehicle** (or a double click) takes you to it, **Start / stop** starts or stops its job. The list updates every second.
+**Ctrl+Alt+I** (in a vehicle or on foot) lists every AutoDrive vehicle of your farm: name, mode, destination, load, fuel, work schedule and what it is doing. A stopped vehicle shows its latest warning or error from the notifications. **Enter vehicle** (or a double click) takes you to it, **Start / stop** starts or stops its job. The list updates every second.
 
 **Statistics** switches the list to the driver statistics, counted while AutoDrive drives the vehicle: distance, time driving, time standing and waiting (with its share of the total), deliveries and the amount unloaded. A delivery is counted when the vehicle's load goes down by at least 500 l (or a quarter of a smaller trailer) and then stays. In this view, **Reset statistics** sets the selected vehicle back to zero. The numbers are saved with the savegame.
 
@@ -92,7 +92,7 @@ New vehicle settings **Start work at** and **Stop work at** (in-game hours, `--:
 | Route check | Ctrl + Alt + N |
 | Fleet overview | Ctrl + Alt + I |
 
-All key bindings can be changed in the game's control settings. Like AutoDrive's other keys, they work while you sit in a vehicle.
+All key bindings can be changed in the game's control settings. Like AutoDrive's other keys, they work while you sit in a vehicle; the fleet overview also works on foot.
 
 ### Notes
 - The mod keeps the name `FS25_AutoDrive`, so it replaces the official AutoDrive mod: install either one, not both. Savegames, routes and settings of the official version keep working.

@@ -184,4 +184,21 @@ s.execute("HEADER.extraHeight = 0.025")  # second line of text
 assert s.eval("HEADER:hit(0.6, 0.835, 0)") and not s.eval("HEADER:hit(0.6, 0.85, 0)")
 assert not s.eval("ICON:hit(0.6, 0.835, 0)")  # only the header grows
 
-print("OK: schedule (13 hour cases, start/stop/finish round), best price, fleet rows, route check screen, header grab area")
+# --- fleet overview key on foot: registered for the player, not again in a vehicle
+s.execute("""
+    REGISTERED = {}
+    InputAction = {ADFleet = "ADFleet"}
+    Utils = Utils or {}
+    Utils.appendedFunction = function(original, extra) return function(...) original(...); extra(...) end end
+    PlayerInputComponent = {registerGlobalPlayerActionEvents = function(self, controlling) end}
+    g_inputBinding = {registerActionEvent = function(self, action, target, callback) table.insert(REGISTERED, {action, callback}); return true, "id" .. #REGISTERED end,
+        setActionEventTextVisibility = function() end}
+    FLEET_OPENED = 0; AutoDrive.onOpenFleet = function() FLEET_OPENED = FLEET_OPENED + 1 end
+""")
+s.execute(t.read(os.path.join(t.MOD, "scripts", "Gui", "FleetGUI.lua")))
+s.execute("PlayerInputComponent:registerGlobalPlayerActionEvents('VEHICLE')")
+assert s.eval("#REGISTERED") == 0
+s.execute("PlayerInputComponent:registerGlobalPlayerActionEvents('PLAYER'); REGISTERED[1][2]()")
+assert s.eval("REGISTERED[1][1]") == "ADFleet" and s.eval("FLEET_OPENED") == 1
+
+print("OK: schedule (13 hour cases, start/stop/finish round), best price, fleet rows, route check screen, header grab area, fleet key on foot")
