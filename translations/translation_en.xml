@@ -528,6 +528,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Fleet overview - statistics, today" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Fleet overview - statistics, last 7 days" />
 		<text name="AD_stats_income"							 text="about %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Waypoint action: unlock load (tension belts), lock again when driving on" />
+		<text name="AD_action_unlock"							 text="unlock load" />
 		<text name="AD_routeCheck_loose"								 text="Loose waypoint without any connection" />
 		<text name="AD_routeCheck_deadEnd"							 text="Dead end: no way on from this waypoint" />
 		<text name="AD_routeCheck_trap"								 text="One-way trap: %s waypoints you can drive into but not out of" />

@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Przegląd floty - statystyki, dzisiaj" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Przegląd floty - statystyki, ostatnie 7 dni" />
 		<text name="AD_stats_income"							 text="ok. %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Akcja punktu: odblokuj ładunek (pasy), zablokuj ponownie przy odjeździe" />
+		<text name="AD_action_unlock"							 text="odblokuj ładunek" />
 		<text name="AD_routeCheck_loose"								 text="Luźny punkt trasy bez żadnego połączenia" />
 		<text name="AD_routeCheck_deadEnd"							 text="Ślepa uliczka: z tego punktu trasy nie ma dalszej drogi" />
 		<text name="AD_routeCheck_trap"								 text="Pułapka jednokierunkowa: punkty trasy, do których można wjechać, ale nie można wyjechać: %s" />

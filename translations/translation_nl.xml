@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Vlootoverzicht - statistieken, vandaag" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Vlootoverzicht - statistieken, laatste 7 dagen" />
 		<text name="AD_stats_income"							 text="ca. %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Routepuntactie: lading losmaken (spanbanden), weer vastzetten bij het verder rijden" />
+		<text name="AD_action_unlock"							 text="lading losmaken" />
 		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
 		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
 		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />

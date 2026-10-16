@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Resumen de la flota - estadísticas, hoy" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Resumen de la flota - estadísticas, últimos 7 días" />
 		<text name="AD_stats_income"							 text="aprox. %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Acción del punto: soltar la carga (cinchas), volver a asegurarla al seguir" />
+		<text name="AD_action_unlock"							 text="soltar la carga" />
 		<text name="AD_routeCheck_loose"								 text="Punto de ruta suelto sin ninguna conexión" />
 		<text name="AD_routeCheck_deadEnd"							 text="Callejón sin salida: no hay forma de seguir desde este punto de ruta" />
 		<text name="AD_routeCheck_trap"								 text="Trampa de sentido único: %s puntos de ruta en los que se puede entrar pero no salir" />

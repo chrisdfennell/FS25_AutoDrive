@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Обзор автопарка - статистика, сегодня" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Обзор автопарка - статистика, последние 7 дней" />
 		<text name="AD_stats_income"							 text="около %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Действие точки: ослабить груз (стяжные ремни), снова закрепить при отъезде" />
+		<text name="AD_action_unlock"							 text="ослабить груз" />
 		<text name="AD_routeCheck_loose"								 text="Одиночная путевая точка без соединений" />
 		<text name="AD_routeCheck_deadEnd"							 text="Тупик: от этой путевой точки дальше пути нет" />
 		<text name="AD_routeCheck_trap"								 text="Односторонняя ловушка: путевых точек, куда можно въехать, но нельзя выехать: %s" />

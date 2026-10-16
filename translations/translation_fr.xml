@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Aperçu de la flotte - statistiques, aujourd'hui" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Aperçu de la flotte - statistiques, 7 derniers jours" />
 		<text name="AD_stats_income"							 text="environ %s" />
+		<text name="input_ADActionUnlock"							 text="AD : Action du point : détacher le chargement (sangles), rattacher en repartant" />
+		<text name="AD_action_unlock"							 text="détacher le chargement" />
 		<text name="AD_routeCheck_loose"								 text="Point de passage isolé sans aucune connexion" />
 		<text name="AD_routeCheck_deadEnd"							 text="Impasse : aucun chemin à partir de ce point de passage" />
 		<text name="AD_routeCheck_trap"								 text="Piège à sens unique : %s points de passage où l'on peut entrer mais d'où l'on ne peut pas sortir" />

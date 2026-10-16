@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Přehled vozového parku - statistiky, dnes" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Přehled vozového parku - statistiky, posledních 7 dní" />
 		<text name="AD_stats_income"							 text="cca %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Akce bodu trasy: uvolnit náklad (upínací pásy), při odjezdu znovu zajistit" />
+		<text name="AD_action_unlock"							 text="uvolnit náklad" />
 		<text name="AD_routeCheck_loose"								 text="Osamocený bod trasy bez jakéhokoli spojení" />
 		<text name="AD_routeCheck_deadEnd"							 text="Slepá ulice: z tohoto bodu trasy nevede žádná cesta dál" />
 		<text name="AD_routeCheck_trap"								 text="Jednosměrná past: počet bodů trasy, do kterých lze vjet, ale ne vyjet: %s" />

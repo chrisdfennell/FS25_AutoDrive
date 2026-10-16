@@ -74,6 +74,7 @@ ADInputManager.actionsToInputs = {
     {"ADActionWait", "input_actionWait", false, false},
     {"ADActionHorn", "input_actionHorn", false, false},
     {"ADActionLights", "input_actionLights", false, false},
+    {"ADActionUnlock", "input_actionUnlock", false, false},
     {"ADRoutePreview", "input_routePreview", false, false}
 }
 
@@ -221,6 +222,10 @@ end
 
 function ADInputManager:input_actionLights(vehicle)
     ADWaypointActions.edit(vehicle, ADWaypointActions.nextLights)
+end
+
+function ADInputManager:input_actionUnlock(vehicle)
+    ADWaypointActions.edit(vehicle, ADWaypointActions.toggleUnlock)
 end
 
 function ADInputManager:input_routePreview(vehicle)

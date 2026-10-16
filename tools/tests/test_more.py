@@ -81,6 +81,40 @@ assert list(s.eval("LIGHTS").values()) == [1, 0]
 s.execute("ADWaypointActions.onReached(DRIVER, {flags = 1})")  # no actions: nothing happens
 assert s.eval("DRIVER.ad.actionWaitUntil") is None
 
+# --- unlock load: belts open at the waypoint, closed again when a new route starts or the vehicle drives on
+s.execute("""
+    U = A.toggleUnlock(A.toggleHorn(1))
+    BELTS = {}
+    TRAILER = {setAllTensionBeltsActive = function(self, active) table.insert(BELTS, active) end}
+    AutoDrive.getAllUnits = function(v) return {v, TRAILER} end
+    PATH = {{id = 50}, {id = 51}}
+    CURRENT = PATH[1]
+    DRIVER.ad.drivePathModule = {getWayPoints = function() return CURRENT_PATH end, getCurrentWayPoint = function() return CURRENT end}
+    CURRENT_PATH = PATH
+""")
+assert s.eval("A.hasUnlock(U)") and s.eval("A.hasHorn(U)") and s.eval("U % 1024") == 1 and s.eval("U < 2^17")
+assert s.eval("A.getText(U)") == "horn, unlock load"
+assert s.eval("A.getActionBits(A.keepActions(U, 0))") == s.eval("A.getActionBits(U)")
+s.execute("ADWaypointActions.onReached(DRIVER, {id = 50, flags = U})")
+assert list(s.eval("BELTS").values()) == [False]  # the trailer, the truck has no belts
+# standing at the target (no route): stays open; same route, same waypoint: stays open
+s.execute("CURRENT_PATH = nil; ADWaypointActions.updateWaiting(DRIVER, 16); CURRENT_PATH = PATH; ADWaypointActions.updateWaiting(DRIVER, 16)")
+assert list(s.eval("BELTS").values()) == [False]
+# a new route (also starting at the same waypoint): locked again before driving off
+s.execute("CURRENT_PATH = {{id = 50}, {id = 60}}; CURRENT = CURRENT_PATH[1]; ADWaypointActions.updateWaiting(DRIVER, 16)")
+assert list(s.eval("BELTS").values()) == [False, True] and s.eval("DRIVER.ad.loadUnlockedWayPointId") is None
+s.execute("ADWaypointActions.updateWaiting(DRIVER, 16)")  # only once
+assert len(list(s.eval("BELTS").values())) == 2
+# with a wait on the same waypoint in the middle of a route: locked after the wait, when driving on
+s.execute("""
+    CURRENT_PATH = PATH; CURRENT = PATH[1]; g_time = 20000
+    ADWaypointActions.onReached(DRIVER, {id = 50, flags = A.nextWait(U)})
+    STILL = ADWaypointActions.updateWaiting(DRIVER, 16)
+""")
+assert s.eval("STILL") is True and list(s.eval("BELTS").values())[-1] is False
+s.execute("g_time = 26000; CURRENT = PATH[2]; ADWaypointActions.updateWaiting(DRIVER, 16)")
+assert list(s.eval("BELTS").values())[-1] is True
+
 # --- route check fixes
 s.execute("""
     function wp(id, x, z, out, incoming) return {id = id, x = x, y = 0, z = z, out = out, incoming = incoming, flags = 0} end

@@ -136,6 +136,7 @@ Changelog: Необходимые корректировки для FS25, нас
 		<action name="ADActionWait"/>
 		<action name="ADActionHorn"/>
 		<action name="ADActionLights"/>
+		<action name="ADActionUnlock"/>
 		<action name="ADRoutePreview"/>
 	</actions>
 
@@ -230,6 +231,9 @@ Changelog: Необходимые корректировки для FS25, нас
 		</actionBinding>
 		<actionBinding action="ADActionLights">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_l" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADActionUnlock">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_b" axisComponent="+" neutralInput="0" index="1" />
 		</actionBinding>
 		<actionBinding action="ADRoutePreview">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_p" axisComponent="+" neutralInput="0" index="1" />

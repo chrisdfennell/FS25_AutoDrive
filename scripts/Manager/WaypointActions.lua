@@ -4,14 +4,16 @@
 --   bits 10..12  wait time index (WAIT_TIMES)
 --   bit  13      horn
 --   bits 14..15  lights: 0 unchanged, 1 on, 2 off
+--   bit  16      unlock load: open the tension belts there, close them again when driving on
 
 ADWaypointActions = {}
 
 ADWaypointActions.WAIT_SHIFT = 10
 ADWaypointActions.HORN_SHIFT = 13
 ADWaypointActions.LIGHTS_SHIFT = 14
-ADWaypointActions.ACTION_MASK_START = 2 ^ 10 -- all bits from here up to bit 15 are action bits
-ADWaypointActions.ACTION_BITS_END = 2 ^ 16
+ADWaypointActions.UNLOCK_SHIFT = 16
+ADWaypointActions.ACTION_MASK_START = 2 ^ 10 -- all bits from here up to bit 16 are action bits
+ADWaypointActions.ACTION_BITS_END = 2 ^ 17
 
 ADWaypointActions.WAIT_TIMES = {[0] = 0, 5, 10, 20, 30, 60, 120, 300}
 ADWaypointActions.LIGHTS_UNCHANGED = 0
@@ -48,6 +50,10 @@ function ADWaypointActions.getLights(flags)
     return getField(flags, ADWaypointActions.LIGHTS_SHIFT, 4)
 end
 
+function ADWaypointActions.hasUnlock(flags)
+    return getField(flags, ADWaypointActions.UNLOCK_SHIFT, 2) == 1
+end
+
 -- the action part of the flags (0 if the waypoint has no action)
 function ADWaypointActions.getActionBits(flags)
     flags = flags or 0
@@ -78,6 +84,14 @@ function ADWaypointActions.toggleHorn(flags)
     return setField(flags, ADWaypointActions.HORN_SHIFT, 2, value)
 end
 
+function ADWaypointActions.toggleUnlock(flags)
+    local value = 1
+    if ADWaypointActions.hasUnlock(flags) then
+        value = 0
+    end
+    return setField(flags, ADWaypointActions.UNLOCK_SHIFT, 2, value)
+end
+
 function ADWaypointActions.nextLights(flags)
     return setField(flags, ADWaypointActions.LIGHTS_SHIFT, 4, (ADWaypointActions.getLights(flags) + 1) % 3)
 end
@@ -97,6 +111,9 @@ function ADWaypointActions.getText(flags)
         table.insert(parts, g_i18n:getText("AD_action_lightsOn"))
     elseif lights == ADWaypointActions.LIGHTS_OFF then
         table.insert(parts, g_i18n:getText("AD_action_lightsOff"))
+    end
+    if ADWaypointActions.hasUnlock(flags) then
+        table.insert(parts, g_i18n:getText("AD_action_unlock"))
     end
     if #parts == 0 then
         return nil
@@ -178,6 +195,11 @@ function ADWaypointActions.onReached(vehicle, wp)
         vehicle:playHonk(true)
         vehicle.ad.actionHornUntil = g_time + ADWaypointActions.HORN_DURATION
     end
+    if ADWaypointActions.hasUnlock(wp.flags) then
+        ADWaypointActions.setBeltsActive(vehicle, false)
+        vehicle.ad.loadUnlockedWayPointId = wp.id
+        vehicle.ad.loadUnlockedPath = vehicle.ad.drivePathModule ~= nil and vehicle.ad.drivePathModule:getWayPoints() or nil
+    end
     local lights = ADWaypointActions.getLights(wp.flags)
     if lights ~= ADWaypointActions.LIGHTS_UNCHANGED and vehicle.setLightsTypesMask ~= nil then
         if lights == ADWaypointActions.LIGHTS_ON then
@@ -185,6 +207,34 @@ function ADWaypointActions.onReached(vehicle, wp)
         else
             vehicle:setLightsTypesMask(0)
         end
+    end
+end
+
+-- tension belts of the vehicle and everything attached (like the lock load key)
+function ADWaypointActions.setBeltsActive(vehicle, active)
+    for _, unit in ipairs(AutoDrive.getAllUnits(vehicle) or {}) do
+        if unit.setAllTensionBeltsActive ~= nil then
+            unit:setAllTensionBeltsActive(active, false)
+        end
+    end
+end
+
+-- after an unlock: lock the load again as soon as the vehicle gets a new route or drives on to another waypoint
+function ADWaypointActions.relockWhenLeaving(vehicle)
+    local ad = vehicle.ad
+    if ad.loadUnlockedWayPointId == nil or ad.drivePathModule == nil then
+        return
+    end
+    local wayPoints = ad.drivePathModule:getWayPoints()
+    if wayPoints == nil or #wayPoints == 0 then
+        -- standing at the target, e.g. while unloading
+        return
+    end
+    local current = ad.drivePathModule:getCurrentWayPoint()
+    if wayPoints ~= ad.loadUnlockedPath or current == nil or current.id ~= ad.loadUnlockedWayPointId then
+        ADWaypointActions.setBeltsActive(vehicle, true)
+        ad.loadUnlockedWayPointId = nil
+        ad.loadUnlockedPath = nil
     end
 end
 
@@ -197,14 +247,14 @@ function ADWaypointActions.updateWaiting(vehicle, dt)
             vehicle:playHonk(false)
         end
     end
-    if ad.actionWaitUntil == nil then
-        return false
-    end
-    if g_time > ad.actionWaitUntil or not ad.stateModule:isActive() then
+    if ad.actionWaitUntil ~= nil then
+        if g_time <= ad.actionWaitUntil and ad.stateModule:isActive() then
+            ad.specialDrivingModule:stopVehicle()
+            ad.specialDrivingModule:update(dt)
+            return true
+        end
         ad.actionWaitUntil = nil
-        return false
     end
-    ad.specialDrivingModule:stopVehicle()
-    ad.specialDrivingModule:update(dt)
-    return true
+    ADWaypointActions.relockWhenLeaving(vehicle)
+    return false
 end

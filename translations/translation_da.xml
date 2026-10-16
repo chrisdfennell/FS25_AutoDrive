@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Flådeoversigt - statistik, i dag" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Flådeoversigt - statistik, sidste 7 dage" />
 		<text name="AD_stats_income"							 text="ca. %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Rutepunkthandling: løsn læsset (spændebånd), spænd igen ved afkørsel" />
+		<text name="AD_action_unlock"							 text="løsn læsset" />
 		<text name="AD_routeCheck_loose"								 text="Løst vejpunkt uden nogen forbindelse" />
 		<text name="AD_routeCheck_deadEnd"							 text="Blindgyde: ingen vej videre fra dette vejpunkt" />
 		<text name="AD_routeCheck_trap"								 text="Ensrettet fælde: %s vejpunkter, man kan køre ind i, men ikke ud af" />

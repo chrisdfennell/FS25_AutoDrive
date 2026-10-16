@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="车队概览 - 统计，今天" />
 		<text name="gui_ad_fleetTitleWeek"							 text="车队概览 - 统计，最近 7 天" />
 		<text name="AD_stats_income"							 text="约 %s" />
+		<text name="input_ADActionUnlock"							 text="AD：航点动作：松开货物（捆绑带），继续行驶时重新固定" />
+		<text name="AD_action_unlock"							 text="松开货物" />
 		<text name="AD_routeCheck_loose"								 text="没有任何连接的孤立航点" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：从此航点无法继续前进" />
 		<text name="AD_routeCheck_trap"								 text="单向陷阱：%s 个航点只能驶入无法驶出" />

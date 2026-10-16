@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Filoya genel bakış - istatistikler, bugün" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Filoya genel bakış - istatistikler, son 7 gün" />
 		<text name="AD_stats_income"							 text="yaklaşık %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Nokta eylemi: yükü çöz (spanzet), yola devam ederken tekrar bağla" />
+		<text name="AD_action_unlock"							 text="yükü çöz" />
 		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
 		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
 		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />

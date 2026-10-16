@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Flottenübersicht - Statistik, heute" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Flottenübersicht - Statistik, letzte 7 Tage" />
 		<text name="AD_stats_income"							 text="ca. %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Wegpunkt-Aktion: Ladung entsichern (Spanngurte), beim Weiterfahren wieder sichern" />
+		<text name="AD_action_unlock"							 text="Ladung entsichern" />
 		<text name="AD_routeCheck_loose"								 text="Loser Wegpunkt ohne jede Verbindung" />
 		<text name="AD_routeCheck_deadEnd"							 text="Sackgasse: von diesem Wegpunkt geht es nicht weiter" />
 		<text name="AD_routeCheck_trap"								 text="Einbahn-Falle: %s Wegpunkte, in die man hinein-, aber nicht wieder herausfahren kann" />

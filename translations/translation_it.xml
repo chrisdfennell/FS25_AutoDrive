@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Panoramica della flotta - statistiche, oggi" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Panoramica della flotta - statistiche, ultimi 7 giorni" />
 		<text name="AD_stats_income"							 text="circa %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Azione del nodo: sblocca il carico (cinghie), bloccalo di nuovo ripartendo" />
+		<text name="AD_action_unlock"							 text="sblocca il carico" />
 		<text name="AD_routeCheck_loose"								 text="Nodo isolato senza alcun collegamento" />
 		<text name="AD_routeCheck_deadEnd"							 text="Vicolo cieco: nessuna via per proseguire da questo nodo" />
 		<text name="AD_routeCheck_trap"								 text="Trappola a senso unico: %s nodi in cui si può entrare ma da cui non si può uscire" />

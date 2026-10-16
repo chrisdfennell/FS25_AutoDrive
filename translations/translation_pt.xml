@@ -525,6 +525,8 @@
 		<text name="gui_ad_fleetTitleToday"							 text="Visão geral da frota - estatísticas, hoje" />
 		<text name="gui_ad_fleetTitleWeek"							 text="Visão geral da frota - estatísticas, últimos 7 dias" />
 		<text name="AD_stats_income"							 text="cerca de %s" />
+		<text name="input_ADActionUnlock"							 text="AD: Ação do waypoint: soltar a carga (cintas), voltar a prender ao seguir" />
+		<text name="AD_action_unlock"							 text="soltar a carga" />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem qualquer ligação" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há caminho a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de sentido único: %s waypoints onde se pode entrar mas não sair" />

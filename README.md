@@ -77,6 +77,7 @@ In the editor, point the mouse at a waypoint (or select one) and press:
 - **Ctrl+Alt+W**: vehicles wait there (each press: 5, 10, 20, 30, 60, 120, 300 seconds, off)
 - **Ctrl+Alt+H**: vehicles sound the horn there
 - **Ctrl+Alt+L**: vehicles switch the lights on there, off there, or leave them (each press)
+- **Ctrl+Alt+B**: unlock load: the tension belts of the vehicle and its trailers open there (like the lock load key), and close again before the vehicle drives on. The vehicle has to stop there: use it on the selling target, or add a wait on the same waypoint
 
 Waypoints with actions get an orange marker with the actions written above it. Every change is one undo step. The actions are stored in the waypoint data, so they are saved, exported with the routes manager and sent to all players. The official AutoDrive ignores them.
 
@@ -111,6 +112,7 @@ New vehicle settings **Start work at** and **Stop work at** (in-game hours, `--:
 | Waypoint action: wait | Ctrl + Alt + W |
 | Waypoint action: horn | Ctrl + Alt + H |
 | Waypoint action: lights | Ctrl + Alt + L |
+| Waypoint action: unlock load | Ctrl + Alt + B |
 | Route preview | Ctrl + Alt + P |
 
 All key bindings can be changed in the game's control settings. Like AutoDrive's other keys, they work while you sit in a vehicle; the fleet overview also works on foot.
