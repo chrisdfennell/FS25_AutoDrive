@@ -494,6 +494,38 @@
 		<text name="AD_stats_waiting"							 text="waiting %s (%s)" />
 		<text name="AD_stats_loads"							 text="deliveries: %s" />
 		<text name="AD_stats_unloaded"							 text="%s unloaded" />
+		<text name="input_ADActionWait"							 text="AD: Waypoint action: wait (0, 5, 10, 20, 30, 60, 120, 300 s)" />
+		<text name="input_ADActionHorn"							 text="AD: Waypoint action: horn on / off" />
+		<text name="input_ADActionLights"							 text="AD: Waypoint action: lights on / off / unchanged" />
+		<text name="input_ADRoutePreview"							 text="AD: Show the route to the destination" />
+		<text name="AD_action_wait"							 text="wait %s s" />
+		<text name="AD_action_horn"							 text="horn" />
+		<text name="AD_action_lightsOn"							 text="lights on" />
+		<text name="AD_action_lightsOff"							 text="lights off" />
+		<text name="AD_action_none"							 text="no action" />
+		<text name="AD_action_set"							 text="Waypoint action: %s (Ctrl+Z to undo)" />
+		<text name="AD_action_howTo"							 text="Waypoint actions: in the editor, point the mouse at a waypoint (or select one) and press the key" />
+		<text name="AD_undoStep_wpAction_1"							 text="waypoint action changed" />
+		<text name="AD_undoStep_wpAction"							 text="%s waypoint actions changed" />
+		<text name="AD_preview_noRoute"							 text="No route found to &quot;%s&quot;" />
+		<text name="AD_preview_noTarget"							 text="No destination set" />
+		<text name="AD_preview_leg"							 text="To %s: %s, about %s" />
+		<text name="AD_sendTo_driving"							 text="drives to" />
+		<text name="gui_ad_sendToTitle"							 text="Send to" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="Send %s to" />
+		<text name="button_ad_send"							 text="Send" />
+		<text name="button_ad_fix"							 text="Fix" />
+		<text name="AD_routeCheck_fixed"							 text="Fixed: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="The route network has changed, check again first" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="Both waypoints have targets, they can not be merged" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="No waypoint within 30 m to connect to" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="This problem can not be fixed automatically, use Show to find it" />
+		<text name="button_ad_statsToday"							 text="Today" />
+		<text name="button_ad_statsWeek"							 text="Last 7 days" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Fleet overview - statistics, total" />
+		<text name="gui_ad_fleetTitleToday"							 text="Fleet overview - statistics, today" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Fleet overview - statistics, last 7 days" />
+		<text name="AD_stats_income"							 text="about %s" />
 		<text name="AD_routeCheck_loose"								 text="Loose waypoint without any connection" />
 		<text name="AD_routeCheck_deadEnd"							 text="Dead end: no way on from this waypoint" />
 		<text name="AD_routeCheck_trap"								 text="One-way trap: %s waypoints you can drive into but not out of" />

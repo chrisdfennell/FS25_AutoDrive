@@ -133,6 +133,10 @@ Changelog: Необходимые корректировки для FS25, нас
 		<action name="ADTidySmooth"/>
 		<action name="ADRouteCheck"/>
 		<action name="ADFleet"/>
+		<action name="ADActionWait"/>
+		<action name="ADActionHorn"/>
+		<action name="ADActionLights"/>
+		<action name="ADRoutePreview"/>
 	</actions>
 
 	<inputBinding>
@@ -217,6 +221,18 @@ Changelog: Необходимые корректировки для FS25, нас
 		</actionBinding>
 		<actionBinding action="ADRouteCheck">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_n" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADActionWait">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_w" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADActionHorn">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_h" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADActionLights">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_l" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADRoutePreview">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_p" axisComponent="+" neutralInput="0" index="1" />
 		</actionBinding>
 		<actionBinding action="ADFleet">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_i" axisComponent="+" neutralInput="0" index="1" />

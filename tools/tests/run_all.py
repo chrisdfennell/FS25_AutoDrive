@@ -43,6 +43,7 @@ def main():
         run("test_tidy.py"),
         run("test_features.py"),
         run("test_statistics.py"),
+        run("test_more.py"),
     ]
     if not all(results):
         sys.exit(1)

@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="čekání %s (%s)" />
 		<text name="AD_stats_loads"							 text="dodávky: %s" />
 		<text name="AD_stats_unloaded"							 text="vyloženo %s" />
+		<text name="input_ADActionWait"							 text="AD: Akce bodu trasy: čekat (0, 5, 10, 20, 30, 60, 120, 300 s)" />
+		<text name="input_ADActionHorn"							 text="AD: Akce bodu trasy: houkačka zapnuta / vypnuta" />
+		<text name="input_ADActionLights"							 text="AD: Akce bodu trasy: světla zapnuta / vypnuta / beze změny" />
+		<text name="input_ADRoutePreview"							 text="AD: Zobrazit trasu do cíle" />
+		<text name="AD_action_wait"							 text="čekat %s s" />
+		<text name="AD_action_horn"							 text="houkačka" />
+		<text name="AD_action_lightsOn"							 text="světla zapnuta" />
+		<text name="AD_action_lightsOff"							 text="světla vypnuta" />
+		<text name="AD_action_none"							 text="žádná akce" />
+		<text name="AD_action_set"							 text="Akce bodu trasy: %s (Ctrl+Z pro vrácení)" />
+		<text name="AD_action_howTo"							 text="Akce bodů trasy: v editoru najeďte myší na bod trasy (nebo jeden vyberte) a stiskněte klávesu" />
+		<text name="AD_undoStep_wpAction_1"							 text="akce bodu trasy změněna" />
+		<text name="AD_undoStep_wpAction"							 text="změněno akcí bodů trasy: %s" />
+		<text name="AD_preview_noRoute"							 text="Nenalezena žádná trasa do &quot;%s&quot;" />
+		<text name="AD_preview_noTarget"							 text="Není nastaven žádný cíl" />
+		<text name="AD_preview_leg"							 text="Do cíle %s: %s, přibližně %s" />
+		<text name="AD_sendTo_driving"							 text="jede do" />
+		<text name="gui_ad_sendToTitle"							 text="Poslat do" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="Poslat %s do" />
+		<text name="button_ad_send"							 text="Poslat" />
+		<text name="button_ad_fix"							 text="Opravit" />
+		<text name="AD_routeCheck_fixed"							 text="Opraveno: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="Síť tras se změnila, nejprve zkontrolujte znovu" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="Oba body trasy mají cíle, nelze je sloučit" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="Žádný bod trasy do 30 m, ke kterému by se dalo připojit" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Tento problém nelze opravit automaticky, najděte ho pomocí Zobrazit" />
+		<text name="button_ad_statsToday"							 text="Dnes" />
+		<text name="button_ad_statsWeek"							 text="Posledních 7 dní" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Přehled vozového parku - statistiky, celkem" />
+		<text name="gui_ad_fleetTitleToday"							 text="Přehled vozového parku - statistiky, dnes" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Přehled vozového parku - statistiky, posledních 7 dní" />
+		<text name="AD_stats_income"							 text="cca %s" />
 		<text name="AD_routeCheck_loose"								 text="Osamocený bod trasy bez jakéhokoli spojení" />
 		<text name="AD_routeCheck_deadEnd"							 text="Slepá ulice: z tohoto bodu trasy nevede žádná cesta dál" />
 		<text name="AD_routeCheck_trap"								 text="Jednosměrná past: počet bodů trasy, do kterých lze vjet, ale ne vyjet: %s" />

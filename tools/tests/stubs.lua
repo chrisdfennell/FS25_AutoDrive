@@ -111,3 +111,6 @@ AutoDriveSync = {
 
 LOGS = {}
 Logging.info = function(fmt, ...) table.insert(LOGS, string.format(fmt, ...)) end
+
+-- Lua 5.1 (the game) has math.atan2, Lua 5.3+ only math.atan(y, x)
+math.atan2 = math.atan2 or function(y, x) return math.atan(y, x) end

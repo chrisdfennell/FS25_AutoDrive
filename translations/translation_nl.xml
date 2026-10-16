@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="wacht %s (%s)" />
 		<text name="AD_stats_loads"							 text="leveringen: %s" />
 		<text name="AD_stats_unloaded"							 text="%s gelost" />
+		<text name="input_ADActionWait"							 text="AD: Routepuntactie: wachten (0, 5, 10, 20, 30, 60, 120, 300 s)" />
+		<text name="input_ADActionHorn"							 text="AD: Routepuntactie: claxon aan / uit" />
+		<text name="input_ADActionLights"							 text="AD: Routepuntactie: lichten aan / uit / ongewijzigd" />
+		<text name="input_ADRoutePreview"							 text="AD: Route naar de bestemming tonen" />
+		<text name="AD_action_wait"							 text="%s s wachten" />
+		<text name="AD_action_horn"							 text="claxon" />
+		<text name="AD_action_lightsOn"							 text="lichten aan" />
+		<text name="AD_action_lightsOff"							 text="lichten uit" />
+		<text name="AD_action_none"							 text="geen actie" />
+		<text name="AD_action_set"							 text="Routepuntactie: %s (Ctrl+Z om ongedaan te maken)" />
+		<text name="AD_action_howTo"							 text="Routepuntacties: wijs in de editor met de muis een routepunt aan (of selecteer er een) en druk op de toets" />
+		<text name="AD_undoStep_wpAction_1"							 text="routepuntactie gewijzigd" />
+		<text name="AD_undoStep_wpAction"							 text="%s routepuntacties gewijzigd" />
+		<text name="AD_preview_noRoute"							 text="Geen route gevonden naar &quot;%s&quot;" />
+		<text name="AD_preview_noTarget"							 text="Geen bestemming ingesteld" />
+		<text name="AD_preview_leg"							 text="Naar %s: %s, ongeveer %s" />
+		<text name="AD_sendTo_driving"							 text="rijdt naar" />
+		<text name="gui_ad_sendToTitle"							 text="Sturen naar" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="%s sturen naar" />
+		<text name="button_ad_send"							 text="Sturen" />
+		<text name="button_ad_fix"							 text="Herstellen" />
+		<text name="AD_routeCheck_fixed"							 text="Hersteld: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="Het routenetwerk is gewijzigd, controleer eerst opnieuw" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="Beide routepunten hebben bestemmingen, ze kunnen niet worden samengevoegd" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="Geen routepunt binnen 30 m om mee te verbinden" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Dit probleem kan niet automatisch worden hersteld, gebruik Tonen om het te vinden" />
+		<text name="button_ad_statsToday"							 text="Vandaag" />
+		<text name="button_ad_statsWeek"							 text="Laatste 7 dagen" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Vlootoverzicht - statistieken, totaal" />
+		<text name="gui_ad_fleetTitleToday"							 text="Vlootoverzicht - statistieken, vandaag" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Vlootoverzicht - statistieken, laatste 7 dagen" />
+		<text name="AD_stats_income"							 text="ca. %s" />
 		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
 		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
 		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />

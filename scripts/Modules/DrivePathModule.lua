@@ -169,6 +169,10 @@ function ADDrivePathModule:update(dt)
         self.vehicle.ad.specialDrivingModule:update(dt)
         return
     end
+    -- Overdrive: waiting at a waypoint with a wait action
+    if ADWaypointActions.updateWaiting(self.vehicle, dt) then
+        return
+    end
 
     if self.wayPoints ~= nil and self:getCurrentWayPointIndex() <= #self.wayPoints then
         if self.isReversing then
@@ -398,6 +402,8 @@ function ADDrivePathModule:handleReachedWayPoint()
     end
     -- while driving forward the lastUsedWayPoint could be used to continue in next drive
     self.lastUsedWayPoint = self:getCurrentWayPoint()
+    -- Overdrive: wait / horn / lights of the reached waypoint
+    ADWaypointActions.onReached(self.vehicle, self:getCurrentWayPoint())
     if self:getNextWayPoint() ~= nil then
         self:switchToNextWayPoint()
     else

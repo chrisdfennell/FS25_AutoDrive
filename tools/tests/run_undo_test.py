@@ -31,6 +31,7 @@ def make_runtime(is_server):
         lua.execute("g_server = nil")
     lua.execute("g_client = nil")
     lua.execute(read(os.path.join(MOD, "scripts", "Manager", "GraphManager.lua")))
+    lua.execute(read(os.path.join(MOD, "scripts", "Manager", "WaypointActions.lua")))
     lua.execute(read(os.path.join(MOD, "scripts", "Manager", "UndoManager.lua")))
     lua.execute(read(os.path.join(MOD, "scripts", "Events", "Graph", "UndoRedoEvent.lua")))
     texts = lua.eval("{}")

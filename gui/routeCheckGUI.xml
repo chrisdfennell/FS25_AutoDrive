@@ -26,6 +26,8 @@
             </BoxLayout>
 
             <BoxLayout profile="ad_common_dialogButtonBox">
+                <Button profile="buttonOK" text="$l10n_button_ad_fix" onClick="onClickFix"/>
+                <Bitmap profile="fs25_dialogButtonBoxSeparator"/>
                 <Button profile="buttonActivate" text="$l10n_button_ad_show" onClick="onClickShow"/>
                 <Bitmap profile="fs25_dialogButtonBoxSeparator"/>
                 <Button profile="buttonCancel" text="$l10n_button_ad_checkAgain" onClick="onClickCheckAgain"/>

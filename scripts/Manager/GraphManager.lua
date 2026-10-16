@@ -2194,7 +2194,9 @@ function ADGraphManager:setWayPointsFlagsInSection(startNodeId, nextNodeId, flag
         if sectionWayPoints ~= nil and #sectionWayPoints > 2 then
             for i = 2, #sectionWayPoints - 1 do
                 -- do not set start and end wayPoint as these are the connections to other lines
-                ADGraphManager:setWayPointFlags(sectionWayPoints[i], flags, false)
+                local sectionWayPoint = ADGraphManager:getWayPointById(sectionWayPoints[i])
+                -- the waypoint actions stay
+                ADGraphManager:setWayPointFlags(sectionWayPoints[i], ADWaypointActions.keepActions(sectionWayPoint and sectionWayPoint.flags, flags), false)
             end
         end
         ADUndoManager:endStep()

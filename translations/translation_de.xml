@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="wartet %s (%s)" />
 		<text name="AD_stats_loads"							 text="Lieferungen: %s" />
 		<text name="AD_stats_unloaded"							 text="%s abgeladen" />
+		<text name="input_ADActionWait"							 text="AD: Wegpunktaktion: warten (0, 5, 10, 20, 30, 60, 120, 300 s)" />
+		<text name="input_ADActionHorn"							 text="AD: Wegpunktaktion: Hupe an / aus" />
+		<text name="input_ADActionLights"							 text="AD: Wegpunktaktion: Licht an / aus / unverändert" />
+		<text name="input_ADRoutePreview"							 text="AD: Route zum Ziel anzeigen" />
+		<text name="AD_action_wait"							 text="%s s warten" />
+		<text name="AD_action_horn"							 text="Hupe" />
+		<text name="AD_action_lightsOn"							 text="Licht an" />
+		<text name="AD_action_lightsOff"							 text="Licht aus" />
+		<text name="AD_action_none"							 text="keine Aktion" />
+		<text name="AD_action_set"							 text="Wegpunktaktion: %s (rückgängig mit Ctrl+Z)" />
+		<text name="AD_action_howTo"							 text="Wegpunktaktionen: im Editor mit der Maus auf einen Wegpunkt zeigen (oder einen auswählen) und die Taste drücken" />
+		<text name="AD_undoStep_wpAction_1"							 text="Wegpunktaktion geändert" />
+		<text name="AD_undoStep_wpAction"							 text="%s Wegpunktaktionen geändert" />
+		<text name="AD_preview_noRoute"							 text="Keine Route zu &quot;%s&quot; gefunden" />
+		<text name="AD_preview_noTarget"							 text="Kein Ziel gewählt" />
+		<text name="AD_preview_leg"							 text="Nach %s: %s, etwa %s" />
+		<text name="AD_sendTo_driving"							 text="fährt zu" />
+		<text name="gui_ad_sendToTitle"							 text="Schicken zu" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="%s schicken zu" />
+		<text name="button_ad_send"							 text="Schicken" />
+		<text name="button_ad_fix"							 text="Beheben" />
+		<text name="AD_routeCheck_fixed"							 text="Behoben: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="Das Routennetz wurde geändert, bitte zuerst erneut prüfen" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="Beide Wegpunkte haben Ziele, sie können nicht zusammengeführt werden" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="Kein Wegpunkt innerhalb von 30 m zum Verbinden" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Dieses Problem kann nicht automatisch behoben werden, nutze Anzeigen, um es zu finden" />
+		<text name="button_ad_statsToday"							 text="Heute" />
+		<text name="button_ad_statsWeek"							 text="Letzte 7 Tage" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Flottenübersicht - Statistik, gesamt" />
+		<text name="gui_ad_fleetTitleToday"							 text="Flottenübersicht - Statistik, heute" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Flottenübersicht - Statistik, letzte 7 Tage" />
+		<text name="AD_stats_income"							 text="ca. %s" />
 		<text name="AD_routeCheck_loose"								 text="Loser Wegpunkt ohne jede Verbindung" />
 		<text name="AD_routeCheck_deadEnd"							 text="Sackgasse: von diesem Wegpunkt geht es nicht weiter" />
 		<text name="AD_routeCheck_trap"								 text="Einbahn-Falle: %s Wegpunkte, in die man hinein-, aber nicht wieder herausfahren kann" />

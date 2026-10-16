@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="czekanie %s (%s)" />
 		<text name="AD_stats_loads"							 text="dostawy: %s" />
 		<text name="AD_stats_unloaded"							 text="rozładowano %s" />
+		<text name="input_ADActionWait"							 text="AD: Akcja punktu trasy: czekaj (0, 5, 10, 20, 30, 60, 120, 300 s)" />
+		<text name="input_ADActionHorn"							 text="AD: Akcja punktu trasy: klakson włącz / wyłącz" />
+		<text name="input_ADActionLights"							 text="AD: Akcja punktu trasy: światła włącz / wyłącz / bez zmian" />
+		<text name="input_ADRoutePreview"							 text="AD: Pokaż trasę do celu" />
+		<text name="AD_action_wait"							 text="czekaj %s s" />
+		<text name="AD_action_horn"							 text="klakson" />
+		<text name="AD_action_lightsOn"							 text="światła włączone" />
+		<text name="AD_action_lightsOff"							 text="światła wyłączone" />
+		<text name="AD_action_none"							 text="brak akcji" />
+		<text name="AD_action_set"							 text="Akcja punktu trasy: %s (Ctrl+Z, aby cofnąć)" />
+		<text name="AD_action_howTo"							 text="Akcje punktów trasy: w edytorze wskaż myszą punkt trasy (lub zaznacz jeden) i naciśnij klawisz" />
+		<text name="AD_undoStep_wpAction_1"							 text="zmieniono akcję punktu trasy" />
+		<text name="AD_undoStep_wpAction"							 text="zmieniono akcje punktów trasy: %s" />
+		<text name="AD_preview_noRoute"							 text="Nie znaleziono trasy do &quot;%s&quot;" />
+		<text name="AD_preview_noTarget"							 text="Nie ustawiono celu" />
+		<text name="AD_preview_leg"							 text="Do celu %s: %s, około %s" />
+		<text name="AD_sendTo_driving"							 text="jedzie do" />
+		<text name="gui_ad_sendToTitle"							 text="Wyślij do" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="Wyślij %s do" />
+		<text name="button_ad_send"							 text="Wyślij" />
+		<text name="button_ad_fix"							 text="Napraw" />
+		<text name="AD_routeCheck_fixed"							 text="Naprawiono: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="Sieć tras zmieniła się, najpierw sprawdź ponownie" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="Oba punkty trasy mają cele, nie można ich połączyć" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="Brak punktu trasy w promieniu 30 m do połączenia" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Tego problemu nie można naprawić automatycznie, użyj Pokaż, aby go znaleźć" />
+		<text name="button_ad_statsToday"							 text="Dzisiaj" />
+		<text name="button_ad_statsWeek"							 text="Ostatnie 7 dni" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Przegląd floty - statystyki, łącznie" />
+		<text name="gui_ad_fleetTitleToday"							 text="Przegląd floty - statystyki, dzisiaj" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Przegląd floty - statystyki, ostatnie 7 dni" />
+		<text name="AD_stats_income"							 text="ok. %s" />
 		<text name="AD_routeCheck_loose"								 text="Luźny punkt trasy bez żadnego połączenia" />
 		<text name="AD_routeCheck_deadEnd"							 text="Ślepa uliczka: z tego punktu trasy nie ma dalszej drogi" />
 		<text name="AD_routeCheck_trap"								 text="Pułapka jednokierunkowa: punkty trasy, do których można wjechać, ale nie można wyjechać: %s" />

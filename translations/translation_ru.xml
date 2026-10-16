@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="ожидание %s (%s)" />
 		<text name="AD_stats_loads"							 text="доставок: %s" />
 		<text name="AD_stats_unloaded"							 text="выгружено %s" />
+		<text name="input_ADActionWait"							 text="AD: Действие путевой точки: ждать (0, 5, 10, 20, 30, 60, 120, 300 с)" />
+		<text name="input_ADActionHorn"							 text="AD: Действие путевой точки: звуковой сигнал вкл. / выкл." />
+		<text name="input_ADActionLights"							 text="AD: Действие путевой точки: свет вкл. / выкл. / без изменений" />
+		<text name="input_ADRoutePreview"							 text="AD: Показать маршрут до локации" />
+		<text name="AD_action_wait"							 text="ждать %s с" />
+		<text name="AD_action_horn"							 text="звуковой сигнал" />
+		<text name="AD_action_lightsOn"							 text="свет вкл." />
+		<text name="AD_action_lightsOff"							 text="свет выкл." />
+		<text name="AD_action_none"							 text="нет действия" />
+		<text name="AD_action_set"							 text="Действие путевой точки: %s (Ctrl+Z для отмены)" />
+		<text name="AD_action_howTo"							 text="Действия путевых точек: в редакторе наведите мышь на путевую точку (или выберите её) и нажмите клавишу" />
+		<text name="AD_undoStep_wpAction_1"							 text="действие путевой точки изменено" />
+		<text name="AD_undoStep_wpAction"							 text="изменено действий путевых точек: %s" />
+		<text name="AD_preview_noRoute"							 text="Маршрут до &quot;%s&quot; не найден" />
+		<text name="AD_preview_noTarget"							 text="Локация не выбрана" />
+		<text name="AD_preview_leg"							 text="До локации %s: %s, около %s" />
+		<text name="AD_sendTo_driving"							 text="едет к" />
+		<text name="gui_ad_sendToTitle"							 text="Отправить в локацию" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="Отправить %s в локацию" />
+		<text name="button_ad_send"							 text="Отправить" />
+		<text name="button_ad_fix"							 text="Исправить" />
+		<text name="AD_routeCheck_fixed"							 text="Исправлено: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="Сеть маршрутов изменилась, сначала проверьте снова" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="У обеих путевых точек есть локации, их нельзя объединить" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="Нет путевой точки в радиусе 30 м для соединения" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Эту проблему нельзя исправить автоматически, найдите её кнопкой Показать" />
+		<text name="button_ad_statsToday"							 text="Сегодня" />
+		<text name="button_ad_statsWeek"							 text="Последние 7 дней" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Обзор автопарка - статистика, всего" />
+		<text name="gui_ad_fleetTitleToday"							 text="Обзор автопарка - статистика, сегодня" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Обзор автопарка - статистика, последние 7 дней" />
+		<text name="AD_stats_income"							 text="около %s" />
 		<text name="AD_routeCheck_loose"								 text="Одиночная путевая точка без соединений" />
 		<text name="AD_routeCheck_deadEnd"							 text="Тупик: от этой путевой точки дальше пути нет" />
 		<text name="AD_routeCheck_trap"								 text="Односторонняя ловушка: путевых точек, куда можно въехать, но нельзя выехать: %s" />

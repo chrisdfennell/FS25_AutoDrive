@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="等待 %s（%s）" />
 		<text name="AD_stats_loads"							 text="送货次数：%s" />
 		<text name="AD_stats_unloaded"							 text="已卸载 %s" />
+		<text name="input_ADActionWait"							 text="AD: 航点动作：等待（0、5、10、20、30、60、120、300 秒）" />
+		<text name="input_ADActionHorn"							 text="AD: 航点动作：喇叭 开 / 关" />
+		<text name="input_ADActionLights"							 text="AD: 航点动作：灯光 开 / 关 / 不变" />
+		<text name="input_ADRoutePreview"							 text="AD: 显示前往目标的路线" />
+		<text name="AD_action_wait"							 text="等待 %s 秒" />
+		<text name="AD_action_horn"							 text="鸣笛" />
+		<text name="AD_action_lightsOn"							 text="开灯" />
+		<text name="AD_action_lightsOff"							 text="关灯" />
+		<text name="AD_action_none"							 text="无动作" />
+		<text name="AD_action_set"							 text="航点动作：%s（Ctrl+Z 撤销）" />
+		<text name="AD_action_howTo"							 text="航点动作：在编辑器中将鼠标指向一个航点（或选择一个航点）并按下按键" />
+		<text name="AD_undoStep_wpAction_1"							 text="已更改航点动作" />
+		<text name="AD_undoStep_wpAction"							 text="已更改 %s 个航点动作" />
+		<text name="AD_preview_noRoute"							 text="未找到前往“%s”的路线" />
+		<text name="AD_preview_noTarget"							 text="未设置目标" />
+		<text name="AD_preview_leg"							 text="前往 %s：%s，约 %s" />
+		<text name="AD_sendTo_driving"							 text="正在前往" />
+		<text name="gui_ad_sendToTitle"							 text="派往" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="将 %s 派往" />
+		<text name="button_ad_send"							 text="派遣" />
+		<text name="button_ad_fix"							 text="修复" />
+		<text name="AD_routeCheck_fixed"							 text="已修复：%s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="路线网络已更改，请先重新检查" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="两个航点都有目标，无法合并" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="30 米内没有可连接的航点" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="此问题无法自动修复，请使用“显示”找到它" />
+		<text name="button_ad_statsToday"							 text="今天" />
+		<text name="button_ad_statsWeek"							 text="最近 7 天" />
+		<text name="gui_ad_fleetTitleTotal"							 text="车队概览 - 统计，总计" />
+		<text name="gui_ad_fleetTitleToday"							 text="车队概览 - 统计，今天" />
+		<text name="gui_ad_fleetTitleWeek"							 text="车队概览 - 统计，最近 7 天" />
+		<text name="AD_stats_income"							 text="约 %s" />
 		<text name="AD_routeCheck_loose"								 text="没有任何连接的孤立航点" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：从此航点无法继续前进" />
 		<text name="AD_routeCheck_trap"								 text="单向陷阱：%s 个航点只能驶入无法驶出" />

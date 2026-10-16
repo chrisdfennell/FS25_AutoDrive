@@ -588,6 +588,8 @@ function AutoDrive:onDrawUIInfo()
         ADUndoManager:drawHighlights(self)
     end
     ADRouteCheck:draw(self)
+    ADWaypointActions.drawEditor(self)
+    ADRoutePreview:draw(self)
 
     local x, y, z = getWorldTranslation(self.components[1].node)
     if AutoDrive.getDebugChannelIsSet(AutoDrive.DC_PATHINFO) then

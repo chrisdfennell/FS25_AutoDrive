@@ -450,3 +450,136 @@ end
 function ADRouteCheck:hide()
     self.shown = nil
 end
+
+-------------------------------------------------------------------------------
+-- fixes: delete a loose waypoint, merge two waypoints on top of each other,
+-- connect a dead end to the nearest waypoint. One undo step each (AutoDriveRouteFixEvent)
+-------------------------------------------------------------------------------
+
+ADRouteCheck.FIX_DELETE = 1
+ADRouteCheck.FIX_MERGE = 2
+ADRouteCheck.FIX_CONNECT = 3
+-- a dead end is connected to a waypoint at most this far away
+ADRouteCheck.CONNECT_RANGE = 30
+
+local function isAt(wp, point)
+    return wp ~= nil and point ~= nil and math.abs(wp.x - point.x) < 0.01 and math.abs(wp.z - point.z) < 0.01
+end
+
+local function hasMarker(mapMarkers, wayPointId)
+    for _, marker in pairs(mapMarkers) do
+        if marker.id == wayPointId and not marker.isADDebug then
+            return true
+        end
+    end
+    return false
+end
+
+-- the fix for a problem as {type, a, b}, or nil and the text key of the reason
+function ADRouteCheck.getFix(problem, wayPoints, mapMarkers)
+    local wp = wayPoints[problem.wayPointId]
+    if not isAt(wp, problem) then
+        return nil, "AD_routeCheck_fixOutdated"
+    end
+    if problem.kind == ADRouteCheck.LOOSE then
+        return {type = ADRouteCheck.FIX_DELETE, a = wp.id}
+    elseif problem.kind == ADRouteCheck.DUPLICATE then
+        local other = wayPoints[problem.otherId]
+        if not isAt(other, problem.points[2]) then
+            return nil, "AD_routeCheck_fixOutdated"
+        end
+        local wpTarget, otherTarget = hasMarker(mapMarkers, wp.id), hasMarker(mapMarkers, other.id)
+        if wpTarget and otherTarget then
+            return nil, "AD_routeCheck_fixBothTargets"
+        end
+        -- the waypoint with a target stays
+        if otherTarget then
+            return {type = ADRouteCheck.FIX_MERGE, a = other.id, b = wp.id}
+        end
+        return {type = ADRouteCheck.FIX_MERGE, a = wp.id, b = other.id}
+    elseif problem.kind == ADRouteCheck.DEAD_END then
+        local nearest, nearestDistance = nil, ADRouteCheck.CONNECT_RANGE
+        for id, candidate in ipairs(wayPoints) do
+            if id ~= wp.id and not table.contains(wp.incoming, id) and not table.contains(candidate.out, wp.id) then
+                local distance = MathUtil.vector2Length(candidate.x - wp.x, candidate.z - wp.z)
+                if distance < nearestDistance then
+                    nearest, nearestDistance = candidate, distance
+                end
+            end
+        end
+        if nearest == nil then
+            return nil, "AD_routeCheck_fixNoNeighbour"
+        end
+        return {type = ADRouteCheck.FIX_CONNECT, a = wp.id, b = nearest.id}
+    end
+    return nil, "AD_routeCheck_fixNotPossible"
+end
+
+-- applies a fix with the network functions that do not send events (the server inside one undo step,
+-- the clients when the server tells them)
+function ADRouteCheck.applyFix(fixType, a, b)
+    local gm = ADGraphManager
+    if fixType == ADRouteCheck.FIX_DELETE then
+        gm:removeWayPoint(a, false)
+    elseif fixType == ADRouteCheck.FIX_CONNECT then
+        local from, to = gm:getWayPointById(a), gm:getWayPointById(b)
+        if from ~= nil and to ~= nil then
+            gm:setConnectionBetween(from, to, 1, false)
+        end
+    elseif fixType == ADRouteCheck.FIX_MERGE then
+        local keep, remove = gm:getWayPointById(a), gm:getWayPointById(b)
+        if keep == nil or remove == nil then
+            return
+        end
+        -- every waypoint linked with the removed one, also by reverse connections that are not in its incoming list
+        local neighbours = {}
+        for _, id in ipairs(remove.out) do
+            neighbours[id] = true
+        end
+        for _, id in ipairs(remove.incoming) do
+            neighbours[id] = true
+        end
+        for id, wp in ipairs(gm:getWayPoints()) do
+            if table.contains(wp.out, remove.id) then
+                neighbours[id] = true
+            end
+        end
+        local ids = {}
+        for id, _ in pairs(neighbours) do
+            if id ~= keep.id and id ~= remove.id then
+                table.insert(ids, id)
+            end
+        end
+        table.sort(ids)
+        -- the kept waypoint takes over the connections it does not have yet
+        for _, id in ipairs(ids) do
+            local neighbour = gm:getWayPointById(id)
+            if neighbour ~= nil and not (table.contains(keep.out, id) or table.contains(neighbour.out, keep.id)) then
+                local fromRemove = table.contains(remove.out, id)
+                local toRemove = table.contains(neighbour.out, remove.id)
+                if fromRemove and toRemove then
+                    gm:setConnectionBetween(keep, neighbour, 3, false)
+                elseif fromRemove then
+                    local reverse = not table.contains(neighbour.incoming, remove.id)
+                    gm:setConnectionBetween(keep, neighbour, reverse and 4 or 1, false)
+                elseif toRemove then
+                    local reverse = not table.contains(remove.incoming, id)
+                    gm:setConnectionBetween(neighbour, keep, reverse and 4 or 1, false)
+                end
+            end
+        end
+        gm:removeWayPoint(remove.id, false)
+    end
+end
+
+-- list button: fix the problem (the list is checked again shortly after)
+function ADRouteCheck:fix(problem)
+    local fix, reason = ADRouteCheck.getFix(problem, ADGraphManager:getWayPoints(), ADGraphManager:getMapMarkers())
+    if fix == nil then
+        ADMessagesManager:addMessage(nil, ADMessagesManager.messageTypes.WARN, g_i18n:getText(reason), 5000)
+        return false
+    end
+    AutoDriveRouteFixEvent.sendEvent(fix.type, fix.a, fix.b)
+    ADMessagesManager:addMessage(nil, ADMessagesManager.messageTypes.INFO, string.format(g_i18n:getText("AD_routeCheck_fixed"), ADRouteCheck.getProblemText(problem)), 4000)
+    return true
+end

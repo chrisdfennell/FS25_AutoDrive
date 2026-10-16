@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="esperando %s (%s)" />
 		<text name="AD_stats_loads"							 text="entregas: %s" />
 		<text name="AD_stats_unloaded"							 text="%s descargados" />
+		<text name="input_ADActionWait"							 text="AD: Acción de punto de ruta: esperar (0, 5, 10, 20, 30, 60, 120, 300 s)" />
+		<text name="input_ADActionHorn"							 text="AD: Acción de punto de ruta: claxon activado / desactivado" />
+		<text name="input_ADActionLights"							 text="AD: Acción de punto de ruta: luces encendidas / apagadas / sin cambios" />
+		<text name="input_ADRoutePreview"							 text="AD: Mostrar la ruta al destino" />
+		<text name="AD_action_wait"							 text="esperar %s s" />
+		<text name="AD_action_horn"							 text="claxon" />
+		<text name="AD_action_lightsOn"							 text="luces encendidas" />
+		<text name="AD_action_lightsOff"							 text="luces apagadas" />
+		<text name="AD_action_none"							 text="ninguna acción" />
+		<text name="AD_action_set"							 text="Acción de punto de ruta: %s (Ctrl+Z para deshacer)" />
+		<text name="AD_action_howTo"							 text="Acciones de punto de ruta: en el editor, apunta con el ratón a un punto de ruta (o selecciona uno) y pulsa la tecla" />
+		<text name="AD_undoStep_wpAction_1"							 text="acción de punto de ruta cambiada" />
+		<text name="AD_undoStep_wpAction"							 text="%s acciones de punto de ruta cambiadas" />
+		<text name="AD_preview_noRoute"							 text="No se encontró ninguna ruta a &quot;%s&quot;" />
+		<text name="AD_preview_noTarget"							 text="No hay destino seleccionado" />
+		<text name="AD_preview_leg"							 text="Hasta %s: %s, aprox. %s" />
+		<text name="AD_sendTo_driving"							 text="se dirige a" />
+		<text name="gui_ad_sendToTitle"							 text="Enviar a" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="Enviar %s a" />
+		<text name="button_ad_send"							 text="Enviar" />
+		<text name="button_ad_fix"							 text="Corregir" />
+		<text name="AD_routeCheck_fixed"							 text="Corregido: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="La red de rutas ha cambiado, comprueba de nuevo primero" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="Ambos puntos de ruta tienen destinos, no se pueden fusionar" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="Ningún punto de ruta a menos de 30 m al que conectar" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Este problema no se puede corregir automáticamente, usa Mostrar para encontrarlo" />
+		<text name="button_ad_statsToday"							 text="Hoy" />
+		<text name="button_ad_statsWeek"							 text="Últimos 7 días" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Resumen de la flota - estadísticas, total" />
+		<text name="gui_ad_fleetTitleToday"							 text="Resumen de la flota - estadísticas, hoy" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Resumen de la flota - estadísticas, últimos 7 días" />
+		<text name="AD_stats_income"							 text="aprox. %s" />
 		<text name="AD_routeCheck_loose"								 text="Punto de ruta suelto sin ninguna conexión" />
 		<text name="AD_routeCheck_deadEnd"							 text="Callejón sin salida: no hay forma de seguir desde este punto de ruta" />
 		<text name="AD_routeCheck_trap"								 text="Trampa de sentido único: %s puntos de ruta en los que se puede entrar pero no salir" />

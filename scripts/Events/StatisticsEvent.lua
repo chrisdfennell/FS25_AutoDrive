@@ -29,11 +29,7 @@ function AutoDriveStatisticsEvent:writeStream(streamId, connection)
         streamWriteUIntN(streamId, #self.entries, 12)
         for _, entry in ipairs(self.entries) do
             NetworkUtil.writeNodeObjectId(streamId, NetworkUtil.getObjectId(entry.vehicle))
-            streamWriteFloat32(streamId, entry.stats.distance)
-            streamWriteFloat32(streamId, entry.stats.driveTime)
-            streamWriteFloat32(streamId, entry.stats.waitTime)
-            streamWriteInt32(streamId, entry.stats.loads)
-            streamWriteFloat32(streamId, entry.stats.unloaded)
+            ADStatistics.writeStream(streamId, entry.stats)
         end
     elseif self.eventType == AutoDriveStatisticsEvent.TYPE_RESET then
         NetworkUtil.writeNodeObjectId(streamId, NetworkUtil.getObjectId(self.vehicle))
@@ -47,13 +43,7 @@ function AutoDriveStatisticsEvent:readStream(streamId, connection)
         local count = streamReadUIntN(streamId, 12)
         for i = 1, count do
             local vehicle = NetworkUtil.getObject(NetworkUtil.readNodeObjectId(streamId))
-            local stats = ADStatistics.newStats()
-            stats.distance = streamReadFloat32(streamId)
-            stats.driveTime = streamReadFloat32(streamId)
-            stats.waitTime = streamReadFloat32(streamId)
-            stats.loads = streamReadInt32(streamId)
-            stats.unloaded = streamReadFloat32(streamId)
-            self.entries[i] = {vehicle = vehicle, stats = stats}
+            self.entries[i] = {vehicle = vehicle, stats = ADStatistics.readStream(streamId)}
         end
     elseif self.eventType == AutoDriveStatisticsEvent.TYPE_RESET then
         self.vehicle = NetworkUtil.getObject(NetworkUtil.readNodeObjectId(streamId))

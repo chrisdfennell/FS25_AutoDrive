@@ -57,6 +57,27 @@ function ADRouteCheckGui:onClickShow()
     self:showProblem(self.problemList:getSelectedIndexInSection())
 end
 
+-- the network changes on the server first, check again a moment later
+ADRouteCheckGui.RECHECK_DELAY = 800
+
+function ADRouteCheckGui:onClickFix()
+    local problem = self.problems[self.problemList:getSelectedIndexInSection()]
+    if problem ~= nil and ADRouteCheck:fix(problem) then
+        self.recheckTimer = ADRouteCheckGui.RECHECK_DELAY
+    end
+end
+
+function ADRouteCheckGui:update(dt)
+    ADRouteCheckGui:superClass().update(self, dt)
+    if self.recheckTimer ~= nil then
+        self.recheckTimer = self.recheckTimer - dt
+        if self.recheckTimer <= 0 then
+            self.recheckTimer = nil
+            self:onClickCheckAgain()
+        end
+    end
+end
+
 function ADRouteCheckGui:onClickCheckAgain()
     ADRouteCheck:run(AutoDrive.getControlledVehicle())
     self:refreshItems()

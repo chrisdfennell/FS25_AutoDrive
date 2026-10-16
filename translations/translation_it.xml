@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="attesa %s (%s)" />
 		<text name="AD_stats_loads"							 text="consegne: %s" />
 		<text name="AD_stats_unloaded"							 text="%s scaricati" />
+		<text name="input_ADActionWait"							 text="AD: Azione nodo: attendi (0, 5, 10, 20, 30, 60, 120, 300 s)" />
+		<text name="input_ADActionHorn"							 text="AD: Azione nodo: clacson attivo / disattivo" />
+		<text name="input_ADActionLights"							 text="AD: Azione nodo: luci accese / spente / invariate" />
+		<text name="input_ADRoutePreview"							 text="AD: Mostra il percorso verso la destinazione" />
+		<text name="AD_action_wait"							 text="attendi %s s" />
+		<text name="AD_action_horn"							 text="clacson" />
+		<text name="AD_action_lightsOn"							 text="luci accese" />
+		<text name="AD_action_lightsOff"							 text="luci spente" />
+		<text name="AD_action_none"							 text="nessuna azione" />
+		<text name="AD_action_set"							 text="Azione nodo: %s (Ctrl+Z per annullare)" />
+		<text name="AD_action_howTo"							 text="Azioni nodo: nell'editor, punta il mouse su un nodo (o selezionane uno) e premi il tasto" />
+		<text name="AD_undoStep_wpAction_1"							 text="azione del nodo modificata" />
+		<text name="AD_undoStep_wpAction"							 text="%s azioni dei nodi modificate" />
+		<text name="AD_preview_noRoute"							 text="Nessun percorso trovato verso &quot;%s&quot;" />
+		<text name="AD_preview_noTarget"							 text="Nessuna destinazione impostata" />
+		<text name="AD_preview_leg"							 text="Verso %s: %s, circa %s" />
+		<text name="AD_sendTo_driving"							 text="si dirige verso" />
+		<text name="gui_ad_sendToTitle"							 text="Invia a" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="Invia %s a" />
+		<text name="button_ad_send"							 text="Invia" />
+		<text name="button_ad_fix"							 text="Correggi" />
+		<text name="AD_routeCheck_fixed"							 text="Corretto: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="La rete dei percorsi è cambiata, controlla prima di nuovo" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="Entrambi i nodi hanno destinazioni, non possono essere uniti" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="Nessun nodo entro 30 m a cui collegarsi" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Questo problema non può essere corretto automaticamente, usa Mostra per trovarlo" />
+		<text name="button_ad_statsToday"							 text="Oggi" />
+		<text name="button_ad_statsWeek"							 text="Ultimi 7 giorni" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Panoramica della flotta - statistiche, totale" />
+		<text name="gui_ad_fleetTitleToday"							 text="Panoramica della flotta - statistiche, oggi" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Panoramica della flotta - statistiche, ultimi 7 giorni" />
+		<text name="AD_stats_income"							 text="circa %s" />
 		<text name="AD_routeCheck_loose"								 text="Nodo isolato senza alcun collegamento" />
 		<text name="AD_routeCheck_deadEnd"							 text="Vicolo cieco: nessuna via per proseguire da questo nodo" />
 		<text name="AD_routeCheck_trap"								 text="Trappola a senso unico: %s nodi in cui si può entrare ma da cui non si può uscire" />

@@ -4,7 +4,7 @@
 [![Latest release](https://img.shields.io/github/v/release/chrisdfennell/FS25_AutoDrive?label=release)](https://github.com/chrisdfennell/FS25_AutoDrive/releases/latest)
 
 AutoDrive Overdrive is an unofficial edition of [AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive) for Farming Simulator 25, by the AutoDrive Team (Stephan-S, Axel32019, TyKonKet and [many contributors](credits.txt)), released under the [MIT licence](LICENSE).
-It is based on AutoDrive 3.0.1.4 and adds route editor improvements, a route check, a fleet overview with driver statistics, best price unloading and work schedules. For the official mod and its support, see the original README below.
+It is based on AutoDrive 3.0.1.4 and adds route editor improvements, waypoint actions, a route check with fixes, a route preview on the map, a fleet overview with send-to and driver statistics, best price unloading and work schedules. For the official mod and its support, see the original README below.
 
 ## Download
 Get **FS25_AutoDrive.zip** from the [latest release](https://github.com/chrisdfennell/FS25_AutoDrive/releases/latest) and put it into your mods folder (`Documents/My Games/FarmingSimulator2025/mods`), replacing the official AutoDrive zip.
@@ -63,12 +63,25 @@ The route between the two waypoints is the shortest chain of connections. Only w
 - loose waypoints without any connection
 - waypoints on top of each other (less than 0.3 m apart)
 
-**Show** (or a double click) marks the problem with a pulsing red beacon. If it is out of sight, a red arrow at your vehicle points the way. The check only reads the network, it changes nothing. It also looks at things the road network debug markers can't see, like whole parts of the network that can't be left, and it doesn't add debug targets to your map.
+**Show** (or a double click) marks the problem with a pulsing red beacon. If it is out of sight, a red arrow at your vehicle points the way. The check only reads the network, it changes nothing until you press **Fix**: a loose waypoint is deleted, two waypoints on top of each other are merged into one (the connections of both are kept; the one with a target stays), and a dead end is connected one-way to the nearest waypoint within 30 m that does not lead to it. Each fix is one undo step, the list is checked again right after. Unreachable targets and one-way traps need a decision about the route, use **Show** to find them. It also looks at things the road network debug markers can't see, like whole parts of the network that can't be left, and it doesn't add debug targets to your map.
 
 ### Fleet overview
-**Ctrl+Alt+I** (in a vehicle or on foot) lists every AutoDrive vehicle of your farm: name, mode, destination, load, fuel, work schedule and what it is doing. A stopped vehicle shows its latest warning or error from the notifications. **Enter vehicle** (or a double click) takes you to it, **Start / stop** starts or stops its job. The list updates every second.
+**Ctrl+Alt+I** (in a vehicle or on foot) lists every AutoDrive vehicle of your farm: name, mode, destination, load, fuel, work schedule and what it is doing. A stopped vehicle shows its latest warning or error from the notifications. **Enter vehicle** takes you to it, **Start / stop** starts or stops its job.
 
-**Statistics** switches the list to the driver statistics, counted while AutoDrive drives the vehicle: distance, time driving, time standing and waiting (with its share of the total), deliveries and the amount unloaded. A delivery is counted when the vehicle's load goes down by at least 500 l (or a quarter of a smaller trailer) and then stays. In this view, **Reset statistics** sets the selected vehicle back to zero. The numbers are saved with the savegame.
+**Send to:** double click a vehicle and choose a destination: the vehicle switches to "drive to" with that destination and starts, without you getting in. The list updates every second.
+
+**Statistics** switches the list to the driver statistics, counted while AutoDrive drives the vehicle: distance, time driving, time standing and waiting (with its share of the total), deliveries, the amount unloaded, the crops hauled most and their estimated value at today's best selling price. The button cycles through total, today, the last 7 in-game days and back to the status. A delivery is counted when the vehicle's load goes down by at least 500 l (or a quarter of a smaller trailer) and then stays. In this view, **Reset statistics** sets the selected vehicle back to zero. The numbers are saved with the savegame.
+
+### Waypoint actions
+In the editor, point the mouse at a waypoint (or select one) and press:
+- **Ctrl+Alt+W**: vehicles wait there (each press: 5, 10, 20, 30, 60, 120, 300 seconds, off)
+- **Ctrl+Alt+H**: vehicles sound the horn there
+- **Ctrl+Alt+L**: vehicles switch the lights on there, off there, or leave them (each press)
+
+Waypoints with actions get an orange marker with the actions written above it. Every change is one undo step. The actions are stored in the waypoint data, so they are saved, exported with the routes manager and sent to all players. The official AutoDrive ignores them.
+
+### Route preview
+**Ctrl+Alt+P** shows the route from the vehicle to its destination, and for pickup and deliver also on to the unload target (second colour): as a line in the world, on the minimap and on the big map (ESC > Map), where you can zoom out and see the whole route. A message gives distance and estimated drive time for each part. Press again to hide it.
 
 ### Best price unloading
 New vehicle setting **Best price unloading**. When the vehicle is loaded and sets off to unload, it picks the target in the unload target's folder whose selling point pays the most for the load right now, and tells you where it goes. Put all the selling points you want to use as targets into one folder, and choose one of them as the unload target. Targets without a selling point within 60 m are left out. Works with pickup and deliver and with unload. It needs "use folders" and does nothing while target rotation for unloading is on. The target must be in a folder, not in "All".
@@ -91,6 +104,10 @@ New vehicle settings **Start work at** and **Stop work at** (in-game hours, `--:
 | Smooth route | Ctrl + Alt + U |
 | Route check | Ctrl + Alt + N |
 | Fleet overview | Ctrl + Alt + I |
+| Waypoint action: wait | Ctrl + Alt + W |
+| Waypoint action: horn | Ctrl + Alt + H |
+| Waypoint action: lights | Ctrl + Alt + L |
+| Route preview | Ctrl + Alt + P |
 
 All key bindings can be changed in the game's control settings. Like AutoDrive's other keys, they work while you sit in a vehicle; the fleet overview also works on foot.
 

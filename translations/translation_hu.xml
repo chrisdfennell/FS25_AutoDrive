@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="várakozás %s (%s)" />
 		<text name="AD_stats_loads"							 text="szállítások: %s" />
 		<text name="AD_stats_unloaded"							 text="lerakva: %s" />
+		<text name="input_ADActionWait"							 text="AD: Útpont-művelet: várakozás (0, 5, 10, 20, 30, 60, 120, 300 mp)" />
+		<text name="input_ADActionHorn"							 text="AD: Útpont-művelet: kürt be / ki" />
+		<text name="input_ADActionLights"							 text="AD: Útpont-művelet: világítás be / ki / változatlan" />
+		<text name="input_ADRoutePreview"							 text="AD: Útvonal megjelenítése a célig" />
+		<text name="AD_action_wait"							 text="várakozás %s mp" />
+		<text name="AD_action_horn"							 text="kürt" />
+		<text name="AD_action_lightsOn"							 text="világítás be" />
+		<text name="AD_action_lightsOff"							 text="világítás ki" />
+		<text name="AD_action_none"							 text="nincs művelet" />
+		<text name="AD_action_set"							 text="Útpont-művelet: %s (Ctrl+Z a visszavonáshoz)" />
+		<text name="AD_action_howTo"							 text="Útpont-műveletek: a szerkesztőben mutass az egérrel egy útpontra (vagy jelölj ki egyet), és nyomd meg a gombot" />
+		<text name="AD_undoStep_wpAction_1"							 text="útpont-művelet módosítva" />
+		<text name="AD_undoStep_wpAction"							 text="%s útpont-művelet módosítva" />
+		<text name="AD_preview_noRoute"							 text="Nem található útvonal ide: &quot;%s&quot;" />
+		<text name="AD_preview_noTarget"							 text="Nincs cél beállítva" />
+		<text name="AD_preview_leg"							 text="%s felé: %s, kb. %s" />
+		<text name="AD_sendTo_driving"							 text="úton van ide:" />
+		<text name="gui_ad_sendToTitle"							 text="Küldés ide" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="%s küldése ide" />
+		<text name="button_ad_send"							 text="Küldés" />
+		<text name="button_ad_fix"							 text="Javítás" />
+		<text name="AD_routeCheck_fixed"							 text="Javítva: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="Az útvonalhálózat megváltozott, előbb ellenőrizd újra" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="Mindkét útpontnak van célja, nem vonhatók össze" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="Nincs csatlakoztatható útpont 30 m-en belül" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Ez a probléma nem javítható automatikusan, a Megjelenítés gombbal megtalálod" />
+		<text name="button_ad_statsToday"							 text="Ma" />
+		<text name="button_ad_statsWeek"							 text="Utolsó 7 nap" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Flotta áttekintése - statisztika, összesen" />
+		<text name="gui_ad_fleetTitleToday"							 text="Flotta áttekintése - statisztika, ma" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Flotta áttekintése - statisztika, utolsó 7 nap" />
+		<text name="AD_stats_income"							 text="kb. %s" />
 		<text name="AD_routeCheck_loose"								 text="Különálló útpont, semmilyen kapcsolat nélkül" />
 		<text name="AD_routeCheck_deadEnd"							 text="Zsákutca: ebből az útpontból nincs továbbhaladás" />
 		<text name="AD_routeCheck_trap"								 text="Egyirányú csapda: %s útpont, ahová be lehet hajtani, de kijutni nem" />

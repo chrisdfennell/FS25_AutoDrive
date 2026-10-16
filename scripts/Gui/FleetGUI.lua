@@ -13,7 +13,8 @@ function ADFleetGui.new(target)
     self.rows = {}
     self.refreshTimer = 0
     self.statsRequestTimer = 0
-    self.showStatistics = false
+    -- nil: the state of the vehicles, else the statistics of this ADStatistics.PERIOD_*
+    self.statsPeriod = nil
     return self
 end
 
@@ -72,7 +73,8 @@ function ADFleetGui.getLastProblem(vehicle)
     return nil
 end
 
-function ADFleetGui.getRow(vehicle)
+-- period / today: which statistics the row shows (ADStatistics.PERIOD_*)
+function ADFleetGui.getRow(vehicle, period, today)
     local stateModule = vehicle.ad.stateModule
     local row = {vehicle = vehicle, name = stateModule:getName() or "", active = stateModule:isActive()}
     local parts = {row.name, AutoDrive.Hud:getModeName(vehicle), ADFleetGui.getDestinationText(vehicle)}
@@ -107,21 +109,22 @@ function ADFleetGui.getRow(vehicle)
     end
     table.insert(parts, state)
     row.text = table.concat(parts, "  |  ")
-    row.statsText = row.name .. "  |  " .. ADStatistics.getText(vehicle.ad.stats)
+    row.statsText = row.name .. "  |  " .. ADStatistics.getText(ADStatistics.getPeriod(vehicle.ad.stats, period or ADStatistics.PERIOD_TOTAL, today))
     return row
 end
 
 -- AutoDrive vehicles of the local player's farm, by name. The order must not depend on the state:
 -- the list refreshes every second and the selected row has to stay on the same vehicle
-function ADFleetGui.getRows()
+function ADFleetGui.getRows(period)
     local farmId
     if g_localPlayer ~= nil and g_localPlayer.getFarmId ~= nil then
         farmId = g_localPlayer:getFarmId()
     end
     local rows = {}
+    local today = ADStatistics.getDay()
     for _, vehicle in pairs(AutoDrive.getAllVehicles() or {}) do
         if vehicle.ad ~= nil and vehicle.ad.stateModule ~= nil and (farmId == nil or vehicle.getOwnerFarmId == nil or vehicle:getOwnerFarmId() == farmId) then
-            table.insert(rows, ADFleetGui.getRow(vehicle))
+            table.insert(rows, ADFleetGui.getRow(vehicle, period, today))
         end
     end
     table.sort(rows, function(a, b)
@@ -137,23 +140,27 @@ function ADFleetGui:onOpen()
     ADFleetGui:superClass().onOpen(self)
     self.vehicleList:setDataSource(self)
     self:updateButtons()
-    if self.showStatistics then
+    if self.statsPeriod ~= nil then
         AutoDriveStatisticsEvent.request()
     end
     self:refreshItems()
 end
 
 -- the list shows either the current state or the driver statistics
+-- the view button shows the next view: statistics (total) > today > last 7 days > state
+ADFleetGui.NEXT_PERIOD = {[ADStatistics.PERIOD_TOTAL] = ADStatistics.PERIOD_TODAY, [ADStatistics.PERIOD_TODAY] = ADStatistics.PERIOD_WEEK}
+ADFleetGui.VIEW_BUTTON_TEXTS = {[ADStatistics.PERIOD_TOTAL] = "button_ad_statsToday", [ADStatistics.PERIOD_TODAY] = "button_ad_statsWeek", [ADStatistics.PERIOD_WEEK] = "button_ad_status"}
+ADFleetGui.TITLE_TEXTS = {[ADStatistics.PERIOD_TOTAL] = "gui_ad_fleetTitleTotal", [ADStatistics.PERIOD_TODAY] = "gui_ad_fleetTitleToday", [ADStatistics.PERIOD_WEEK] = "gui_ad_fleetTitleWeek"}
+
 function ADFleetGui:updateButtons()
     if self.viewButton ~= nil then
-        if self.showStatistics then
-            self.viewButton:setText(g_i18n:getText("button_ad_status"))
-        else
-            self.viewButton:setText(g_i18n:getText("button_ad_statistics"))
-        end
+        self.viewButton:setText(g_i18n:getText(ADFleetGui.VIEW_BUTTON_TEXTS[self.statsPeriod] or "button_ad_statistics"))
+    end
+    if self.titleText ~= nil then
+        self.titleText:setText(g_i18n:getText(ADFleetGui.TITLE_TEXTS[self.statsPeriod] or "gui_ad_fleetTitle"))
     end
     if self.actionButton ~= nil then
-        if self.showStatistics then
+        if self.statsPeriod ~= nil then
             self.actionButton:setText(g_i18n:getText("button_ad_resetStatistics"))
         else
             self.actionButton:setText(g_i18n:getText("button_ad_startStop"))
@@ -162,9 +169,13 @@ function ADFleetGui:updateButtons()
 end
 
 function ADFleetGui:onClickView()
-    self.showStatistics = not self.showStatistics
+    if self.statsPeriod == nil then
+        self.statsPeriod = ADStatistics.PERIOD_TOTAL
+    else
+        self.statsPeriod = ADFleetGui.NEXT_PERIOD[self.statsPeriod]
+    end
     self:updateButtons()
-    if self.showStatistics then
+    if self.statsPeriod ~= nil then
         AutoDriveStatisticsEvent.request()
         self.statsRequestTimer = 0
     end
@@ -172,7 +183,7 @@ function ADFleetGui:onClickView()
 end
 
 function ADFleetGui:refreshItems()
-    self.rows = ADFleetGui.getRows()
+    self.rows = ADFleetGui.getRows(self.statsPeriod)
     self.refreshTimer = 0
     self.vehicleList:reloadData()
 end
@@ -183,7 +194,7 @@ function ADFleetGui:update(dt)
     if self.refreshTimer > ADFleetGui.REFRESH_INTERVAL then
         self:refreshItems()
     end
-    if self.showStatistics then
+    if self.statsPeriod ~= nil then
         self.statsRequestTimer = self.statsRequestTimer + dt
         if self.statsRequestTimer > ADFleetGui.STATS_REQUEST_INTERVAL then
             self.statsRequestTimer = 0
@@ -203,7 +214,7 @@ function ADFleetGui:populateCellForItemInSection(list, section, index, cell)
     if list == self.vehicleList then
         local row = self.rows[index]
         cell.attributes.listItemIcon:setImageSlice(nil, row.icon)
-        if self.showStatistics then
+        if self.statsPeriod ~= nil then
             cell.attributes.listItemText:setText(row.statsText)
         else
             cell.attributes.listItemText:setText(row.text)
@@ -227,10 +238,11 @@ function ADFleetGui:enterVehicle(vehicle)
     end
 end
 
+-- double click: choose a destination and send the vehicle there
 function ADFleetGui:onDoubleClick(list, section, index, cell)
     local row = self.rows[index]
-    if row ~= nil then
-        self:enterVehicle(row.vehicle)
+    if row ~= nil and row.vehicle ~= nil and row.vehicle.ad ~= nil then
+        AutoDrive.onOpenSendTo(row.vehicle)
     end
 end
 
@@ -240,7 +252,7 @@ end
 
 function ADFleetGui:onClickStartStop()
     local vehicle = self:getSelectedVehicle()
-    if vehicle ~= nil and self.showStatistics then
+    if vehicle ~= nil and self.statsPeriod ~= nil then
         -- in the statistics view this button resets the selected vehicle's numbers
         AutoDriveStatisticsEvent.requestReset(vehicle)
         self:refreshItems()

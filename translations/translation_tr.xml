@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="bekleme %s (%s)" />
 		<text name="AD_stats_loads"							 text="teslimatlar: %s" />
 		<text name="AD_stats_unloaded"							 text="%s boşaltıldı" />
+		<text name="input_ADActionWait"							 text="AD: Ara nokta eylemi: bekle (0, 5, 10, 20, 30, 60, 120, 300 sn)" />
+		<text name="input_ADActionHorn"							 text="AD: Ara nokta eylemi: korna açık / kapalı" />
+		<text name="input_ADActionLights"							 text="AD: Ara nokta eylemi: ışıklar açık / kapalı / değişmez" />
+		<text name="input_ADRoutePreview"							 text="AD: Hedefe giden rotayı göster" />
+		<text name="AD_action_wait"							 text="%s sn bekle" />
+		<text name="AD_action_horn"							 text="korna" />
+		<text name="AD_action_lightsOn"							 text="ışıklar açık" />
+		<text name="AD_action_lightsOff"							 text="ışıklar kapalı" />
+		<text name="AD_action_none"							 text="eylem yok" />
+		<text name="AD_action_set"							 text="Ara nokta eylemi: %s (geri almak için Ctrl+Z)" />
+		<text name="AD_action_howTo"							 text="Ara nokta eylemleri: düzenleyicide fareyle bir ara noktanın üzerine gelin (veya birini seçin) ve tuşa basın" />
+		<text name="AD_undoStep_wpAction_1"							 text="ara nokta eylemi değiştirildi" />
+		<text name="AD_undoStep_wpAction"							 text="%s ara nokta eylemi değiştirildi" />
+		<text name="AD_preview_noRoute"							 text="&quot;%s&quot; için rota bulunamadı" />
+		<text name="AD_preview_noTarget"							 text="Hedef belirlenmedi" />
+		<text name="AD_preview_leg"							 text="%s hedefine: %s, yaklaşık %s" />
+		<text name="AD_sendTo_driving"							 text="şuraya gidiyor:" />
+		<text name="gui_ad_sendToTitle"							 text="Hedefe gönder" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="%s: hedefe gönder" />
+		<text name="button_ad_send"							 text="Gönder" />
+		<text name="button_ad_fix"							 text="Düzelt" />
+		<text name="AD_routeCheck_fixed"							 text="Düzeltildi: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="Rota ağı değişti, önce tekrar kontrol edin" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="İki ara noktanın da hedefi var, birleştirilemezler" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="30 m içinde bağlanacak ara nokta yok" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Bu sorun otomatik olarak düzeltilemez, bulmak için Göster'i kullanın" />
+		<text name="button_ad_statsToday"							 text="Bugün" />
+		<text name="button_ad_statsWeek"							 text="Son 7 gün" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Filoya genel bakış - istatistikler, toplam" />
+		<text name="gui_ad_fleetTitleToday"							 text="Filoya genel bakış - istatistikler, bugün" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Filoya genel bakış - istatistikler, son 7 gün" />
+		<text name="AD_stats_income"							 text="yaklaşık %s" />
 		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
 		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
 		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />

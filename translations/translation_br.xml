@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="esperando %s (%s)" />
 		<text name="AD_stats_loads"							 text="entregas: %s" />
 		<text name="AD_stats_unloaded"							 text="%s descarregados" />
+		<text name="input_ADActionWait"							 text="AD: Ação do waypoint: esperar (0, 5, 10, 20, 30, 60, 120, 300 s)" />
+		<text name="input_ADActionHorn"							 text="AD: Ação do waypoint: buzina ligada / desligada" />
+		<text name="input_ADActionLights"							 text="AD: Ação do waypoint: luzes ligadas / desligadas / sem alteração" />
+		<text name="input_ADRoutePreview"							 text="AD: Mostrar a rota até o destino" />
+		<text name="AD_action_wait"							 text="esperar %s s" />
+		<text name="AD_action_horn"							 text="buzina" />
+		<text name="AD_action_lightsOn"							 text="luzes ligadas" />
+		<text name="AD_action_lightsOff"							 text="luzes desligadas" />
+		<text name="AD_action_none"							 text="nenhuma ação" />
+		<text name="AD_action_set"							 text="Ação do waypoint: %s (Ctrl+Z para desfazer)" />
+		<text name="AD_action_howTo"							 text="Ações de waypoint: no editor, aponte o mouse para um waypoint (ou selecione um) e pressione a tecla" />
+		<text name="AD_undoStep_wpAction_1"							 text="ação de waypoint alterada" />
+		<text name="AD_undoStep_wpAction"							 text="%s ações de waypoint alteradas" />
+		<text name="AD_preview_noRoute"							 text="Nenhuma rota encontrada para &quot;%s&quot;" />
+		<text name="AD_preview_noTarget"							 text="Nenhum destino definido" />
+		<text name="AD_preview_leg"							 text="Até %s: %s, cerca de %s" />
+		<text name="AD_sendTo_driving"							 text="vai para" />
+		<text name="gui_ad_sendToTitle"							 text="Enviar para" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="Enviar %s para" />
+		<text name="button_ad_send"							 text="Enviar" />
+		<text name="button_ad_fix"							 text="Corrigir" />
+		<text name="AD_routeCheck_fixed"							 text="Corrigido: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="A rede de rotas foi alterada, verifique novamente primeiro" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="Os dois waypoints têm destinos, não podem ser mesclados" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="Nenhum waypoint a menos de 30 m para conectar" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Este problema não pode ser corrigido automaticamente, use Mostrar para encontrá-lo" />
+		<text name="button_ad_statsToday"							 text="Hoje" />
+		<text name="button_ad_statsWeek"							 text="Últimos 7 dias" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Visão geral da frota - estatísticas, total" />
+		<text name="gui_ad_fleetTitleToday"							 text="Visão geral da frota - estatísticas, hoje" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Visão geral da frota - estatísticas, últimos 7 dias" />
+		<text name="AD_stats_income"							 text="cerca de %s" />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem nenhuma conexão" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há como seguir a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de mão única: %s waypoints onde é possível entrar, mas não sair" />

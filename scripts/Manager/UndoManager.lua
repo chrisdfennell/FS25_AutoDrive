@@ -298,6 +298,7 @@ function ADUndoManager.installActorHooks()
         AutoDriveDeleteWayPointsEvent,
         AutoDriveMoveWayPointEvent,
         AutoDriveMoveWayPointsEvent,
+        AutoDriveRouteFixEvent,
         AutoDriveRenameMapMarkerEvent,
         AutoDriveRoutesUploadEvent,
         AutoDriveSectionEvent,
@@ -958,7 +959,7 @@ end
 
 -- feedback text parts {key, args} describing ops, always as the original action
 function ADUndoManager.describeOps(ops)
-    local created, deleted, moved, sideRoads, linkedWayPoints = 0, 0, 0, 0, 0
+    local created, deleted, moved, sideRoads, linkedWayPoints, actions = 0, 0, 0, 0, 0, 0
     local markersCreated, markersDeleted, foldersCreated, foldersDeleted = {}, {}, {}, {}
     local parts = {}
     local function addCounted(count, key)
@@ -986,6 +987,8 @@ function ADUndoManager.describeOps(ops)
         elseif op.type == ADUndoManager.OP_WP_DATA then
             if op.old.x ~= op.new.x or op.old.y ~= op.new.y or op.old.z ~= op.new.z then
                 moved = moved + 1
+            elseif ADWaypointActions.getActionBits(op.old.flags) ~= ADWaypointActions.getActionBits(op.new.flags) then
+                actions = actions + 1
             else
                 sideRoads = sideRoads + 1
             end
@@ -1004,6 +1007,7 @@ function ADUndoManager.describeOps(ops)
     addCounted(deleted, "AD_undoStep_wpDeleted")
     addCounted(moved, "AD_undoStep_wpMoved")
     addCounted(sideRoads, "AD_undoStep_sideRoad")
+    addCounted(actions, "AD_undoStep_wpAction")
     if created == 0 and deleted == 0 and linkedWayPoints > 0 then
         -- a connection changes 2 waypoints, a section of n waypoints has n - 1 connections
         addCounted(math.max(1, linkedWayPoints - 1), "AD_undoStep_connection")

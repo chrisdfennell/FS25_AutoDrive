@@ -491,6 +491,38 @@
 		<text name="AD_stats_waiting"							 text="venter %s (%s)" />
 		<text name="AD_stats_loads"							 text="leveringer: %s" />
 		<text name="AD_stats_unloaded"							 text="%s aflæsset" />
+		<text name="input_ADActionWait"							 text="AD: Vejpunktshandling: vent (0, 5, 10, 20, 30, 60, 120, 300 s)" />
+		<text name="input_ADActionHorn"							 text="AD: Vejpunktshandling: horn til / fra" />
+		<text name="input_ADActionLights"							 text="AD: Vejpunktshandling: lys til / fra / uændret" />
+		<text name="input_ADRoutePreview"							 text="AD: Vis ruten til målet" />
+		<text name="AD_action_wait"							 text="vent %s s" />
+		<text name="AD_action_horn"							 text="horn" />
+		<text name="AD_action_lightsOn"							 text="lys til" />
+		<text name="AD_action_lightsOff"							 text="lys fra" />
+		<text name="AD_action_none"							 text="ingen handling" />
+		<text name="AD_action_set"							 text="Vejpunktshandling: %s (Ctrl+Z for at fortryde)" />
+		<text name="AD_action_howTo"							 text="Vejpunktshandlinger: peg i editoren med musen på et vejpunkt (eller vælg et) og tryk på tasten" />
+		<text name="AD_undoStep_wpAction_1"							 text="vejpunktshandling ændret" />
+		<text name="AD_undoStep_wpAction"							 text="%s vejpunktshandlinger ændret" />
+		<text name="AD_preview_noRoute"							 text="Ingen rute fundet til &quot;%s&quot;" />
+		<text name="AD_preview_noTarget"							 text="Intet mål valgt" />
+		<text name="AD_preview_leg"							 text="Til %s: %s, ca. %s" />
+		<text name="AD_sendTo_driving"							 text="er på vej til" />
+		<text name="gui_ad_sendToTitle"							 text="Send til" />
+		<text name="gui_ad_sendToTitleVehicle"							 text="Send %s til" />
+		<text name="button_ad_send"							 text="Send" />
+		<text name="button_ad_fix"							 text="Ret" />
+		<text name="AD_routeCheck_fixed"							 text="Rettet: %s" />
+		<text name="AD_routeCheck_fixOutdated"							 text="Rutenetværket er ændret, kontroller igen først" />
+		<text name="AD_routeCheck_fixBothTargets"							 text="Begge vejpunkter har mål, de kan ikke lægges sammen" />
+		<text name="AD_routeCheck_fixNoNeighbour"							 text="Intet vejpunkt inden for 30 m at forbinde til" />
+		<text name="AD_routeCheck_fixNotPossible"							 text="Dette problem kan ikke rettes automatisk, brug Vis for at finde det" />
+		<text name="button_ad_statsToday"							 text="I dag" />
+		<text name="button_ad_statsWeek"							 text="Sidste 7 dage" />
+		<text name="gui_ad_fleetTitleTotal"							 text="Flådeoversigt - statistik, i alt" />
+		<text name="gui_ad_fleetTitleToday"							 text="Flådeoversigt - statistik, i dag" />
+		<text name="gui_ad_fleetTitleWeek"							 text="Flådeoversigt - statistik, sidste 7 dage" />
+		<text name="AD_stats_income"							 text="ca. %s" />
 		<text name="AD_routeCheck_loose"								 text="Løst vejpunkt uden nogen forbindelse" />
 		<text name="AD_routeCheck_deadEnd"							 text="Blindgyde: ingen vej videre fra dette vejpunkt" />
 		<text name="AD_routeCheck_trap"								 text="Ensrettet fælde: %s vejpunkter, man kan køre ind i, men ikke ud af" />

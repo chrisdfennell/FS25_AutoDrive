@@ -70,7 +70,11 @@ ADInputManager.actionsToInputs = {
     {"ADTidyStraighten", "input_tidyStraighten", false, false},
     {"ADTidySmooth", "input_tidySmooth", false, false},
     {"ADRouteCheck", "input_routeCheck", false, false},
-    {"ADFleet", "input_fleet", false, false}
+    {"ADFleet", "input_fleet", false, false},
+    {"ADActionWait", "input_actionWait", false, false},
+    {"ADActionHorn", "input_actionHorn", false, false},
+    {"ADActionLights", "input_actionLights", false, false},
+    {"ADRoutePreview", "input_routePreview", false, false}
 }
 
 --[[
@@ -205,6 +209,22 @@ end
 
 function ADInputManager:input_routeCheck(vehicle)
     ADRouteCheck:open(vehicle)
+end
+
+function ADInputManager:input_actionWait(vehicle)
+    ADWaypointActions.edit(vehicle, ADWaypointActions.nextWait)
+end
+
+function ADInputManager:input_actionHorn(vehicle)
+    ADWaypointActions.edit(vehicle, ADWaypointActions.toggleHorn)
+end
+
+function ADInputManager:input_actionLights(vehicle)
+    ADWaypointActions.edit(vehicle, ADWaypointActions.nextLights)
+end
+
+function ADInputManager:input_routePreview(vehicle)
+    ADRoutePreview:toggle(vehicle)
 end
 
 function ADInputManager:input_fleet(vehicle)
