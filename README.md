@@ -84,7 +84,11 @@ Waypoints with actions get an orange marker with the actions written above it. E
 **Ctrl+Alt+P** shows the route from the vehicle to its destination, and for pickup and deliver also on to the unload target (second colour): as a line in the world, on the minimap and on the big map (ESC > Map), where you can zoom out and see the whole route. A message gives distance and estimated drive time for each part. Press again to hide it.
 
 ### Best price unloading
-New vehicle setting **Best price unloading**. When the vehicle is loaded and sets off to unload, it picks the target in the unload target's folder whose selling point pays the most for the load right now, and tells you where it goes. Put all the selling points you want to use as targets into one folder, and choose one of them as the unload target. Targets without a selling point within 60 m are left out. Works with pickup and deliver and with unload. It needs "use folders" and does nothing while target rotation for unloading is on. The target must be in a folder, not in "All".
+New vehicle setting **Best price unloading**, for pickup and deliver and for unload. Put all the selling points you want to use as targets into one folder and choose one of them as the unload target. When the vehicle is loaded and sets off to unload, it compares the current prices of the selling points next to these targets (within 60 m) and tells you where it goes:
+- **One stop (whole load):** the target where everything on board together brings the most. Products that selling point does not buy stay on board.
+- **Each product (several stops):** the product worth the most goes first, to the target that pays the most for it; then pickup and deliver drives on to the next target for what is left, until nothing sellable is left (at most 5 stops). In unload mode there is only one stop, so it works like one stop.
+
+The vehicle's own tanks (diesel, DEF, ...) are never counted as load. A stop is done when the selling point takes nothing more, so a vehicle never waits forever for a product the point does not buy. It needs "use folders", does nothing while target rotation for unloading is on, and the target must be in a folder, not in "All".
 
 ### Work schedule
 New vehicle settings **Start work at** and **Stop work at** (in-game hours, `--:--` = off).

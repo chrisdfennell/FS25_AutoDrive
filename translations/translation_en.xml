@@ -477,7 +477,9 @@
 		<text name="AD_fleet_driving"												 text="driving" />
 		<text name="AD_fleet_stopped"												 text="stopped" />
 		<text name="gui_ad_bestPriceUnload"											 text="Best price unloading" />
-		<text name="gui_ad_bestPriceUnload_tooltip"									 text="When loaded, unload at the target in the unload target's folder whose selling point pays the most for the load right now" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="When loaded, unload at the targets in the unload target's folder that pay the most right now. One stop: where the whole load brings the most. Each product: every product at its best selling point, one after another" />
+		<text name="gui_ad_bestPrice_oneStop"							 text="One stop (whole load)" />
+		<text name="gui_ad_bestPrice_eachProduct"							 text="Each product (several stops)" />
 		<text name="AD_bestPrice_switch"												 text="sells at the best price at" />
 		<text name="gui_ad_scheduleStart"											 text="Start work at" />
 		<text name="gui_ad_scheduleStart_tooltip"									 text="At this in-game hour the driver starts its AutoDrive job" />

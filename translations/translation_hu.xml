@@ -474,7 +474,9 @@
 		<text name="AD_fleet_driving"												 text="halad" />
 		<text name="AD_fleet_stopped"												 text="leállítva" />
 		<text name="gui_ad_bestPriceUnload"											 text="Kirakodás a legjobb áron" />
-		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Megrakva a kirakodási cél mappájában lévő azon célhoz megy, amelynek értékesítési pontja jelenleg a legtöbbet fizeti a rakományért" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Megrakva a lerakodási cél mappájának azon céljainál rak le, amelyek most a legtöbbet fizetik. Egy megálló: ahol a teljes rakomány a legtöbbet hozza. Minden termék: minden termék a legjobb értékesítési pontján, egymás után" />
+		<text name="gui_ad_bestPrice_oneStop"							 text="Egy megálló (teljes rakomány)" />
+		<text name="gui_ad_bestPrice_eachProduct"							 text="Minden termék (több megálló)" />
 		<text name="AD_bestPrice_switch"												 text="a legjobb áron értékesít itt:" />
 		<text name="gui_ad_scheduleStart"											 text="Munkakezdés" />
 		<text name="gui_ad_scheduleStart_tooltip"									 text="Ebben a játékbeli órában a sofőr elindítja az AutoDrive feladatát" />

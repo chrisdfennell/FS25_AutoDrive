@@ -474,7 +474,9 @@
 		<text name="AD_fleet_driving"												 text="jede" />
 		<text name="AD_fleet_stopped"												 text="stojí" />
 		<text name="gui_ad_bestPriceUnload"											 text="Vykládka za nejlepší cenu" />
-		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Po naložení vyložit u cíle v adresáři cíle vykládky, jehož prodejní místo za náklad právě platí nejvíce" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Naložené vozidlo vyloží v cílech ze složky cíle vykládky, které teď platí nejvíc. Jedna zastávka: kde celý náklad vynese nejvíc. Každý produkt: každý produkt v jeho nejlepším prodejním místě, jeden po druhém" />
+		<text name="gui_ad_bestPrice_oneStop"							 text="Jedna zastávka (celý náklad)" />
+		<text name="gui_ad_bestPrice_eachProduct"							 text="Každý produkt (více zastávek)" />
 		<text name="AD_bestPrice_switch"												 text="prodává za nejlepší cenu v" />
 		<text name="gui_ad_scheduleStart"											 text="Začátek práce v" />
 		<text name="gui_ad_scheduleStart_tooltip"									 text="V tuto herní hodinu řidič spustí svou úlohu AutoDrive" />

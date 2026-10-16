@@ -94,39 +94,12 @@ assert s.eval("ADWorkSchedule.getText(IDLE)") is None
 texts = list(s.eval("MESSAGES").values())
 assert texts[2] == "$l10n_AD_Driver_of; Truck $l10n_AD_schedule_finishing;", texts
 
-# --- best price: nearest selling point within reach, highest price wins
-s.execute("""
-    CANDIDATES = {{marker = "A", x = 0, z = 0}, {marker = "B", x = 500, z = 0}, {marker = "C", x = 1000, z = 0}}
-    STATIONS = {{name = "Mill", x = 10, z = 0, price = 1.2}, {name = "Port", x = 520, z = 0, price = 1.9}, {name = "Far", x = 1200, z = 0, price = 9}}
-    BEST, STATION = ADBestPrice.pickBest(CANDIDATES, STATIONS, 60)
-""")
-assert s.eval("BEST.marker") == "B" and s.eval("STATION.name") == "Port"
-s.execute("BEST2 = ADBestPrice.pickBest({{marker = 'C', x = 1000, z = 0}}, STATIONS, 60)")
-assert s.eval("BEST2") is None
-
-# --- best price apply: switches the unload target inside the folder and tells the player
+# --- network for the fleet rows and the route check screen (best price has its own test, test_bestprice.py)
 s.execute("""
     ADGraphManager.wayPoints[3] = {id = 3, x = 500, y = 0, z = 0, out = {}, incoming = {}}
-    ADGraphManager.mapMarkers = {{name = "Field", id = 1, markerIndex = 1, group = "All"}, {name = "Silo A", id = 2, markerIndex = 2, group = "Silos"},
-        {name = "Silo B", id = 3, markerIndex = 3, group = "Silos"}}
-    ADGraphManager.getMapMarkersInGroup = function(self, group)
-        local r = {}
-        for _, m in ipairs(self.mapMarkers) do if m.group == group then table.insert(r, m) end end
-        return r
-    end
     AutoDrive.getAllUnits = function() return {} end
-    ADBestPrice.getStations = function(fillType) return {{name = "Mill", x = 110, z = 0, price = 1.0}, {name = "Port", x = 510, z = 0, price = 2.0}} end
-    SELLER = makeVehicle("Seller", AutoDrive.MODE_PICKUPANDDELIVER, {bestPriceUnload = true})
-    OFF = makeVehicle("Off", AutoDrive.MODE_PICKUPANDDELIVER, {bestPriceUnload = false})
     MESSAGES = {}
 """)
-assert s.eval("ADBestPrice.apply(SELLER, false)") is True
-assert s.eval("SELLER.ad.stateModule:getSecondMarkerName()") == "Silo B"
-assert "Silo B (Port)" in list(s.eval("MESSAGES").values())[0]
-assert s.eval("ADBestPrice.apply(OFF, false)") is False
-assert s.eval("OFF.ad.stateModule:getSecondMarkerName()") == "Silo A"
-s.execute("SELLER.ad.stateModule.second = ADGraphManager.mapMarkers[1]")  # folder "All": not used
-assert s.eval("ADBestPrice.apply(SELLER, false)") is False
 
 # --- fleet rows
 s.execute("""
@@ -201,4 +174,4 @@ assert s.eval("#REGISTERED") == 0
 s.execute("PlayerInputComponent:registerGlobalPlayerActionEvents('PLAYER'); REGISTERED[1][2]()")
 assert s.eval("REGISTERED[1][1]") == "ADFleet" and s.eval("FLEET_OPENED") == 1
 
-print("OK: schedule (13 hour cases, start/stop/finish round), best price, fleet rows, route check screen, header grab area, fleet key on foot")
+print("OK: schedule (13 hour cases, start/stop/finish round), fleet rows, route check screen, header grab area, fleet key on foot")

@@ -777,8 +777,9 @@ AutoDrive.settings.rotateTargets = {
 }
 
 AutoDrive.settings.bestPriceUnload = {
-    values = {false, true},
-    texts = {"gui_ad_no", "gui_ad_yes"},
+    -- ADBestPrice.OFF / ONE_STOP / EACH_PRODUCT; saved as index, so "yes" of od.6 (index 2) is now "one stop"
+    values = {0, 1, 2},
+    texts = {"gui_ad_off", "gui_ad_bestPrice_oneStop", "gui_ad_bestPrice_eachProduct"},
     default = 1,
     current = 1,
     text = "gui_ad_bestPriceUnload",

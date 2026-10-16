@@ -474,7 +474,9 @@
 		<text name="AD_fleet_driving"												 text="in marcia" />
 		<text name="AD_fleet_stopped"												 text="fermo" />
 		<text name="gui_ad_bestPriceUnload"											 text="Scarico al miglior prezzo" />
-		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Quando è carico, scarica alla destinazione nella cartella della destinazione di scarico il cui punto vendita paga di più per il carico in questo momento" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Quando carico, scarica nelle destinazioni della cartella della destinazione di scarico che pagano di più ora. Una sosta: dove tutto il carico rende di più. Ogni prodotto: ogni prodotto nel suo miglior punto vendita, uno dopo l'altro" />
+		<text name="gui_ad_bestPrice_oneStop"							 text="Una sosta (tutto il carico)" />
+		<text name="gui_ad_bestPrice_eachProduct"							 text="Ogni prodotto (più soste)" />
 		<text name="AD_bestPrice_switch"												 text="vende al miglior prezzo presso" />
 		<text name="gui_ad_scheduleStart"											 text="Inizio lavoro alle" />
 		<text name="gui_ad_scheduleStart_tooltip"									 text="A quest'ora di gioco l'autista avvia il suo lavoro AutoDrive" />

@@ -474,7 +474,9 @@
 		<text name="AD_fleet_driving"												 text="kører" />
 		<text name="AD_fleet_stopped"												 text="stoppet" />
 		<text name="gui_ad_bestPriceUnload"											 text="Aflæsning til bedste pris" />
-		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Når der er læsset, aflæs ved det mål i aflæsningsmålets mappe, hvis salgssted betaler mest for lasten lige nu" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Læsset aflæsses ved de mål i aflæsningsmålets mappe, der betaler mest lige nu. Ét stop: hvor hele læsset giver mest. Hvert produkt: hvert produkt ved sit bedste salgssted, et ad gangen" />
+		<text name="gui_ad_bestPrice_oneStop"							 text="Ét stop (hele læsset)" />
+		<text name="gui_ad_bestPrice_eachProduct"							 text="Hvert produkt (flere stop)" />
 		<text name="AD_bestPrice_switch"												 text="sælger til den bedste pris ved" />
 		<text name="gui_ad_scheduleStart"											 text="Start arbejde kl." />
 		<text name="gui_ad_scheduleStart_tooltip"									 text="På denne time i spillet starter køreren sit AutoDrive-job" />

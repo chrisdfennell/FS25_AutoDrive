@@ -44,6 +44,7 @@ def main():
         run("test_features.py"),
         run("test_statistics.py"),
         run("test_more.py"),
+        run("test_bestprice.py"),
     ]
     if not all(results):
         sys.exit(1)

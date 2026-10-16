@@ -474,7 +474,9 @@
 		<text name="AD_fleet_driving"												 text="sürüyor" />
 		<text name="AD_fleet_stopped"												 text="durdu" />
 		<text name="gui_ad_bestPriceUnload"											 text="En iyi fiyata boşaltma" />
-		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Yüklüyken, boşaltma hedefinin klasöründe satış noktası şu anda yük için en çok ödeyen hedefte boşalt" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Yüklüyken, boşaltma hedefinin klasöründeki şu anda en çok ödeyen hedeflerde boşalt. Tek durak: tüm yükün en çok getirdiği yer. Her ürün: her ürün en iyi satış noktasında, sırayla" />
+		<text name="gui_ad_bestPrice_oneStop"							 text="Tek durak (tüm yük)" />
+		<text name="gui_ad_bestPrice_eachProduct"							 text="Her ürün (birkaç durak)" />
 		<text name="AD_bestPrice_switch"												 text="en iyi fiyatla satıyor:" />
 		<text name="gui_ad_scheduleStart"											 text="İşe başlama saati" />
 		<text name="gui_ad_scheduleStart_tooltip"									 text="Sürücü, oyun içindeki bu saatte AutoDrive işine başlar" />

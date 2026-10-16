@@ -474,7 +474,9 @@
 		<text name="AD_fleet_driving"												 text="в дорозі" />
 		<text name="AD_fleet_stopped"												 text="зупинений" />
 		<text name="gui_ad_bestPriceUnload"											 text="Розвантаження за найкращою ціною" />
-		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Коли завантажено, розвантажуватися в тій локації з папки цілі розвантаження, пункт продажу якої зараз платить за вантаж найбільше" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="З вантажем розвантажуватися в локаціях з папки локації розвантаження, які зараз платять найбільше. Одна зупинка: там, де весь вантаж принесе найбільше. Кожен продукт: кожен продукт у його найкращій точці продажу, по черзі" />
+		<text name="gui_ad_bestPrice_oneStop"							 text="Одна зупинка (весь вантаж)" />
+		<text name="gui_ad_bestPrice_eachProduct"							 text="Кожен продукт (кілька зупинок)" />
 		<text name="AD_bestPrice_switch"												 text="продає за найкращою ціною в" />
 		<text name="gui_ad_scheduleStart"											 text="Початок роботи о" />
 		<text name="gui_ad_scheduleStart_tooltip"									 text="У цю ігрову годину водій запускає своє завдання AutoDrive" />

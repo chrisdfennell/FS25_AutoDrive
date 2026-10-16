@@ -474,7 +474,9 @@
 		<text name="AD_fleet_driving"												 text="en route" />
 		<text name="AD_fleet_stopped"												 text="arrêté" />
 		<text name="gui_ad_bestPriceUnload"											 text="Déchargement au meilleur prix" />
-		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Une fois chargé, décharger à la destination du dossier de la destination de déchargement dont le point de vente paie actuellement le plus pour la cargaison" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Une fois chargé, décharger aux destinations du dossier de la destination de déchargement qui paient le plus en ce moment. Un arrêt : là où tout le chargement rapporte le plus. Chaque produit : chaque produit à son meilleur point de vente, l'un après l'autre" />
+		<text name="gui_ad_bestPrice_oneStop"							 text="Un arrêt (tout le chargement)" />
+		<text name="gui_ad_bestPrice_eachProduct"							 text="Chaque produit (plusieurs arrêts)" />
 		<text name="AD_bestPrice_switch"												 text="vend au meilleur prix à" />
 		<text name="gui_ad_scheduleStart"											 text="Début du travail à" />
 		<text name="gui_ad_scheduleStart_tooltip"									 text="À cette heure du jeu, le chauffeur lance sa tâche AutoDrive" />

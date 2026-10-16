@@ -474,7 +474,9 @@
 		<text name="AD_fleet_driving"												 text="行駛中" />
 		<text name="AD_fleet_stopped"												 text="已停止" />
 		<text name="gui_ad_bestPriceUnload"											 text="最高價卸貨" />
-		<text name="gui_ad_bestPriceUnload_tooltip"									 text="裝貨後，在卸貨目標所在文件夾中選擇出售點當前對該貨物出價最高的目標進行卸貨" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="裝貨後，在卸貨目標所在資料夾中當前出價最高的目標卸貨。一站：在整車貨物收益最高的地方卸貨。按產品：每種產品依次在其最佳出售點卸貨" />
+		<text name="gui_ad_bestPrice_oneStop"							 text="一站（全部貨物）" />
+		<text name="gui_ad_bestPrice_eachProduct"							 text="按產品（多站）" />
 		<text name="AD_bestPrice_switch"												 text="前往最高價出售點" />
 		<text name="gui_ad_scheduleStart"											 text="開始工作時間" />
 		<text name="gui_ad_scheduleStart_tooltip"									 text="司機在此遊戲時間開始執行 AutoDrive 任務" />

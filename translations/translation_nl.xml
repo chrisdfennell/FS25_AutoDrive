@@ -474,7 +474,9 @@
 		<text name="AD_fleet_driving"												 text="rijdt" />
 		<text name="AD_fleet_stopped"												 text="gestopt" />
 		<text name="gui_ad_bestPriceUnload"											 text="Lossen tegen de beste prijs" />
-		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Wanneer geladen, lossen bij de bestemming in de map van de losbestemming waarvan het verkooppunt op dit moment het meest betaalt voor de lading" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Beladen lossen bij de bestemmingen in de map van de losbestemming die nu het meest betalen. Eén stop: waar de hele lading het meest oplevert. Elk product: elk product bij zijn beste verkooppunt, na elkaar" />
+		<text name="gui_ad_bestPrice_oneStop"							 text="Eén stop (hele lading)" />
+		<text name="gui_ad_bestPrice_eachProduct"							 text="Elk product (meerdere stops)" />
 		<text name="AD_bestPrice_switch"												 text="verkoopt voor de beste prijs bij" />
 		<text name="gui_ad_scheduleStart"											 text="Begin werk om" />
 		<text name="gui_ad_scheduleStart_tooltip"									 text="Op dit speluur start de bestuurder zijn AutoDrive-taak" />
