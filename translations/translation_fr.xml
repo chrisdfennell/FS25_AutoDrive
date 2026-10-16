@@ -484,6 +484,13 @@
 		<text name="AD_schedule_finishing"											 text="termine le tour en cours puis se gare (horaire)" />
 		<text name="AD_schedule_stopped"												 text="a arrêté le travail (horaire)" />
 		<text name="AD_folders_switchedOn"							 text="Les dossiers étaient désactivés, le réglage &quot;Utiliser des dossiers&quot; est maintenant activé" />
+		<text name="button_ad_statistics"							 text="Statistiques" />
+		<text name="button_ad_status"							 text="État" />
+		<text name="button_ad_resetStatistics"							 text="Réinitialiser les statistiques" />
+		<text name="AD_stats_driving"							 text="conduite %s" />
+		<text name="AD_stats_waiting"							 text="attente %s (%s)" />
+		<text name="AD_stats_loads"							 text="livraisons : %s" />
+		<text name="AD_stats_unloaded"							 text="%s déchargés" />
 		<text name="AD_routeCheck_loose"								 text="Point de passage isolé sans aucune connexion" />
 		<text name="AD_routeCheck_deadEnd"							 text="Impasse : aucun chemin à partir de ce point de passage" />
 		<text name="AD_routeCheck_trap"								 text="Piège à sens unique : %s points de passage où l'on peut entrer mais d'où l'on ne peut pas sortir" />

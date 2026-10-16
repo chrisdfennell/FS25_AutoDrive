@@ -484,6 +484,13 @@
 		<text name="AD_schedule_finishing"											 text="maakt de huidige ronde af en parkeert daarna (schema)" />
 		<text name="AD_schedule_stopped"												 text="is gestopt met werken (schema)" />
 		<text name="AD_folders_switchedOn"							 text="Mappen stonden uit, de instelling &quot;Gebruik mappen&quot; staat nu aan" />
+		<text name="button_ad_statistics"							 text="Statistieken" />
+		<text name="button_ad_status"							 text="Status" />
+		<text name="button_ad_resetStatistics"							 text="Statistieken resetten" />
+		<text name="AD_stats_driving"							 text="rijdt %s" />
+		<text name="AD_stats_waiting"							 text="wacht %s (%s)" />
+		<text name="AD_stats_loads"							 text="leveringen: %s" />
+		<text name="AD_stats_unloaded"							 text="%s gelost" />
 		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
 		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
 		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />

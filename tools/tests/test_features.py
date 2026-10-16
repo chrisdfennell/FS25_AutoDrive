@@ -47,7 +47,7 @@ s.execute("""
         return {ad = {stateModule = stateModule}, settings = settings, getOwnerFarmId = function() return 1 end}
     end
 """)
-for f in [("Manager", "WorkSchedule.lua"), ("Manager", "BestPrice.lua"), ("Manager", "RouteCheck.lua"), ("Gui", "FleetGUI.lua"), ("Gui", "RouteCheckGUI.lua")]:
+for f in [("Manager", "WorkSchedule.lua"), ("Manager", "Statistics.lua"), ("Manager", "BestPrice.lua"), ("Manager", "RouteCheck.lua"), ("Gui", "FleetGUI.lua"), ("Gui", "RouteCheckGUI.lua")]:
     s.execute(t.read(os.path.join(t.MOD, "scripts", *f)))
 
 # --- schedule: which hour crossings start or stop

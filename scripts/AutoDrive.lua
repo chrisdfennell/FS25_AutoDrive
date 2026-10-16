@@ -274,6 +274,8 @@ function AutoDrive:loadMap(name)
 
 	ADWorkSchedule:load()
 
+	ADStatistics:load()
+
 	ADUnloadManager:load()
 
 	AutoDrivePlaceableData:load()
@@ -727,6 +729,7 @@ function AutoDrive:update(dt)
 		ADScheduler:update(dt)
 		ADUnloadManager:update(dt)
 		ADWorkSchedule:update(dt)
+		ADStatistics:update(dt)
 	end
 
 	ADMessagesManager:update(dt)

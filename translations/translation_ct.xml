@@ -484,6 +484,13 @@
 		<text name="AD_schedule_finishing"											 text="按計劃完成當前一輪後停車" />
 		<text name="AD_schedule_stopped"												 text="按計劃停止工作" />
 		<text name="AD_folders_switchedOn"							 text="資料夾已關閉，「使用文件夾」設定現已開啟" />
+		<text name="button_ad_statistics"							 text="統計" />
+		<text name="button_ad_status"							 text="狀態" />
+		<text name="button_ad_resetStatistics"							 text="重設統計" />
+		<text name="AD_stats_driving"							 text="行駛 %s" />
+		<text name="AD_stats_waiting"							 text="等待 %s（%s）" />
+		<text name="AD_stats_loads"							 text="送貨次數：%s" />
+		<text name="AD_stats_unloaded"							 text="已卸載 %s" />
 		<text name="AD_routeCheck_loose"								 text="沒有任何連接的孤立航點" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：從此航點無法繼續前進" />
 		<text name="AD_routeCheck_trap"								 text="單向陷阱：%s 個航點只能駛入無法駛出" />

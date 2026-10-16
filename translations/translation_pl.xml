@@ -484,6 +484,13 @@
 		<text name="AD_schedule_finishing"											 text="kończy bieżący kurs, a następnie parkuje (harmonogram)" />
 		<text name="AD_schedule_stopped"												 text="zakończył pracę (harmonogram)" />
 		<text name="AD_folders_switchedOn"							 text="Foldery były wyłączone, ustawienie &quot;Użyj folderów&quot; jest teraz włączone" />
+		<text name="button_ad_statistics"							 text="Statystyki" />
+		<text name="button_ad_status"							 text="Status" />
+		<text name="button_ad_resetStatistics"							 text="Resetuj statystyki" />
+		<text name="AD_stats_driving"							 text="jazda %s" />
+		<text name="AD_stats_waiting"							 text="czekanie %s (%s)" />
+		<text name="AD_stats_loads"							 text="dostawy: %s" />
+		<text name="AD_stats_unloaded"							 text="rozładowano %s" />
 		<text name="AD_routeCheck_loose"								 text="Luźny punkt trasy bez żadnego połączenia" />
 		<text name="AD_routeCheck_deadEnd"							 text="Ślepa uliczka: z tego punktu trasy nie ma dalszej drogi" />
 		<text name="AD_routeCheck_trap"								 text="Pułapka jednokierunkowa: punkty trasy, do których można wjechać, ale nie można wyjechać: %s" />

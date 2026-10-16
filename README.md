@@ -4,7 +4,7 @@
 [![Latest release](https://img.shields.io/github/v/release/chrisdfennell/FS25_AutoDrive?label=release)](https://github.com/chrisdfennell/FS25_AutoDrive/releases/latest)
 
 AutoDrive Overdrive is an unofficial edition of [AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive) for Farming Simulator 25, by the AutoDrive Team (Stephan-S, Axel32019, TyKonKet and [many contributors](credits.txt)), released under the [MIT licence](LICENSE).
-It is based on AutoDrive 3.0.1.4 and adds route editor improvements, a route check, a fleet overview, best price unloading and work schedules. For the official mod and its support, see the original README below.
+It is based on AutoDrive 3.0.1.4 and adds route editor improvements, a route check, a fleet overview with driver statistics, best price unloading and work schedules. For the official mod and its support, see the original README below.
 
 ## Download
 Get **FS25_AutoDrive.zip** from the [latest release](https://github.com/chrisdfennell/FS25_AutoDrive/releases/latest) and put it into your mods folder (`Documents/My Games/FarmingSimulator2025/mods`), replacing the official AutoDrive zip.
@@ -67,6 +67,8 @@ The route between the two waypoints is the shortest chain of connections. Only w
 
 ### Fleet overview
 **Ctrl+Alt+I** lists every AutoDrive vehicle of your farm: name, mode, destination, load, fuel, work schedule and what it is doing. A stopped vehicle shows its latest warning or error from the notifications. **Enter vehicle** (or a double click) takes you to it, **Start / stop** starts or stops its job. The list updates every second.
+
+**Statistics** switches the list to the driver statistics, counted while AutoDrive drives the vehicle: distance, time driving, time standing and waiting (with its share of the total), deliveries and the amount unloaded. A delivery is counted when the vehicle's load goes down by at least 500 l (or a quarter of a smaller trailer) and then stays. In this view, **Reset statistics** sets the selected vehicle back to zero. The numbers are saved with the savegame.
 
 ### Best price unloading
 New vehicle setting **Best price unloading**. When the vehicle is loaded and sets off to unload, it picks the target in the unload target's folder whose selling point pays the most for the load right now, and tells you where it goes. Put all the selling points you want to use as targets into one folder, and choose one of them as the unload target. Targets without a selling point within 60 m are left out. Works with pickup and deliver and with unload. It needs "use folders" and does nothing while target rotation for unloading is on. The target must be in a folder, not in "All".

@@ -26,9 +26,11 @@
             </BoxLayout>
 
             <BoxLayout profile="ad_common_dialogButtonBox">
+                <Button profile="buttonOK" id="viewButton" text="$l10n_button_ad_statistics" onClick="onClickView"/>
+                <Bitmap profile="fs25_dialogButtonBoxSeparator"/>
                 <Button profile="buttonActivate" text="$l10n_button_ad_enterVehicle" onClick="onClickEnter"/>
                 <Bitmap profile="fs25_dialogButtonBoxSeparator"/>
-                <Button profile="buttonCancel" text="$l10n_button_ad_startStop" onClick="onClickStartStop"/>
+                <Button profile="buttonCancel" id="actionButton" text="$l10n_button_ad_startStop" onClick="onClickStartStop"/>
                 <Bitmap profile="fs25_dialogButtonBoxSeparator"/>
                 <Button profile="buttonBack" text="$l10n_button_back" onClick="onClickBack"/>
             </BoxLayout>

@@ -2,6 +2,8 @@
 ADFleetGui = {}
 ADFleetGui.debug = false
 ADFleetGui.REFRESH_INTERVAL = 1000
+-- a multiplayer client asks the server for the driver statistics this often while the list shows them
+ADFleetGui.STATS_REQUEST_INTERVAL = 2000
 
 local ADFleetGui_mt = Class(ADFleetGui, DialogElement)
 
@@ -10,6 +12,8 @@ function ADFleetGui.new(target)
     self:include(ADGuiDebugMixin)
     self.rows = {}
     self.refreshTimer = 0
+    self.statsRequestTimer = 0
+    self.showStatistics = false
     return self
 end
 
@@ -103,6 +107,7 @@ function ADFleetGui.getRow(vehicle)
     end
     table.insert(parts, state)
     row.text = table.concat(parts, "  |  ")
+    row.statsText = row.name .. "  |  " .. ADStatistics.getText(vehicle.ad.stats)
     return row
 end
 
@@ -131,6 +136,38 @@ end
 function ADFleetGui:onOpen()
     ADFleetGui:superClass().onOpen(self)
     self.vehicleList:setDataSource(self)
+    self:updateButtons()
+    if self.showStatistics then
+        AutoDriveStatisticsEvent.request()
+    end
+    self:refreshItems()
+end
+
+-- the list shows either the current state or the driver statistics
+function ADFleetGui:updateButtons()
+    if self.viewButton ~= nil then
+        if self.showStatistics then
+            self.viewButton:setText(g_i18n:getText("button_ad_status"))
+        else
+            self.viewButton:setText(g_i18n:getText("button_ad_statistics"))
+        end
+    end
+    if self.actionButton ~= nil then
+        if self.showStatistics then
+            self.actionButton:setText(g_i18n:getText("button_ad_resetStatistics"))
+        else
+            self.actionButton:setText(g_i18n:getText("button_ad_startStop"))
+        end
+    end
+end
+
+function ADFleetGui:onClickView()
+    self.showStatistics = not self.showStatistics
+    self:updateButtons()
+    if self.showStatistics then
+        AutoDriveStatisticsEvent.request()
+        self.statsRequestTimer = 0
+    end
     self:refreshItems()
 end
 
@@ -146,6 +183,13 @@ function ADFleetGui:update(dt)
     if self.refreshTimer > ADFleetGui.REFRESH_INTERVAL then
         self:refreshItems()
     end
+    if self.showStatistics then
+        self.statsRequestTimer = self.statsRequestTimer + dt
+        if self.statsRequestTimer > ADFleetGui.STATS_REQUEST_INTERVAL then
+            self.statsRequestTimer = 0
+            AutoDriveStatisticsEvent.request()
+        end
+    end
 end
 
 function ADFleetGui:getNumberOfItemsInSection(list, section)
@@ -159,7 +203,11 @@ function ADFleetGui:populateCellForItemInSection(list, section, index, cell)
     if list == self.vehicleList then
         local row = self.rows[index]
         cell.attributes.listItemIcon:setImageSlice(nil, row.icon)
-        cell.attributes.listItemText:setText(row.text)
+        if self.showStatistics then
+            cell.attributes.listItemText:setText(row.statsText)
+        else
+            cell.attributes.listItemText:setText(row.text)
+        end
         cell.target = self
     end
 end
@@ -192,7 +240,11 @@ end
 
 function ADFleetGui:onClickStartStop()
     local vehicle = self:getSelectedVehicle()
-    if vehicle ~= nil then
+    if vehicle ~= nil and self.showStatistics then
+        -- in the statistics view this button resets the selected vehicle's numbers
+        AutoDriveStatisticsEvent.requestReset(vehicle)
+        self:refreshItems()
+    elseif vehicle ~= nil then
         local farmId = vehicle.getOwnerFarmId ~= nil and vehicle:getOwnerFarmId() or nil
         ADInputManager:onInputCall(vehicle, "input_start_stop", farmId)
     end

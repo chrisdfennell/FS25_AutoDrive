@@ -487,6 +487,13 @@
 		<text name="AD_schedule_finishing"											 text="finishes the current round and then parks (schedule)" />
 		<text name="AD_schedule_stopped"												 text="stopped work (schedule)" />
 		<text name="AD_folders_switchedOn"							 text="Folders were switched off, the setting &quot;Use folders&quot; is now on" />
+		<text name="button_ad_statistics"							 text="Statistics" />
+		<text name="button_ad_status"							 text="Status" />
+		<text name="button_ad_resetStatistics"							 text="Reset statistics" />
+		<text name="AD_stats_driving"							 text="driving %s" />
+		<text name="AD_stats_waiting"							 text="waiting %s (%s)" />
+		<text name="AD_stats_loads"							 text="deliveries: %s" />
+		<text name="AD_stats_unloaded"							 text="%s unloaded" />
 		<text name="AD_routeCheck_loose"								 text="Loose waypoint without any connection" />
 		<text name="AD_routeCheck_deadEnd"							 text="Dead end: no way on from this waypoint" />
 		<text name="AD_routeCheck_trap"								 text="One-way trap: %s waypoints you can drive into but not out of" />

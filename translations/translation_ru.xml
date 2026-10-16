@@ -484,6 +484,13 @@
 		<text name="AD_schedule_finishing"											 text="завершает текущий рейс и затем паркуется (по расписанию)" />
 		<text name="AD_schedule_stopped"												 text="закончил работу (по расписанию)" />
 		<text name="AD_folders_switchedOn"							 text="Папки были выключены, настройка &quot;Использовать папки&quot; теперь включена" />
+		<text name="button_ad_statistics"							 text="Статистика" />
+		<text name="button_ad_status"							 text="Статус" />
+		<text name="button_ad_resetStatistics"							 text="Сбросить статистику" />
+		<text name="AD_stats_driving"							 text="в пути %s" />
+		<text name="AD_stats_waiting"							 text="ожидание %s (%s)" />
+		<text name="AD_stats_loads"							 text="доставок: %s" />
+		<text name="AD_stats_unloaded"							 text="выгружено %s" />
 		<text name="AD_routeCheck_loose"								 text="Одиночная путевая точка без соединений" />
 		<text name="AD_routeCheck_deadEnd"							 text="Тупик: от этой путевой точки дальше пути нет" />
 		<text name="AD_routeCheck_trap"								 text="Односторонняя ловушка: путевых точек, куда можно въехать, но нельзя выехать: %s" />

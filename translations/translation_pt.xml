@@ -484,6 +484,13 @@
 		<text name="AD_schedule_finishing"											 text="termina a ronda atual e depois estaciona (horário)" />
 		<text name="AD_schedule_stopped"												 text="parou de trabalhar (horário)" />
 		<text name="AD_folders_switchedOn"							 text="As pastas estavam desativadas, a opção &quot;Use pastas&quot; está agora ativada" />
+		<text name="button_ad_statistics"							 text="Estatísticas" />
+		<text name="button_ad_status"							 text="Estado" />
+		<text name="button_ad_resetStatistics"							 text="Repor estatísticas" />
+		<text name="AD_stats_driving"							 text="a conduzir %s" />
+		<text name="AD_stats_waiting"							 text="à espera %s (%s)" />
+		<text name="AD_stats_loads"							 text="entregas: %s" />
+		<text name="AD_stats_unloaded"							 text="%s descarregados" />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem qualquer ligação" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há caminho a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de sentido único: %s waypoints onde se pode entrar mas não sair" />

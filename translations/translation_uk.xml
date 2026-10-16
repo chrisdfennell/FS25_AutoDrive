@@ -484,6 +484,13 @@
 		<text name="AD_schedule_finishing"											 text="завершує поточний рейс і потім паркується (за розкладом)" />
 		<text name="AD_schedule_stopped"												 text="закінчив роботу (за розкладом)" />
 		<text name="AD_folders_switchedOn"							 text="Папки були вимкнені, налаштування &quot;Використовувати папки&quot; тепер увімкнено" />
+		<text name="button_ad_statistics"							 text="Статистика" />
+		<text name="button_ad_status"							 text="Стан" />
+		<text name="button_ad_resetStatistics"							 text="Скинути статистику" />
+		<text name="AD_stats_driving"							 text="в дорозі %s" />
+		<text name="AD_stats_waiting"							 text="очікування %s (%s)" />
+		<text name="AD_stats_loads"							 text="доставок: %s" />
+		<text name="AD_stats_unloaded"							 text="вивантажено %s" />
 		<text name="AD_routeCheck_loose"								 text="Окрема точка шляху без з'єднань" />
 		<text name="AD_routeCheck_deadEnd"							 text="Глухий кут: від цієї точки шляху далі немає шляху" />
 		<text name="AD_routeCheck_trap"								 text="Одностороння пастка: точок шляху, куди можна заїхати, але не можна виїхати: %s" />

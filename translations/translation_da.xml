@@ -484,6 +484,13 @@
 		<text name="AD_schedule_finishing"											 text="afslutter den aktuelle runde og parkerer derefter (tidsplan)" />
 		<text name="AD_schedule_stopped"												 text="har stoppet arbejdet (tidsplan)" />
 		<text name="AD_folders_switchedOn"							 text="Mapper var slået fra, indstillingen &quot;Brug mapper&quot; er nu slået til" />
+		<text name="button_ad_statistics"							 text="Statistik" />
+		<text name="button_ad_status"							 text="Status" />
+		<text name="button_ad_resetStatistics"							 text="Nulstil statistik" />
+		<text name="AD_stats_driving"							 text="kører %s" />
+		<text name="AD_stats_waiting"							 text="venter %s (%s)" />
+		<text name="AD_stats_loads"							 text="leveringer: %s" />
+		<text name="AD_stats_unloaded"							 text="%s aflæsset" />
 		<text name="AD_routeCheck_loose"								 text="Løst vejpunkt uden nogen forbindelse" />
 		<text name="AD_routeCheck_deadEnd"							 text="Blindgyde: ingen vej videre fra dette vejpunkt" />
 		<text name="AD_routeCheck_trap"								 text="Ensrettet fælde: %s vejpunkter, man kan køre ind i, men ikke ud af" />

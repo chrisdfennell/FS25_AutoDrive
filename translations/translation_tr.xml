@@ -484,6 +484,13 @@
 		<text name="AD_schedule_finishing"											 text="mevcut turu bitirip ardından park edecek (program)" />
 		<text name="AD_schedule_stopped"												 text="işi bıraktı (program)" />
 		<text name="AD_folders_switchedOn"							 text="Klasörler kapalıydı, &quot;Klasörleri kullan&quot; ayarı artık açık" />
+		<text name="button_ad_statistics"							 text="İstatistikler" />
+		<text name="button_ad_status"							 text="Durum" />
+		<text name="button_ad_resetStatistics"							 text="İstatistikleri sıfırla" />
+		<text name="AD_stats_driving"							 text="sürüş %s" />
+		<text name="AD_stats_waiting"							 text="bekleme %s (%s)" />
+		<text name="AD_stats_loads"							 text="teslimatlar: %s" />
+		<text name="AD_stats_unloaded"							 text="%s boşaltıldı" />
 		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
 		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
 		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />

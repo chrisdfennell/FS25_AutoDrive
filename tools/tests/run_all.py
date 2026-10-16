@@ -42,6 +42,7 @@ def main():
         run("test_routecheck.py"),
         run("test_tidy.py"),
         run("test_features.py"),
+        run("test_statistics.py"),
     ]
     if not all(results):
         sys.exit(1)

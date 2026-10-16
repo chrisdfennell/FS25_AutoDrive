@@ -27,7 +27,7 @@ def main():
         "",
         "Based on **AutoDrive %s** by the AutoDrive Team, with route editor improvements: "
         "undo and redo (Ctrl+Z / Ctrl+Y) with preview and highlighted changes, target sub folders and folder colours, "
-        "moving waypoints by dragging and tidy-up tools, plus a route check, a fleet overview, best price unloading and work schedules. "
+        "moving waypoints by dragging and tidy-up tools, plus a route check, a fleet overview with driver statistics, best price unloading and work schedules. "
         "Everything is described in the [README](%s)." % (base, readme),
         "",
         "### Install",

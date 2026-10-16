@@ -484,6 +484,13 @@
 		<text name="AD_schedule_finishing"											 text="beendet die aktuelle Runde und parkt dann (Zeitplan)" />
 		<text name="AD_schedule_stopped"												 text="hat die Arbeit beendet (Zeitplan)" />
 		<text name="AD_folders_switchedOn"							 text="Ordner waren ausgeschaltet, die Einstellung &quot;Ordner verwenden&quot; ist jetzt an" />
+		<text name="button_ad_statistics"							 text="Statistik" />
+		<text name="button_ad_status"							 text="Status" />
+		<text name="button_ad_resetStatistics"							 text="Statistik zurücksetzen" />
+		<text name="AD_stats_driving"							 text="fährt %s" />
+		<text name="AD_stats_waiting"							 text="wartet %s (%s)" />
+		<text name="AD_stats_loads"							 text="Lieferungen: %s" />
+		<text name="AD_stats_unloaded"							 text="%s abgeladen" />
 		<text name="AD_routeCheck_loose"								 text="Loser Wegpunkt ohne jede Verbindung" />
 		<text name="AD_routeCheck_deadEnd"							 text="Sackgasse: von diesem Wegpunkt geht es nicht weiter" />
 		<text name="AD_routeCheck_trap"								 text="Einbahn-Falle: %s Wegpunkte, in die man hinein-, aber nicht wieder herausfahren kann" />
