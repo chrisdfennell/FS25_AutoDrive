@@ -406,51 +406,54 @@
 		<text name="gui_ad_editorTip_9"								text="1. nodo es intersección, segundo es vecino:" />
 		<text name="gui_ad_editorTip_10"								text="Alternar tipo de segmento (normal/dual)" />
 		<text name="gui_ad_editorTip_11"								text="LSHIFT = Alternar a carretera secundaria" />
-		<text name="input_ADUndo"									 text="AD: Undo route edit" />
-		<text name="input_ADRedo"									 text="AD: Redo route edit" />
-		<text name="AD_undo_done"									 text="Undone: %s (%s more to undo, %s to redo)" />
-		<text name="AD_redo_done"									 text="Redone: %s (%s more to undo, %s to redo)" />
-		<text name="AD_undo_empty"									 text="Nothing to undo" />
-		<text name="AD_redo_empty"									 text="Nothing to redo" />
-		<text name="AD_undo_blocked"									 text="Redo is not possible while recording" />
-		<text name="gui_ad_editorTip_12"								 text="LCTRL + Z / LCTRL + Y = Undo / Redo, hold LALT + Z = preview" />
-		<text name="AD_undoStep_wpCreated_1"							 text="waypoint created" />
-		<text name="AD_undoStep_wpCreated"							 text="%s waypoints created" />
-		<text name="AD_undoStep_wpDeleted_1"							 text="waypoint deleted" />
-		<text name="AD_undoStep_wpDeleted"							 text="%s waypoints deleted" />
-		<text name="AD_undoStep_wpMoved_1"							 text="waypoint moved" />
-		<text name="AD_undoStep_wpMoved"								 text="%s waypoints moved" />
-		<text name="AD_undoStep_sideRoad_1"							 text="side road toggled" />
-		<text name="AD_undoStep_sideRoad"							 text="side road toggled on %s waypoints" />
-		<text name="AD_undoStep_connection_1"						 text="connection changed" />
-		<text name="AD_undoStep_connection"							 text="%s connections changed" />
-		<text name="AD_undoStep_markerCreated_1"						 text="target &quot;%s&quot; created" />
-		<text name="AD_undoStep_markerCreated"						 text="%s targets created" />
-		<text name="AD_undoStep_markerDeleted_1"						 text="target &quot;%s&quot; deleted" />
-		<text name="AD_undoStep_markerDeleted"						 text="%s targets deleted" />
-		<text name="AD_undoStep_markerRenamed"						 text="target &quot;%s&quot; renamed to &quot;%s&quot;" />
-		<text name="AD_undoStep_markerFolder"						 text="target &quot;%s&quot; moved to folder &quot;%s&quot;" />
-		<text name="AD_undoStep_edit"								 text="route edit" />
-		<text name="input_ADUndoPreview"								 text="AD: Hold to preview the next undo" />
-		<text name="AD_undo_conflict"								 text="Can't undo yet: %s changed the route network after your last edit" />
+		<text name="input_ADUndo"									 text="AD: Deshacer edición de ruta" />
+		<text name="input_ADRedo"									 text="AD: Rehacer edición de ruta" />
+		<text name="AD_undo_done"									 text="Deshecho: %s (%s más para deshacer, %s para rehacer)" />
+		<text name="AD_redo_done"									 text="Rehecho: %s (%s más para deshacer, %s para rehacer)" />
+		<text name="AD_undo_empty"									 text="Nada que deshacer" />
+		<text name="AD_redo_empty"									 text="Nada que rehacer" />
+		<text name="AD_undo_blocked"									 text="No se puede rehacer durante la grabación" />
+		<text name="gui_ad_editorTip_12"								 text="LCTRL + Z / LCTRL + Y = Deshacer / Rehacer, mantener LALT + Z = vista previa" />
+		<text name="AD_undoStep_wpCreated_1"							 text="punto de ruta creado" />
+		<text name="AD_undoStep_wpCreated"							 text="%s puntos de ruta creados" />
+		<text name="AD_undoStep_wpDeleted_1"							 text="punto de ruta eliminado" />
+		<text name="AD_undoStep_wpDeleted"							 text="%s puntos de ruta eliminados" />
+		<text name="AD_undoStep_wpMoved_1"							 text="punto de ruta movido" />
+		<text name="AD_undoStep_wpMoved"								 text="%s puntos de ruta movidos" />
+		<text name="AD_undoStep_sideRoad_1"							 text="carretera secundaria cambiada" />
+		<text name="AD_undoStep_sideRoad"							 text="carretera secundaria cambiada en %s puntos de ruta" />
+		<text name="AD_undoStep_connection_1"						 text="conexión cambiada" />
+		<text name="AD_undoStep_connection"							 text="%s conexiones cambiadas" />
+		<text name="AD_undoStep_markerCreated_1"						 text="destino &quot;%s&quot; creado" />
+		<text name="AD_undoStep_markerCreated"						 text="%s destinos creados" />
+		<text name="AD_undoStep_markerDeleted_1"						 text="destino &quot;%s&quot; eliminado" />
+		<text name="AD_undoStep_markerDeleted"						 text="%s destinos eliminados" />
+		<text name="AD_undoStep_markerRenamed"						 text="destino &quot;%s&quot; renombrado a &quot;%s&quot;" />
+		<text name="AD_undoStep_markerFolder"						 text="destino &quot;%s&quot; movido a la carpeta &quot;%s&quot;" />
+		<text name="AD_undoStep_edit"								 text="edición de ruta" />
+		<text name="input_ADUndoPreview"								 text="AD: Mantener para previsualizar el siguiente deshacer" />
+		<text name="AD_undo_conflict"								 text="Aún no se puede deshacer: %s ha cambiado la red de rutas después de tu última edición" />
 		<text name="AD_undo_name"									 text="%s" />
-		<text name="AD_undo_otherPlayer"								 text="another player" />
-		<text name="AD_undo_recordingStart"							 text="Start of the recording reached - stop recording to undo it completely" />
-		<text name="AD_undo_recording"								 text="Recording: removed %s, continuing from the highlighted point" />
-		<text name="AD_undoStep_recordedPoints_1"					 text="the last recorded point" />
-		<text name="AD_undoStep_recordedPoints"						 text="the last %s recorded points" />
-		<text name="AD_undo_preview"									 text="Next undo: %s" />
-		<text name="AD_undo_cleared"									 text="Undo history cleared: %s" />
-		<text name="AD_undo_reason_network"							 text="route network replaced" />
-		<text name="AD_undo_reason_debug"							 text="debug markers changed" />
-		<text name="AD_undo_reason_colors"							 text="colour selection points used" />
-		<text name="AD_undo_reason_other"							 text="route network changed outside the editor" />
-		<text name="AD_undoStep_folderCreated_1"						 text="folder &quot;%s&quot; created" />
-		<text name="AD_undoStep_folderCreated"						 text="%s folders created" />
-		<text name="AD_undoStep_folderDeleted_1"						 text="folder &quot;%s&quot; deleted" />
-		<text name="AD_undoStep_folderDeleted"						 text="%s folders deleted" />
-		<text name="AD_undoStep_folderRenamed"						 text="folder &quot;%s&quot; renamed to &quot;%s&quot;" />
-		<text name="AD_undoStep_folderColor"							 text="colour of folder &quot;%s&quot; changed" />
-		<text name="AD_undoStep_network"								 text="routes loaded" />
+		<text name="AD_undo_otherPlayer"								 text="otro jugador" />
+		<text name="AD_undo_recordingStart"							 text="Inicio de la grabación alcanzado: detén la grabación para deshacerla por completo" />
+		<text name="AD_undo_recording"								 text="Grabación: quitado(s) %s, se continúa desde el punto resaltado" />
+		<text name="AD_undoStep_recordedPoints_1"					 text="el último punto grabado" />
+		<text name="AD_undoStep_recordedPoints"						 text="los últimos %s puntos grabados" />
+		<text name="AD_undo_preview"									 text="Siguiente deshacer: %s" />
+		<text name="AD_undo_cleared"									 text="Historial de deshacer borrado: %s" />
+		<text name="AD_undo_reason_network"							 text="red de rutas reemplazada" />
+		<text name="AD_undo_reason_debug"							 text="marcadores de depuración cambiados" />
+		<text name="AD_undo_reason_colors"							 text="puntos de selección de color usados" />
+		<text name="AD_undo_reason_other"							 text="red de rutas cambiada fuera del editor" />
+		<text name="AD_undoStep_folderCreated_1"						 text="carpeta &quot;%s&quot; creada" />
+		<text name="AD_undoStep_folderCreated"						 text="%s carpetas creadas" />
+		<text name="AD_undoStep_folderDeleted_1"						 text="carpeta &quot;%s&quot; eliminada" />
+		<text name="AD_undoStep_folderDeleted"						 text="%s carpetas eliminadas" />
+		<text name="AD_undoStep_folderRenamed"						 text="carpeta &quot;%s&quot; renombrada a &quot;%s&quot;" />
+		<text name="AD_undoStep_folderColor"							 text="color de la carpeta &quot;%s&quot; cambiado" />
+		<text name="AD_undoStep_network"								 text="rutas cargadas" />
+		<text name="input_ADMoveNode"								 text="AD: Mantener + arrastrar con el botón izquierdo para mover el punto de ruta" />
+		<text name="gui_ad_enterSubGroupNameTitle"					 text="Crear subcarpeta en %s" />
+		<text name="gui_ad_renameGroupNameTitle"						 text="Renombrar carpeta %s" />
 	</texts>
 </l10n>

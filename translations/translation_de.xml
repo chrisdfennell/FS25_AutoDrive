@@ -452,5 +452,8 @@
 		<text name="AD_undoStep_folderRenamed"						 text="Ordner &quot;%s&quot; umbenannt in &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="Farbe von Ordner &quot;%s&quot; geändert" />
 		<text name="AD_undoStep_network"								 text="Routen geladen" />
+		<text name="input_ADMoveNode"								 text="AD: Halten + mit linker Maustaste ziehen, um Wegpunkt zu verschieben" />
+		<text name="gui_ad_enterSubGroupNameTitle"					 text="Unterordner in %s erstellen" />
+		<text name="gui_ad_renameGroupNameTitle"						 text="Ordner %s umbenennen" />
 	</texts>
 </l10n>

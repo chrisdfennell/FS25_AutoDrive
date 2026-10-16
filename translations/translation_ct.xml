@@ -406,51 +406,54 @@
 		<text name="gui_ad_editorTip_9"								text="第一個點是交叉點，第二個是相鄰點：" />
 		<text name="gui_ad_editorTip_10"								text="左CTRL: 更改路線類型" />
 		<text name="gui_ad_editorTip_11"								text="左SHIFT = 更改支線" />
-		<text name="input_ADUndo"									 text="AD: Undo route edit" />
-		<text name="input_ADRedo"									 text="AD: Redo route edit" />
-		<text name="AD_undo_done"									 text="Undone: %s (%s more to undo, %s to redo)" />
-		<text name="AD_redo_done"									 text="Redone: %s (%s more to undo, %s to redo)" />
-		<text name="AD_undo_empty"									 text="Nothing to undo" />
-		<text name="AD_redo_empty"									 text="Nothing to redo" />
-		<text name="AD_undo_blocked"									 text="Redo is not possible while recording" />
-		<text name="gui_ad_editorTip_12"								 text="LCTRL + Z / LCTRL + Y = Undo / Redo, hold LALT + Z = preview" />
-		<text name="AD_undoStep_wpCreated_1"							 text="waypoint created" />
-		<text name="AD_undoStep_wpCreated"							 text="%s waypoints created" />
-		<text name="AD_undoStep_wpDeleted_1"							 text="waypoint deleted" />
-		<text name="AD_undoStep_wpDeleted"							 text="%s waypoints deleted" />
-		<text name="AD_undoStep_wpMoved_1"							 text="waypoint moved" />
-		<text name="AD_undoStep_wpMoved"								 text="%s waypoints moved" />
-		<text name="AD_undoStep_sideRoad_1"							 text="side road toggled" />
-		<text name="AD_undoStep_sideRoad"							 text="side road toggled on %s waypoints" />
-		<text name="AD_undoStep_connection_1"						 text="connection changed" />
-		<text name="AD_undoStep_connection"							 text="%s connections changed" />
-		<text name="AD_undoStep_markerCreated_1"						 text="target &quot;%s&quot; created" />
-		<text name="AD_undoStep_markerCreated"						 text="%s targets created" />
-		<text name="AD_undoStep_markerDeleted_1"						 text="target &quot;%s&quot; deleted" />
-		<text name="AD_undoStep_markerDeleted"						 text="%s targets deleted" />
-		<text name="AD_undoStep_markerRenamed"						 text="target &quot;%s&quot; renamed to &quot;%s&quot;" />
-		<text name="AD_undoStep_markerFolder"						 text="target &quot;%s&quot; moved to folder &quot;%s&quot;" />
-		<text name="AD_undoStep_edit"								 text="route edit" />
-		<text name="input_ADUndoPreview"								 text="AD: Hold to preview the next undo" />
-		<text name="AD_undo_conflict"								 text="Can't undo yet: %s changed the route network after your last edit" />
+		<text name="input_ADUndo"									 text="AD: 復原路線編輯" />
+		<text name="input_ADRedo"									 text="AD: 重做路線編輯" />
+		<text name="AD_undo_done"									 text="已復原：%s（還可復原 %s 步，可重做 %s 步）" />
+		<text name="AD_redo_done"									 text="已重做：%s（還可復原 %s 步，可重做 %s 步）" />
+		<text name="AD_undo_empty"									 text="沒有可復原的操作" />
+		<text name="AD_redo_empty"									 text="沒有可重做的操作" />
+		<text name="AD_undo_blocked"									 text="記錄時無法重做" />
+		<text name="gui_ad_editorTip_12"								 text="左CTRL + Z / 左CTRL + Y = 復原 / 重做，按住 左ALT + Z = 預覽" />
+		<text name="AD_undoStep_wpCreated_1"							 text="已建立航點" />
+		<text name="AD_undoStep_wpCreated"							 text="已建立 %s 個航點" />
+		<text name="AD_undoStep_wpDeleted_1"							 text="已刪除航點" />
+		<text name="AD_undoStep_wpDeleted"							 text="已刪除 %s 個航點" />
+		<text name="AD_undoStep_wpMoved_1"							 text="已移動航點" />
+		<text name="AD_undoStep_wpMoved"								 text="已移動 %s 個航點" />
+		<text name="AD_undoStep_sideRoad_1"							 text="已切換支線" />
+		<text name="AD_undoStep_sideRoad"							 text="已在 %s 個航點上切換支線" />
+		<text name="AD_undoStep_connection_1"						 text="已變更連接" />
+		<text name="AD_undoStep_connection"							 text="已變更 %s 個連接" />
+		<text name="AD_undoStep_markerCreated_1"						 text="已建立目標「%s」" />
+		<text name="AD_undoStep_markerCreated"						 text="已建立 %s 個目標" />
+		<text name="AD_undoStep_markerDeleted_1"						 text="已刪除目標「%s」" />
+		<text name="AD_undoStep_markerDeleted"						 text="已刪除 %s 個目標" />
+		<text name="AD_undoStep_markerRenamed"						 text="已將目標「%s」重新命名為「%s」" />
+		<text name="AD_undoStep_markerFolder"						 text="已將目標「%s」移至文件夾「%s」" />
+		<text name="AD_undoStep_edit"								 text="路線編輯" />
+		<text name="input_ADUndoPreview"								 text="AD: 按住以預覽下一次復原" />
+		<text name="AD_undo_conflict"								 text="暫時無法復原：%s 在你上次編輯後修改了路線網絡" />
 		<text name="AD_undo_name"									 text="%s" />
-		<text name="AD_undo_otherPlayer"								 text="another player" />
-		<text name="AD_undo_recordingStart"							 text="Start of the recording reached - stop recording to undo it completely" />
-		<text name="AD_undo_recording"								 text="Recording: removed %s, continuing from the highlighted point" />
-		<text name="AD_undoStep_recordedPoints_1"					 text="the last recorded point" />
-		<text name="AD_undoStep_recordedPoints"						 text="the last %s recorded points" />
-		<text name="AD_undo_preview"									 text="Next undo: %s" />
-		<text name="AD_undo_cleared"									 text="Undo history cleared: %s" />
-		<text name="AD_undo_reason_network"							 text="route network replaced" />
-		<text name="AD_undo_reason_debug"							 text="debug markers changed" />
-		<text name="AD_undo_reason_colors"							 text="colour selection points used" />
-		<text name="AD_undo_reason_other"							 text="route network changed outside the editor" />
-		<text name="AD_undoStep_folderCreated_1"						 text="folder &quot;%s&quot; created" />
-		<text name="AD_undoStep_folderCreated"						 text="%s folders created" />
-		<text name="AD_undoStep_folderDeleted_1"						 text="folder &quot;%s&quot; deleted" />
-		<text name="AD_undoStep_folderDeleted"						 text="%s folders deleted" />
-		<text name="AD_undoStep_folderRenamed"						 text="folder &quot;%s&quot; renamed to &quot;%s&quot;" />
-		<text name="AD_undoStep_folderColor"							 text="colour of folder &quot;%s&quot; changed" />
-		<text name="AD_undoStep_network"								 text="routes loaded" />
+		<text name="AD_undo_otherPlayer"								 text="其他玩家" />
+		<text name="AD_undo_recordingStart"							 text="已到達記錄起點 - 停止記錄後可完整復原" />
+		<text name="AD_undo_recording"								 text="記錄：已移除%s，將從高亮點繼續" />
+		<text name="AD_undoStep_recordedPoints_1"					 text="最後一個記錄點" />
+		<text name="AD_undoStep_recordedPoints"						 text="最後 %s 個記錄點" />
+		<text name="AD_undo_preview"									 text="下一次復原：%s" />
+		<text name="AD_undo_cleared"									 text="復原歷史已清除：%s" />
+		<text name="AD_undo_reason_network"							 text="路線網絡已被替換" />
+		<text name="AD_undo_reason_debug"							 text="除錯標記已變更" />
+		<text name="AD_undo_reason_colors"							 text="已使用顏色選擇點" />
+		<text name="AD_undo_reason_other"							 text="路線網絡在編輯器外被變更" />
+		<text name="AD_undoStep_folderCreated_1"						 text="已建立文件夾「%s」" />
+		<text name="AD_undoStep_folderCreated"						 text="已建立 %s 個文件夾" />
+		<text name="AD_undoStep_folderDeleted_1"						 text="已刪除文件夾「%s」" />
+		<text name="AD_undoStep_folderDeleted"						 text="已刪除 %s 個文件夾" />
+		<text name="AD_undoStep_folderRenamed"						 text="已將文件夾「%s」重新命名為「%s」" />
+		<text name="AD_undoStep_folderColor"							 text="已變更文件夾「%s」的顏色" />
+		<text name="AD_undoStep_network"								 text="已載入路線" />
+		<text name="input_ADMoveNode"								 text="AD: 按住 + 滑鼠左鍵拖曳以移動航點" />
+		<text name="gui_ad_enterSubGroupNameTitle"					 text="在 %s 中建立子文件夾" />
+		<text name="gui_ad_renameGroupNameTitle"						 text="重新命名文件夾 %s" />
 	</texts>
 </l10n>

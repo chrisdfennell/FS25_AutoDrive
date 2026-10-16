@@ -406,51 +406,54 @@
 		<text name="gui_ad_editorTip_9"								text="Az első csomópont kereszteződés, a második pedig a szomszédja:" />
 		<text name="gui_ad_editorTip_10"								text="Bal CTRL: Szakasz típusának váltása (normál/kétirányú)" />
 		<text name="gui_ad_editorTip_11"								text="Bal SHIFT = Mellékút beállítása" />
-		<text name="input_ADUndo"									 text="AD: Undo route edit" />
-		<text name="input_ADRedo"									 text="AD: Redo route edit" />
-		<text name="AD_undo_done"									 text="Undone: %s (%s more to undo, %s to redo)" />
-		<text name="AD_redo_done"									 text="Redone: %s (%s more to undo, %s to redo)" />
-		<text name="AD_undo_empty"									 text="Nothing to undo" />
-		<text name="AD_redo_empty"									 text="Nothing to redo" />
-		<text name="AD_undo_blocked"									 text="Redo is not possible while recording" />
-		<text name="gui_ad_editorTip_12"								 text="LCTRL + Z / LCTRL + Y = Undo / Redo, hold LALT + Z = preview" />
-		<text name="AD_undoStep_wpCreated_1"							 text="waypoint created" />
-		<text name="AD_undoStep_wpCreated"							 text="%s waypoints created" />
-		<text name="AD_undoStep_wpDeleted_1"							 text="waypoint deleted" />
-		<text name="AD_undoStep_wpDeleted"							 text="%s waypoints deleted" />
-		<text name="AD_undoStep_wpMoved_1"							 text="waypoint moved" />
-		<text name="AD_undoStep_wpMoved"								 text="%s waypoints moved" />
-		<text name="AD_undoStep_sideRoad_1"							 text="side road toggled" />
-		<text name="AD_undoStep_sideRoad"							 text="side road toggled on %s waypoints" />
-		<text name="AD_undoStep_connection_1"						 text="connection changed" />
-		<text name="AD_undoStep_connection"							 text="%s connections changed" />
-		<text name="AD_undoStep_markerCreated_1"						 text="target &quot;%s&quot; created" />
-		<text name="AD_undoStep_markerCreated"						 text="%s targets created" />
-		<text name="AD_undoStep_markerDeleted_1"						 text="target &quot;%s&quot; deleted" />
-		<text name="AD_undoStep_markerDeleted"						 text="%s targets deleted" />
-		<text name="AD_undoStep_markerRenamed"						 text="target &quot;%s&quot; renamed to &quot;%s&quot;" />
-		<text name="AD_undoStep_markerFolder"						 text="target &quot;%s&quot; moved to folder &quot;%s&quot;" />
-		<text name="AD_undoStep_edit"								 text="route edit" />
-		<text name="input_ADUndoPreview"								 text="AD: Hold to preview the next undo" />
-		<text name="AD_undo_conflict"								 text="Can't undo yet: %s changed the route network after your last edit" />
+		<text name="input_ADUndo"									 text="AD: Útvonal-módosítás visszavonása" />
+		<text name="input_ADRedo"									 text="AD: Útvonal-módosítás ismétlése" />
+		<text name="AD_undo_done"									 text="Visszavonva: %s (még %s visszavonható, %s ismételhető)" />
+		<text name="AD_redo_done"									 text="Megismételve: %s (még %s visszavonható, %s ismételhető)" />
+		<text name="AD_undo_empty"									 text="Nincs mit visszavonni" />
+		<text name="AD_redo_empty"									 text="Nincs mit megismételni" />
+		<text name="AD_undo_blocked"									 text="Felvétel közben az ismétlés nem lehetséges" />
+		<text name="gui_ad_editorTip_12"								 text="LCTRL + Z / LCTRL + Y = Visszavonás / Ismétlés, LALT + Z nyomva tartva = előnézet" />
+		<text name="AD_undoStep_wpCreated_1"							 text="útpont létrehozva" />
+		<text name="AD_undoStep_wpCreated"							 text="%s útpont létrehozva" />
+		<text name="AD_undoStep_wpDeleted_1"							 text="útpont törölve" />
+		<text name="AD_undoStep_wpDeleted"							 text="%s útpont törölve" />
+		<text name="AD_undoStep_wpMoved_1"							 text="útpont áthelyezve" />
+		<text name="AD_undoStep_wpMoved"								 text="%s útpont áthelyezve" />
+		<text name="AD_undoStep_sideRoad_1"							 text="mellékút átváltva" />
+		<text name="AD_undoStep_sideRoad"							 text="mellékút átváltva %s útponton" />
+		<text name="AD_undoStep_connection_1"						 text="kapcsolat módosítva" />
+		<text name="AD_undoStep_connection"							 text="%s kapcsolat módosítva" />
+		<text name="AD_undoStep_markerCreated_1"						 text="&quot;%s&quot; cél létrehozva" />
+		<text name="AD_undoStep_markerCreated"						 text="%s cél létrehozva" />
+		<text name="AD_undoStep_markerDeleted_1"						 text="&quot;%s&quot; cél törölve" />
+		<text name="AD_undoStep_markerDeleted"						 text="%s cél törölve" />
+		<text name="AD_undoStep_markerRenamed"						 text="&quot;%s&quot; cél átnevezve erre: &quot;%s&quot;" />
+		<text name="AD_undoStep_markerFolder"						 text="&quot;%s&quot; cél áthelyezve ebbe a mappába: &quot;%s&quot;" />
+		<text name="AD_undoStep_edit"								 text="útvonal-módosítás" />
+		<text name="input_ADUndoPreview"								 text="AD: Nyomva tartva a következő visszavonás előnézete" />
+		<text name="AD_undo_conflict"								 text="Még nem vonható vissza: %s a legutóbbi módosításod után megváltoztatta az útvonalhálózatot" />
 		<text name="AD_undo_name"									 text="%s" />
-		<text name="AD_undo_otherPlayer"								 text="another player" />
-		<text name="AD_undo_recordingStart"							 text="Start of the recording reached - stop recording to undo it completely" />
-		<text name="AD_undo_recording"								 text="Recording: removed %s, continuing from the highlighted point" />
-		<text name="AD_undoStep_recordedPoints_1"					 text="the last recorded point" />
-		<text name="AD_undoStep_recordedPoints"						 text="the last %s recorded points" />
-		<text name="AD_undo_preview"									 text="Next undo: %s" />
-		<text name="AD_undo_cleared"									 text="Undo history cleared: %s" />
-		<text name="AD_undo_reason_network"							 text="route network replaced" />
-		<text name="AD_undo_reason_debug"							 text="debug markers changed" />
-		<text name="AD_undo_reason_colors"							 text="colour selection points used" />
-		<text name="AD_undo_reason_other"							 text="route network changed outside the editor" />
-		<text name="AD_undoStep_folderCreated_1"						 text="folder &quot;%s&quot; created" />
-		<text name="AD_undoStep_folderCreated"						 text="%s folders created" />
-		<text name="AD_undoStep_folderDeleted_1"						 text="folder &quot;%s&quot; deleted" />
-		<text name="AD_undoStep_folderDeleted"						 text="%s folders deleted" />
-		<text name="AD_undoStep_folderRenamed"						 text="folder &quot;%s&quot; renamed to &quot;%s&quot;" />
-		<text name="AD_undoStep_folderColor"							 text="colour of folder &quot;%s&quot; changed" />
-		<text name="AD_undoStep_network"								 text="routes loaded" />
+		<text name="AD_undo_otherPlayer"								 text="egy másik játékos" />
+		<text name="AD_undo_recordingStart"							 text="Elérted a felvétel elejét - állítsd le a felvételt a teljes visszavonáshoz" />
+		<text name="AD_undo_recording"								 text="Felvétel: %s eltávolítva, a kiemelt ponttól folytatódik" />
+		<text name="AD_undoStep_recordedPoints_1"					 text="az utolsó rögzített pont" />
+		<text name="AD_undoStep_recordedPoints"						 text="az utolsó %s rögzített pont" />
+		<text name="AD_undo_preview"									 text="Következő visszavonás: %s" />
+		<text name="AD_undo_cleared"									 text="Visszavonási előzmények törölve: %s" />
+		<text name="AD_undo_reason_network"							 text="útvonalhálózat lecserélve" />
+		<text name="AD_undo_reason_debug"							 text="hibakereső jelölők módosítva" />
+		<text name="AD_undo_reason_colors"							 text="színválasztó pontok használva" />
+		<text name="AD_undo_reason_other"							 text="útvonalhálózat a szerkesztőn kívül módosítva" />
+		<text name="AD_undoStep_folderCreated_1"						 text="&quot;%s&quot; mappa létrehozva" />
+		<text name="AD_undoStep_folderCreated"						 text="%s mappa létrehozva" />
+		<text name="AD_undoStep_folderDeleted_1"						 text="&quot;%s&quot; mappa törölve" />
+		<text name="AD_undoStep_folderDeleted"						 text="%s mappa törölve" />
+		<text name="AD_undoStep_folderRenamed"						 text="&quot;%s&quot; mappa átnevezve erre: &quot;%s&quot;" />
+		<text name="AD_undoStep_folderColor"							 text="&quot;%s&quot; mappa színe módosítva" />
+		<text name="AD_undoStep_network"								 text="útvonalak betöltve" />
+		<text name="input_ADMoveNode"								 text="AD: Nyomva tartás + bal egérgombos húzás az útpont mozgatásához" />
+		<text name="gui_ad_enterSubGroupNameTitle"					 text="Almappa létrehozása itt: %s" />
+		<text name="gui_ad_renameGroupNameTitle"						 text="%s mappa átnevezése" />
 	</texts>
 </l10n>

@@ -406,51 +406,54 @@
 		<text name="gui_ad_editorTip_9"								text="1-ый узел это пересечение, 2-ой это соседний:" />
 		<text name="gui_ad_editorTip_10"								text="с L-Ctrl = Смена типа сегмента (одно/двусторонняя)" />
 		<text name="gui_ad_editorTip_11"								text="с L-Shift = Смена типа на 'боковая дорога'" />
-		<text name="input_ADUndo"									 text="AD: Undo route edit" />
-		<text name="input_ADRedo"									 text="AD: Redo route edit" />
-		<text name="AD_undo_done"									 text="Undone: %s (%s more to undo, %s to redo)" />
-		<text name="AD_redo_done"									 text="Redone: %s (%s more to undo, %s to redo)" />
-		<text name="AD_undo_empty"									 text="Nothing to undo" />
-		<text name="AD_redo_empty"									 text="Nothing to redo" />
-		<text name="AD_undo_blocked"									 text="Redo is not possible while recording" />
-		<text name="gui_ad_editorTip_12"								 text="LCTRL + Z / LCTRL + Y = Undo / Redo, hold LALT + Z = preview" />
-		<text name="AD_undoStep_wpCreated_1"							 text="waypoint created" />
-		<text name="AD_undoStep_wpCreated"							 text="%s waypoints created" />
-		<text name="AD_undoStep_wpDeleted_1"							 text="waypoint deleted" />
-		<text name="AD_undoStep_wpDeleted"							 text="%s waypoints deleted" />
-		<text name="AD_undoStep_wpMoved_1"							 text="waypoint moved" />
-		<text name="AD_undoStep_wpMoved"								 text="%s waypoints moved" />
-		<text name="AD_undoStep_sideRoad_1"							 text="side road toggled" />
-		<text name="AD_undoStep_sideRoad"							 text="side road toggled on %s waypoints" />
-		<text name="AD_undoStep_connection_1"						 text="connection changed" />
-		<text name="AD_undoStep_connection"							 text="%s connections changed" />
-		<text name="AD_undoStep_markerCreated_1"						 text="target &quot;%s&quot; created" />
-		<text name="AD_undoStep_markerCreated"						 text="%s targets created" />
-		<text name="AD_undoStep_markerDeleted_1"						 text="target &quot;%s&quot; deleted" />
-		<text name="AD_undoStep_markerDeleted"						 text="%s targets deleted" />
-		<text name="AD_undoStep_markerRenamed"						 text="target &quot;%s&quot; renamed to &quot;%s&quot;" />
-		<text name="AD_undoStep_markerFolder"						 text="target &quot;%s&quot; moved to folder &quot;%s&quot;" />
-		<text name="AD_undoStep_edit"								 text="route edit" />
-		<text name="input_ADUndoPreview"								 text="AD: Hold to preview the next undo" />
-		<text name="AD_undo_conflict"								 text="Can't undo yet: %s changed the route network after your last edit" />
+		<text name="input_ADUndo"									 text="AD: Отменить изменение маршрута" />
+		<text name="input_ADRedo"									 text="AD: Повторить изменение маршрута" />
+		<text name="AD_undo_done"									 text="Отменено: %s (ещё можно отменить: %s, повторить: %s)" />
+		<text name="AD_redo_done"									 text="Повторено: %s (ещё можно отменить: %s, повторить: %s)" />
+		<text name="AD_undo_empty"									 text="Нечего отменять" />
+		<text name="AD_redo_empty"									 text="Нечего повторять" />
+		<text name="AD_undo_blocked"									 text="Повтор невозможен во время записи" />
+		<text name="gui_ad_editorTip_12"								 text="LCTRL + Z / LCTRL + Y = Отменить / Повторить, удерживать LALT + Z = предпросмотр" />
+		<text name="AD_undoStep_wpCreated_1"							 text="путевая точка создана" />
+		<text name="AD_undoStep_wpCreated"							 text="создано путевых точек: %s" />
+		<text name="AD_undoStep_wpDeleted_1"							 text="путевая точка удалена" />
+		<text name="AD_undoStep_wpDeleted"							 text="удалено путевых точек: %s" />
+		<text name="AD_undoStep_wpMoved_1"							 text="путевая точка перемещена" />
+		<text name="AD_undoStep_wpMoved"								 text="перемещено путевых точек: %s" />
+		<text name="AD_undoStep_sideRoad_1"							 text="боковая дорога переключена" />
+		<text name="AD_undoStep_sideRoad"							 text="боковая дорога переключена у путевых точек: %s" />
+		<text name="AD_undoStep_connection_1"						 text="соединение изменено" />
+		<text name="AD_undoStep_connection"							 text="изменено соединений: %s" />
+		<text name="AD_undoStep_markerCreated_1"						 text="локация &quot;%s&quot; создана" />
+		<text name="AD_undoStep_markerCreated"						 text="создано локаций: %s" />
+		<text name="AD_undoStep_markerDeleted_1"						 text="локация &quot;%s&quot; удалена" />
+		<text name="AD_undoStep_markerDeleted"						 text="удалено локаций: %s" />
+		<text name="AD_undoStep_markerRenamed"						 text="локация &quot;%s&quot; переименована в &quot;%s&quot;" />
+		<text name="AD_undoStep_markerFolder"						 text="локация &quot;%s&quot; перемещена в папку &quot;%s&quot;" />
+		<text name="AD_undoStep_edit"								 text="изменение маршрута" />
+		<text name="input_ADUndoPreview"								 text="AD: Удерживать для предпросмотра следующей отмены" />
+		<text name="AD_undo_conflict"								 text="Пока нельзя отменить: %s изменил(а) сеть маршрутов после вашего последнего изменения" />
 		<text name="AD_undo_name"									 text="%s" />
-		<text name="AD_undo_otherPlayer"								 text="another player" />
-		<text name="AD_undo_recordingStart"							 text="Start of the recording reached - stop recording to undo it completely" />
-		<text name="AD_undo_recording"								 text="Recording: removed %s, continuing from the highlighted point" />
-		<text name="AD_undoStep_recordedPoints_1"					 text="the last recorded point" />
-		<text name="AD_undoStep_recordedPoints"						 text="the last %s recorded points" />
-		<text name="AD_undo_preview"									 text="Next undo: %s" />
-		<text name="AD_undo_cleared"									 text="Undo history cleared: %s" />
-		<text name="AD_undo_reason_network"							 text="route network replaced" />
-		<text name="AD_undo_reason_debug"							 text="debug markers changed" />
-		<text name="AD_undo_reason_colors"							 text="colour selection points used" />
-		<text name="AD_undo_reason_other"							 text="route network changed outside the editor" />
-		<text name="AD_undoStep_folderCreated_1"						 text="folder &quot;%s&quot; created" />
-		<text name="AD_undoStep_folderCreated"						 text="%s folders created" />
-		<text name="AD_undoStep_folderDeleted_1"						 text="folder &quot;%s&quot; deleted" />
-		<text name="AD_undoStep_folderDeleted"						 text="%s folders deleted" />
-		<text name="AD_undoStep_folderRenamed"						 text="folder &quot;%s&quot; renamed to &quot;%s&quot;" />
-		<text name="AD_undoStep_folderColor"							 text="colour of folder &quot;%s&quot; changed" />
-		<text name="AD_undoStep_network"								 text="routes loaded" />
+		<text name="AD_undo_otherPlayer"								 text="другой игрок" />
+		<text name="AD_undo_recordingStart"							 text="Достигнуто начало записи - остановите запись, чтобы отменить её полностью" />
+		<text name="AD_undo_recording"								 text="Запись: удалено - %s, продолжение от выделенной точки" />
+		<text name="AD_undoStep_recordedPoints_1"					 text="последняя записанная точка" />
+		<text name="AD_undoStep_recordedPoints"						 text="последние записанные точки (%s)" />
+		<text name="AD_undo_preview"									 text="Следующая отмена: %s" />
+		<text name="AD_undo_cleared"									 text="История отмены очищена: %s" />
+		<text name="AD_undo_reason_network"							 text="сеть маршрутов заменена" />
+		<text name="AD_undo_reason_debug"							 text="отладочные маркеры изменены" />
+		<text name="AD_undo_reason_colors"							 text="использованы точки выбора цвета" />
+		<text name="AD_undo_reason_other"							 text="сеть маршрутов изменена вне редактора" />
+		<text name="AD_undoStep_folderCreated_1"						 text="папка &quot;%s&quot; создана" />
+		<text name="AD_undoStep_folderCreated"						 text="создано папок: %s" />
+		<text name="AD_undoStep_folderDeleted_1"						 text="папка &quot;%s&quot; удалена" />
+		<text name="AD_undoStep_folderDeleted"						 text="удалено папок: %s" />
+		<text name="AD_undoStep_folderRenamed"						 text="папка &quot;%s&quot; переименована в &quot;%s&quot;" />
+		<text name="AD_undoStep_folderColor"							 text="цвет папки &quot;%s&quot; изменён" />
+		<text name="AD_undoStep_network"								 text="маршруты загружены" />
+		<text name="input_ADMoveNode"								 text="AD: Удерживать + тянуть левой кнопкой мыши для перемещения путевой точки" />
+		<text name="gui_ad_enterSubGroupNameTitle"					 text="Создать подпапку в %s" />
+		<text name="gui_ad_renameGroupNameTitle"						 text="Переименовать папку %s" />
 	</texts>
 </l10n>
