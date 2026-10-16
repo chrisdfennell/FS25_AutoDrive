@@ -535,7 +535,7 @@
 		<text name="button_ad_toggle"							 text="Zaznacz / odznacz" />
 		<text name="button_ad_select"							 text="Wybierz" />
 		<text name="AD_unloadFilter_onBoard"							 text="załadowano %s" />
-		<text name="AD_unloadFilter_noneVehicle"							 text="Brak produktów: pojazd i jego przyczepy nie mają przestrzeni ładunkowej" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Nic nie załadowano" />
 		<text name="AD_unloadFilter_noneTarget"							 text="Brak punktu rozładunku w promieniu 60 m od tego celu" />
 		<text name="gui_ad_vehicleMenuTitle"							 text="Pojazd" />
 		<text name="AD_vehicleMenu_sendTo"							 text="Wyślij do..." />

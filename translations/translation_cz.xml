@@ -535,7 +535,7 @@
 		<text name="button_ad_toggle"							 text="Vybrat / zrušit výběr" />
 		<text name="button_ad_select"							 text="Vybrat" />
 		<text name="AD_unloadFilter_onBoard"							 text="naloženo %s" />
-		<text name="AD_unloadFilter_noneVehicle"							 text="Žádné produkty: vozidlo a jeho přívěsy nemají ložný prostor" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Nic naloženo" />
 		<text name="AD_unloadFilter_noneTarget"							 text="Žádné místo vykládky do 60 m od tohoto cíle" />
 		<text name="gui_ad_vehicleMenuTitle"							 text="Vozidlo" />
 		<text name="AD_vehicleMenu_sendTo"							 text="Poslat do..." />

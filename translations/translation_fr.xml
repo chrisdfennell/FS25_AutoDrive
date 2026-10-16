@@ -535,7 +535,7 @@
 		<text name="button_ad_toggle"							 text="Sélectionner / désélectionner" />
 		<text name="button_ad_select"							 text="Sélectionner" />
 		<text name="AD_unloadFilter_onBoard"							 text="%s à bord" />
-		<text name="AD_unloadFilter_noneVehicle"							 text="Aucun produit : le véhicule et ses remorques n'ont pas d'espace de chargement" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Rien à bord" />
 		<text name="AD_unloadFilter_noneTarget"							 text="Aucun point de déchargement à moins de 60 m de cette destination" />
 		<text name="gui_ad_vehicleMenuTitle"							 text="Véhicule" />
 		<text name="AD_vehicleMenu_sendTo"							 text="Envoyer vers..." />

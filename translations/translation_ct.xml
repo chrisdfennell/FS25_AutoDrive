@@ -535,7 +535,7 @@
 		<text name="button_ad_toggle"							 text="選擇 / 取消選擇" />
 		<text name="button_ad_select"							 text="選擇" />
 		<text name="AD_unloadFilter_onBoard"							 text="已裝載 %s" />
-		<text name="AD_unloadFilter_noneVehicle"							 text="無產品：該車輛及其拖車沒有裝載空間" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="車上沒有貨物" />
 		<text name="AD_unloadFilter_noneTarget"							 text="此目標 60 公尺內沒有卸載點" />
 		<text name="gui_ad_vehicleMenuTitle"							 text="車輛" />
 		<text name="AD_vehicleMenu_sendTo"							 text="派往..." />

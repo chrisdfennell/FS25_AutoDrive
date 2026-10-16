@@ -163,7 +163,7 @@ s.execute("""
     ROWS = UF.getRows(UF.getVehicleChoices(RV), {CANOLA = true})
 """)
 rows = [(s.eval("ROWS[%d].name" % i), s.eval("ROWS[%d].litres" % i), s.eval("ROWS[%d].selected" % i)) for i in range(1, s.eval("#ROWS") + 1)]
-assert rows == [("WHEAT", 8000, False), ("BARLEY", 0, False), ("CANOLA", 0, True)], rows  # no diesel
+assert rows == [("WHEAT", 8000, False), ("CANOLA", 0, True)], rows  # only what is on board (no diesel), plus what was chosen
 # --- pallets on a Universal Autoload trailer
 s.execute("""
     function pallet(fillType, litres) return {getFillUnits = function() return {{}} end, getFillUnitFillType = function() return fillType end,

@@ -535,7 +535,7 @@
 		<text name="button_ad_toggle"							 text="Seç / seçimi kaldır" />
 		<text name="button_ad_select"							 text="Seç" />
 		<text name="AD_unloadFilter_onBoard"							 text="%s yüklü" />
-		<text name="AD_unloadFilter_noneVehicle"							 text="Ürün yok: aracın ve römorklarının yük alanı yok" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Araçta yük yok" />
 		<text name="AD_unloadFilter_noneTarget"							 text="Bu hedefin 60 m yakınında boşaltma noktası yok" />
 		<text name="gui_ad_vehicleMenuTitle"							 text="Araç" />
 		<text name="AD_vehicleMenu_sendTo"							 text="Hedefe gönder..." />

@@ -538,7 +538,7 @@
 		<text name="button_ad_toggle"							 text="Select / unselect" />
 		<text name="button_ad_select"							 text="Select" />
 		<text name="AD_unloadFilter_onBoard"							 text="%s on board" />
-		<text name="AD_unloadFilter_noneVehicle"							 text="No products: the vehicle and its trailers have no fill units" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Nothing on board" />
 		<text name="AD_unloadFilter_noneTarget"							 text="No unloading point within 60 m of this target" />
 		<text name="gui_ad_vehicleMenuTitle"							 text="Vehicle" />
 		<text name="AD_vehicleMenu_sendTo"							 text="Send to..." />

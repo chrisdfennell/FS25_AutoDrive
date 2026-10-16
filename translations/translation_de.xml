@@ -535,7 +535,7 @@
 		<text name="button_ad_toggle"							 text="Auswählen / abwählen" />
 		<text name="button_ad_select"							 text="Auswählen" />
 		<text name="AD_unloadFilter_onBoard"							 text="%s an Bord" />
-		<text name="AD_unloadFilter_noneVehicle"							 text="Keine Produkte: Fahrzeug und Anhänger haben keinen Laderaum" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Nichts an Bord" />
 		<text name="AD_unloadFilter_noneTarget"							 text="Keine Abladestelle innerhalb von 60 m um dieses Ziel" />
 		<text name="gui_ad_vehicleMenuTitle"							 text="Fahrzeug" />
 		<text name="AD_vehicleMenu_sendTo"							 text="Schicken zu..." />

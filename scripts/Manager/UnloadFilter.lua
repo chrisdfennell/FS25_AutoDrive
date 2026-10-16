@@ -285,22 +285,16 @@ end
 -- the products to choose from in the dialog
 -------------------------------------------------------------------------------
 
--- vehicle: what is on board and what its trailers can carry
+-- vehicle: only what is on board (products chosen before stay in the list via getRows)
 function ADUnloadFilter.getVehicleChoices(vehicle)
     local choices = {}
     for _, unit in ipairs(AutoDrive.getAllUnits(vehicle) or {}) do
         if unit.getFillUnits ~= nil then
             for index, _ in ipairs(unit:getFillUnits()) do
-                if unit.getFillUnitSupportedFillTypes ~= nil then
-                    for fillType, supported in pairs(unit:getFillUnitSupportedFillTypes(index) or {}) do
-                        if supported then
-                            choices[fillType] = choices[fillType] or 0
-                        end
-                    end
-                end
                 local fillType = unit:getFillUnitFillType(index)
-                if fillType ~= nil and fillType ~= FillType.UNKNOWN then
-                    choices[fillType] = (choices[fillType] or 0) + unit:getFillUnitFillLevel(index)
+                local level = unit:getFillUnitFillLevel(index) or 0
+                if fillType ~= nil and fillType ~= FillType.UNKNOWN and level > 0 then
+                    choices[fillType] = (choices[fillType] or 0) + level
                 end
             end
         end

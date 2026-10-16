@@ -535,7 +535,7 @@
 		<text name="button_ad_toggle"							 text="Kijelölés / kijelölés törlése" />
 		<text name="button_ad_select"							 text="Kijelölés" />
 		<text name="AD_unloadFilter_onBoard"							 text="%s a járművön" />
-		<text name="AD_unloadFilter_noneVehicle"							 text="Nincsenek termékek: a járműnek és pótkocsijainak nincs rakterük" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Nincs rakomány" />
 		<text name="AD_unloadFilter_noneTarget"							 text="Nincs lerakodási pont 60 m-en belül ettől a céltól" />
 		<text name="gui_ad_vehicleMenuTitle"							 text="Jármű" />
 		<text name="AD_vehicleMenu_sendTo"							 text="Küldés ide..." />
