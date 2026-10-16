@@ -133,7 +133,7 @@ function ADUndoManager.sameIds(a, b)
 end
 
 function ADUndoManager.wayPointData(wp)
-    return {id = wp.id, x = wp.x, y = wp.y, z = wp.z, flags = wp.flags or 0, out = ADUndoManager.copyIds(wp.out), incoming = ADUndoManager.copyIds(wp.incoming)}
+    return {id = wp.id, x = wp.x, y = wp.y, z = wp.z, flags = wp.flags or 0, fieldID = wp.fieldID, out = ADUndoManager.copyIds(wp.out), incoming = ADUndoManager.copyIds(wp.incoming)}
 end
 
 function ADUndoManager.markerData(marker)

@@ -94,6 +94,10 @@ local function writeWayPointData(streamId, data)
     streamWriteFloat32(streamId, data.y)
     streamWriteFloat32(streamId, data.z)
     streamWriteInt32(streamId, data.flags)
+    -- field points belong to a field, nil for all others
+    if streamWriteBool(streamId, data.fieldID ~= nil) then
+        streamWriteInt32(streamId, data.fieldID)
+    end
     writeIds(streamId, data.out)
     writeIds(streamId, data.incoming)
 end
@@ -105,6 +109,9 @@ local function readWayPointData(streamId)
     data.y = streamReadFloat32(streamId)
     data.z = streamReadFloat32(streamId)
     data.flags = streamReadInt32(streamId)
+    if streamReadBool(streamId) then
+        data.fieldID = streamReadInt32(streamId)
+    end
     data.out = readIds(streamId)
     data.incoming = readIds(streamId)
     return data
