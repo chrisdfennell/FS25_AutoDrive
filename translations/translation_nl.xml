@@ -483,6 +483,7 @@
 		<text name="AD_schedule_started"												 text="is begonnen met werken (schema)" />
 		<text name="AD_schedule_finishing"											 text="maakt de huidige ronde af en parkeert daarna (schema)" />
 		<text name="AD_schedule_stopped"												 text="is gestopt met werken (schema)" />
+		<text name="AD_folders_switchedOn"							 text="Mappen stonden uit, de instelling &quot;Gebruik mappen&quot; staat nu aan" />
 		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
 		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
 		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />

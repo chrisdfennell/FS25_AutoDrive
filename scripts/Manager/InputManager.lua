@@ -629,8 +629,6 @@ function ADInputManager:input_createFieldPoints(vehicle, farmId, uniqueUserId)
     end
     local isOnField = vehicle.getIsOnField and vehicle:getIsOnField()
     if isOnField and AutoDrive.isInExtendedEditorMode() then
-        -- removing the old and creating the new field points is one undo step
-        ADUndoManager:beginStep()
         local localFieldID
         local vx, _, vz = getWorldTranslation(vehicle.components[1].node)
         local farmland = g_farmlandManager:getFarmlandAtWorldPosition(vx, vz)
@@ -638,19 +636,19 @@ function ADInputManager:input_createFieldPoints(vehicle, farmId, uniqueUserId)
             local field = farmland:getField()
             if field then
                 localFieldID = field:getId()
-                if localFieldID then
-                    local deletedWaypoints = ADGraphManager:removeFieldWaypoints(localFieldID)
-                end
             end
         end
         if localFieldID then
             local wayPoints = FieldPointGenerator:getWayPointsForFieldID(ADGraphManager:getWayPoints(), localFieldID, -AutoDrive.getSetting("fieldPointOffset"), AutoDrive.getSetting("maxFieldPointDistance"))
             if wayPoints and #wayPoints > 0 then
-                for _, wp in pairs(wayPoints) do
-                    ADGraphManager:createWayPointWithConnections(wp.x, AutoDrive:getTerrainHeightAtWorldPos(wp.x, wp.z), wp.z, wp.out, wp.incoming, AutoDrive.FLAG_FIELD_POINT, false, false, false, wp.fieldID)
+                -- the generator returns a closed loop, in order
+                local points = {}
+                for _, wp in ipairs(wayPoints) do
+                    table.insert(points, {x = wp.x, y = AutoDrive:getTerrainHeightAtWorldPos(wp.x, wp.z), z = wp.z})
                 end
+                -- old field points out, new ones in: one undo step and one event for the clients
+                ADGraphManager:replaceFieldWaypoints(localFieldID, points)
             end
         end
-        ADUndoManager:endStep()
     end
 end

@@ -483,6 +483,7 @@
 		<text name="AD_schedule_started"												 text="ha empezado a trabajar (horario)" />
 		<text name="AD_schedule_finishing"											 text="termina la ronda actual y después aparca (horario)" />
 		<text name="AD_schedule_stopped"												 text="ha dejado de trabajar (horario)" />
+		<text name="AD_folders_switchedOn"							 text="Las carpetas estaban desactivadas, la opción &quot;Crear carpetas&quot; ahora está activada" />
 		<text name="AD_routeCheck_loose"								 text="Punto de ruta suelto sin ninguna conexión" />
 		<text name="AD_routeCheck_deadEnd"							 text="Callejón sin salida: no hay forma de seguir desde este punto de ruta" />
 		<text name="AD_routeCheck_trap"								 text="Trampa de sentido único: %s puntos de ruta en los que se puede entrar pero no salir" />

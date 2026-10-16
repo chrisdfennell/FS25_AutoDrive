@@ -483,6 +483,7 @@
 		<text name="AD_schedule_started"												 text="işe başladı (program)" />
 		<text name="AD_schedule_finishing"											 text="mevcut turu bitirip ardından park edecek (program)" />
 		<text name="AD_schedule_stopped"												 text="işi bıraktı (program)" />
+		<text name="AD_folders_switchedOn"							 text="Klasörler kapalıydı, &quot;Klasörleri kullan&quot; ayarı artık açık" />
 		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
 		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
 		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />

@@ -483,6 +483,7 @@
 		<text name="AD_schedule_started"												 text="按计划开始工作" />
 		<text name="AD_schedule_finishing"											 text="按计划完成当前一轮后停车" />
 		<text name="AD_schedule_stopped"												 text="按计划停止工作" />
+		<text name="AD_folders_switchedOn"							 text="文件夹已关闭，“使用文件夹”设置现已开启" />
 		<text name="AD_routeCheck_loose"								 text="没有任何连接的孤立航点" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：从此航点无法继续前进" />
 		<text name="AD_routeCheck_trap"								 text="单向陷阱：%s 个航点只能驶入无法驶出" />

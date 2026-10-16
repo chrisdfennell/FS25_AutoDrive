@@ -412,6 +412,11 @@ function FieldPointGenerator:getMaxWaypointId(waypoints)
 end
 
 function FieldPointGenerator:getWaypointById(waypoints, id) -- ???
+    -- Overdrive: the new waypoints are maxId + 1, maxId + 2, ... at index 1, 2, ...
+    local candidate = waypoints[id - (self.firstIdOffset or 0)]
+    if candidate ~= nil and candidate.id == id then
+        return candidate
+    end
     for _, wp in ipairs(waypoints) do
         if wp.id == id then
             return wp
@@ -480,6 +485,7 @@ function FieldPointGenerator:appendLoopToWaypointTableAD(waypoints, points)
     end
 
     local maxId = self:getMaxWaypointId(waypoints)
+    self.firstIdOffset = maxId
     local createdIds = {}
     for i = 1, #points do
         local p = points[i]

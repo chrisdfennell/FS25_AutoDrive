@@ -483,6 +483,7 @@
 		<text name="AD_schedule_started"												 text="munkába állt (ütemezés)" />
 		<text name="AD_schedule_finishing"											 text="befejezi az aktuális kört, majd leparkol (ütemezés)" />
 		<text name="AD_schedule_stopped"												 text="befejezte a munkát (ütemezés)" />
+		<text name="AD_folders_switchedOn"							 text="A mappák ki voltak kapcsolva, a &quot;Mappa használat&quot; beállítás most be van kapcsolva" />
 		<text name="AD_routeCheck_loose"								 text="Különálló útpont, semmilyen kapcsolat nélkül" />
 		<text name="AD_routeCheck_deadEnd"							 text="Zsákutca: ebből az útpontból nincs továbbhaladás" />
 		<text name="AD_routeCheck_trap"								 text="Egyirányú csapda: %s útpont, ahová be lehet hajtani, de kijutni nem" />

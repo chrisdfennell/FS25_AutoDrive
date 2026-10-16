@@ -52,6 +52,7 @@ source(Utils.getFilename("scripts/Events/Graph/CreateWayPointEvent.lua", g_curre
 source(Utils.getFilename("scripts/Events/Graph/RecordWayPointEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/MoveWayPointEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/MoveWayPointsEvent.lua", g_currentModDirectory))
+source(Utils.getFilename("scripts/Events/Graph/FieldPointsEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/RoutesUploadEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/SectionEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/SetConnectionEvent.lua", g_currentModDirectory))

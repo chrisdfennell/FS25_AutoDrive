@@ -483,6 +483,7 @@
 		<text name="AD_schedule_started"												 text="ha iniziato il lavoro (programma)" />
 		<text name="AD_schedule_finishing"											 text="termina il giro in corso e poi parcheggia (programma)" />
 		<text name="AD_schedule_stopped"												 text="ha terminato il lavoro (programma)" />
+		<text name="AD_folders_switchedOn"							 text="Le cartelle erano disattivate, l'opzione &quot;Usa le cartelle&quot; ora è attiva" />
 		<text name="AD_routeCheck_loose"								 text="Nodo isolato senza alcun collegamento" />
 		<text name="AD_routeCheck_deadEnd"							 text="Vicolo cieco: nessuna via per proseguire da questo nodo" />
 		<text name="AD_routeCheck_trap"								 text="Trappola a senso unico: %s nodi in cui si può entrare ma da cui non si può uscire" />

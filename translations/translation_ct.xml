@@ -483,6 +483,7 @@
 		<text name="AD_schedule_started"												 text="按計劃開始工作" />
 		<text name="AD_schedule_finishing"											 text="按計劃完成當前一輪後停車" />
 		<text name="AD_schedule_stopped"												 text="按計劃停止工作" />
+		<text name="AD_folders_switchedOn"							 text="資料夾已關閉，「使用文件夾」設定現已開啟" />
 		<text name="AD_routeCheck_loose"								 text="沒有任何連接的孤立航點" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：從此航點無法繼續前進" />
 		<text name="AD_routeCheck_trap"								 text="單向陷阱：%s 個航點只能駛入無法駛出" />

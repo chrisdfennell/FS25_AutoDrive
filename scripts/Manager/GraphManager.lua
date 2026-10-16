@@ -2284,7 +2284,7 @@ function ADGraphManager:deleteColorSelectionWayPoints()
     end
 end
 
-function ADGraphManager:removeFieldWaypoints(fieldID)
+function ADGraphManager:removeFieldWaypoints(fieldID, sendEvent)
     local network = self:getWayPoints()
     local pointsToDelete = {}
     for i, wp in pairs(network) do
@@ -2300,10 +2300,33 @@ function ADGraphManager:removeFieldWaypoints(fieldID)
         table.sort(pointsToDelete, sort_func)
 
         for i = 1, #pointsToDelete do
-            ADGraphManager:removeWayPoint(pointsToDelete[i])
+            ADGraphManager:removeWayPoint(pointsToDelete[i], sendEvent)
         end
     end
     return #pointsToDelete
+end
+
+-- field points of one field (Ctrl+Shift+F): the old ones are removed and a closed two-way loop through
+-- the points {x, y, z} is added. The server changes its network right away, as one undo step, and sends
+-- one event to the clients (sendEvent ~= false). Sending an event per waypoint would run each one later,
+-- outside the undo step, and log thousands of steps for a big field.
+function ADGraphManager:replaceFieldWaypoints(fieldID, points, sendEvent)
+    if #points < 3 then
+        return
+    end
+    ADUndoManager:beginStep()
+    self:removeFieldWaypoints(fieldID, false)
+    local firstId = self:getWayPointsCount() + 1
+    local count = #points
+    for i, point in ipairs(points) do
+        local previousId = firstId + (i - 2) % count
+        local nextId = firstId + i % count
+        self:createWayPointWithConnections(point.x, point.y, point.z, {previousId, nextId}, {previousId, nextId}, AutoDrive.FLAG_FIELD_POINT, false, false, false, fieldID, false)
+    end
+    ADUndoManager:endStep()
+    if sendEvent ~= false then
+        AutoDriveFieldPointsEvent.sendEvent(fieldID, points)
+    end
 end
 
 function ADGraphManager:removeNodesWithFlag(flagToRemove)

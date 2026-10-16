@@ -67,10 +67,21 @@ function ADEnterGroupNameGui:onClickOk()
             ADGraphManager:renameGroup(self.renameGroupName, groupName)
         else
             ADGraphManager:addGroup(groupName)
+            ADEnterGroupNameGui.switchFoldersOn()
         end
     end
 
     self:onClickBack()
+end
+
+-- a new folder is only listed with the setting "use folders": switch it on, else the folder seems to be lost
+function ADEnterGroupNameGui.switchFoldersOn()
+    if AutoDrive.getSetting("useFolders") then
+        return
+    end
+    AutoDrive.setSettingState("useFolders", 2)
+    AutoDriveUpdateSettingsEvent.sendEvent(AutoDrive.getControlledVehicle())
+    ADMessagesManager:addMessage(nil, ADMessagesManager.messageTypes.INFO, g_i18n:getText("AD_folders_switchedOn"), 6000)
 end
 
 function ADEnterGroupNameGui:onEnterPressed(_, isClick)

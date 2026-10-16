@@ -483,6 +483,7 @@
 		<text name="AD_schedule_started"												 text="começou a trabalhar (horário)" />
 		<text name="AD_schedule_finishing"											 text="termina a ronda atual e depois estaciona (horário)" />
 		<text name="AD_schedule_stopped"												 text="parou de trabalhar (horário)" />
+		<text name="AD_folders_switchedOn"							 text="As pastas estavam desativadas, a opção &quot;Use pastas&quot; está agora ativada" />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem qualquer ligação" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há caminho a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de sentido único: %s waypoints onde se pode entrar mas não sair" />

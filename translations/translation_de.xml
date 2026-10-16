@@ -483,6 +483,7 @@
 		<text name="AD_schedule_started"												 text="hat die Arbeit begonnen (Zeitplan)" />
 		<text name="AD_schedule_finishing"											 text="beendet die aktuelle Runde und parkt dann (Zeitplan)" />
 		<text name="AD_schedule_stopped"												 text="hat die Arbeit beendet (Zeitplan)" />
+		<text name="AD_folders_switchedOn"							 text="Ordner waren ausgeschaltet, die Einstellung &quot;Ordner verwenden&quot; ist jetzt an" />
 		<text name="AD_routeCheck_loose"								 text="Loser Wegpunkt ohne jede Verbindung" />
 		<text name="AD_routeCheck_deadEnd"							 text="Sackgasse: von diesem Wegpunkt geht es nicht weiter" />
 		<text name="AD_routeCheck_trap"								 text="Einbahn-Falle: %s Wegpunkte, in die man hinein-, aber nicht wieder herausfahren kann" />
