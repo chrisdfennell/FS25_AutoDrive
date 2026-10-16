@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="Ordner &quot;%s&quot; umbenannt in &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="Farbe von Ordner &quot;%s&quot; geändert" />
 		<text name="AD_undoStep_network"								 text="Routen geladen" />
+		<text name="input_ADTidyEven"									 text="AD: Wegpunktabstände angleichen (ausgewählter bis anvisierter Wegpunkt)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Route begradigen (ausgewählter bis anvisierter Wegpunkt)" />
+		<text name="input_ADTidySmooth"								 text="AD: Route glätten (ausgewählter bis anvisierter Wegpunkt)" />
+		<text name="input_ADRouteCheck"								 text="AD: Routennetz prüfen" />
+		<text name="input_ADFleet"										 text="AD: Flottenübersicht" />
+		<text name="AD_tidy_howTo"										 text="Aufräumen: Wegpunkt anklicken, um ihn auszuwählen, dann mit der Maus auf einen anderen Wegpunkt derselben Route zeigen und die Taste erneut drücken" />
+		<text name="AD_tidy_nothing"									 text="Diese Route ist bereits aufgeräumt" />
+		<text name="AD_tidy_done"										 text="%s von %s Wegpunkten verschoben (Ctrl+Z zum Rückgängigmachen)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Routenprüfung" />
+		<text name="AD_routeCheck_title"												 text="Routenprüfung: %s Probleme gefunden, nächstes zuerst" />
+		<text name="AD_routeCheck_none"												 text="Routenprüfung: keine Probleme in %s Wegpunkten gefunden" />
+		<text name="AD_routeCheck_shown"												 text="%s, %s m entfernt. Folge dem roten Pfeil." />
+		<text name="button_ad_show"													 text="Anzeigen" />
+		<text name="button_ad_checkAgain"											 text="Erneut prüfen" />
+		<text name="gui_ad_fleetTitle"												 text="Flottenübersicht" />
+		<text name="button_ad_enterVehicle"											 text="Einsteigen" />
+		<text name="button_ad_startStop"												 text="Start / Stopp" />
+		<text name="AD_fleet_load"													 text="Ladung %s" />
+		<text name="AD_fleet_fuel"													 text="Kraftstoff %s" />
+		<text name="AD_fleet_driving"												 text="fährt" />
+		<text name="AD_fleet_stopped"												 text="angehalten" />
+		<text name="gui_ad_bestPriceUnload"											 text="Zum besten Preis abladen" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Wenn beladen, am Ziel im Ordner des Entladeziels abladen, dessen Verkaufsstelle gerade am meisten für die Ladung zahlt" />
+		<text name="AD_bestPrice_switch"												 text="verkauft zum besten Preis bei" />
+		<text name="gui_ad_scheduleStart"											 text="Arbeitsbeginn um" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="Zu dieser Spielstunde startet der Fahrer seinen AutoDrive-Auftrag" />
+		<text name="gui_ad_scheduleStop"												 text="Arbeitsende um" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="Zu dieser Spielstunde beendet Abholen und Abliefern die aktuelle Runde und parkt, andere Modi halten an" />
+		<text name="AD_schedule_started"												 text="hat die Arbeit begonnen (Zeitplan)" />
+		<text name="AD_schedule_finishing"											 text="beendet die aktuelle Runde und parkt dann (Zeitplan)" />
+		<text name="AD_schedule_stopped"												 text="hat die Arbeit beendet (Zeitplan)" />
+		<text name="AD_routeCheck_loose"								 text="Loser Wegpunkt ohne jede Verbindung" />
+		<text name="AD_routeCheck_deadEnd"							 text="Sackgasse: von diesem Wegpunkt geht es nicht weiter" />
+		<text name="AD_routeCheck_trap"								 text="Einbahn-Falle: %s Wegpunkte, in die man hinein-, aber nicht wieder herausfahren kann" />
+		<text name="AD_routeCheck_unreachable"						 text="Ziel &quot;%s&quot; ist nicht erreichbar" />
+		<text name="AD_routeCheck_isolated"							 text="Ziel &quot;%s&quot; ist nicht mit dem Netz verbunden" />
+		<text name="AD_routeCheck_noWayBack"							 text="Kein Rückweg vom Ziel &quot;%s&quot;" />
+		<text name="AD_routeCheck_duplicate"							 text="Zwei Wegpunkte übereinander (%s m Abstand)" />
 		<text name="input_ADMoveNode"								 text="AD: Halten + mit linker Maustaste ziehen, um Wegpunkt zu verschieben" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="Unterordner in %s erstellen" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="Ordner %s umbenennen" />

@@ -16,7 +16,7 @@ function ParkTask:setUp()
     self.vehicle.ad.onRouteToPark = false
     local targetParkParkDestination = nil
 
-    if AutoDrive.getSetting("enableParkAtJobFinished", self.vehicle) then
+    if AutoDrive.getSetting("enableParkAtJobFinished", self.vehicle) or ADWorkSchedule.isStopRequested(self.vehicle) then
         local actualParkDestination = self.vehicle.ad.stateModule:getParkDestinationAtJobFinished()
         if actualParkDestination >= 1 and ADGraphManager:getMapMarkerById(actualParkDestination) ~= nil then
             targetParkParkDestination = ADGraphManager:getMapMarkerById(actualParkDestination).id

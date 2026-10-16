@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="已将文件夹“%s”重命名为“%s”" />
 		<text name="AD_undoStep_folderColor"							 text="已更改文件夹“%s”的颜色" />
 		<text name="AD_undoStep_network"								 text="已加载路线" />
+		<text name="input_ADTidyEven"									 text="AD: 均匀航点间距（从选中航点到鼠标所指航点）" />
+		<text name="input_ADTidyStraighten"							 text="AD: 拉直路线（从选中航点到鼠标所指航点）" />
+		<text name="input_ADTidySmooth"								 text="AD: 平滑路线（从选中航点到鼠标所指航点）" />
+		<text name="input_ADRouteCheck"								 text="AD: 检查路线网络" />
+		<text name="input_ADFleet"										 text="AD: 车队概览" />
+		<text name="AD_tidy_howTo"										 text="整理：点击一个航点将其选中，然后将鼠标指向同一路线上的另一个航点，再次按下该键" />
+		<text name="AD_tidy_nothing"									 text="此路线已经很整齐" />
+		<text name="AD_tidy_done"										 text="已移动 %s 个航点（共 %s 个）（按 Ctrl+Z 撤销）" />
+		<text name="gui_ad_routeCheckTitle"											 text="路线检查" />
+		<text name="AD_routeCheck_title"												 text="路线检查：发现 %s 个问题，由近到远排列" />
+		<text name="AD_routeCheck_none"												 text="路线检查：在 %s 个航点中未发现问题" />
+		<text name="AD_routeCheck_shown"												 text="%s，距离 %s 米。请跟随红色箭头。" />
+		<text name="button_ad_show"													 text="显示" />
+		<text name="button_ad_checkAgain"											 text="重新检查" />
+		<text name="gui_ad_fleetTitle"												 text="车队概览" />
+		<text name="button_ad_enterVehicle"											 text="进入车辆" />
+		<text name="button_ad_startStop"												 text="启动 / 停止" />
+		<text name="AD_fleet_load"													 text="载货 %s" />
+		<text name="AD_fleet_fuel"													 text="燃油 %s" />
+		<text name="AD_fleet_driving"												 text="行驶中" />
+		<text name="AD_fleet_stopped"												 text="已停止" />
+		<text name="gui_ad_bestPriceUnload"											 text="最高价卸货" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="装货后，在卸货目标所在文件夹中选择出售点当前对该货物出价最高的目标进行卸货" />
+		<text name="AD_bestPrice_switch"												 text="前往最高价出售点" />
+		<text name="gui_ad_scheduleStart"											 text="开始工作时间" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="司机在此游戏时间开始执行 AutoDrive 任务" />
+		<text name="gui_ad_scheduleStop"												 text="停止工作时间" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="在此游戏时间，取货和送货模式完成当前一轮后停车，其他模式直接停止" />
+		<text name="AD_schedule_started"												 text="按计划开始工作" />
+		<text name="AD_schedule_finishing"											 text="按计划完成当前一轮后停车" />
+		<text name="AD_schedule_stopped"												 text="按计划停止工作" />
+		<text name="AD_routeCheck_loose"								 text="没有任何连接的孤立航点" />
+		<text name="AD_routeCheck_deadEnd"							 text="死路：从此航点无法继续前进" />
+		<text name="AD_routeCheck_trap"								 text="单向陷阱：%s 个航点只能驶入无法驶出" />
+		<text name="AD_routeCheck_unreachable"						 text="无法到达目标“%s”" />
+		<text name="AD_routeCheck_isolated"							 text="目标“%s”未连接到路线网络" />
+		<text name="AD_routeCheck_noWayBack"							 text="无法从目标“%s”返回" />
+		<text name="AD_routeCheck_duplicate"							 text="两个航点重叠（相距 %s 米）" />
 		<text name="input_ADMoveNode"								 text="AD: 按住 + 鼠标左键拖动以移动航点" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="在 %s 中创建子文件夹" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="重命名文件夹 %s" />

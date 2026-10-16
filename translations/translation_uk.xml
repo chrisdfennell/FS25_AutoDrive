@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="папку &quot;%s&quot; перейменовано на &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="колір папки &quot;%s&quot; змінено" />
 		<text name="AD_undoStep_network"								 text="маршрути завантажено" />
+		<text name="input_ADTidyEven"									 text="AD: Вирівняти відстань між точками шляху (від вибраної до вказаної)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Випрямити маршрут (від вибраної до вказаної точки шляху)" />
+		<text name="input_ADTidySmooth"								 text="AD: Згладити маршрут (від вибраної до вказаної точки шляху)" />
+		<text name="input_ADRouteCheck"								 text="AD: Перевірити мережу маршрутів" />
+		<text name="input_ADFleet"										 text="AD: Огляд автопарку" />
+		<text name="AD_tidy_howTo"										 text="Упорядкування: клацніть точку шляху, щоб вибрати її, потім наведіть мишу на іншу точку шляху того ж маршруту і натисніть клавішу ще раз" />
+		<text name="AD_tidy_nothing"									 text="Цей маршрут уже впорядкований" />
+		<text name="AD_tidy_done"										 text="Переміщено точок шляху: %s з %s (Ctrl+Z для скасування)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Перевірка маршрутів" />
+		<text name="AD_routeCheck_title"												 text="Перевірка маршрутів: знайдено проблем: %s, спочатку найближчі" />
+		<text name="AD_routeCheck_none"												 text="Перевірка маршрутів: проблем не знайдено (точок шляху: %s)" />
+		<text name="AD_routeCheck_shown"												 text="%s, відстань %s м. Слідуйте за червоною стрілкою." />
+		<text name="button_ad_show"													 text="Показати" />
+		<text name="button_ad_checkAgain"											 text="Перевірити знову" />
+		<text name="gui_ad_fleetTitle"												 text="Огляд автопарку" />
+		<text name="button_ad_enterVehicle"											 text="Сісти в техніку" />
+		<text name="button_ad_startStop"												 text="Старт / стоп" />
+		<text name="AD_fleet_load"													 text="вантаж %s" />
+		<text name="AD_fleet_fuel"													 text="паливо %s" />
+		<text name="AD_fleet_driving"												 text="в дорозі" />
+		<text name="AD_fleet_stopped"												 text="зупинений" />
+		<text name="gui_ad_bestPriceUnload"											 text="Розвантаження за найкращою ціною" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Коли завантажено, розвантажуватися в тій локації з папки цілі розвантаження, пункт продажу якої зараз платить за вантаж найбільше" />
+		<text name="AD_bestPrice_switch"												 text="продає за найкращою ціною в" />
+		<text name="gui_ad_scheduleStart"											 text="Початок роботи о" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="У цю ігрову годину водій запускає своє завдання AutoDrive" />
+		<text name="gui_ad_scheduleStop"												 text="Кінець роботи о" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="У цю ігрову годину режим «Завантаження та Постачання» завершує поточний рейс і паркується, інші режими зупиняються" />
+		<text name="AD_schedule_started"												 text="почав роботу (за розкладом)" />
+		<text name="AD_schedule_finishing"											 text="завершує поточний рейс і потім паркується (за розкладом)" />
+		<text name="AD_schedule_stopped"												 text="закінчив роботу (за розкладом)" />
+		<text name="AD_routeCheck_loose"								 text="Окрема точка шляху без з'єднань" />
+		<text name="AD_routeCheck_deadEnd"							 text="Глухий кут: від цієї точки шляху далі немає шляху" />
+		<text name="AD_routeCheck_trap"								 text="Одностороння пастка: точок шляху, куди можна заїхати, але не можна виїхати: %s" />
+		<text name="AD_routeCheck_unreachable"						 text="Локація &quot;%s&quot; недосяжна" />
+		<text name="AD_routeCheck_isolated"							 text="Локація &quot;%s&quot; не під'єднана до мережі" />
+		<text name="AD_routeCheck_noWayBack"							 text="Немає шляху назад від локації &quot;%s&quot;" />
+		<text name="AD_routeCheck_duplicate"							 text="Дві точки шляху одна на одній (відстань %s м)" />
 		<text name="input_ADMoveNode"								 text="AD: Утримувати + тягнути лівою кнопкою миші для переміщення точки шляху" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="Створити підпапку в %s" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="Перейменувати папку %s" />

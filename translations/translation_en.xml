@@ -455,5 +455,43 @@
 		<text name="AD_undoStep_folderRenamed"						 text="folder &quot;%s&quot; renamed to &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="colour of folder &quot;%s&quot; changed" />
 		<text name="AD_undoStep_network"								 text="routes loaded" />
+		<text name="input_ADTidyEven"									 text="AD: Even out waypoint spacing (selected to pointed waypoint)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Straighten route (selected to pointed waypoint)" />
+		<text name="input_ADTidySmooth"								 text="AD: Smooth route (selected to pointed waypoint)" />
+		<text name="input_ADRouteCheck"								 text="AD: Check the route network" />
+		<text name="input_ADFleet"										 text="AD: Fleet overview" />
+		<text name="AD_tidy_howTo"										 text="Tidy up: click a waypoint to select it, then point the mouse at another waypoint on the same route and press the key again" />
+		<text name="AD_tidy_nothing"									 text="This route is already tidy" />
+		<text name="AD_tidy_done"										 text="%s of %s waypoints moved (Ctrl+Z to undo)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Route check" />
+		<text name="AD_routeCheck_title"												 text="Route check: %s problems found, nearest first" />
+		<text name="AD_routeCheck_none"												 text="Route check: no problems found in %s waypoints" />
+		<text name="AD_routeCheck_shown"												 text="%s, %s m away. Follow the red arrow." />
+		<text name="button_ad_show"													 text="Show" />
+		<text name="button_ad_checkAgain"											 text="Check again" />
+		<text name="gui_ad_fleetTitle"												 text="Fleet overview" />
+		<text name="button_ad_enterVehicle"											 text="Enter vehicle" />
+		<text name="button_ad_startStop"												 text="Start / stop" />
+		<text name="AD_fleet_load"													 text="load %s" />
+		<text name="AD_fleet_fuel"													 text="fuel %s" />
+		<text name="AD_fleet_driving"												 text="driving" />
+		<text name="AD_fleet_stopped"												 text="stopped" />
+		<text name="gui_ad_bestPriceUnload"											 text="Best price unloading" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="When loaded, unload at the target in the unload target's folder whose selling point pays the most for the load right now" />
+		<text name="AD_bestPrice_switch"												 text="sells at the best price at" />
+		<text name="gui_ad_scheduleStart"											 text="Start work at" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="At this in-game hour the driver starts its AutoDrive job" />
+		<text name="gui_ad_scheduleStop"												 text="Stop work at" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="At this in-game hour pickup and deliver finishes the current round and parks, other modes stop" />
+		<text name="AD_schedule_started"												 text="started work (schedule)" />
+		<text name="AD_schedule_finishing"											 text="finishes the current round and then parks (schedule)" />
+		<text name="AD_schedule_stopped"												 text="stopped work (schedule)" />
+		<text name="AD_routeCheck_loose"								 text="Loose waypoint without any connection" />
+		<text name="AD_routeCheck_deadEnd"							 text="Dead end: no way on from this waypoint" />
+		<text name="AD_routeCheck_trap"								 text="One-way trap: %s waypoints you can drive into but not out of" />
+		<text name="AD_routeCheck_unreachable"						 text="Target &quot;%s&quot; can not be reached" />
+		<text name="AD_routeCheck_isolated"							 text="Target &quot;%s&quot; is not connected to the network" />
+		<text name="AD_routeCheck_noWayBack"							 text="No way back from target &quot;%s&quot;" />
+		<text name="AD_routeCheck_duplicate"							 text="Two waypoints on top of each other (%s m apart)" />
 	</texts>
 </l10n>

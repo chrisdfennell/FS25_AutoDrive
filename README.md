@@ -4,7 +4,7 @@
 [![Latest release](https://img.shields.io/github/v/release/chrisdfennell/FS25_AutoDrive?label=release)](https://github.com/chrisdfennell/FS25_AutoDrive/releases/latest)
 
 AutoDrive Overdrive is an unofficial edition of [AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive) for Farming Simulator 25, by the AutoDrive Team (Stephan-S, Axel32019, TyKonKet and [many contributors](credits.txt)), released under the [MIT licence](LICENSE).
-It is based on AutoDrive 3.0.1.4 and adds route editor improvements. For the official mod and its support, see the original README below.
+It is based on AutoDrive 3.0.1.4 and adds route editor improvements, a route check, a fleet overview, best price unloading and work schedules. For the official mod and its support, see the original README below.
 
 ## Download
 Get **FS25_AutoDrive.zip** from the [latest release](https://github.com/chrisdfennell/FS25_AutoDrive/releases/latest) and put it into your mods folder (`Documents/My Games/FarmingSimulator2025/mods`), replacing the official AutoDrive zip.
@@ -47,6 +47,36 @@ With the editor turned on, **Ctrl+Z** undoes and **Ctrl+Y** redoes your last cha
 - **Move waypoints by dragging:** hold **Left Shift** and drag a waypoint with the left mouse button. A short click without moving still toggles the side road setting as before. The key can be changed ("AD: Hold + left mouse drag to move waypoint").
 - **Deleting a waypoint** removes all targets on it, not only the first one, and every connection pointing to it. Before, a second target or a reverse connection could be left pointing at the next waypoint.
 
+### Tidy-up tools
+Select a waypoint with a left click, point the mouse at another waypoint on the same route and press:
+- **Ctrl+Alt+J** to even out the spacing: the waypoints stay on the route, at equal distances
+- **Ctrl+Alt+K** to straighten: the waypoints are lined up between the two waypoints
+- **Ctrl+Alt+U** to smooth: kinks and zig-zags of e.g. a recorded drive are rounded off
+
+The route between the two waypoints is the shortest chain of connections. Only waypoints between them are moved, both end points stay where they are, and connections, targets and side road settings don't change. Heights follow the ground. Each tidy-up is one undo step.
+
+### Route check
+**Ctrl+Alt+N** checks the whole route network and lists the problems, nearest first:
+- targets that can't be reached from the rest of the network, or from which there is no way back
+- one-way traps: parts of the network you can drive into but not out of
+- dead ends (waypoints without a way on, unless a target is on them)
+- loose waypoints without any connection
+- waypoints on top of each other (less than 0.3 m apart)
+
+**Show** (or a double click) marks the problem with a pulsing red beacon. If it is out of sight, a red arrow at your vehicle points the way. The check only reads the network, it changes nothing. It also looks at things the road network debug markers can't see, like whole parts of the network that can't be left, and it doesn't add debug targets to your map.
+
+### Fleet overview
+**Ctrl+Alt+I** lists every AutoDrive vehicle of your farm: name, mode, destination, load, fuel, work schedule and what it is doing. A stopped vehicle shows its latest warning or error from the notifications. **Enter vehicle** (or a double click) takes you to it, **Start / stop** starts or stops its job. The list updates every second.
+
+### Best price unloading
+New vehicle setting **Best price unloading**. When the vehicle is loaded and sets off to unload, it picks the target in the unload target's folder whose selling point pays the most for the load right now, and tells you where it goes. Put all the selling points you want to use as targets into one folder, and choose one of them as the unload target. Targets without a selling point within 60 m are left out. Works with pickup and deliver and with unload. It needs "use folders" and does nothing while target rotation for unloading is on. The target must be in a folder, not in "All".
+
+### Work schedule
+New vehicle settings **Start work at** and **Stop work at** (in-game hours, `--:--` = off).
+- At the start hour the driver starts its job, with the mode and targets set in the HUD.
+- At the stop hour, pickup and deliver finishes the round it is on (loading and unloading) and then drives to its park position, if one is set. Other modes stop right away.
+- Skipping time (sleeping) counts: the later of the two hours that were skipped decides.
+
 ### Key bindings
 | Action | Default key |
 |---|---|
@@ -54,8 +84,13 @@ With the editor turned on, **Ctrl+Z** undoes and **Ctrl+Y** redoes your last cha
 | Redo route edit | Ctrl + Y |
 | Preview the next undo (hold) | Left Alt + Z |
 | Move waypoint (hold, then drag with the left mouse button) | Left Shift |
+| Even out waypoint spacing | Ctrl + Alt + J |
+| Straighten route | Ctrl + Alt + K |
+| Smooth route | Ctrl + Alt + U |
+| Route check | Ctrl + Alt + N |
+| Fleet overview | Ctrl + Alt + I |
 
-All key bindings can be changed in the game's control settings.
+All key bindings can be changed in the game's control settings. Like AutoDrive's other keys, they work while you sit in a vehicle.
 
 ### Notes
 - The mod keeps the name `FS25_AutoDrive`, so it replaces the official AutoDrive mod: install either one, not both. Savegames, routes and settings of the official version keep working.
@@ -65,7 +100,8 @@ All key bindings can be changed in the game's control settings.
 Every push and pull request runs the [CI workflow](.github/workflows/ci.yml):
 - a Lua 5.1 syntax check, the Lua version the game uses
 - static checks: XML files, translation placeholders, every script loaded by `register.lua` exists ([tools/ci_checks.py](tools/ci_checks.py))
-- the undo / redo tests ([tools/tests](tools/tests)), which run the mod code outside the game with stubs for the game API
+- static checks also make sure every text the code uses exists in English, and that the mod's startup check accepts its title
+- the tests ([tools/tests](tools/tests)): undo / redo, route check, tidy-up tools, work schedule, best price and fleet overview. They run the mod code outside the game with stubs for the game API
 - a test build of the mod zip, attached to the workflow run
 
 Run the same locally with `pip install lupa`, then `python tools/ci_checks.py` and `python tools/tests/run_all.py`.

@@ -1175,6 +1175,25 @@ function ADGraphManager:moveWayPoint(wayPointId, x, y, z, flags, sendEvent)
     end
 end
 
+-- moves: list of {id, x, y, z}, all moved in one undo step (tidy-up tools)
+function ADGraphManager:moveWayPoints(moves, sendEvent)
+    if #moves == 0 then
+        return
+    end
+    if sendEvent == nil or sendEvent == true then
+        AutoDriveMoveWayPointsEvent.sendEvent(moves)
+        return
+    end
+    ADUndoManager:beginStep()
+    for _, move in ipairs(moves) do
+        local wayPoint = self:getWayPointById(move.id)
+        if wayPoint ~= nil then
+            self:moveWayPoint(move.id, move.x, move.y, move.z, wayPoint.flags, false)
+        end
+    end
+    ADUndoManager:endStep()
+end
+
 function ADGraphManager:recordWayPoint(x, y, z, connectPrevious, dual, isReverse, previousId, flags, sendEvent)
     previousId = previousId or 0
     local previous

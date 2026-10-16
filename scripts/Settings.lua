@@ -776,6 +776,43 @@ AutoDrive.settings.rotateTargets = {
     isCopyPaste = true
 }
 
+AutoDrive.settings.bestPriceUnload = {
+    values = {false, true},
+    texts = {"gui_ad_no", "gui_ad_yes"},
+    default = 1,
+    current = 1,
+    text = "gui_ad_bestPriceUnload",
+    tooltip = "gui_ad_bestPriceUnload_tooltip",
+    translate = true,
+    isVehicleSpecific = true,
+    isCopyPaste = true
+}
+
+-- work schedule: start and stop hour (-1 = not set), see ADWorkSchedule
+AutoDrive.settings.scheduleStart = {
+    values = {-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23},
+    texts = {"--:--", "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"},
+    default = 1,
+    current = 1,
+    text = "gui_ad_scheduleStart",
+    tooltip = "gui_ad_scheduleStart_tooltip",
+    translate = false,
+    isVehicleSpecific = true,
+    isCopyPaste = true
+}
+
+AutoDrive.settings.scheduleStop = {
+    values = {-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23},
+    texts = {"--:--", "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"},
+    default = 1,
+    current = 1,
+    text = "gui_ad_scheduleStop",
+    tooltip = "gui_ad_scheduleStop_tooltip",
+    translate = false,
+    isVehicleSpecific = true,
+    isCopyPaste = true
+}
+
 AutoDrive.settings.maxTriggerDistance = {
     values = {10, 25, 50, 100, 200},
     texts = {"10 m", "25 m", "50 m", "100 m", "200 m"},

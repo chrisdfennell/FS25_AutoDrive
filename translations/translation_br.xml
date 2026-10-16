@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="pasta &quot;%s&quot; renomeada para &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="cor da pasta &quot;%s&quot; alterada" />
 		<text name="AD_undoStep_network"								 text="rotas carregadas" />
+		<text name="input_ADTidyEven"									 text="AD: Uniformizar o espaçamento dos waypoints (do selecionado ao apontado)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Endireitar rota (do waypoint selecionado ao apontado)" />
+		<text name="input_ADTidySmooth"								 text="AD: Suavizar rota (do waypoint selecionado ao apontado)" />
+		<text name="input_ADRouteCheck"								 text="AD: Verificar a rede de rotas" />
+		<text name="input_ADFleet"										 text="AD: Visão geral da frota" />
+		<text name="AD_tidy_howTo"										 text="Organizar: clique em um waypoint para selecioná-lo, depois aponte o mouse para outro waypoint da mesma rota e pressione a tecla novamente" />
+		<text name="AD_tidy_nothing"									 text="Esta rota já está organizada" />
+		<text name="AD_tidy_done"										 text="%s de %s waypoints movidos (Ctrl+Z para desfazer)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Verificação de rotas" />
+		<text name="AD_routeCheck_title"												 text="Verificação de rotas: %s problemas encontrados, os mais próximos primeiro" />
+		<text name="AD_routeCheck_none"												 text="Verificação de rotas: nenhum problema encontrado em %s waypoints" />
+		<text name="AD_routeCheck_shown"												 text="%s, a %s m. Siga a seta vermelha." />
+		<text name="button_ad_show"													 text="Mostrar" />
+		<text name="button_ad_checkAgain"											 text="Verificar novamente" />
+		<text name="gui_ad_fleetTitle"												 text="Visão geral da frota" />
+		<text name="button_ad_enterVehicle"											 text="Entrar no veículo" />
+		<text name="button_ad_startStop"												 text="Iniciar / parar" />
+		<text name="AD_fleet_load"													 text="carga %s" />
+		<text name="AD_fleet_fuel"													 text="combustível %s" />
+		<text name="AD_fleet_driving"												 text="dirigindo" />
+		<text name="AD_fleet_stopped"												 text="parado" />
+		<text name="gui_ad_bestPriceUnload"											 text="Descarregar pelo melhor preço" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Quando carregado, descarrega no destino da pasta do destino de descarga cujo ponto de venda paga mais pela carga no momento" />
+		<text name="AD_bestPrice_switch"												 text="vende pelo melhor preço em" />
+		<text name="gui_ad_scheduleStart"											 text="Começar a trabalhar às" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="Nesta hora do jogo, o motorista inicia seu trabalho do AutoDrive" />
+		<text name="gui_ad_scheduleStop"												 text="Parar de trabalhar às" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="Nesta hora do jogo, Pegar e entregar termina a rodada atual e estaciona, os outros modos param" />
+		<text name="AD_schedule_started"												 text="começou a trabalhar (agenda)" />
+		<text name="AD_schedule_finishing"											 text="termina a rodada atual e depois estaciona (agenda)" />
+		<text name="AD_schedule_stopped"												 text="parou de trabalhar (agenda)" />
+		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem nenhuma conexão" />
+		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há como seguir a partir deste waypoint" />
+		<text name="AD_routeCheck_trap"								 text="Armadilha de mão única: %s waypoints onde é possível entrar, mas não sair" />
+		<text name="AD_routeCheck_unreachable"						 text="O destino &quot;%s&quot; não pode ser alcançado" />
+		<text name="AD_routeCheck_isolated"							 text="O destino &quot;%s&quot; não está conectado à rede" />
+		<text name="AD_routeCheck_noWayBack"							 text="Sem caminho de volta a partir do destino &quot;%s&quot;" />
+		<text name="AD_routeCheck_duplicate"							 text="Dois waypoints sobrepostos (a %s m de distância)" />
 		<text name="input_ADMoveNode"								 text="AD: Segurar + arrastar com o botão esquerdo para mover o waypoint" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="Criar subpasta em %s" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="Renomear pasta %s" />

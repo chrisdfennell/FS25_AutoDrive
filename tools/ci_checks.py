@@ -4,6 +4,7 @@
 - modDesc.xml has a numeric version (x.x.x.x), as the game expects
 - translations: placeholders (%s) match the English text, no stray % (would break string.format in game)
 - every script loaded by register.lua exists
+- every text key used in scripts, GUI files and settings exists in the English translation
 - the startup check in register.lua accepts the English title of modDesc.xml (otherwise the mod disables itself)
 - Lua files have no UTF-8 BOM (Lua 5.1 can not read it)
 
@@ -56,6 +57,31 @@ def check_translations():
     return len(files)
 
 
+# texts that come with the game itself
+GAME_TEXT_KEYS = re.compile(r"^(button_|typeDesc_)")
+# upstream setting without texts, it is not shown in any menu
+UNUSED_TEXT_KEYS = {"gui_ad_RecordTwoRoads", "gui_ad_RecordTwoRoads_tooltip"}
+
+
+def check_text_keys():
+    english = texts(os.path.join(ROOT, "translations", "translation_en.xml"))
+    used = {}
+    lua_files = glob.glob(os.path.join(ROOT, "scripts", "**", "*.lua"), recursive=True) + [os.path.join(ROOT, "register.lua")]
+    for path in lua_files:
+        source = open(path, encoding="utf-8").read()
+        keys = re.findall(r'getText\("([A-Za-z0-9_]+)"\)', source) + re.findall(r"\$l10n_([A-Za-z0-9_]+);", source)
+        keys += re.findall(r'(?:text|tooltip) = "(gui_ad_[A-Za-z0-9_]+)"', source)
+        for key in keys:
+            used.setdefault(key, path)
+    for path in glob.glob(os.path.join(ROOT, "gui", "*.xml")) + [os.path.join(ROOT, "modDesc.xml")]:
+        for key in re.findall(r"\$l10n_([A-Za-z0-9_]+)", open(path, encoding="utf-8").read()):
+            used.setdefault(key, path)
+    for key, path in sorted(used.items()):
+        if key not in english and key not in UNUSED_TEXT_KEYS and not GAME_TEXT_KEYS.match(key):
+            errors.append("text %s used in %s is missing in translation_en.xml" % (key, os.path.relpath(path, ROOT)))
+    return len(used)
+
+
 def check_sources():
     source = open(os.path.join(ROOT, "register.lua"), encoding="utf-8").read()
     scripts = re.findall(r'Utils\.getFilename\("([^"]+\.lua)"', source)
@@ -86,6 +112,7 @@ if __name__ == "__main__":
     print("XML files:        %d" % check_xml())
     print("modDesc version:  %s" % check_mod_desc())
     print("translations:     %d" % check_translations())
+    print("text keys used:   %d" % check_text_keys())
     print("register sources: %d" % check_sources())
     print("startup title:    %s" % check_title())
     print("Lua files:        %d" % check_lua_bom())

@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="cartella &quot;%s&quot; rinominata in &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="colore della cartella &quot;%s&quot; modificato" />
 		<text name="AD_undoStep_network"								 text="percorsi caricati" />
+		<text name="input_ADTidyEven"									 text="AD: Uniforma la distanza tra i nodi (dal nodo selezionato a quello puntato)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Raddrizza il percorso (dal nodo selezionato a quello puntato)" />
+		<text name="input_ADTidySmooth"								 text="AD: Ammorbidisci il percorso (dal nodo selezionato a quello puntato)" />
+		<text name="input_ADRouteCheck"								 text="AD: Controlla la rete dei percorsi" />
+		<text name="input_ADFleet"										 text="AD: Panoramica della flotta" />
+		<text name="AD_tidy_howTo"										 text="Riordino: clicca su un nodo per selezionarlo, poi punta il mouse su un altro nodo dello stesso percorso e premi di nuovo il tasto" />
+		<text name="AD_tidy_nothing"									 text="Questo percorso è già in ordine" />
+		<text name="AD_tidy_done"										 text="%s nodi su %s spostati (Ctrl+Z per annullare)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Controllo percorsi" />
+		<text name="AD_routeCheck_title"												 text="Controllo percorsi: %s problemi trovati, dal più vicino" />
+		<text name="AD_routeCheck_none"												 text="Controllo percorsi: nessun problema trovato in %s nodi" />
+		<text name="AD_routeCheck_shown"												 text="%s, a %s m. Segui la freccia rossa." />
+		<text name="button_ad_show"													 text="Mostra" />
+		<text name="button_ad_checkAgain"											 text="Controlla di nuovo" />
+		<text name="gui_ad_fleetTitle"												 text="Panoramica della flotta" />
+		<text name="button_ad_enterVehicle"											 text="Sali sul veicolo" />
+		<text name="button_ad_startStop"												 text="Avvia / ferma" />
+		<text name="AD_fleet_load"													 text="carico %s" />
+		<text name="AD_fleet_fuel"													 text="carburante %s" />
+		<text name="AD_fleet_driving"												 text="in marcia" />
+		<text name="AD_fleet_stopped"												 text="fermo" />
+		<text name="gui_ad_bestPriceUnload"											 text="Scarico al miglior prezzo" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Quando è carico, scarica alla destinazione nella cartella della destinazione di scarico il cui punto vendita paga di più per il carico in questo momento" />
+		<text name="AD_bestPrice_switch"												 text="vende al miglior prezzo presso" />
+		<text name="gui_ad_scheduleStart"											 text="Inizio lavoro alle" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="A quest'ora di gioco l'autista avvia il suo lavoro AutoDrive" />
+		<text name="gui_ad_scheduleStop"												 text="Fine lavoro alle" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="A quest'ora di gioco Carica e consegna termina il giro in corso e parcheggia, le altre modalità si fermano" />
+		<text name="AD_schedule_started"												 text="ha iniziato il lavoro (programma)" />
+		<text name="AD_schedule_finishing"											 text="termina il giro in corso e poi parcheggia (programma)" />
+		<text name="AD_schedule_stopped"												 text="ha terminato il lavoro (programma)" />
+		<text name="AD_routeCheck_loose"								 text="Nodo isolato senza alcun collegamento" />
+		<text name="AD_routeCheck_deadEnd"							 text="Vicolo cieco: nessuna via per proseguire da questo nodo" />
+		<text name="AD_routeCheck_trap"								 text="Trappola a senso unico: %s nodi in cui si può entrare ma da cui non si può uscire" />
+		<text name="AD_routeCheck_unreachable"						 text="La destinazione &quot;%s&quot; non è raggiungibile" />
+		<text name="AD_routeCheck_isolated"							 text="La destinazione &quot;%s&quot; non è collegata alla rete" />
+		<text name="AD_routeCheck_noWayBack"							 text="Nessuna via di ritorno dalla destinazione &quot;%s&quot;" />
+		<text name="AD_routeCheck_duplicate"							 text="Due nodi sovrapposti (a %s m di distanza)" />
 		<text name="input_ADMoveNode"								 text="AD: Tieni premuto + trascina con il tasto sinistro per spostare il nodo" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="Crea sottocartella in %s" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="Rinomina cartella %s" />

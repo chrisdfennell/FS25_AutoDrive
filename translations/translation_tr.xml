@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="&quot;%s&quot; klasörü &quot;%s&quot; olarak yeniden adlandırıldı" />
 		<text name="AD_undoStep_folderColor"							 text="&quot;%s&quot; klasörünün rengi değiştirildi" />
 		<text name="AD_undoStep_network"								 text="rotalar yüklendi" />
+		<text name="input_ADTidyEven"									 text="AD: Ara nokta aralıklarını eşitle (seçili noktadan işaret edilen noktaya)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Rotayı düzleştir (seçili noktadan işaret edilen noktaya)" />
+		<text name="input_ADTidySmooth"								 text="AD: Rotayı yumuşat (seçili noktadan işaret edilen noktaya)" />
+		<text name="input_ADRouteCheck"								 text="AD: Rota ağını kontrol et" />
+		<text name="input_ADFleet"										 text="AD: Filoya genel bakış" />
+		<text name="AD_tidy_howTo"										 text="Düzenle: seçmek için bir ara noktaya tıklayın, ardından fareyle aynı rotadaki başka bir ara noktayı gösterin ve tuşa tekrar basın" />
+		<text name="AD_tidy_nothing"									 text="Bu rota zaten düzenli" />
+		<text name="AD_tidy_done"										 text="%s / %s ara nokta taşındı (geri almak için Ctrl+Z)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Rota kontrolü" />
+		<text name="AD_routeCheck_title"												 text="Rota kontrolü: %s sorun bulundu, en yakını önce" />
+		<text name="AD_routeCheck_none"												 text="Rota kontrolü: %s ara noktada sorun bulunamadı" />
+		<text name="AD_routeCheck_shown"												 text="%s, %s m uzakta. Kırmızı oku takip edin." />
+		<text name="button_ad_show"													 text="Göster" />
+		<text name="button_ad_checkAgain"											 text="Tekrar kontrol et" />
+		<text name="gui_ad_fleetTitle"												 text="Filoya genel bakış" />
+		<text name="button_ad_enterVehicle"											 text="Araca bin" />
+		<text name="button_ad_startStop"												 text="Başlat / durdur" />
+		<text name="AD_fleet_load"													 text="yük %s" />
+		<text name="AD_fleet_fuel"													 text="yakıt %s" />
+		<text name="AD_fleet_driving"												 text="sürüyor" />
+		<text name="AD_fleet_stopped"												 text="durdu" />
+		<text name="gui_ad_bestPriceUnload"											 text="En iyi fiyata boşaltma" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Yüklüyken, boşaltma hedefinin klasöründe satış noktası şu anda yük için en çok ödeyen hedefte boşalt" />
+		<text name="AD_bestPrice_switch"												 text="en iyi fiyatla satıyor:" />
+		<text name="gui_ad_scheduleStart"											 text="İşe başlama saati" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="Sürücü, oyun içindeki bu saatte AutoDrive işine başlar" />
+		<text name="gui_ad_scheduleStop"												 text="İşi bitirme saati" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="Oyun içindeki bu saatte Toplama ve Teslim Etme mevcut turu bitirip park eder, diğer modlar durur" />
+		<text name="AD_schedule_started"												 text="işe başladı (program)" />
+		<text name="AD_schedule_finishing"											 text="mevcut turu bitirip ardından park edecek (program)" />
+		<text name="AD_schedule_stopped"												 text="işi bıraktı (program)" />
+		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
+		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
+		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />
+		<text name="AD_routeCheck_unreachable"						 text="&quot;%s&quot; hedefine ulaşılamıyor" />
+		<text name="AD_routeCheck_isolated"							 text="&quot;%s&quot; hedefi ağa bağlı değil" />
+		<text name="AD_routeCheck_noWayBack"							 text="&quot;%s&quot; hedefinden geri dönüş yolu yok" />
+		<text name="AD_routeCheck_duplicate"							 text="Üst üste iki ara nokta (%s m arayla)" />
 		<text name="input_ADMoveNode"								 text="AD: Ara noktayı taşımak için basılı tut + sol fare tuşuyla sürükle" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="%s içinde alt klasör oluştur" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="%s klasörünü yeniden adlandır" />

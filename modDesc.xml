@@ -128,6 +128,11 @@ Changelog: Необходимые корректировки для FS25, нас
 		<action name="ADRedo"/>
 		<action name="ADUndoPreview"/>
 		<action name="ADMoveNode"/>
+		<action name="ADTidyEven"/>
+		<action name="ADTidyStraighten"/>
+		<action name="ADTidySmooth"/>
+		<action name="ADRouteCheck"/>
+		<action name="ADFleet"/>
 	</actions>
 
 	<inputBinding>
@@ -200,6 +205,21 @@ Changelog: Необходимые корректировки для FS25, нас
 		</actionBinding>
 		<actionBinding action="ADUndoPreview">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_z" />
+		</actionBinding>
+		<actionBinding action="ADTidyEven">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_j" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADTidyStraighten">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_k" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADTidySmooth">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_u" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADRouteCheck">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_n" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADFleet">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_i" axisComponent="+" neutralInput="0" index="1" />
 		</actionBinding>
 		<actionBinding action="AD_open_notification_history">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_m" axisComponent="+" neutralInput="0" index="1" />

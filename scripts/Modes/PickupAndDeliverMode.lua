@@ -131,6 +131,7 @@ function PickupAndDeliverMode:getNextTask(forced)
             end
             AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_PATHINFO, "PickupAndDeliverMode:setDeliverTarget getSecondMarkerName() %s", tostring(self.vehicle.ad.stateModule:getSecondMarkerName()))
         else
+            ADBestPrice.apply(self.vehicle, false) -- Overdrive: best paying target of the folder, if set
             if self.vehicle.ad.stateModule:getAutomaticUnloadTarget() then
                 local sellingStation = ADTriggerManager:getHighestPayingSellStation(self.vehicle.ad.stateModule:getFillType())
                 if sellingStation ~= nil then
@@ -190,7 +191,7 @@ function PickupAndDeliverMode:getNextTask(forced)
         -- STATE_DELIVER - drive to load destination
         AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_PATHINFO, "PickupAndDeliverMode:getNextTask STATE_DELIVER loopsDone %s", tostring(self.vehicle.ad.stateModule:getLoopsDone()))
         -- if self.vehicle.ad.stateModule:getLoopCounter() == 0 or self.vehicle.ad.stateModule:getLoopsDone() < self.vehicle.ad.stateModule:getLoopCounter() or ((AutoDrive.getSetting("rotateTargets", self.vehicle) == AutoDrive.RT_ONLYPICKUP or AutoDrive.getSetting("rotateTargets", self.vehicle) == AutoDrive.RT_PICKUPANDDELIVER) and AutoDrive.getSetting("useFolders")) then
-        if self.vehicle.ad.stateModule:getLoopCounter() == 0 or self.vehicle.ad.stateModule:getLoopsDone() < self.vehicle.ad.stateModule:getLoopCounter() then
+        if (self.vehicle.ad.stateModule:getLoopCounter() == 0 or self.vehicle.ad.stateModule:getLoopsDone() < self.vehicle.ad.stateModule:getLoopCounter()) and not ADWorkSchedule.isStopRequested(self.vehicle) then
             -- until loops not finished or 0 - drive to load destination
             setPickupTarget()   -- if rotateTargets is set, set the next pickup target
             AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_PATHINFO, "PickupAndDeliverMode:getNextTask LoadAtDestinationTask... getFirstMarkerName() %s", tostring(self.vehicle.ad.stateModule:getFirstMarkerName()))

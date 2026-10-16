@@ -56,6 +56,7 @@ function UnloadAtMode:getNextTask()
 		-- STATE_TO_TARGET - drive to unload destination
 		AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_PATHINFO, "UnloadAtMode:getNextTask STATE_TO_TARGET UnloadAtDestinationTask...")
 
+        ADBestPrice.apply(self.vehicle, true) -- Overdrive: best paying target of the folder, if set
         if self.vehicle.ad.stateModule:getAutomaticUnloadTarget() then
             local sellingStation = ADTriggerManager:getHighestPayingSellStation(self.vehicle.ad.stateModule:getFillType())
             if sellingStation ~= nil then

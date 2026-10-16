@@ -65,7 +65,12 @@ ADInputManager.actionsToInputs = {
     {"ADPasteSettings", "input_pasteSettings", false, true},
     {"ADCreateFieldPoints", "input_createFieldPoints", false, true},
     {"ADUndo", "input_undo", false, false},
-    {"ADRedo", "input_redo", false, false}
+    {"ADRedo", "input_redo", false, false},
+    {"ADTidyEven", "input_tidyEven", false, false},
+    {"ADTidyStraighten", "input_tidyStraighten", false, false},
+    {"ADTidySmooth", "input_tidySmooth", false, false},
+    {"ADRouteCheck", "input_routeCheck", false, false},
+    {"ADFleet", "input_fleet", false, false}
 }
 
 --[[
@@ -184,6 +189,26 @@ function ADInputManager:input_redo(vehicle)
         AutoDrive.resetMouseSelections(vehicle)
         ADUndoManager:requestRedo()
     end
+end
+
+function ADInputManager:input_tidyEven(vehicle)
+    ADTidyTools.apply(vehicle, ADTidyTools.EVEN)
+end
+
+function ADInputManager:input_tidyStraighten(vehicle)
+    ADTidyTools.apply(vehicle, ADTidyTools.STRAIGHTEN)
+end
+
+function ADInputManager:input_tidySmooth(vehicle)
+    ADTidyTools.apply(vehicle, ADTidyTools.SMOOTH)
+end
+
+function ADInputManager:input_routeCheck(vehicle)
+    ADRouteCheck:open(vehicle)
+end
+
+function ADInputManager:input_fleet(vehicle)
+    AutoDrive.onOpenFleet()
 end
 
 function ADInputManager:input_removeMapMarker(vehicle)

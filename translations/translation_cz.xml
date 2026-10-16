@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="adresář &quot;%s&quot; přejmenován na &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="barva adresáře &quot;%s&quot; změněna" />
 		<text name="AD_undoStep_network"								 text="trasy načteny" />
+		<text name="input_ADTidyEven"									 text="AD: Vyrovnat rozestupy bodů trasy (od vybraného bodu k bodu pod kurzorem)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Narovnat trasu (od vybraného bodu k bodu pod kurzorem)" />
+		<text name="input_ADTidySmooth"								 text="AD: Vyhladit trasu (od vybraného bodu k bodu pod kurzorem)" />
+		<text name="input_ADRouteCheck"								 text="AD: Zkontrolovat síť tras" />
+		<text name="input_ADFleet"										 text="AD: Přehled vozového parku" />
+		<text name="AD_tidy_howTo"										 text="Úprava: kliknutím vyberte bod trasy, pak najeďte myší na jiný bod stejné trasy a znovu stiskněte klávesu" />
+		<text name="AD_tidy_nothing"									 text="Tato trasa je již upravená" />
+		<text name="AD_tidy_done"										 text="Přesunuto bodů trasy: %s z %s (Ctrl+Z pro vrácení)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Kontrola tras" />
+		<text name="AD_routeCheck_title"												 text="Kontrola tras: počet problémů: %s, nejbližší první" />
+		<text name="AD_routeCheck_none"												 text="Kontrola tras: žádné problémy (zkontrolováno bodů trasy: %s)" />
+		<text name="AD_routeCheck_shown"												 text="%s, vzdálenost %s m. Následujte červenou šipku." />
+		<text name="button_ad_show"													 text="Zobrazit" />
+		<text name="button_ad_checkAgain"											 text="Zkontrolovat znovu" />
+		<text name="gui_ad_fleetTitle"												 text="Přehled vozového parku" />
+		<text name="button_ad_enterVehicle"											 text="Nastoupit do vozidla" />
+		<text name="button_ad_startStop"												 text="Spustit / zastavit" />
+		<text name="AD_fleet_load"													 text="náklad %s" />
+		<text name="AD_fleet_fuel"													 text="palivo %s" />
+		<text name="AD_fleet_driving"												 text="jede" />
+		<text name="AD_fleet_stopped"												 text="stojí" />
+		<text name="gui_ad_bestPriceUnload"											 text="Vykládka za nejlepší cenu" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Po naložení vyložit u cíle v adresáři cíle vykládky, jehož prodejní místo za náklad právě platí nejvíce" />
+		<text name="AD_bestPrice_switch"												 text="prodává za nejlepší cenu v" />
+		<text name="gui_ad_scheduleStart"											 text="Začátek práce v" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="V tuto herní hodinu řidič spustí svou úlohu AutoDrive" />
+		<text name="gui_ad_scheduleStop"												 text="Konec práce v" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="V tuto herní hodinu režim Nakládka a odvoz dokončí aktuální kolo a zaparkuje, ostatní režimy zastaví" />
+		<text name="AD_schedule_started"												 text="začal pracovat (plán)" />
+		<text name="AD_schedule_finishing"											 text="dokončí aktuální kolo a pak zaparkuje (plán)" />
+		<text name="AD_schedule_stopped"												 text="ukončil práci (plán)" />
+		<text name="AD_routeCheck_loose"								 text="Osamocený bod trasy bez jakéhokoli spojení" />
+		<text name="AD_routeCheck_deadEnd"							 text="Slepá ulice: z tohoto bodu trasy nevede žádná cesta dál" />
+		<text name="AD_routeCheck_trap"								 text="Jednosměrná past: počet bodů trasy, do kterých lze vjet, ale ne vyjet: %s" />
+		<text name="AD_routeCheck_unreachable"						 text="Cíl &quot;%s&quot; je nedosažitelný" />
+		<text name="AD_routeCheck_isolated"							 text="Cíl &quot;%s&quot; není připojen k síti" />
+		<text name="AD_routeCheck_noWayBack"							 text="Z cíle &quot;%s&quot; nevede cesta zpět" />
+		<text name="AD_routeCheck_duplicate"							 text="Dva body trasy na sobě (vzdálenost %s m)" />
 		<text name="input_ADMoveNode"								 text="AD: Držet + táhnout levým tlačítkem myši pro posun bodu trasy" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="Vytvořit podadresář v %s" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="Přejmenovat adresář %s" />

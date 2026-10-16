@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="zmieniono nazwę folderu &quot;%s&quot; na &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="zmieniono kolor folderu &quot;%s&quot;" />
 		<text name="AD_undoStep_network"								 text="wczytano trasy" />
+		<text name="input_ADTidyEven"									 text="AD: Wyrównaj odstępy punktów trasy (od wybranego punktu do punktu pod kursorem)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Wyprostuj trasę (od wybranego punktu do punktu pod kursorem)" />
+		<text name="input_ADTidySmooth"								 text="AD: Wygładź trasę (od wybranego punktu do punktu pod kursorem)" />
+		<text name="input_ADRouteCheck"								 text="AD: Sprawdź sieć tras" />
+		<text name="input_ADFleet"										 text="AD: Przegląd floty" />
+		<text name="AD_tidy_howTo"										 text="Porządkowanie: kliknij punkt trasy, aby go wybrać, następnie wskaż myszą inny punkt tej samej trasy i ponownie naciśnij klawisz" />
+		<text name="AD_tidy_nothing"									 text="Ta trasa jest już uporządkowana" />
+		<text name="AD_tidy_done"										 text="Przesunięto punkty trasy: %s z %s (Ctrl+Z, aby cofnąć)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Sprawdzanie tras" />
+		<text name="AD_routeCheck_title"												 text="Sprawdzanie tras: liczba problemów: %s, od najbliższego" />
+		<text name="AD_routeCheck_none"												 text="Sprawdzanie tras: brak problemów (sprawdzone punkty trasy: %s)" />
+		<text name="AD_routeCheck_shown"												 text="%s, odległość %s m. Podążaj za czerwoną strzałką." />
+		<text name="button_ad_show"													 text="Pokaż" />
+		<text name="button_ad_checkAgain"											 text="Sprawdź ponownie" />
+		<text name="gui_ad_fleetTitle"												 text="Przegląd floty" />
+		<text name="button_ad_enterVehicle"											 text="Wsiądź do pojazdu" />
+		<text name="button_ad_startStop"												 text="Start / stop" />
+		<text name="AD_fleet_load"													 text="ładunek %s" />
+		<text name="AD_fleet_fuel"													 text="paliwo %s" />
+		<text name="AD_fleet_driving"												 text="jedzie" />
+		<text name="AD_fleet_stopped"												 text="zatrzymany" />
+		<text name="gui_ad_bestPriceUnload"											 text="Rozładunek po najlepszej cenie" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Po załadowaniu rozładuj w tym celu z folderu celu rozładunku, którego punkt sprzedaży płaci obecnie najwięcej za ładunek" />
+		<text name="AD_bestPrice_switch"												 text="sprzedaje po najlepszej cenie w" />
+		<text name="gui_ad_scheduleStart"											 text="Rozpocznij pracę o" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="O tej godzinie w grze kierowca rozpoczyna swoje zadanie AutoDrive" />
+		<text name="gui_ad_scheduleStop"												 text="Zakończ pracę o" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="O tej godzinie w grze tryb Odbiór i rozładunek kończy bieżący kurs i parkuje, pozostałe tryby się zatrzymują" />
+		<text name="AD_schedule_started"												 text="rozpoczął pracę (harmonogram)" />
+		<text name="AD_schedule_finishing"											 text="kończy bieżący kurs, a następnie parkuje (harmonogram)" />
+		<text name="AD_schedule_stopped"												 text="zakończył pracę (harmonogram)" />
+		<text name="AD_routeCheck_loose"								 text="Luźny punkt trasy bez żadnego połączenia" />
+		<text name="AD_routeCheck_deadEnd"							 text="Ślepa uliczka: z tego punktu trasy nie ma dalszej drogi" />
+		<text name="AD_routeCheck_trap"								 text="Pułapka jednokierunkowa: punkty trasy, do których można wjechać, ale nie można wyjechać: %s" />
+		<text name="AD_routeCheck_unreachable"						 text="Nie można dotrzeć do celu &quot;%s&quot;" />
+		<text name="AD_routeCheck_isolated"							 text="Cel &quot;%s&quot; nie jest połączony z siecią" />
+		<text name="AD_routeCheck_noWayBack"							 text="Brak drogi powrotnej z celu &quot;%s&quot;" />
+		<text name="AD_routeCheck_duplicate"							 text="Dwa punkty trasy na sobie (odległość %s m)" />
 		<text name="input_ADMoveNode"								 text="AD: Przytrzymaj + przeciągnij lewym przyciskiem, aby przesunąć punkt trasy" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="Utwórz podfolder w %s" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="Zmień nazwę folderu %s" />

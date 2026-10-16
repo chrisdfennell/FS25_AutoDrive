@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="carpeta &quot;%s&quot; renombrada a &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="color de la carpeta &quot;%s&quot; cambiado" />
 		<text name="AD_undoStep_network"								 text="rutas cargadas" />
+		<text name="input_ADTidyEven"									 text="AD: Igualar la distancia entre puntos de ruta (del seleccionado al señalado)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Enderezar ruta (del punto de ruta seleccionado al señalado)" />
+		<text name="input_ADTidySmooth"								 text="AD: Suavizar ruta (del punto de ruta seleccionado al señalado)" />
+		<text name="input_ADRouteCheck"								 text="AD: Comprobar la red de rutas" />
+		<text name="input_ADFleet"										 text="AD: Resumen de la flota" />
+		<text name="AD_tidy_howTo"										 text="Ordenar: haz clic en un punto de ruta para seleccionarlo, luego señala con el ratón otro punto de ruta de la misma ruta y vuelve a pulsar la tecla" />
+		<text name="AD_tidy_nothing"									 text="Esta ruta ya está ordenada" />
+		<text name="AD_tidy_done"										 text="%s de %s puntos de ruta movidos (Ctrl+Z para deshacer)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Comprobación de rutas" />
+		<text name="AD_routeCheck_title"												 text="Comprobación de rutas: %s problemas encontrados, los más cercanos primero" />
+		<text name="AD_routeCheck_none"												 text="Comprobación de rutas: ningún problema encontrado en %s puntos de ruta" />
+		<text name="AD_routeCheck_shown"												 text="%s, a %s m. Sigue la flecha roja." />
+		<text name="button_ad_show"													 text="Mostrar" />
+		<text name="button_ad_checkAgain"											 text="Comprobar de nuevo" />
+		<text name="gui_ad_fleetTitle"												 text="Resumen de la flota" />
+		<text name="button_ad_enterVehicle"											 text="Subir al vehículo" />
+		<text name="button_ad_startStop"												 text="Iniciar / detener" />
+		<text name="AD_fleet_load"													 text="carga %s" />
+		<text name="AD_fleet_fuel"													 text="combustible %s" />
+		<text name="AD_fleet_driving"												 text="conduciendo" />
+		<text name="AD_fleet_stopped"												 text="detenido" />
+		<text name="gui_ad_bestPriceUnload"											 text="Descarga al mejor precio" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Cuando esté cargado, descarga en el destino de la carpeta del destino de descarga cuyo punto de venta paga más por la carga en este momento" />
+		<text name="AD_bestPrice_switch"												 text="vende al mejor precio en" />
+		<text name="gui_ad_scheduleStart"											 text="Empezar a trabajar a las" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="A esta hora del juego el conductor inicia su trabajo de AutoDrive" />
+		<text name="gui_ad_scheduleStop"												 text="Dejar de trabajar a las" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="A esta hora del juego, Cargar y entregar termina la ronda actual y aparca, los demás modos se detienen" />
+		<text name="AD_schedule_started"												 text="ha empezado a trabajar (horario)" />
+		<text name="AD_schedule_finishing"											 text="termina la ronda actual y después aparca (horario)" />
+		<text name="AD_schedule_stopped"												 text="ha dejado de trabajar (horario)" />
+		<text name="AD_routeCheck_loose"								 text="Punto de ruta suelto sin ninguna conexión" />
+		<text name="AD_routeCheck_deadEnd"							 text="Callejón sin salida: no hay forma de seguir desde este punto de ruta" />
+		<text name="AD_routeCheck_trap"								 text="Trampa de sentido único: %s puntos de ruta en los que se puede entrar pero no salir" />
+		<text name="AD_routeCheck_unreachable"						 text="No se puede llegar al destino &quot;%s&quot;" />
+		<text name="AD_routeCheck_isolated"							 text="El destino &quot;%s&quot; no está conectado a la red" />
+		<text name="AD_routeCheck_noWayBack"							 text="No hay camino de vuelta desde el destino &quot;%s&quot;" />
+		<text name="AD_routeCheck_duplicate"							 text="Dos puntos de ruta superpuestos (a %s m de distancia)" />
 		<text name="input_ADMoveNode"								 text="AD: Mantener + arrastrar con el botón izquierdo para mover el punto de ruta" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="Crear subcarpeta en %s" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="Renombrar carpeta %s" />

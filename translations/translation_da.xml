@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="mappe &quot;%s&quot; omdøbt til &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="farve på mappe &quot;%s&quot; ændret" />
 		<text name="AD_undoStep_network"								 text="ruter indlæst" />
+		<text name="input_ADTidyEven"									 text="AD: Udjævn afstanden mellem vejpunkter (fra valgt til udpeget vejpunkt)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Ret ruten ud (fra valgt til udpeget vejpunkt)" />
+		<text name="input_ADTidySmooth"								 text="AD: Udglat ruten (fra valgt til udpeget vejpunkt)" />
+		<text name="input_ADRouteCheck"								 text="AD: Kontroller rutenetværket" />
+		<text name="input_ADFleet"										 text="AD: Flådeoversigt" />
+		<text name="AD_tidy_howTo"										 text="Ryd op: klik på et vejpunkt for at vælge det, peg derefter med musen på et andet vejpunkt på samme rute, og tryk på tasten igen" />
+		<text name="AD_tidy_nothing"									 text="Denne rute er allerede ryddet op" />
+		<text name="AD_tidy_done"										 text="%s af %s vejpunkter flyttet (Ctrl+Z for at fortryde)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Rutekontrol" />
+		<text name="AD_routeCheck_title"												 text="Rutekontrol: %s problemer fundet, nærmeste først" />
+		<text name="AD_routeCheck_none"												 text="Rutekontrol: ingen problemer fundet i %s vejpunkter" />
+		<text name="AD_routeCheck_shown"												 text="%s, %s m væk. Følg den røde pil." />
+		<text name="button_ad_show"													 text="Vis" />
+		<text name="button_ad_checkAgain"											 text="Kontroller igen" />
+		<text name="gui_ad_fleetTitle"												 text="Flådeoversigt" />
+		<text name="button_ad_enterVehicle"											 text="Stig ind i maskinen" />
+		<text name="button_ad_startStop"												 text="Start / stop" />
+		<text name="AD_fleet_load"													 text="last %s" />
+		<text name="AD_fleet_fuel"													 text="brændstof %s" />
+		<text name="AD_fleet_driving"												 text="kører" />
+		<text name="AD_fleet_stopped"												 text="stoppet" />
+		<text name="gui_ad_bestPriceUnload"											 text="Aflæsning til bedste pris" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Når der er læsset, aflæs ved det mål i aflæsningsmålets mappe, hvis salgssted betaler mest for lasten lige nu" />
+		<text name="AD_bestPrice_switch"												 text="sælger til den bedste pris ved" />
+		<text name="gui_ad_scheduleStart"											 text="Start arbejde kl." />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="På denne time i spillet starter køreren sit AutoDrive-job" />
+		<text name="gui_ad_scheduleStop"												 text="Stop arbejde kl." />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="På denne time i spillet afslutter Påfyld og aflevering den aktuelle runde og parkerer, andre tilstande stopper" />
+		<text name="AD_schedule_started"												 text="er startet på arbejdet (tidsplan)" />
+		<text name="AD_schedule_finishing"											 text="afslutter den aktuelle runde og parkerer derefter (tidsplan)" />
+		<text name="AD_schedule_stopped"												 text="har stoppet arbejdet (tidsplan)" />
+		<text name="AD_routeCheck_loose"								 text="Løst vejpunkt uden nogen forbindelse" />
+		<text name="AD_routeCheck_deadEnd"							 text="Blindgyde: ingen vej videre fra dette vejpunkt" />
+		<text name="AD_routeCheck_trap"								 text="Ensrettet fælde: %s vejpunkter, man kan køre ind i, men ikke ud af" />
+		<text name="AD_routeCheck_unreachable"						 text="Målet &quot;%s&quot; kan ikke nås" />
+		<text name="AD_routeCheck_isolated"							 text="Målet &quot;%s&quot; er ikke forbundet med netværket" />
+		<text name="AD_routeCheck_noWayBack"							 text="Ingen vej tilbage fra målet &quot;%s&quot;" />
+		<text name="AD_routeCheck_duplicate"							 text="To vejpunkter oven i hinanden (%s m fra hinanden)" />
 		<text name="input_ADMoveNode"								 text="AD: Hold + træk med venstre museknap for at flytte vejpunkt" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="Opret undermappe i %s" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="Omdøb mappe %s" />

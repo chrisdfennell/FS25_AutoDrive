@@ -11,6 +11,8 @@ function AutoDrive:loadGUI()
 	AutoDrive.gui.ADNotificationsHistoryGui = ADNotificationsHistoryGui.new()
 	AutoDrive.gui.ADColorSettingsGui = ADColorSettingsGui.new()
 	AutoDrive.gui.ADScanConfirmationGui = ADScanConfirmationGui.new()
+	AutoDrive.gui.ADRouteCheckGui = ADRouteCheckGui.new()
+	AutoDrive.gui.ADFleetGui = ADFleetGui.new()
 
     local count = 1
     local result = nil
@@ -58,6 +60,18 @@ function AutoDrive:loadGUI()
     end
 
 	result = g_gui:loadGui(AutoDrive.directory .. "gui/scanConfirmationGUI.xml", "ADScanConfirmationGui", AutoDrive.gui.ADScanConfirmationGui)
+    count = count + 1
+    if result == nil then
+        AutoDrive.debugMsg(nil, "AutoDrive:loadGUI failed count %d", count)
+    end
+
+	result = g_gui:loadGui(AutoDrive.directory .. "gui/routeCheckGUI.xml", "ADRouteCheckGui", AutoDrive.gui.ADRouteCheckGui)
+    count = count + 1
+    if result == nil then
+        AutoDrive.debugMsg(nil, "AutoDrive:loadGUI failed count %d", count)
+    end
+
+	result = g_gui:loadGui(AutoDrive.directory .. "gui/fleetGUI.xml", "ADFleetGui", AutoDrive.gui.ADFleetGui)
     count = count + 1
     if result == nil then
         AutoDrive.debugMsg(nil, "AutoDrive:loadGUI failed count %d", count)
@@ -151,6 +165,18 @@ end
 function AutoDrive.onOpenRoutesManager()
 	if not AutoDrive.gui.ADRoutesManagerGui.isOpen then
 		g_gui:showDialog("ADRoutesManagerGui")
+	end
+end
+
+function AutoDrive.onOpenRouteCheck()
+	if not AutoDrive.gui.ADRouteCheckGui.isOpen then
+		g_gui:showDialog("ADRouteCheckGui")
+	end
+end
+
+function AutoDrive.onOpenFleet()
+	if not AutoDrive.gui.ADFleetGui.isOpen then
+		g_gui:showDialog("ADFleetGui")
 	end
 end
 

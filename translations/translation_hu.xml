@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="&quot;%s&quot; mappa átnevezve erre: &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="&quot;%s&quot; mappa színe módosítva" />
 		<text name="AD_undoStep_network"								 text="útvonalak betöltve" />
+		<text name="input_ADTidyEven"									 text="AD: Útpontok közötti távolság kiegyenlítése (a kijelölttől a mutatott útpontig)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Útvonal kiegyenesítése (a kijelölttől a mutatott útpontig)" />
+		<text name="input_ADTidySmooth"								 text="AD: Útvonal simítása (a kijelölttől a mutatott útpontig)" />
+		<text name="input_ADRouteCheck"								 text="AD: Útvonalhálózat ellenőrzése" />
+		<text name="input_ADFleet"										 text="AD: Flotta áttekintése" />
+		<text name="AD_tidy_howTo"										 text="Rendrakás: kattints egy útpontra a kijelöléséhez, majd mutass az egérrel ugyanazon útvonal egy másik útpontjára, és nyomd meg újra a gombot" />
+		<text name="AD_tidy_nothing"									 text="Ez az útvonal már rendben van" />
+		<text name="AD_tidy_done"										 text="%s / %s útpont áthelyezve (Ctrl+Z a visszavonáshoz)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Útvonal-ellenőrzés" />
+		<text name="AD_routeCheck_title"												 text="Útvonal-ellenőrzés: %s probléma található, a legközelebbi elöl" />
+		<text name="AD_routeCheck_none"												 text="Útvonal-ellenőrzés: nem található probléma %s útpontban" />
+		<text name="AD_routeCheck_shown"												 text="%s, %s m-re. Kövesd a piros nyilat." />
+		<text name="button_ad_show"													 text="Megjelenítés" />
+		<text name="button_ad_checkAgain"											 text="Újraellenőrzés" />
+		<text name="gui_ad_fleetTitle"												 text="Flotta áttekintése" />
+		<text name="button_ad_enterVehicle"											 text="Beszállás a járműbe" />
+		<text name="button_ad_startStop"												 text="Indítás / leállítás" />
+		<text name="AD_fleet_load"													 text="rakomány %s" />
+		<text name="AD_fleet_fuel"													 text="üzemanyag %s" />
+		<text name="AD_fleet_driving"												 text="halad" />
+		<text name="AD_fleet_stopped"												 text="leállítva" />
+		<text name="gui_ad_bestPriceUnload"											 text="Kirakodás a legjobb áron" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Megrakva a kirakodási cél mappájában lévő azon célhoz megy, amelynek értékesítési pontja jelenleg a legtöbbet fizeti a rakományért" />
+		<text name="AD_bestPrice_switch"												 text="a legjobb áron értékesít itt:" />
+		<text name="gui_ad_scheduleStart"											 text="Munkakezdés" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="Ebben a játékbeli órában a sofőr elindítja az AutoDrive feladatát" />
+		<text name="gui_ad_scheduleStop"												 text="Munka vége" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="Ebben a játékbeli órában a Felrakás és lerakás befejezi az aktuális kört és leparkol, a többi mód leáll" />
+		<text name="AD_schedule_started"												 text="munkába állt (ütemezés)" />
+		<text name="AD_schedule_finishing"											 text="befejezi az aktuális kört, majd leparkol (ütemezés)" />
+		<text name="AD_schedule_stopped"												 text="befejezte a munkát (ütemezés)" />
+		<text name="AD_routeCheck_loose"								 text="Különálló útpont, semmilyen kapcsolat nélkül" />
+		<text name="AD_routeCheck_deadEnd"							 text="Zsákutca: ebből az útpontból nincs továbbhaladás" />
+		<text name="AD_routeCheck_trap"								 text="Egyirányú csapda: %s útpont, ahová be lehet hajtani, de kijutni nem" />
+		<text name="AD_routeCheck_unreachable"						 text="A(z) &quot;%s&quot; cél nem érhető el" />
+		<text name="AD_routeCheck_isolated"							 text="A(z) &quot;%s&quot; cél nincs a hálózathoz kapcsolva" />
+		<text name="AD_routeCheck_noWayBack"							 text="Nincs visszaút a(z) &quot;%s&quot; célból" />
+		<text name="AD_routeCheck_duplicate"							 text="Két útpont egymáson (%s m távolságra)" />
 		<text name="input_ADMoveNode"								 text="AD: Nyomva tartás + bal egérgombos húzás az útpont mozgatásához" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="Almappa létrehozása itt: %s" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="%s mappa átnevezése" />

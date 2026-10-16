@@ -452,6 +452,44 @@
 		<text name="AD_undoStep_folderRenamed"						 text="map &quot;%s&quot; hernoemd naar &quot;%s&quot;" />
 		<text name="AD_undoStep_folderColor"							 text="kleur van map &quot;%s&quot; gewijzigd" />
 		<text name="AD_undoStep_network"								 text="routes geladen" />
+		<text name="input_ADTidyEven"									 text="AD: Afstand tussen routepunten gelijk maken (van geselecteerd tot aangewezen routepunt)" />
+		<text name="input_ADTidyStraighten"							 text="AD: Route rechttrekken (van geselecteerd tot aangewezen routepunt)" />
+		<text name="input_ADTidySmooth"								 text="AD: Route gladstrijken (van geselecteerd tot aangewezen routepunt)" />
+		<text name="input_ADRouteCheck"								 text="AD: Routenetwerk controleren" />
+		<text name="input_ADFleet"										 text="AD: Vlootoverzicht" />
+		<text name="AD_tidy_howTo"										 text="Opruimen: klik op een routepunt om het te selecteren, wijs dan met de muis een ander routepunt op dezelfde route aan en druk nogmaals op de toets" />
+		<text name="AD_tidy_nothing"									 text="Deze route is al netjes" />
+		<text name="AD_tidy_done"										 text="%s van %s routepunten verplaatst (Ctrl+Z om ongedaan te maken)" />
+		<text name="gui_ad_routeCheckTitle"											 text="Routecontrole" />
+		<text name="AD_routeCheck_title"												 text="Routecontrole: %s problemen gevonden, dichtstbijzijnde eerst" />
+		<text name="AD_routeCheck_none"												 text="Routecontrole: geen problemen gevonden in %s routepunten" />
+		<text name="AD_routeCheck_shown"												 text="%s, %s m verderop. Volg de rode pijl." />
+		<text name="button_ad_show"													 text="Tonen" />
+		<text name="button_ad_checkAgain"											 text="Opnieuw controleren" />
+		<text name="gui_ad_fleetTitle"												 text="Vlootoverzicht" />
+		<text name="button_ad_enterVehicle"											 text="Voertuig instappen" />
+		<text name="button_ad_startStop"												 text="Starten / stoppen" />
+		<text name="AD_fleet_load"													 text="lading %s" />
+		<text name="AD_fleet_fuel"													 text="brandstof %s" />
+		<text name="AD_fleet_driving"												 text="rijdt" />
+		<text name="AD_fleet_stopped"												 text="gestopt" />
+		<text name="gui_ad_bestPriceUnload"											 text="Lossen tegen de beste prijs" />
+		<text name="gui_ad_bestPriceUnload_tooltip"									 text="Wanneer geladen, lossen bij de bestemming in de map van de losbestemming waarvan het verkooppunt op dit moment het meest betaalt voor de lading" />
+		<text name="AD_bestPrice_switch"												 text="verkoopt voor de beste prijs bij" />
+		<text name="gui_ad_scheduleStart"											 text="Begin werk om" />
+		<text name="gui_ad_scheduleStart_tooltip"									 text="Op dit speluur start de bestuurder zijn AutoDrive-taak" />
+		<text name="gui_ad_scheduleStop"												 text="Stop werk om" />
+		<text name="gui_ad_scheduleStop_tooltip"										 text="Op dit speluur maakt Ophalen en Afleveren de huidige ronde af en parkeert, andere modi stoppen" />
+		<text name="AD_schedule_started"												 text="is begonnen met werken (schema)" />
+		<text name="AD_schedule_finishing"											 text="maakt de huidige ronde af en parkeert daarna (schema)" />
+		<text name="AD_schedule_stopped"												 text="is gestopt met werken (schema)" />
+		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
+		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
+		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />
+		<text name="AD_routeCheck_unreachable"						 text="Bestemming &quot;%s&quot; is niet bereikbaar" />
+		<text name="AD_routeCheck_isolated"							 text="Bestemming &quot;%s&quot; is niet verbonden met het netwerk" />
+		<text name="AD_routeCheck_noWayBack"							 text="Geen weg terug vanaf bestemming &quot;%s&quot;" />
+		<text name="AD_routeCheck_duplicate"							 text="Twee routepunten boven op elkaar (%s m uit elkaar)" />
 		<text name="input_ADMoveNode"								 text="AD: Vasthouden + slepen met linkermuisknop om routepunt te verplaatsen" />
 		<text name="gui_ad_enterSubGroupNameTitle"					 text="Submap maken in %s" />
 		<text name="gui_ad_renameGroupNameTitle"						 text="Map %s hernoemen" />
