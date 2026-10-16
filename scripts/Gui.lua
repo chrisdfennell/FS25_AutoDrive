@@ -14,6 +14,8 @@ function AutoDrive:loadGUI()
 	AutoDrive.gui.ADRouteCheckGui = ADRouteCheckGui.new()
 	AutoDrive.gui.ADFleetGui = ADFleetGui.new()
 	AutoDrive.gui.ADSendToGui = ADSendToGui.new()
+	AutoDrive.gui.ADUnloadFilterGui = ADUnloadFilterGui.new()
+	AutoDrive.gui.ADVehicleMenuGui = ADVehicleMenuGui.new()
 
     local count = 1
     local result = nil
@@ -79,6 +81,18 @@ function AutoDrive:loadGUI()
     end
 
 	result = g_gui:loadGui(AutoDrive.directory .. "gui/sendToGUI.xml", "ADSendToGui", AutoDrive.gui.ADSendToGui)
+    count = count + 1
+    if result == nil then
+        AutoDrive.debugMsg(nil, "AutoDrive:loadGUI failed count %d", count)
+    end
+
+	result = g_gui:loadGui(AutoDrive.directory .. "gui/unloadFilterGUI.xml", "ADUnloadFilterGui", AutoDrive.gui.ADUnloadFilterGui)
+    count = count + 1
+    if result == nil then
+        AutoDrive.debugMsg(nil, "AutoDrive:loadGUI failed count %d", count)
+    end
+
+	result = g_gui:loadGui(AutoDrive.directory .. "gui/vehicleMenuGUI.xml", "ADVehicleMenuGui", AutoDrive.gui.ADVehicleMenuGui)
     count = count + 1
     if result == nil then
         AutoDrive.debugMsg(nil, "AutoDrive:loadGUI failed count %d", count)
@@ -185,6 +199,23 @@ function AutoDrive.onOpenSendTo(vehicle)
 	if not AutoDrive.gui.ADSendToGui.isOpen then
 		AutoDrive.gui.ADSendToGui:setVehicle(vehicle)
 		g_gui:showDialog("ADSendToGui")
+	end
+end
+
+-- unload products of a vehicle, or of a target (marker) when given
+function AutoDrive.onOpenUnloadFilter(vehicle, marker)
+	if not AutoDrive.gui.ADUnloadFilterGui.isOpen then
+		AutoDrive.gui.ADUnloadFilterGui:setSubject(vehicle, marker)
+		AutoDriveUnloadFilterEvent.request(vehicle)
+		AutoDrive.gui.ADUnloadFilterGui.refreshTimer = 500
+		g_gui:showDialog("ADUnloadFilterGui")
+	end
+end
+
+function AutoDrive.onOpenVehicleMenu(vehicle)
+	if not AutoDrive.gui.ADVehicleMenuGui.isOpen then
+		AutoDrive.gui.ADVehicleMenuGui:setVehicle(vehicle)
+		g_gui:showDialog("ADVehicleMenuGui")
 	end
 end
 

@@ -30,6 +30,20 @@ function ADBestPrice.getMode(vehicle)
     return mode
 end
 
+-- the load best price plans with: what is on board and the vehicle unloads (unload products of the vehicle)
+function ADBestPrice.getSellableLoad(vehicle)
+    local load = ADBestPrice.getLoad(vehicle)
+    local filter = vehicle.ad ~= nil and vehicle.ad.unloadFilter or nil
+    if ADUnloadFilter ~= nil and not ADUnloadFilter.isEmpty(filter) then
+        for fillType, _ in pairs(load) do
+            if not ADUnloadFilter.allows(filter, g_fillTypeManager:getFillTypeNameByIndex(fillType)) then
+                load[fillType] = nil
+            end
+        end
+    end
+    return load
+end
+
 -- the load on board: fill type -> litres, without the vehicles' own tanks
 function ADBestPrice.getLoad(vehicle)
     local load = {}
@@ -129,9 +143,11 @@ function ADBestPrice.getPrices(candidates, stationsByFillType, maxDistance)
     local prices = {}
     for i, candidate in ipairs(candidates) do
         prices[i] = {}
+        -- products the target does not take (unload products of the target) are not priced there
+        local targetFilter = ADUnloadFilter ~= nil and candidate.marker ~= nil and ADUnloadFilter.getTargetFilter(candidate.marker) or nil
         for fillType, stations in pairs(stationsByFillType) do
             local station = nearestStation(candidate, stations, maxDistance)
-            if station ~= nil then
+            if station ~= nil and (targetFilter == nil or ADUnloadFilter.allows(targetFilter, g_fillTypeManager:getFillTypeNameByIndex(fillType))) then
                 prices[i][fillType] = {price = station.price, station = station}
             end
         end
@@ -200,17 +216,18 @@ end
 
 -- is anything of the load sold by a target of the folder?
 function ADBestPrice.hasSellableLoad(vehicle, group)
-    local load = ADBestPrice.getLoad(vehicle)
+    local load = ADBestPrice.getSellableLoad(vehicle)
     if next(load) == nil then
         return false
     end
     local candidates = ADBestPrice.getCandidates(group)
+    local stationsByFillType = {}
     for fillType, _ in pairs(load) do
-        local stations = ADBestPrice.getStations(fillType)
-        for _, candidate in ipairs(candidates) do
-            if nearestStation(candidate, stations, ADBestPrice.MAX_DISTANCE) ~= nil then
-                return true
-            end
+        stationsByFillType[fillType] = ADBestPrice.getStations(fillType)
+    end
+    for _, candidatePrices in ipairs(ADBestPrice.getPrices(candidates, stationsByFillType, ADBestPrice.MAX_DISTANCE)) do
+        if next(candidatePrices) ~= nil then
+            return true
         end
     end
     return false
@@ -261,13 +278,20 @@ function ADBestPrice.apply(vehicle, useFirstMarker)
     if current == nil or current.group == nil or current.group == "All" then
         return false
     end
-    local load = ADBestPrice.getLoad(vehicle)
-    if next(load) == nil then
+    local load = ADBestPrice.getSellableLoad(vehicle)
+    if next(ADBestPrice.getLoad(vehicle)) == nil then
+        -- nothing on board yet: plan with the fill type selected in the HUD, if the vehicle unloads it
         local fillType = stateModule:getFillType()
         if fillType == nil or fillType == FillType.UNKNOWN then
             return false
         end
+        if ADUnloadFilter ~= nil and not ADUnloadFilter.allows(vehicle.ad.unloadFilter, g_fillTypeManager:getFillTypeNameByIndex(fillType)) then
+            return false
+        end
         load[fillType] = 1
+    elseif next(load) == nil then
+        -- nothing on board the vehicle unloads
+        return false
     end
 
     local candidates = ADBestPrice.getCandidates(current.group)

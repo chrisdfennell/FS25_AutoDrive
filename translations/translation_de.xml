@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="ca. %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Wegpunkt-Aktion: Ladung entsichern (Spanngurte), beim Weiterfahren wieder sichern" />
 		<text name="AD_action_unlock"							 text="Ladung entsichern" />
+		<text name="input_ADUnloadProducts"							 text="AD: Produkte abladen (im Editor an einem Ziel: die Produkte, die das Ziel annimmt)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Produkte abladen" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Abladen von %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="Ziel %s nimmt an" />
+		<text name="button_ad_allProducts"							 text="Alle Produkte" />
+		<text name="button_ad_toggle"							 text="Auswählen / abwählen" />
+		<text name="button_ad_select"							 text="Auswählen" />
+		<text name="AD_unloadFilter_onBoard"							 text="%s an Bord" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Keine Produkte: Fahrzeug und Anhänger haben keinen Laderaum" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Keine Abladestelle innerhalb von 60 m um dieses Ziel" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Fahrzeug" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Schicken zu..." />
+		<text name="AD_vehicleMenu_unload"							 text="Produkte abladen..." />
+		<text name="AD_vehicleMenu_enter"							 text="Einsteigen" />
+		<text name="AD_fleet_unloadOnly"							 text="lädt nur %s ab" />
 		<text name="AD_routeCheck_loose"								 text="Loser Wegpunkt ohne jede Verbindung" />
 		<text name="AD_routeCheck_deadEnd"							 text="Sackgasse: von diesem Wegpunkt geht es nicht weiter" />
 		<text name="AD_routeCheck_trap"								 text="Einbahn-Falle: %s Wegpunkte, in die man hinein-, aber nicht wieder herausfahren kann" />

@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="yaklaşık %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Nokta eylemi: yükü çöz (spanzet), yola devam ederken tekrar bağla" />
 		<text name="AD_action_unlock"							 text="yükü çöz" />
+		<text name="input_ADUnloadProducts"							 text="AD: Ürünleri boşalt (editörde bir hedefte: hedefin kabul ettiği ürünler)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Ürünleri boşalt" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Boşaltma: %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="%s hedefinin kabul ettikleri" />
+		<text name="button_ad_allProducts"							 text="Tüm ürünler" />
+		<text name="button_ad_toggle"							 text="Seç / seçimi kaldır" />
+		<text name="button_ad_select"							 text="Seç" />
+		<text name="AD_unloadFilter_onBoard"							 text="%s yüklü" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Ürün yok: aracın ve römorklarının yük alanı yok" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Bu hedefin 60 m yakınında boşaltma noktası yok" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Araç" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Hedefe gönder..." />
+		<text name="AD_vehicleMenu_unload"							 text="Ürünleri boşalt..." />
+		<text name="AD_vehicleMenu_enter"							 text="Araca bin" />
+		<text name="AD_fleet_unloadOnly"							 text="yalnızca %s boşaltıyor" />
 		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
 		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
 		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />

@@ -170,6 +170,8 @@ function AutoDrive.readFromXML(xmlFile)
 		groupColorIndex = groupColorIndex + 1
 	end
 	ADGraphManager:setGroupColors(groupColors)
+	-- Overdrive: products the targets take
+	ADUnloadFilter.loadTargetFilters(xmlFile)
 
 	ADGraphManager:resetWayPoints()
 
@@ -387,6 +389,8 @@ function AutoDrive.saveToXML(xmlFile)
 			groupColorIndex = groupColorIndex + 1
 		end
 	end
+	-- Overdrive: products the targets take
+	ADUnloadFilter.saveTargetFilters(xmlFile)
 
 	saveXMLFile(xmlFile)
 	if g_client == nil then

@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="около %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Действие точки: ослабить груз (стяжные ремни), снова закрепить при отъезде" />
 		<text name="AD_action_unlock"							 text="ослабить груз" />
+		<text name="input_ADUnloadProducts"							 text="AD: Разгрузка продуктов (в редакторе на локации: продукты, которые принимает локация)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Разгрузка продуктов" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Разгрузка: %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="Локация %s принимает" />
+		<text name="button_ad_allProducts"							 text="Все продукты" />
+		<text name="button_ad_toggle"							 text="Выбрать / снять выбор" />
+		<text name="button_ad_select"							 text="Выбрать" />
+		<text name="AD_unloadFilter_onBoard"							 text="загружено %s" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Нет продуктов: у техники и её прицепов нет грузовых ёмкостей" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Нет точки разгрузки в радиусе 60 м от этой локации" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Техника" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Отправить в локацию..." />
+		<text name="AD_vehicleMenu_unload"							 text="Разгрузка продуктов..." />
+		<text name="AD_vehicleMenu_enter"							 text="Сесть в технику" />
+		<text name="AD_fleet_unloadOnly"							 text="выгружает только %s" />
 		<text name="AD_routeCheck_loose"								 text="Одиночная путевая точка без соединений" />
 		<text name="AD_routeCheck_deadEnd"							 text="Тупик: от этой путевой точки дальше пути нет" />
 		<text name="AD_routeCheck_trap"								 text="Односторонняя ловушка: путевых точек, куда можно въехать, но нельзя выехать: %s" />

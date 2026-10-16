@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="cca %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Akce bodu trasy: uvolnit náklad (upínací pásy), při odjezdu znovu zajistit" />
 		<text name="AD_action_unlock"							 text="uvolnit náklad" />
+		<text name="input_ADUnloadProducts"							 text="AD: Vyložit produkty (v editoru na cíli: produkty, které cíl přijímá)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Vyložit produkty" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Vykládka: %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="Cíl %s přijímá" />
+		<text name="button_ad_allProducts"							 text="Všechny produkty" />
+		<text name="button_ad_toggle"							 text="Vybrat / zrušit výběr" />
+		<text name="button_ad_select"							 text="Vybrat" />
+		<text name="AD_unloadFilter_onBoard"							 text="naloženo %s" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Žádné produkty: vozidlo a jeho přívěsy nemají ložný prostor" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Žádné místo vykládky do 60 m od tohoto cíle" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Vozidlo" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Poslat do..." />
+		<text name="AD_vehicleMenu_unload"							 text="Vyložit produkty..." />
+		<text name="AD_vehicleMenu_enter"							 text="Nastoupit do vozidla" />
+		<text name="AD_fleet_unloadOnly"							 text="vykládá jen %s" />
 		<text name="AD_routeCheck_loose"								 text="Osamocený bod trasy bez jakéhokoli spojení" />
 		<text name="AD_routeCheck_deadEnd"							 text="Slepá ulice: z tohoto bodu trasy nevede žádná cesta dál" />
 		<text name="AD_routeCheck_trap"								 text="Jednosměrná past: počet bodů trasy, do kterých lze vjet, ale ne vyjet: %s" />

@@ -181,6 +181,7 @@ function AutoDrive.initSpecialization()
     schemaSavegame:register(XMLValueType.INT, "vehicles.vehicle(?).AutoDrive#bunkerUnloadType", "bunkerUnloadType")
     schemaSavegame:register(XMLValueType.INT, "vehicles.vehicle(?).AutoDrive#actualFarmId", "actualFarmId")
     ADStatistics.registerSavegameKeys(schemaSavegame)
+    ADUnloadFilter.registerSavegameKeys(schemaSavegame)
     if AutoDrive.automaticUnloadTarget then
         schemaSavegame:register(XMLValueType.BOOL, "vehicles.vehicle(?).AutoDrive#automaticUnloadTarget", "automaticUnloadTarget")
     end
@@ -274,6 +275,7 @@ function AutoDrive:onPostLoad(savegame)
             self.ad.stateModule:readFromXMLFile(xmlFile, key)
             AutoDrive.readVehicleSettingsFromXML(self, xmlFile, key)
             ADStatistics.loadFromXML(self, xmlFile, key)
+            ADUnloadFilter.loadFromXML(self, xmlFile, key)
 
             if xmlFile:hasProperty(key) then
                 local groupString = xmlFile:getValue(key .. "#groups")
@@ -541,6 +543,7 @@ function AutoDrive:saveToXMLFile(xmlFile, key, usedModNames)
     self.ad.stateModule:saveToXMLFile(xmlFile, adKey)
     AutoDrive.saveVehicleSettingsToXMLFile(self, xmlFile, adKey)
     ADStatistics.saveToXML(self, xmlFile, adKey)
+    ADUnloadFilter.saveToXML(self, xmlFile, adKey)
 
     if self.ad.groups ~= nil then
         local combinedString = ""

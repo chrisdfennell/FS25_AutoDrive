@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="environ %s" />
 		<text name="input_ADActionUnlock"							 text="AD : Action du point : détacher le chargement (sangles), rattacher en repartant" />
 		<text name="AD_action_unlock"							 text="détacher le chargement" />
+		<text name="input_ADUnloadProducts"							 text="AD: Décharger les produits (dans l'éditeur, sur une destination : les produits que la destination accepte)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Décharger les produits" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Déchargement de %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="La destination %s accepte" />
+		<text name="button_ad_allProducts"							 text="Tous les produits" />
+		<text name="button_ad_toggle"							 text="Sélectionner / désélectionner" />
+		<text name="button_ad_select"							 text="Sélectionner" />
+		<text name="AD_unloadFilter_onBoard"							 text="%s à bord" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Aucun produit : le véhicule et ses remorques n'ont pas d'espace de chargement" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Aucun point de déchargement à moins de 60 m de cette destination" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Véhicule" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Envoyer vers..." />
+		<text name="AD_vehicleMenu_unload"							 text="Décharger les produits..." />
+		<text name="AD_vehicleMenu_enter"							 text="Monter dans le véhicule" />
+		<text name="AD_fleet_unloadOnly"							 text="ne décharge que %s" />
 		<text name="AD_routeCheck_loose"								 text="Point de passage isolé sans aucune connexion" />
 		<text name="AD_routeCheck_deadEnd"							 text="Impasse : aucun chemin à partir de ce point de passage" />
 		<text name="AD_routeCheck_trap"								 text="Piège à sens unique : %s points de passage où l'on peut entrer mais d'où l'on ne peut pas sortir" />

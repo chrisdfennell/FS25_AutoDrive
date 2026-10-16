@@ -45,6 +45,7 @@ def main():
         run("test_statistics.py"),
         run("test_more.py"),
         run("test_bestprice.py"),
+        run("test_unloadfilter.py"),
     ]
     if not all(results):
         sys.exit(1)

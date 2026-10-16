@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="ca. %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Rutepunkthandling: løsn læsset (spændebånd), spænd igen ved afkørsel" />
 		<text name="AD_action_unlock"							 text="løsn læsset" />
+		<text name="input_ADUnloadProducts"							 text="AD: Aflæs produkter (i editoren på et mål: de produkter, målet modtager)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Aflæs produkter" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Aflæs fra %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="Mål %s modtager" />
+		<text name="button_ad_allProducts"							 text="Alle produkter" />
+		<text name="button_ad_toggle"							 text="Vælg / fravælg" />
+		<text name="button_ad_select"							 text="Vælg" />
+		<text name="AD_unloadFilter_onBoard"							 text="%s om bord" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Ingen produkter: maskinen og dens anhængere har intet lastrum" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Intet aflæsningssted inden for 60 m af dette mål" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Maskine" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Send til..." />
+		<text name="AD_vehicleMenu_unload"							 text="Aflæs produkter..." />
+		<text name="AD_vehicleMenu_enter"							 text="Stig ind i maskinen" />
+		<text name="AD_fleet_unloadOnly"							 text="aflæsser kun %s" />
 		<text name="AD_routeCheck_loose"								 text="Løst vejpunkt uden nogen forbindelse" />
 		<text name="AD_routeCheck_deadEnd"							 text="Blindgyde: ingen vej videre fra dette vejpunkt" />
 		<text name="AD_routeCheck_trap"								 text="Ensrettet fælde: %s vejpunkter, man kan køre ind i, men ikke ud af" />

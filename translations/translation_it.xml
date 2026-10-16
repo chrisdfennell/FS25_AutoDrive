@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="circa %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Azione del nodo: sblocca il carico (cinghie), bloccalo di nuovo ripartendo" />
 		<text name="AD_action_unlock"							 text="sblocca il carico" />
+		<text name="input_ADUnloadProducts"							 text="AD: Scarica prodotti (nell'editor su una destinazione: i prodotti che la destinazione accetta)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Scarica prodotti" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Scarica da %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="La destinazione %s accetta" />
+		<text name="button_ad_allProducts"							 text="Tutti i prodotti" />
+		<text name="button_ad_toggle"							 text="Seleziona / deseleziona" />
+		<text name="button_ad_select"							 text="Seleziona" />
+		<text name="AD_unloadFilter_onBoard"							 text="%s a bordo" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Nessun prodotto: il veicolo e i suoi rimorchi non hanno spazio di carico" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Nessun punto di scarico entro 60 m da questa destinazione" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Veicolo" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Invia a..." />
+		<text name="AD_vehicleMenu_unload"							 text="Scarica prodotti..." />
+		<text name="AD_vehicleMenu_enter"							 text="Sali sul veicolo" />
+		<text name="AD_fleet_unloadOnly"							 text="scarica solo %s" />
 		<text name="AD_routeCheck_loose"								 text="Nodo isolato senza alcun collegamento" />
 		<text name="AD_routeCheck_deadEnd"							 text="Vicolo cieco: nessuna via per proseguire da questo nodo" />
 		<text name="AD_routeCheck_trap"								 text="Trappola a senso unico: %s nodi in cui si può entrare ma da cui non si può uscire" />

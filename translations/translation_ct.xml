@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="約 %s" />
 		<text name="input_ADActionUnlock"							 text="AD：航點動作：鬆開貨物（綑綁帶），繼續行駛時重新固定" />
 		<text name="AD_action_unlock"							 text="鬆開貨物" />
+		<text name="input_ADUnloadProducts"							 text="AD: 卸載產品（在編輯器中的目標上：該目標接收的產品）" />
+		<text name="gui_ad_unloadFilterTitle"							 text="卸載產品" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="從 %s 卸載" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="目標 %s 接收" />
+		<text name="button_ad_allProducts"							 text="全部產品" />
+		<text name="button_ad_toggle"							 text="選擇 / 取消選擇" />
+		<text name="button_ad_select"							 text="選擇" />
+		<text name="AD_unloadFilter_onBoard"							 text="已裝載 %s" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="無產品：該車輛及其拖車沒有裝載空間" />
+		<text name="AD_unloadFilter_noneTarget"							 text="此目標 60 公尺內沒有卸載點" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="車輛" />
+		<text name="AD_vehicleMenu_sendTo"							 text="派往..." />
+		<text name="AD_vehicleMenu_unload"							 text="卸載產品..." />
+		<text name="AD_vehicleMenu_enter"							 text="進入車輛" />
+		<text name="AD_fleet_unloadOnly"							 text="只卸載 %s" />
 		<text name="AD_routeCheck_loose"								 text="沒有任何連接的孤立航點" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：從此航點無法繼續前進" />
 		<text name="AD_routeCheck_trap"								 text="單向陷阱：%s 個航點只能駛入無法駛出" />

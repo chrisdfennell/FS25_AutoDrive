@@ -639,8 +639,8 @@ function ADTrailerModule:lookForPossibleUnloadTrigger(trailer)
     if (trailer.getCurrentDischargeNode == nil or self.fillLevel == 0) then
         return nil
     end
-    -- Overdrive: best price "each product" only sells the products of this stop, the rest stays on board
-    if not ADBestPrice.mayUnload(self.vehicle, trailer) then
+    -- Overdrive: unload products of the vehicle / target and best price "each product", the rest stays on board
+    if not ADUnloadFilter.mayUnload(self.vehicle, trailer) then
         return nil
     end
 

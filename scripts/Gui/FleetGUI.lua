@@ -103,6 +103,14 @@ function ADFleetGui.getRow(vehicle, period, today)
             row.icon = ADNotificationsHistoryGui.ICON_SLICES[problem.messageType] or "ad_gui.warn_icon"
         end
     end
+    if not ADUnloadFilter.isEmpty(vehicle.ad.unloadFilter) then
+        local titles = {}
+        for _, name in ipairs(ADUnloadFilter.toList(vehicle.ad.unloadFilter)) do
+            local fillType = g_fillTypeManager:getFillTypeByName(name)
+            table.insert(titles, fillType ~= nil and fillType.title or name)
+        end
+        table.insert(parts, string.format(g_i18n:getText("AD_fleet_unloadOnly"), table.concat(titles, ", ")))
+    end
     local schedule = ADWorkSchedule.getText(vehicle)
     if schedule ~= nil then
         table.insert(parts, schedule)
@@ -238,11 +246,11 @@ function ADFleetGui:enterVehicle(vehicle)
     end
 end
 
--- double click: choose a destination and send the vehicle there
+-- double click: send to / unload products / enter vehicle
 function ADFleetGui:onDoubleClick(list, section, index, cell)
     local row = self.rows[index]
     if row ~= nil and row.vehicle ~= nil and row.vehicle.ad ~= nil then
-        AutoDrive.onOpenSendTo(row.vehicle)
+        AutoDrive.onOpenVehicleMenu(row.vehicle)
     end
 end
 

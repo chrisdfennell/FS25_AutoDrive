@@ -111,8 +111,8 @@ function UnloadAtDestinationTask:update(dt)
                         and (not (self.vehicle.ad.drivePathModule:getIsReversing() and self.vehicle.ad.trailerModule:getBunkerTrigger() ~= nil))
                         and self.vehicle.ad.trailerModule:getHasAL() ~= true
                     )
-                    -- Overdrive: best price unloading leaves what this selling point does not buy on board
-                    or (ADBestPrice.finishesUnloadEarly(self.vehicle) and not (self.vehicle.ad.drivePathModule:getIsReversing() and self.vehicle.ad.trailerModule:getBunkerTrigger() ~= nil))
+                    -- Overdrive: unload products / best price leave products on board, done when nothing is tipped any more
+                    or (ADUnloadFilter.finishesUnloadEarly(self.vehicle) and not (self.vehicle.ad.drivePathModule:getIsReversing() and self.vehicle.ad.trailerModule:getBunkerTrigger() ~= nil))
                     then
                     --AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_VEHICLEINFO, "UnloadAtDestinationTask:update fillLevel < 0.1")
                     AutoDrive.setAugerPipeOpen(self.trailers, false)

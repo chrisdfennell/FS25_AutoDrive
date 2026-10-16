@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="cerca de %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Ação do waypoint: soltar a carga (cintas), voltar a prender ao seguir" />
 		<text name="AD_action_unlock"							 text="soltar a carga" />
+		<text name="input_ADUnloadProducts"							 text="AD: Descarregar produtos (no editor, num destino: os produtos que o destino aceita)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Descarregar produtos" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Descarregar de %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="Destino %s aceita" />
+		<text name="button_ad_allProducts"							 text="Todos os produtos" />
+		<text name="button_ad_toggle"							 text="Selecionar / desmarcar" />
+		<text name="button_ad_select"							 text="Selecionar" />
+		<text name="AD_unloadFilter_onBoard"							 text="%s a bordo" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Nenhum produto: o veículo e os seus reboques não têm espaço de carga" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Nenhum ponto de descarga a menos de 60 m deste destino" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Veículo" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Enviar para..." />
+		<text name="AD_vehicleMenu_unload"							 text="Descarregar produtos..." />
+		<text name="AD_vehicleMenu_enter"							 text="Entrar no veículo" />
+		<text name="AD_fleet_unloadOnly"							 text="descarrega apenas %s" />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem qualquer ligação" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há caminho a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de sentido único: %s waypoints onde se pode entrar mas não sair" />

@@ -433,6 +433,8 @@ function ADGraphManager:renameMapMarker(newName, markerId, sendEvent)
             local oldName = self.mapMarkers[markerId].name
             -- Renaming map marker
             self.mapMarkers[markerId].name = newName
+            -- Overdrive: the target keeps its unload products
+            ADUnloadFilter.renameTarget(oldName, newName)
             ADUndoManager:recordMarkerData(markerId, oldName, mapMarker.group, newName, mapMarker.group)
 
             -- Calling external interop listeners

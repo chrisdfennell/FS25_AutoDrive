@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="ok. %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Akcja punktu: odblokuj ładunek (pasy), zablokuj ponownie przy odjeździe" />
 		<text name="AD_action_unlock"							 text="odblokuj ładunek" />
+		<text name="input_ADUnloadProducts"							 text="AD: Rozładuj produkty (w edytorze na celu: produkty, które cel przyjmuje)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Rozładuj produkty" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Rozładunek: %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="Cel %s przyjmuje" />
+		<text name="button_ad_allProducts"							 text="Wszystkie produkty" />
+		<text name="button_ad_toggle"							 text="Zaznacz / odznacz" />
+		<text name="button_ad_select"							 text="Wybierz" />
+		<text name="AD_unloadFilter_onBoard"							 text="załadowano %s" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Brak produktów: pojazd i jego przyczepy nie mają przestrzeni ładunkowej" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Brak punktu rozładunku w promieniu 60 m od tego celu" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Pojazd" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Wyślij do..." />
+		<text name="AD_vehicleMenu_unload"							 text="Rozładuj produkty..." />
+		<text name="AD_vehicleMenu_enter"							 text="Wsiądź do pojazdu" />
+		<text name="AD_fleet_unloadOnly"							 text="rozładowuje tylko %s" />
 		<text name="AD_routeCheck_loose"								 text="Luźny punkt trasy bez żadnego połączenia" />
 		<text name="AD_routeCheck_deadEnd"							 text="Ślepa uliczka: z tego punktu trasy nie ma dalszej drogi" />
 		<text name="AD_routeCheck_trap"								 text="Pułapka jednokierunkowa: punkty trasy, do których można wjechać, ale nie można wyjechać: %s" />

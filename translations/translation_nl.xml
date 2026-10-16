@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="ca. %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Routepuntactie: lading losmaken (spanbanden), weer vastzetten bij het verder rijden" />
 		<text name="AD_action_unlock"							 text="lading losmaken" />
+		<text name="input_ADUnloadProducts"							 text="AD: Producten lossen (in de editor op een bestemming: de producten die de bestemming aanneemt)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Producten lossen" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Lossen van %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="Bestemming %s neemt aan" />
+		<text name="button_ad_allProducts"							 text="Alle producten" />
+		<text name="button_ad_toggle"							 text="Selecteren / deselecteren" />
+		<text name="button_ad_select"							 text="Selecteren" />
+		<text name="AD_unloadFilter_onBoard"							 text="%s aan boord" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Geen producten: het voertuig en zijn aanhangers hebben geen laadruimte" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Geen lospunt binnen 60 m van deze bestemming" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Voertuig" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Sturen naar..." />
+		<text name="AD_vehicleMenu_unload"							 text="Producten lossen..." />
+		<text name="AD_vehicleMenu_enter"							 text="Voertuig instappen" />
+		<text name="AD_fleet_unloadOnly"							 text="lost alleen %s" />
 		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
 		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
 		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />

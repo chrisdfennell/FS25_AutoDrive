@@ -68,7 +68,7 @@ The route between the two waypoints is the shortest chain of connections. Only w
 ### Fleet overview
 **Ctrl+Alt+I** (in a vehicle or on foot) lists every AutoDrive vehicle of your farm: name, mode, destination, load, fuel, work schedule and what it is doing. A stopped vehicle shows its latest warning or error from the notifications. **Enter vehicle** takes you to it, **Start / stop** starts or stops its job.
 
-**Send to:** double click a vehicle and choose a destination: the vehicle switches to "drive to" with that destination and starts, without you getting in. The list updates every second.
+**Double click a vehicle** for its menu: **Send to...** (choose a destination: the vehicle switches to "drive to" with that destination and starts, without you getting in), **Unload products...** and **Enter vehicle**. The list updates every second.
 
 **Statistics** switches the list to the driver statistics, counted while AutoDrive drives the vehicle: distance, time driving, time standing and waiting (with its share of the total), deliveries, the amount unloaded, the crops hauled most and their estimated value at today's best selling price. The button cycles through total, today, the last 7 in-game days and back to the status. A delivery is counted when the vehicle's load goes down by at least 500 l (or a quarter of a smaller trailer) and then stays. In this view, **Reset statistics** sets the selected vehicle back to zero. The numbers are saved with the savegame.
 
@@ -83,6 +83,13 @@ Waypoints with actions get an orange marker with the actions written above it. E
 
 ### Route preview
 **Ctrl+Alt+P** shows the route from the vehicle to its destination, and for pickup and deliver also on to the unload target (second colour): as a line in the world, on the minimap and on the big map (ESC > Map), where you can zoom out and see the whole route. A message gives distance and estimated drive time for each part. Press again to hide it.
+
+### Unload products
+Choose what is unloaded at the unload target, the rest stays on board:
+- **Per vehicle:** "unload only these products". Open it with **Ctrl+Alt+F** in the vehicle, with the button left of the unload target list in the HUD (pickup and deliver and unload mode), or in the fleet overview: double click a vehicle > **Unload products...**. The list shows what is on board and what the trailers can carry; click products to select them, **All products** removes the limit. The choice is saved with the vehicle and shown in the fleet overview.
+- **Per target:** "this target takes only these products". In the editor, point at a waypoint with a target and press **Ctrl+Alt+F**. The list shows what the unloading points next to the target (within 60 m) take. Saved with the routes of the savegame; a renamed target keeps its list.
+
+A trailer only tips if its product is allowed by the vehicle, by the target, and by best price "each product". A stop with something left on board is done when nothing has been tipped for 3 seconds. Best price only plans with the products the vehicle unloads and only at targets that take them. This works per trailer (or per compartment that tips on its own).
 
 ### Best price unloading
 New vehicle setting **Best price unloading**, for pickup and deliver and for unload. Put all the selling points you want to use as targets into one folder and choose one of them as the unload target. When the vehicle is loaded and sets off to unload, it compares the current prices of the selling points next to these targets (within 60 m) and tells you where it goes:
@@ -113,6 +120,7 @@ New vehicle settings **Start work at** and **Stop work at** (in-game hours, `--:
 | Waypoint action: horn | Ctrl + Alt + H |
 | Waypoint action: lights | Ctrl + Alt + L |
 | Waypoint action: unlock load | Ctrl + Alt + B |
+| Unload products (vehicle, or the target under the mouse in the editor) | Ctrl + Alt + F |
 | Route preview | Ctrl + Alt + P |
 
 All key bindings can be changed in the game's control settings. Like AutoDrive's other keys, they work while you sit in a vehicle; the fleet overview also works on foot.

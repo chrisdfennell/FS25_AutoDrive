@@ -75,6 +75,7 @@ ADInputManager.actionsToInputs = {
     {"ADActionHorn", "input_actionHorn", false, false},
     {"ADActionLights", "input_actionLights", false, false},
     {"ADActionUnlock", "input_actionUnlock", false, false},
+    {"ADUnloadProducts", "input_unloadProducts", false, false},
     {"ADRoutePreview", "input_routePreview", false, false}
 }
 
@@ -226,6 +227,19 @@ end
 
 function ADInputManager:input_actionUnlock(vehicle)
     ADWaypointActions.edit(vehicle, ADWaypointActions.toggleUnlock)
+end
+
+-- in the editor on a waypoint with a target: products of that target, else of the vehicle
+function ADInputManager:input_unloadProducts(vehicle)
+    if AutoDrive.isEditorModeEnabled() and vehicle.ad ~= nil then
+        local id = vehicle.ad.hoveredNodeId or vehicle.ad.selectedNodeId
+        local marker = id ~= nil and ADGraphManager:getMapMarkerByWayPointId(id) or nil
+        if marker ~= nil and not marker.isADDebug then
+            AutoDrive.onOpenUnloadFilter(vehicle, marker)
+            return
+        end
+    end
+    AutoDrive.onOpenUnloadFilter(vehicle, nil)
 end
 
 function ADInputManager:input_routePreview(vehicle)

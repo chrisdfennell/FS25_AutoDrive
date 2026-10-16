@@ -530,6 +530,21 @@
 		<text name="AD_stats_income"							 text="about %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Waypoint action: unlock load (tension belts), lock again when driving on" />
 		<text name="AD_action_unlock"							 text="unlock load" />
+		<text name="input_ADUnloadProducts"							 text="AD: Unload products (in the editor on a target: the products the target takes)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Unload products" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Unload from %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="Target %s takes" />
+		<text name="button_ad_allProducts"							 text="All products" />
+		<text name="button_ad_toggle"							 text="Select / unselect" />
+		<text name="button_ad_select"							 text="Select" />
+		<text name="AD_unloadFilter_onBoard"							 text="%s on board" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="No products: the vehicle and its trailers have no fill units" />
+		<text name="AD_unloadFilter_noneTarget"							 text="No unloading point within 60 m of this target" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Vehicle" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Send to..." />
+		<text name="AD_vehicleMenu_unload"							 text="Unload products..." />
+		<text name="AD_vehicleMenu_enter"							 text="Enter vehicle" />
+		<text name="AD_fleet_unloadOnly"							 text="unloads only %s" />
 		<text name="AD_routeCheck_loose"								 text="Loose waypoint without any connection" />
 		<text name="AD_routeCheck_deadEnd"							 text="Dead end: no way on from this waypoint" />
 		<text name="AD_routeCheck_trap"								 text="One-way trap: %s waypoints you can drive into but not out of" />

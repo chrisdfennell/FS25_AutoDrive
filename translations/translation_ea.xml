@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="aprox. %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Acción del punto: soltar la carga (cinchas), volver a asegurarla al seguir" />
 		<text name="AD_action_unlock"							 text="soltar la carga" />
+		<text name="input_ADUnloadProducts"							 text="AD: Descargar productos (en el editor, en un destino: los productos que acepta el destino)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Descargar productos" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Descargar de %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="El destino %s acepta" />
+		<text name="button_ad_allProducts"							 text="Todos los productos" />
+		<text name="button_ad_toggle"							 text="Seleccionar / deseleccionar" />
+		<text name="button_ad_select"							 text="Seleccionar" />
+		<text name="AD_unloadFilter_onBoard"							 text="%s a bordo" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Sin productos: el vehículo y sus remolques no tienen espacio de carga" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Ningún punto de descarga a menos de 60 m de este destino" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Vehículo" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Enviar a..." />
+		<text name="AD_vehicleMenu_unload"							 text="Descargar productos..." />
+		<text name="AD_vehicleMenu_enter"							 text="Subir al vehículo" />
+		<text name="AD_fleet_unloadOnly"							 text="descarga solo %s" />
 		<text name="AD_routeCheck_loose"								 text="Punto de ruta suelto sin ninguna conexión" />
 		<text name="AD_routeCheck_deadEnd"							 text="Callejón sin salida: no hay forma de seguir desde este punto de ruta" />
 		<text name="AD_routeCheck_trap"								 text="Trampa de sentido único: %s puntos de ruta en los que se puede entrar pero no salir" />

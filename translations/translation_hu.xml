@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="kb. %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Útpont művelet: rakomány kioldása (spanifer), továbbinduláskor újra rögzítés" />
 		<text name="AD_action_unlock"							 text="rakomány kioldása" />
+		<text name="input_ADUnloadProducts"							 text="AD: Termékek lerakodása (a szerkesztőben egy célon: a cél által átvett termékek)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Termékek lerakodása" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Lerakodás: %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="%s cél ezeket veszi át" />
+		<text name="button_ad_allProducts"							 text="Minden termék" />
+		<text name="button_ad_toggle"							 text="Kijelölés / kijelölés törlése" />
+		<text name="button_ad_select"							 text="Kijelölés" />
+		<text name="AD_unloadFilter_onBoard"							 text="%s a járművön" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Nincsenek termékek: a járműnek és pótkocsijainak nincs rakterük" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Nincs lerakodási pont 60 m-en belül ettől a céltól" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Jármű" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Küldés ide..." />
+		<text name="AD_vehicleMenu_unload"							 text="Termékek lerakodása..." />
+		<text name="AD_vehicleMenu_enter"							 text="Beszállás a járműbe" />
+		<text name="AD_fleet_unloadOnly"							 text="csak ezt rakja le: %s" />
 		<text name="AD_routeCheck_loose"								 text="Különálló útpont, semmilyen kapcsolat nélkül" />
 		<text name="AD_routeCheck_deadEnd"							 text="Zsákutca: ebből az útpontból nincs továbbhaladás" />
 		<text name="AD_routeCheck_trap"								 text="Egyirányú csapda: %s útpont, ahová be lehet hajtani, de kijutni nem" />

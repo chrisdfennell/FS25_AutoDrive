@@ -527,6 +527,21 @@
 		<text name="AD_stats_income"							 text="близько %s" />
 		<text name="input_ADActionUnlock"							 text="AD: Дія точки: послабити вантаж (стяжні ремені), знову закріпити при від'їзді" />
 		<text name="AD_action_unlock"							 text="послабити вантаж" />
+		<text name="input_ADUnloadProducts"							 text="AD: Розвантаження продуктів (у редакторі на локації: продукти, які приймає локація)" />
+		<text name="gui_ad_unloadFilterTitle"							 text="Розвантаження продуктів" />
+		<text name="gui_ad_unloadFilterTitleVehicle"							 text="Розвантаження: %s" />
+		<text name="gui_ad_unloadFilterTitleTarget"							 text="Локація %s приймає" />
+		<text name="button_ad_allProducts"							 text="Усі продукти" />
+		<text name="button_ad_toggle"							 text="Вибрати / зняти вибір" />
+		<text name="button_ad_select"							 text="Вибрати" />
+		<text name="AD_unloadFilter_onBoard"							 text="завантажено %s" />
+		<text name="AD_unloadFilter_noneVehicle"							 text="Немає продуктів: техніка та її причепи не мають вантажних ємностей" />
+		<text name="AD_unloadFilter_noneTarget"							 text="Немає точки розвантаження в радіусі 60 м від цієї локації" />
+		<text name="gui_ad_vehicleMenuTitle"							 text="Техніка" />
+		<text name="AD_vehicleMenu_sendTo"							 text="Відправити до локації..." />
+		<text name="AD_vehicleMenu_unload"							 text="Розвантаження продуктів..." />
+		<text name="AD_vehicleMenu_enter"							 text="Сісти в техніку" />
+		<text name="AD_fleet_unloadOnly"							 text="вивантажує лише %s" />
 		<text name="AD_routeCheck_loose"								 text="Окрема точка шляху без з'єднань" />
 		<text name="AD_routeCheck_deadEnd"							 text="Глухий кут: від цієї точки шляху далі немає шляху" />
 		<text name="AD_routeCheck_trap"								 text="Одностороння пастка: точок шляху, куди можна заїхати, але не можна виїхати: %s" />
