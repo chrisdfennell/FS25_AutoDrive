@@ -639,6 +639,10 @@ function ADTrailerModule:lookForPossibleUnloadTrigger(trailer)
     if (trailer.getCurrentDischargeNode == nil or self.fillLevel == 0) then
         return nil
     end
+    -- Overdrive: best price "each product" only sells the products of this stop, the rest stays on board
+    if not ADBestPrice.mayUnload(self.vehicle, trailer) then
+        return nil
+    end
 
     -- local distanceToTarget = AutoDrive.getDistanceToUnloadPosition(self.vehicle)
     local distanceToTarget = AutoDrive.getDistanceToUnloadPosition(trailer)

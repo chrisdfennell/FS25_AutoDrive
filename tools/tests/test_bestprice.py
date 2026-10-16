@@ -85,6 +85,32 @@ assert s.eval("ADBestPrice.wantsNextStop(EACH, 8000)") is True
 assert s.eval("ADBestPrice.apply(EACH, false)") is True
 assert s.eval("EACH.ad.stateModule.second.name") == "C" and s.eval("EACH.ad.bestPriceStops") == 1
 
+# --- each product: a stop only sells its products, the rest stays on board even if that selling point buys it
+s.execute("""
+    -- canola is best at the port too (B), barley best at the silo (C); the mill (A) buys wheat and barley but cheaper
+    PRICES[4] = {{name = "Port", x = 510, z = 0, price = 3.0}, {name = "Silo", x = 1010, z = 0, price = 2.5}}
+    MIX = makeTruck(2, {unit({{1, 10000}}), unit({{2, 8000}}), unit({{4, 2000}})})
+    MESSAGES = {}
+    ADBestPrice.apply(MIX, false)
+    function trailer(fillType) return {getCurrentDischargeNode = function() return {fillUnitIndex = 1} end, getFillUnitFillType = function() return fillType end} end
+""")
+assert s.eval("MIX.ad.stateModule.second.name") == "B"
+assert s.eval("MIX.ad.bestPriceProducts[1]") and s.eval("MIX.ad.bestPriceProducts[4]") and s.eval("MIX.ad.bestPriceProducts[2]") is None
+assert s.eval("MESSAGES[1]").endswith("B (Port): Canola, Wheat"), s.eval("MESSAGES[1]")
+assert s.eval("ADBestPrice.mayUnload(MIX, trailer(1))") and s.eval("ADBestPrice.mayUnload(MIX, trailer(4))")
+assert not s.eval("ADBestPrice.mayUnload(MIX, trailer(2))")  # barley stays on board for the silo
+# next stop: the silo for the barley; the mill would also buy it, but cheaper
+s.execute("MIX.units = {unit({{1, 0}}), unit({{2, 8000}}), unit({{4, 0}})}")
+assert s.eval("ADBestPrice.wantsNextStop(MIX, 8000)") is True
+s.execute("ADBestPrice.apply(MIX, false)")
+assert s.eval("MIX.ad.stateModule.second.name") == "C" and s.eval("ADBestPrice.mayUnload(MIX, trailer(2))")
+# one stop sells everything the selling point buys: no restriction
+s.execute("ONE2 = makeTruck(1, {unit({{1, 10000}}), unit({{2, 8000}})}); ADBestPrice.apply(ONE2, false)")
+assert s.eval("ONE2.ad.bestPriceProducts") is None and s.eval("ADBestPrice.mayUnload(ONE2, trailer(2))")
+# best price off: no restriction either
+assert s.eval("ADBestPrice.mayUnload(makeTruck(0, {}), trailer(2))")
+s.execute("PRICES[4] = nil")
+
 # --- a product nobody buys is left: no next stop, so no endless waiting
 s.execute("""
     STUCK = makeTruck(2, {unit({{1, 5000}, {4, 3000}})})

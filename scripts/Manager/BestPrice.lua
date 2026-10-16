@@ -175,6 +175,29 @@ function ADBestPrice.pickProduct(candidates, prices, load)
     return bestIndex, bestFillType, bestStation
 end
 
+-- each product: the products sold at candidate index, all for which no other target pays more
+-- (one stop for each product would be the same money, but more driving)
+function ADBestPrice.getProductsForStop(candidates, prices, load, index)
+    local products = {}
+    for fillType, _ in pairs(load) do
+        local here = prices[index][fillType]
+        if here ~= nil then
+            local isBest = true
+            for i, _ in ipairs(candidates) do
+                local other = prices[i][fillType]
+                if other ~= nil and other.price > here.price then
+                    isBest = false
+                    break
+                end
+            end
+            if isBest then
+                products[fillType] = true
+            end
+        end
+    end
+    return products
+end
+
 -- is anything of the load sold by a target of the folder?
 function ADBestPrice.hasSellableLoad(vehicle, group)
     local load = ADBestPrice.getLoad(vehicle)
@@ -220,6 +243,7 @@ function ADBestPrice.apply(vehicle, useFirstMarker)
         return false
     end
     vehicle.ad.bestPriceActive = false
+    vehicle.ad.bestPriceProducts = nil
     -- a new load starts counting its stops again, a next stop of the same load (wantsNextStop) does not
     if not vehicle.ad.bestPriceNextStop then
         vehicle.ad.bestPriceStops = 0
@@ -257,8 +281,15 @@ function ADBestPrice.apply(vehicle, useFirstMarker)
     if mode == ADBestPrice.EACH_PRODUCT then
         local fillType
         index, fillType, station = ADBestPrice.pickProduct(candidates, prices, load)
-        if fillType ~= nil then
-            productText = g_fillTypeManager:getFillTypeTitleByIndex(fillType)
+        if index ~= nil then
+            -- only these products are unloaded at this stop, the rest stays on board (ADTrailerModule)
+            vehicle.ad.bestPriceProducts = ADBestPrice.getProductsForStop(candidates, prices, load, index)
+            local titles = {}
+            for productFillType, _ in pairs(vehicle.ad.bestPriceProducts) do
+                table.insert(titles, g_fillTypeManager:getFillTypeTitleByIndex(productFillType))
+            end
+            table.sort(titles)
+            productText = table.concat(titles, ", ")
         end
     else
         index, _, station = ADBestPrice.pickOneStop(candidates, prices, load)
@@ -285,6 +316,19 @@ function ADBestPrice.apply(vehicle, useFirstMarker)
     return true
 end
 
+-- ADTrailerModule: may this trailer unload here? Each product only unloads the products of this stop
+function ADBestPrice.mayUnload(vehicle, trailer)
+    local products = vehicle.ad ~= nil and vehicle.ad.bestPriceProducts or nil
+    if products == nil or vehicle.ad.bestPriceActive ~= true or trailer.getCurrentDischargeNode == nil or trailer.getFillUnitFillType == nil then
+        return true
+    end
+    local node = trailer:getCurrentDischargeNode()
+    if node == nil or node.fillUnitIndex == nil then
+        return true
+    end
+    return products[trailer:getFillUnitFillType(node.fillUnitIndex)] == true
+end
+
 -- UnloadAtDestinationTask: the stop is done when the selling point takes nothing more, even with something
 -- left on board (a product it does not buy)
 function ADBestPrice.finishesUnloadEarly(vehicle)
@@ -307,6 +351,7 @@ function ADBestPrice.wantsNextStop(vehicle, fillLevel)
     else
         ad.bestPriceStops = 0
         ad.bestPriceActive = false
+        ad.bestPriceProducts = nil
     end
     return wanted
 end
