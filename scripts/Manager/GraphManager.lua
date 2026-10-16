@@ -802,9 +802,7 @@ function ADGraphManager:rawSetGroupColor(groupName, color)
     else
         self.groupColors[groupName] = nil
     end
-    if AutoDrive.Hud ~= nil then
-        AutoDrive.Hud.lastUIScale = 0
-    end
+    -- no HUD rebuild: the target list reads the colors while drawing, a rebuild would close an open list
     self:markChanges()
 end
 
