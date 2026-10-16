@@ -1,4 +1,28 @@
-# FS25_AutoDrive
+# FS25_AutoDrive (chrisdfennell edition)
+
+This is a personal fork of [AutoDrive](https://github.com/Stephan-S/FS25_AutoDrive) by the AutoDrive Team (Stephan-S, Axel32019, TyKonKet and [many contributors](credits.txt)), released under the [MIT licence](LICENSE).
+It is based on AutoDrive 3.0.1.4 and adds route editor improvements. It is not the official release: for the official mod, downloads and support, see the original README below.
+
+## Added in this edition
+
+### Undo / redo in the route editor
+- **Ctrl+Z / Ctrl+Y** undo and redo network edits: waypoints, connections, side roads, targets, folders, recorded drives, generated field points and routes loaded with the routes manager. Undo/redo icons in the HUD header show what is available.
+- Hold **Left Alt + Z**, or right click the undo icon, to preview what the next undo changes, without changing anything.
+- After an undo or redo the changed waypoints flash for a few seconds, a moved waypoint shows a line to its previous position, and a pointer from the vehicle leads to changes out of sight.
+- **Ctrl+Z while recording** removes the last ~10 m of recorded points, and the recording continues from there.
+- In multiplayer, each player undoes their own edits.
+
+### Editor
+- **Left Shift + left mouse drag** moves waypoints.
+- Target folders: sub folders, renaming and folder colours.
+- Deleting a waypoint removes all targets on it, not only the first one.
+
+All key bindings can be changed in the game's control settings.
+
+---
+
+# Original AutoDrive README
+
 FS25 version of the AutoDrive mod
 
 ### Latest Release: 3.0.1.4
