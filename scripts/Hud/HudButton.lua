@@ -108,7 +108,10 @@ function ADHudButton:getNewState(vehicle)
 
     if self.primaryAction == "input_undo" or self.primaryAction == "input_redo" then
         self.isVisible = AutoDrive.isEditorModeEnabled()
-        local canUndo, canRedo = ADUndoManager:getClientAvailability()
+        local canUndo, canRedo = false, false
+        if self.isVisible then
+            canUndo, canRedo = ADUndoManager:getClientAvailability()
+        end
         local available = canRedo
         if self.primaryAction == "input_undo" then
             available = canUndo

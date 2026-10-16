@@ -79,8 +79,10 @@ function ADHudIcon:renderDefaultText(vehicle, fontSize, posX, posY)
     end
     local lines = self:splitTextByLength(textToShow, fontSize, self.size.width - reservedWidth)
 
+    -- a long header text wraps, the header grows upwards by the extra lines
+    self.extraHeight = (textHeight + AutoDrive.Hud.gapHeight) * (#lines - 1)
     if #lines ~= self.lastLineCount and self.ov ~= nil then
-        self.ov:setDimension(nil, self.size.height + (textHeight + AutoDrive.Hud.gapHeight) * (#lines - 1))        
+        self.ov:setDimension(nil, self.size.height + self.extraHeight)
     end
 
     for lineNumber, lineText in pairs(lines) do
@@ -184,6 +186,15 @@ function ADHudIcon:updateVisibility(vehicle)
     end
 
     self.isVisible = newVisibility
+end
+
+-- the header can be grabbed on all its lines, not only on the first one
+function ADHudIcon:hit(posX, posY, layer)
+    local height = self.size.height
+    if self.name == "header" and self.extraHeight ~= nil then
+        height = height + self.extraHeight
+    end
+    return layer <= self.layer and posX >= self.position.x and posX <= (self.position.x + self.size.width) and posY >= self.position.y and posY <= (self.position.y + height)
 end
 
 function ADHudIcon:act(vehicle, posX, posY, isDown, isUp, button)

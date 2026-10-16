@@ -172,4 +172,16 @@ s.execute("""
 assert s.eval("DRAWN") == 13  # sphere + beacon + pointer line + arrow
 s.execute("g_time = g_time + ADRouteCheck.SHOW_DURATION + 1; ADRouteCheck:draw(VEHICLE)")
 assert s.eval("ADRouteCheck.shown") is None
-print("OK: schedule (13 hour cases, start/stop/finish round), best price, fleet rows, route check screen")
+# --- HUD header: a wrapped header text can be grabbed on all its lines
+s.execute(t.read(os.path.join(t.MOD, "scripts", "Hud", "GenericHudElement.lua")))
+s.execute(t.read(os.path.join(t.MOD, "scripts", "Hud", "HudIcon.lua")))
+s.execute("""
+    HEADER = setmetatable({name = "header", layer = 1, position = {x = 0.5, y = 0.8}, size = {width = 0.2, height = 0.02}}, {__index = ADHudIcon})
+    ICON = setmetatable({name = "background", layer = 1, position = {x = 0.5, y = 0.8}, size = {width = 0.2, height = 0.02}, extraHeight = 0.05}, {__index = ADHudIcon})
+""")
+assert s.eval("HEADER:hit(0.6, 0.81, 0)") and not s.eval("HEADER:hit(0.6, 0.835, 0)")
+s.execute("HEADER.extraHeight = 0.025")  # second line of text
+assert s.eval("HEADER:hit(0.6, 0.835, 0)") and not s.eval("HEADER:hit(0.6, 0.85, 0)")
+assert not s.eval("ICON:hit(0.6, 0.835, 0)")  # only the header grows
+
+print("OK: schedule (13 hour cases, start/stop/finish round), best price, fleet rows, route check screen, header grab area")
