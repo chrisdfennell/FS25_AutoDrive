@@ -46,6 +46,8 @@ ADPullDownList.ICON_RENAME_MARKER = 1
 
 -- indentation per folder level
 ADPullDownList.INDENT = "   "
+-- hovered folders with their own color are drawn this much lighter
+ADPullDownList.HOVER_LIGHTEN = 0.35
 
 
 function ADPullDownList:initReusableOverlaysOnlyOnce()
@@ -290,19 +292,23 @@ function ADPullDownList:onDraw(vehicle, uiScale)
 
                 setTextBold(makeBold)
 
+                local folderColor = nil
+                if listEntry.isFolder and self.type ~= ADPullDownList.TYPE_FILLTYPE then
+                    folderColor = ADGraphManager:getGroupColor(listEntry.returnValue)
+                end
                 if self.hovered == self.selected + (i - 1) then
                     -- mouse hovering over selected item
-                    if makeSpecial then
+                    if folderColor ~= nil then
+                        -- a colored folder keeps its color, a bit lighter, so a new color shows right away
+                        local light = ADPullDownList.HOVER_LIGHTEN
+                        setTextColor(folderColor[1] + (1 - folderColor[1]) * light, folderColor[2] + (1 - folderColor[2]) * light, folderColor[3] + (1 - folderColor[3]) * light, 1)
+                    elseif makeSpecial then
                         setTextColor(unpack(AutoDrive.currentColors.ad_color_hudTextHoverSpecial))
                     else
                         setTextColor(unpack(AutoDrive.currentColors.ad_color_hudTextHover))
                     end
                 else
                     -- other element
-                    local folderColor = nil
-                    if listEntry.isFolder and self.type ~= ADPullDownList.TYPE_FILLTYPE then
-                        folderColor = ADGraphManager:getGroupColor(listEntry.returnValue)
-                    end
                     if folderColor ~= nil then
                         setTextColor(folderColor[1], folderColor[2], folderColor[3], 1)
                     elseif makeSpecial then
