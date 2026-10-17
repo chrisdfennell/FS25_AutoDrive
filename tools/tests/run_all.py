@@ -48,6 +48,7 @@ def main():
         run("test_unloadfilter.py"),
         run("test_zones_load_map.py"),
         run("test_waypointpanel.py"),
+        run("test_actor_deferred.py"),
     ]
     if not all(results):
         sys.exit(1)

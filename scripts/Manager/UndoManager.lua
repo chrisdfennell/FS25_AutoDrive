@@ -286,6 +286,33 @@ function ADUndoManager:getActor()
     return ADUndoManager.getOwnerByConnection(self.actorConnection)
 end
 
+-- run the server's own copy of an event at once (see installActorHooks)
+ADUndoManager.LOCAL_RUN_CONNECTION = {getIsServer = function() return true end}
+
+-- while the server handles a change a client sent: the graph events send the change on to all clients and to
+-- the server itself (broadcastEvent with sendLocal). The game runs that local copy a little later, when the
+-- client who made the change is not known anymore, so the step was recorded for the server and the player
+-- could not undo it (dedicated server). Here the local copy runs at once instead, the other copies go out as
+-- before. Returns the function which puts broadcastEvent back.
+function ADUndoManager.runLocalCopiesNow()
+    local server = g_server
+    if type(server) ~= "table" or server.broadcastEvent == nil then
+        return nil
+    end
+    local own = rawget(server, "broadcastEvent")
+    local original = server.broadcastEvent
+    server.broadcastEvent = function(srv, event, sendLocal, ...)
+        if sendLocal and type(event) == "table" and event.adUndoActorHook and event.run ~= nil then
+            event:run(ADUndoManager.LOCAL_RUN_CONNECTION)
+            return original(srv, event, false, ...)
+        end
+        return original(srv, event, sendLocal, ...)
+    end
+    return function()
+        server.broadcastEvent = own
+    end
+end
+
 -- the graph events tell, which client a change came from
 function ADUndoManager.installActorHooks()
     local eventClasses = {
@@ -315,10 +342,15 @@ function ADUndoManager.installActorHooks()
             local originalRun = eventClass.run
             eventClass.run = function(self, connection, ...)
                 local previous = ADUndoManager.actorConnection
+                local restore = nil
                 if g_server ~= nil and connection ~= nil and connection.getIsServer ~= nil and not connection:getIsServer() then
                     ADUndoManager.actorConnection = connection
+                    restore = ADUndoManager.runLocalCopiesNow()
                 end
                 local ok, err = pcall(originalRun, self, connection, ...)
+                if restore ~= nil then
+                    restore()
+                end
                 ADUndoManager.actorConnection = previous
                 if not ok then
                     error(err, 0)
