@@ -152,6 +152,7 @@ source(Utils.getFilename("scripts/Gui/NotificationsHistoryGUI.lua", g_currentMod
 source(Utils.getFilename("scripts/Gui/RouteCheckGUI.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Gui/FleetGUI.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Gui/FleetMap.lua", g_currentModDirectory))
+source(Utils.getFilename("scripts/Gui/WaypointPanel.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Gui/SendToGUI.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Gui/UnloadFilterGUI.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Gui/ColorSettingsGUI.lua", g_currentModDirectory))

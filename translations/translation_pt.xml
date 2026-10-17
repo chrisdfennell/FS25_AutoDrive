@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s paletes por perto" />
 		<text name="AD_loadFilter_none"							 text="Nenhuma palete perto do veículo ou do seu destino de carga" />
 		<text name="AD_vehicleMenu_load"							 text="Carregar produtos..." />
+		<text name="gui_ad_waypointPanel"							 text="Painel do waypoint" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="No editor, um painel ao lado do HUD para o waypoint selecionado: destino, estrada secundária, ligações, ações e zona de velocidade" />
+		<text name="AD_wpPanel_title"							 text="Waypoint %s" />
+		<text name="AD_wpPanel_info"							 text="Altura %s m, a %s m" />
+		<text name="AD_wpPanel_target"							 text="Destino: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Sem destino" />
+		<text name="AD_wpPanel_create"							 text="Criar" />
+		<text name="AD_wpPanel_rename"							 text="Renomear" />
+		<text name="AD_wpPanel_remove"							 text="Remover" />
+		<text name="AD_wpPanel_sideRoad"							 text="Estrada secundária" />
+		<text name="AD_wpPanel_connections"							 text="Ligações: %s entrada, %s saída" />
+		<text name="AD_wpPanel_connection"							 text="Waypoint %s" />
+		<text name="AD_wpPanel_more"							 text="+ %s outros" />
+		<text name="AD_wpPanel_dir_1"							 text="Saída" />
+		<text name="AD_wpPanel_dir_2"							 text="Entrada" />
+		<text name="AD_wpPanel_dir_3"							 text="Dois sentidos" />
+		<text name="AD_wpPanel_dir_4"							 text="Marcha-atrás saída" />
+		<text name="AD_wpPanel_dir_5"							 text="Marcha-atrás entrada" />
+		<text name="AD_wpPanel_actions"							 text="Ações" />
+		<text name="AD_wpPanel_wait"							 text="Esperar" />
+		<text name="AD_wpPanel_horn"							 text="Buzina" />
+		<text name="AD_wpPanel_lights"							 text="Luzes" />
+		<text name="AD_wpPanel_unlock"							 text="Soltar a carga" />
+		<text name="AD_wpPanel_on"							 text="Ligar" />
+		<text name="AD_wpPanel_off"							 text="Desligar" />
+		<text name="AD_wpPanel_zone"							 text="Zona de velocidade" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Zona na estrada (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem qualquer ligação" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há caminho a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de sentido único: %s waypoints onde se pode entrar mas não sair" />

@@ -74,6 +74,16 @@ The route between the two waypoints is the shortest chain of connections. Only w
 
 **Fleet on the map:** the big map (ESC > Map) shows every AutoDrive vehicle of your farm as a coloured square with its name: green driving, yellow switched on but standing, red stopped with a problem, grey idle. Switch it off in the user settings (**Fleet on the map**).
 
+### Waypoint panel
+In the editor, **left-click a waypoint** to select it: a panel opens next to the AutoDrive HUD with everything about that waypoint, as buttons:
+- **Target:** its name with **Rename** and **Remove**, or **Create** a target right on this waypoint
+- **Side road:** no / yes
+- **Connections:** every neighbouring waypoint with the kind of connection (out, in, both ways, reverse out, reverse in). Click it to switch to the next kind; pointing at it draws a line to that waypoint
+- **Actions:** wait (each click: next time), horn, lights, unlock load
+- **Speed zone** for this waypoint, and **Zone on road** for the whole road it is on, up to the next junctions in both directions (the number of waypoints is shown)
+
+Every click is one undo step and works in multiplayer like the keys. The panel stays while the waypoint is selected; **X**, clicking the waypoint again, or connecting it to another waypoint closes it. It moves to the left of the HUD when there is no room on the right. Switch it off in the user settings (**Waypoint panel**).
+
 ### Waypoint actions
 In the editor, point the mouse at a waypoint (or select one) and press:
 - **Ctrl+Alt+W**: vehicles wait there (each press: 5, 10, 20, 30, 60, 120, 300 seconds, off)

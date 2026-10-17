@@ -27,8 +27,13 @@ function ADEnterTargetNameGui:onOpen()
     self.editName = nil
     self.editId = nil
     self.edit = false
+    -- Overdrive: a target on the waypoint of the waypoint panel instead of the closest one
+    self.createWayPointId = AutoDrive.createMapMarkerWayPointId
+    AutoDrive.createMapMarkerWayPointId = nil
     local controlledVehicle = AutoDrive.getControlledVehicle()
-    if AutoDrive.editMapMarkerId ~= nil then
+    if self.createWayPointId ~= nil then
+        -- nothing to look up: the panel only offers "create" on a waypoint without a target
+    elseif AutoDrive.editMapMarkerId ~= nil then
         -- edit the map marker clicked in the pull down list
         if ADGraphManager:getMapMarkerById(AutoDrive.editMapMarkerId) ~= nil then
             self.editId = AutoDrive.editMapMarkerId
@@ -76,6 +81,8 @@ function ADEnterTargetNameGui:onClickOk()
     self:debugMsg("ADEnterTargetNameGui:onClickOk")
     if self.edit then
         ADGraphManager:renameMapMarker(self.textInputElement.text, self.editId)
+    elseif self.createWayPointId ~= nil then
+        ADGraphManager:createMapMarker(self.createWayPointId, self.textInputElement.text)
     else
         ADGraphManager:createMapMarkerOnClosest(AutoDrive.getControlledVehicle(), self.textInputElement.text)
     end

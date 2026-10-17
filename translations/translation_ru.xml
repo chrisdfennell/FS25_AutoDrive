@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s поддонов рядом" />
 		<text name="AD_loadFilter_none"							 text="Нет поддонов рядом с техникой или её локацией погрузки" />
 		<text name="AD_vehicleMenu_load"							 text="Погрузка продуктов..." />
+		<text name="gui_ad_waypointPanel"							 text="Панель точки" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="В редакторе панель рядом с HUD для выбранной точки: локация, боковая дорога, соединения, действия и зона скорости" />
+		<text name="AD_wpPanel_title"							 text="Точка %s" />
+		<text name="AD_wpPanel_info"							 text="Высота %s м, %s м отсюда" />
+		<text name="AD_wpPanel_target"							 text="Локация: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Нет локации" />
+		<text name="AD_wpPanel_create"							 text="Создать" />
+		<text name="AD_wpPanel_rename"							 text="Переименовать" />
+		<text name="AD_wpPanel_remove"							 text="Удалить" />
+		<text name="AD_wpPanel_sideRoad"							 text="Боковая дорога" />
+		<text name="AD_wpPanel_connections"							 text="Соединения: %s вход, %s выход" />
+		<text name="AD_wpPanel_connection"							 text="Точка %s" />
+		<text name="AD_wpPanel_more"							 text="+ ещё %s" />
+		<text name="AD_wpPanel_dir_1"							 text="Выход" />
+		<text name="AD_wpPanel_dir_2"							 text="Вход" />
+		<text name="AD_wpPanel_dir_3"							 text="В обе стороны" />
+		<text name="AD_wpPanel_dir_4"							 text="Задний ход выход" />
+		<text name="AD_wpPanel_dir_5"							 text="Задний ход вход" />
+		<text name="AD_wpPanel_actions"							 text="Действия" />
+		<text name="AD_wpPanel_wait"							 text="Ждать" />
+		<text name="AD_wpPanel_horn"							 text="Гудок" />
+		<text name="AD_wpPanel_lights"							 text="Свет" />
+		<text name="AD_wpPanel_unlock"							 text="Ослабить груз" />
+		<text name="AD_wpPanel_on"							 text="Вкл." />
+		<text name="AD_wpPanel_off"							 text="Выкл." />
+		<text name="AD_wpPanel_zone"							 text="Зона скорости" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Зона на дороге (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Одиночная путевая точка без соединений" />
 		<text name="AD_routeCheck_deadEnd"							 text="Тупик: от этой путевой точки дальше пути нет" />
 		<text name="AD_routeCheck_trap"								 text="Односторонняя ловушка: путевых точек, куда можно въехать, но нельзя выехать: %s" />

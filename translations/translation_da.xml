@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s paller i nærheden" />
 		<text name="AD_loadFilter_none"							 text="Ingen paller nær maskinen eller dens læssemål" />
 		<text name="AD_vehicleMenu_load"							 text="Læs produkter..." />
+		<text name="gui_ad_waypointPanel"							 text="Vejpunktpanel" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="I editoren et panel ved siden af HUD'en for det valgte vejpunkt: mål, sidevej, forbindelser, handlinger og hastighedszone" />
+		<text name="AD_wpPanel_title"							 text="Vejpunkt %s" />
+		<text name="AD_wpPanel_info"							 text="Højde %s m, %s m væk" />
+		<text name="AD_wpPanel_target"							 text="Mål: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Intet mål" />
+		<text name="AD_wpPanel_create"							 text="Opret" />
+		<text name="AD_wpPanel_rename"							 text="Omdøb" />
+		<text name="AD_wpPanel_remove"							 text="Fjern" />
+		<text name="AD_wpPanel_sideRoad"							 text="Sidevej" />
+		<text name="AD_wpPanel_connections"							 text="Forbindelser: %s ind, %s ud" />
+		<text name="AD_wpPanel_connection"							 text="Vejpunkt %s" />
+		<text name="AD_wpPanel_more"							 text="+ %s mere" />
+		<text name="AD_wpPanel_dir_1"							 text="Ud" />
+		<text name="AD_wpPanel_dir_2"							 text="Ind" />
+		<text name="AD_wpPanel_dir_3"							 text="Begge veje" />
+		<text name="AD_wpPanel_dir_4"							 text="Bakke ud" />
+		<text name="AD_wpPanel_dir_5"							 text="Bakke ind" />
+		<text name="AD_wpPanel_actions"							 text="Handlinger" />
+		<text name="AD_wpPanel_wait"							 text="Vent" />
+		<text name="AD_wpPanel_horn"							 text="Horn" />
+		<text name="AD_wpPanel_lights"							 text="Lys" />
+		<text name="AD_wpPanel_unlock"							 text="Løsn læsset" />
+		<text name="AD_wpPanel_on"							 text="Tænd" />
+		<text name="AD_wpPanel_off"							 text="Sluk" />
+		<text name="AD_wpPanel_zone"							 text="Hastighedszone" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Zone på vejen (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Løst vejpunkt uden nogen forbindelse" />
 		<text name="AD_routeCheck_deadEnd"							 text="Blindgyde: ingen vej videre fra dette vejpunkt" />
 		<text name="AD_routeCheck_trap"								 text="Ensrettet fælde: %s vejpunkter, man kan køre ind i, men ikke ud af" />

@@ -990,6 +990,19 @@ AutoDrive.settings.iconSetToUse = {
     isUserSpecific = true
 }
 
+-- Overdrive: panel next to the HUD for the selected waypoint in the editor (ADWaypointPanel)
+AutoDrive.settings.waypointPanel = {
+    values = {false, true},
+    texts = {"gui_ad_no", "gui_ad_yes"},
+    default = 2,
+    current = 2,
+    text = "gui_ad_waypointPanel",
+    tooltip = "gui_ad_waypointPanel_tooltip",
+    translate = true,
+    isVehicleSpecific = false,
+    isUserSpecific = true
+}
+
 -- Overdrive: AutoDrive vehicles on the big map (ADFleetMap)
 AutoDrive.settings.showFleetOnMap = {
     values = {false, true},

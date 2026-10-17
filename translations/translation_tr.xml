@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="yakında %s palet" />
 		<text name="AD_loadFilter_none"							 text="Aracın veya yükleme hedefinin yakınında palet yok" />
 		<text name="AD_vehicleMenu_load"							 text="Ürünleri yükle..." />
+		<text name="gui_ad_waypointPanel"							 text="Nokta paneli" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="Editörde seçili ara nokta için HUD'un yanında bir panel: hedef, yan yol, bağlantılar, eylemler ve hız bölgesi" />
+		<text name="AD_wpPanel_title"							 text="Nokta %s" />
+		<text name="AD_wpPanel_info"							 text="Yükseklik %s m, %s m uzakta" />
+		<text name="AD_wpPanel_target"							 text="Hedef: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Hedef yok" />
+		<text name="AD_wpPanel_create"							 text="Oluştur" />
+		<text name="AD_wpPanel_rename"							 text="Yeniden adlandır" />
+		<text name="AD_wpPanel_remove"							 text="Kaldır" />
+		<text name="AD_wpPanel_sideRoad"							 text="Yan yol" />
+		<text name="AD_wpPanel_connections"							 text="Bağlantılar: %s giriş, %s çıkış" />
+		<text name="AD_wpPanel_connection"							 text="Nokta %s" />
+		<text name="AD_wpPanel_more"							 text="+ %s daha" />
+		<text name="AD_wpPanel_dir_1"							 text="Çıkış" />
+		<text name="AD_wpPanel_dir_2"							 text="Giriş" />
+		<text name="AD_wpPanel_dir_3"							 text="Çift yön" />
+		<text name="AD_wpPanel_dir_4"							 text="Geri çıkış" />
+		<text name="AD_wpPanel_dir_5"							 text="Geri giriş" />
+		<text name="AD_wpPanel_actions"							 text="Eylemler" />
+		<text name="AD_wpPanel_wait"							 text="Bekle" />
+		<text name="AD_wpPanel_horn"							 text="Korna" />
+		<text name="AD_wpPanel_lights"							 text="Işıklar" />
+		<text name="AD_wpPanel_unlock"							 text="Yükü çöz" />
+		<text name="AD_wpPanel_on"							 text="Açık" />
+		<text name="AD_wpPanel_off"							 text="Kapalı" />
+		<text name="AD_wpPanel_zone"							 text="Hız bölgesi" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Yolda bölge (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
 		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
 		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />

@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s palet w pobliżu" />
 		<text name="AD_loadFilter_none"							 text="Brak palet w pobliżu pojazdu lub jego celu załadunku" />
 		<text name="AD_vehicleMenu_load"							 text="Załaduj produkty..." />
+		<text name="gui_ad_waypointPanel"							 text="Panel punktu" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="W edytorze panel obok HUD dla wybranego punktu trasy: cel, droga boczna, połączenia, akcje i strefa prędkości" />
+		<text name="AD_wpPanel_title"							 text="Punkt %s" />
+		<text name="AD_wpPanel_info"							 text="Wysokość %s m, %s m stąd" />
+		<text name="AD_wpPanel_target"							 text="Cel: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Brak celu" />
+		<text name="AD_wpPanel_create"							 text="Utwórz" />
+		<text name="AD_wpPanel_rename"							 text="Zmień nazwę" />
+		<text name="AD_wpPanel_remove"							 text="Usuń" />
+		<text name="AD_wpPanel_sideRoad"							 text="Droga boczna" />
+		<text name="AD_wpPanel_connections"							 text="Połączenia: %s wej., %s wyj." />
+		<text name="AD_wpPanel_connection"							 text="Punkt %s" />
+		<text name="AD_wpPanel_more"							 text="+ %s więcej" />
+		<text name="AD_wpPanel_dir_1"							 text="Wyjście" />
+		<text name="AD_wpPanel_dir_2"							 text="Wejście" />
+		<text name="AD_wpPanel_dir_3"							 text="Oba kierunki" />
+		<text name="AD_wpPanel_dir_4"							 text="Wstecz wyjście" />
+		<text name="AD_wpPanel_dir_5"							 text="Wstecz wejście" />
+		<text name="AD_wpPanel_actions"							 text="Akcje" />
+		<text name="AD_wpPanel_wait"							 text="Czekaj" />
+		<text name="AD_wpPanel_horn"							 text="Klakson" />
+		<text name="AD_wpPanel_lights"							 text="Światła" />
+		<text name="AD_wpPanel_unlock"							 text="Odblokuj ładunek" />
+		<text name="AD_wpPanel_on"							 text="Wł." />
+		<text name="AD_wpPanel_off"							 text="Wył." />
+		<text name="AD_wpPanel_zone"							 text="Strefa prędkości" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Strefa na drodze (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Luźny punkt trasy bez żadnego połączenia" />
 		<text name="AD_routeCheck_deadEnd"							 text="Ślepa uliczka: z tego punktu trasy nie ma dalszej drogi" />
 		<text name="AD_routeCheck_trap"								 text="Pułapka jednokierunkowa: punkty trasy, do których można wjechać, ale nie można wyjechać: %s" />

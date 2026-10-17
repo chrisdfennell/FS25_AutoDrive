@@ -563,6 +563,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s pallets nearby" />
 		<text name="AD_loadFilter_none"							 text="No pallets near the vehicle or its load target" />
 		<text name="AD_vehicleMenu_load"							 text="Load products..." />
+		<text name="gui_ad_waypointPanel"							 text="Waypoint panel" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="In the editor, a panel next to the HUD for the selected waypoint: target, side road, connections, actions and speed zone" />
+		<text name="AD_wpPanel_title"							 text="Waypoint %s" />
+		<text name="AD_wpPanel_info"							 text="Height %s m, %s m away" />
+		<text name="AD_wpPanel_target"							 text="Target: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="No target" />
+		<text name="AD_wpPanel_create"							 text="Create" />
+		<text name="AD_wpPanel_rename"							 text="Rename" />
+		<text name="AD_wpPanel_remove"							 text="Remove" />
+		<text name="AD_wpPanel_sideRoad"							 text="Side road" />
+		<text name="AD_wpPanel_connections"							 text="Connections: %s in, %s out" />
+		<text name="AD_wpPanel_connection"							 text="Waypoint %s" />
+		<text name="AD_wpPanel_more"							 text="+ %s more" />
+		<text name="AD_wpPanel_dir_1"							 text="Out" />
+		<text name="AD_wpPanel_dir_2"							 text="In" />
+		<text name="AD_wpPanel_dir_3"							 text="Both ways" />
+		<text name="AD_wpPanel_dir_4"							 text="Reverse out" />
+		<text name="AD_wpPanel_dir_5"							 text="Reverse in" />
+		<text name="AD_wpPanel_actions"							 text="Actions" />
+		<text name="AD_wpPanel_wait"							 text="Wait" />
+		<text name="AD_wpPanel_horn"							 text="Horn" />
+		<text name="AD_wpPanel_lights"							 text="Lights" />
+		<text name="AD_wpPanel_unlock"							 text="Unlock load" />
+		<text name="AD_wpPanel_on"							 text="On" />
+		<text name="AD_wpPanel_off"							 text="Off" />
+		<text name="AD_wpPanel_zone"							 text="Speed zone" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Zone on road (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Loose waypoint without any connection" />
 		<text name="AD_routeCheck_deadEnd"							 text="Dead end: no way on from this waypoint" />
 		<text name="AD_routeCheck_trap"								 text="One-way trap: %s waypoints you can drive into but not out of" />

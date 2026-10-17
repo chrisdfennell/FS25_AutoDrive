@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s pallets in de buurt" />
 		<text name="AD_loadFilter_none"							 text="Geen pallets bij het voertuig of zijn laadbestemming" />
 		<text name="AD_vehicleMenu_load"							 text="Producten laden..." />
+		<text name="gui_ad_waypointPanel"							 text="Routepuntpaneel" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="In de editor een paneel naast de HUD voor het geselecteerde routepunt: bestemming, zijweg, verbindingen, acties en snelheidszone" />
+		<text name="AD_wpPanel_title"							 text="Routepunt %s" />
+		<text name="AD_wpPanel_info"							 text="Hoogte %s m, %s m verderop" />
+		<text name="AD_wpPanel_target"							 text="Bestemming: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Geen bestemming" />
+		<text name="AD_wpPanel_create"							 text="Maken" />
+		<text name="AD_wpPanel_rename"							 text="Hernoemen" />
+		<text name="AD_wpPanel_remove"							 text="Verwijderen" />
+		<text name="AD_wpPanel_sideRoad"							 text="Zijweg" />
+		<text name="AD_wpPanel_connections"							 text="Verbindingen: %s in, %s uit" />
+		<text name="AD_wpPanel_connection"							 text="Routepunt %s" />
+		<text name="AD_wpPanel_more"							 text="+ %s meer" />
+		<text name="AD_wpPanel_dir_1"							 text="Uit" />
+		<text name="AD_wpPanel_dir_2"							 text="In" />
+		<text name="AD_wpPanel_dir_3"							 text="Beide richtingen" />
+		<text name="AD_wpPanel_dir_4"							 text="Achteruit uit" />
+		<text name="AD_wpPanel_dir_5"							 text="Achteruit in" />
+		<text name="AD_wpPanel_actions"							 text="Acties" />
+		<text name="AD_wpPanel_wait"							 text="Wachten" />
+		<text name="AD_wpPanel_horn"							 text="Claxon" />
+		<text name="AD_wpPanel_lights"							 text="Verlichting" />
+		<text name="AD_wpPanel_unlock"							 text="Lading losmaken" />
+		<text name="AD_wpPanel_on"							 text="Aan" />
+		<text name="AD_wpPanel_off"							 text="Uit" />
+		<text name="AD_wpPanel_zone"							 text="Snelheidszone" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Zone op weg (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
 		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
 		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />

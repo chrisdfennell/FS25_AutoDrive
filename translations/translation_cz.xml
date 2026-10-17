@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s palet poblíž" />
 		<text name="AD_loadFilter_none"							 text="Žádné palety u vozidla ani u jeho cíle nakládky" />
 		<text name="AD_vehicleMenu_load"							 text="Naložit produkty..." />
+		<text name="gui_ad_waypointPanel"							 text="Panel bodu trasy" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="V editoru panel vedle HUD pro vybraný bod trasy: cíl, vedlejší silnice, spojení, akce a rychlostní zóna" />
+		<text name="AD_wpPanel_title"							 text="Bod %s" />
+		<text name="AD_wpPanel_info"							 text="Výška %s m, %s m odsud" />
+		<text name="AD_wpPanel_target"							 text="Cíl: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Žádný cíl" />
+		<text name="AD_wpPanel_create"							 text="Vytvořit" />
+		<text name="AD_wpPanel_rename"							 text="Přejmenovat" />
+		<text name="AD_wpPanel_remove"							 text="Odstranit" />
+		<text name="AD_wpPanel_sideRoad"							 text="Vedlejší silnice" />
+		<text name="AD_wpPanel_connections"							 text="Spojení: %s dovnitř, %s ven" />
+		<text name="AD_wpPanel_connection"							 text="Bod %s" />
+		<text name="AD_wpPanel_more"							 text="+ %s dalších" />
+		<text name="AD_wpPanel_dir_1"							 text="Ven" />
+		<text name="AD_wpPanel_dir_2"							 text="Dovnitř" />
+		<text name="AD_wpPanel_dir_3"							 text="Oba směry" />
+		<text name="AD_wpPanel_dir_4"							 text="Couvání ven" />
+		<text name="AD_wpPanel_dir_5"							 text="Couvání dovnitř" />
+		<text name="AD_wpPanel_actions"							 text="Akce" />
+		<text name="AD_wpPanel_wait"							 text="Čekat" />
+		<text name="AD_wpPanel_horn"							 text="Klakson" />
+		<text name="AD_wpPanel_lights"							 text="Světla" />
+		<text name="AD_wpPanel_unlock"							 text="Uvolnit náklad" />
+		<text name="AD_wpPanel_on"							 text="Zap." />
+		<text name="AD_wpPanel_off"							 text="Vyp." />
+		<text name="AD_wpPanel_zone"							 text="Rychlostní zóna" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Zóna na silnici (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Osamocený bod trasy bez jakéhokoli spojení" />
 		<text name="AD_routeCheck_deadEnd"							 text="Slepá ulice: z tohoto bodu trasy nevede žádná cesta dál" />
 		<text name="AD_routeCheck_trap"								 text="Jednosměrná past: počet bodů trasy, do kterých lze vjet, ale ne vyjet: %s" />

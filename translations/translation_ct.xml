@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="附近有 %s 個棧板" />
 		<text name="AD_loadFilter_none"							 text="車輛或其裝載目標附近沒有棧板" />
 		<text name="AD_vehicleMenu_load"							 text="裝載產品..." />
+		<text name="gui_ad_waypointPanel"							 text="航點面板" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="在編輯器中，HUD 旁邊顯示所選航點的面板：目標、支線、連接、動作和限速區" />
+		<text name="AD_wpPanel_title"							 text="航點 %s" />
+		<text name="AD_wpPanel_info"							 text="高度 %s 公尺，距離 %s 公尺" />
+		<text name="AD_wpPanel_target"							 text="目標：%s" />
+		<text name="AD_wpPanel_noTarget"							 text="無目標" />
+		<text name="AD_wpPanel_create"							 text="建立" />
+		<text name="AD_wpPanel_rename"							 text="重新命名" />
+		<text name="AD_wpPanel_remove"							 text="移除" />
+		<text name="AD_wpPanel_sideRoad"							 text="支線" />
+		<text name="AD_wpPanel_connections"							 text="連接：%s 進，%s 出" />
+		<text name="AD_wpPanel_connection"							 text="航點 %s" />
+		<text name="AD_wpPanel_more"							 text="+ 另外 %s 個" />
+		<text name="AD_wpPanel_dir_1"							 text="出" />
+		<text name="AD_wpPanel_dir_2"							 text="進" />
+		<text name="AD_wpPanel_dir_3"							 text="雙向" />
+		<text name="AD_wpPanel_dir_4"							 text="倒車出" />
+		<text name="AD_wpPanel_dir_5"							 text="倒車進" />
+		<text name="AD_wpPanel_actions"							 text="動作" />
+		<text name="AD_wpPanel_wait"							 text="等待" />
+		<text name="AD_wpPanel_horn"							 text="喇叭" />
+		<text name="AD_wpPanel_lights"							 text="燈光" />
+		<text name="AD_wpPanel_unlock"							 text="鬆開貨物" />
+		<text name="AD_wpPanel_on"							 text="開" />
+		<text name="AD_wpPanel_off"							 text="關" />
+		<text name="AD_wpPanel_zone"							 text="限速區" />
+		<text name="AD_wpPanel_zoneRoad"							 text="整段道路限速 (%s)" />
 		<text name="AD_routeCheck_loose"								 text="沒有任何連接的孤立航點" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：從此航點無法繼續前進" />
 		<text name="AD_routeCheck_trap"								 text="單向陷阱：%s 個航點只能駛入無法駛出" />

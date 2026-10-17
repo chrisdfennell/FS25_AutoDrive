@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s raklap a közelben" />
 		<text name="AD_loadFilter_none"							 text="Nincs raklap a jármű vagy a rakodási cél közelében" />
 		<text name="AD_vehicleMenu_load"							 text="Termékek rakodása..." />
+		<text name="gui_ad_waypointPanel"							 text="Útpont panel" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="A szerkesztőben egy panel a HUD mellett a kijelölt útponthoz: cél, mellékút, kapcsolatok, műveletek és sebességzóna" />
+		<text name="AD_wpPanel_title"							 text="%s. útpont" />
+		<text name="AD_wpPanel_info"							 text="Magasság %s m, %s m-re" />
+		<text name="AD_wpPanel_target"							 text="Cél: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Nincs cél" />
+		<text name="AD_wpPanel_create"							 text="Létrehozás" />
+		<text name="AD_wpPanel_rename"							 text="Átnevezés" />
+		<text name="AD_wpPanel_remove"							 text="Törlés" />
+		<text name="AD_wpPanel_sideRoad"							 text="Mellékút" />
+		<text name="AD_wpPanel_connections"							 text="Kapcsolatok: %s be, %s ki" />
+		<text name="AD_wpPanel_connection"							 text="%s. útpont" />
+		<text name="AD_wpPanel_more"							 text="+ %s további" />
+		<text name="AD_wpPanel_dir_1"							 text="Ki" />
+		<text name="AD_wpPanel_dir_2"							 text="Be" />
+		<text name="AD_wpPanel_dir_3"							 text="Kétirányú" />
+		<text name="AD_wpPanel_dir_4"							 text="Tolatás ki" />
+		<text name="AD_wpPanel_dir_5"							 text="Tolatás be" />
+		<text name="AD_wpPanel_actions"							 text="Műveletek" />
+		<text name="AD_wpPanel_wait"							 text="Várakozás" />
+		<text name="AD_wpPanel_horn"							 text="Kürt" />
+		<text name="AD_wpPanel_lights"							 text="Lámpák" />
+		<text name="AD_wpPanel_unlock"							 text="Rakomány kioldása" />
+		<text name="AD_wpPanel_on"							 text="Be" />
+		<text name="AD_wpPanel_off"							 text="Ki" />
+		<text name="AD_wpPanel_zone"							 text="Sebességzóna" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Zóna az úton (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Különálló útpont, semmilyen kapcsolat nélkül" />
 		<text name="AD_routeCheck_deadEnd"							 text="Zsákutca: ebből az útpontból nincs továbbhaladás" />
 		<text name="AD_routeCheck_trap"								 text="Egyirányú csapda: %s útpont, ahová be lehet hajtani, de kijutni nem" />

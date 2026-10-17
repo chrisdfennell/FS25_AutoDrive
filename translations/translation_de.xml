@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s Paletten in der Nähe" />
 		<text name="AD_loadFilter_none"							 text="Keine Paletten in der Nähe des Fahrzeugs oder seines Ladeziels" />
 		<text name="AD_vehicleMenu_load"							 text="Produkte laden..." />
+		<text name="gui_ad_waypointPanel"							 text="Wegpunkt-Fenster" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="Im Editor ein Fenster neben dem HUD für den ausgewählten Wegpunkt: Ziel, Nebenstrecke, Verbindungen, Aktionen und Tempozone" />
+		<text name="AD_wpPanel_title"							 text="Wegpunkt %s" />
+		<text name="AD_wpPanel_info"							 text="Höhe %s m, %s m entfernt" />
+		<text name="AD_wpPanel_target"							 text="Ziel: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Kein Ziel" />
+		<text name="AD_wpPanel_create"							 text="Erstellen" />
+		<text name="AD_wpPanel_rename"							 text="Umbenennen" />
+		<text name="AD_wpPanel_remove"							 text="Entfernen" />
+		<text name="AD_wpPanel_sideRoad"							 text="Nebenstrecke" />
+		<text name="AD_wpPanel_connections"							 text="Verbindungen: %s rein, %s raus" />
+		<text name="AD_wpPanel_connection"							 text="Wegpunkt %s" />
+		<text name="AD_wpPanel_more"							 text="+ %s weitere" />
+		<text name="AD_wpPanel_dir_1"							 text="Raus" />
+		<text name="AD_wpPanel_dir_2"							 text="Rein" />
+		<text name="AD_wpPanel_dir_3"							 text="Beide Richtungen" />
+		<text name="AD_wpPanel_dir_4"							 text="Rückwärts raus" />
+		<text name="AD_wpPanel_dir_5"							 text="Rückwärts rein" />
+		<text name="AD_wpPanel_actions"							 text="Aktionen" />
+		<text name="AD_wpPanel_wait"							 text="Warten" />
+		<text name="AD_wpPanel_horn"							 text="Hupe" />
+		<text name="AD_wpPanel_lights"							 text="Licht" />
+		<text name="AD_wpPanel_unlock"							 text="Ladung entsichern" />
+		<text name="AD_wpPanel_on"							 text="An" />
+		<text name="AD_wpPanel_off"							 text="Aus" />
+		<text name="AD_wpPanel_zone"							 text="Tempozone" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Zone auf Strecke (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Loser Wegpunkt ohne jede Verbindung" />
 		<text name="AD_routeCheck_deadEnd"							 text="Sackgasse: von diesem Wegpunkt geht es nicht weiter" />
 		<text name="AD_routeCheck_trap"								 text="Einbahn-Falle: %s Wegpunkte, in die man hinein-, aber nicht wieder herausfahren kann" />

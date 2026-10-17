@@ -47,6 +47,7 @@ def main():
         run("test_bestprice.py"),
         run("test_unloadfilter.py"),
         run("test_zones_load_map.py"),
+        run("test_waypointpanel.py"),
     ]
     if not all(results):
         sys.exit(1)

@@ -380,6 +380,8 @@ function AutoDriveHud:drawHud(vehicle)
             for _, element in ipairs(self.hudElements) do -- `ipairs` is important, as we want "index-value pairs", not "key-value pairs". https://stackoverflow.com/a/55109411
                 element:onDraw(vehicle, uiScale)
             end
+            -- Overdrive: the selected waypoint next to the HUD
+            ADWaypointPanel.safeDraw(vehicle, self)
         end
 	end
 end
@@ -413,6 +415,9 @@ function AutoDriveHud:isMouseOverHud( x, y)
 	if focusVehicle ~= nil then
         if focusVehicle.ad and focusVehicle.ad.stateModule then
             if AutoDrive.getSetting("showHUD") then
+                if ADWaypointPanel.isMouseOver(x, y) then
+                    return true
+                end
                 if AutoDrive.Hud and AutoDrive.Hud.hudElements then
                     for i= 1,#AutoDrive.Hud.hudElements do 
                         if AutoDrive.Hud.hudElements[i]:hit(x, y, 0) then 
@@ -427,6 +432,10 @@ end
 
 function AutoDriveHud:mouseEventOnHudElements(vehicle, posX, posY, isDown, isUp, button)
 	-- returns "handled"
+	-- Overdrive: the waypoint panel next to the HUD uses the mouse over it
+	if not self.isMoving and ADWaypointPanel:mouseEvent(vehicle, posX, posY, isDown, isUp, button) then
+		return true
+	end
 	if self.hudElements ~= nil then
 		-- Start with highest layer value (last in array), and then iterate backwards.
 		for i = #self.hudElements, 1, -1 do

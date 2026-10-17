@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s pallet nelle vicinanze" />
 		<text name="AD_loadFilter_none"							 text="Nessun pallet vicino al veicolo o alla sua destinazione di carico" />
 		<text name="AD_vehicleMenu_load"							 text="Carica prodotti..." />
+		<text name="gui_ad_waypointPanel"							 text="Pannello del nodo" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="Nell'editor, un pannello accanto all'HUD per il nodo selezionato: destinazione, strada laterale, collegamenti, azioni e zona di velocità" />
+		<text name="AD_wpPanel_title"							 text="Nodo %s" />
+		<text name="AD_wpPanel_info"							 text="Altezza %s m, a %s m" />
+		<text name="AD_wpPanel_target"							 text="Destinazione: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Nessuna destinazione" />
+		<text name="AD_wpPanel_create"							 text="Crea" />
+		<text name="AD_wpPanel_rename"							 text="Rinomina" />
+		<text name="AD_wpPanel_remove"							 text="Rimuovi" />
+		<text name="AD_wpPanel_sideRoad"							 text="Strada laterale" />
+		<text name="AD_wpPanel_connections"							 text="Collegamenti: %s in entrata, %s in uscita" />
+		<text name="AD_wpPanel_connection"							 text="Nodo %s" />
+		<text name="AD_wpPanel_more"							 text="+ altri %s" />
+		<text name="AD_wpPanel_dir_1"							 text="Uscita" />
+		<text name="AD_wpPanel_dir_2"							 text="Entrata" />
+		<text name="AD_wpPanel_dir_3"							 text="Doppio senso" />
+		<text name="AD_wpPanel_dir_4"							 text="Retro uscita" />
+		<text name="AD_wpPanel_dir_5"							 text="Retro entrata" />
+		<text name="AD_wpPanel_actions"							 text="Azioni" />
+		<text name="AD_wpPanel_wait"							 text="Attesa" />
+		<text name="AD_wpPanel_horn"							 text="Clacson" />
+		<text name="AD_wpPanel_lights"							 text="Luci" />
+		<text name="AD_wpPanel_unlock"							 text="Sblocca il carico" />
+		<text name="AD_wpPanel_on"							 text="Accese" />
+		<text name="AD_wpPanel_off"							 text="Spente" />
+		<text name="AD_wpPanel_zone"							 text="Zona di velocità" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Zona sulla strada (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Nodo isolato senza alcun collegamento" />
 		<text name="AD_routeCheck_deadEnd"							 text="Vicolo cieco: nessuna via per proseguire da questo nodo" />
 		<text name="AD_routeCheck_trap"								 text="Trappola a senso unico: %s nodi in cui si può entrare ma da cui non si può uscire" />

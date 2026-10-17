@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s paletes por perto" />
 		<text name="AD_loadFilter_none"							 text="Nenhum palete perto do veículo ou do seu destino de carga" />
 		<text name="AD_vehicleMenu_load"							 text="Carregar produtos..." />
+		<text name="gui_ad_waypointPanel"							 text="Painel do waypoint" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="No editor, um painel ao lado do HUD para o waypoint selecionado: destino, via lateral, conexões, ações e zona de velocidade" />
+		<text name="AD_wpPanel_title"							 text="Waypoint %s" />
+		<text name="AD_wpPanel_info"							 text="Altura %s m, a %s m" />
+		<text name="AD_wpPanel_target"							 text="Destino: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Sem destino" />
+		<text name="AD_wpPanel_create"							 text="Criar" />
+		<text name="AD_wpPanel_rename"							 text="Renomear" />
+		<text name="AD_wpPanel_remove"							 text="Remover" />
+		<text name="AD_wpPanel_sideRoad"							 text="Via lateral" />
+		<text name="AD_wpPanel_connections"							 text="Conexões: %s entrada, %s saída" />
+		<text name="AD_wpPanel_connection"							 text="Waypoint %s" />
+		<text name="AD_wpPanel_more"							 text="+ %s outros" />
+		<text name="AD_wpPanel_dir_1"							 text="Saída" />
+		<text name="AD_wpPanel_dir_2"							 text="Entrada" />
+		<text name="AD_wpPanel_dir_3"							 text="Mão dupla" />
+		<text name="AD_wpPanel_dir_4"							 text="Ré saída" />
+		<text name="AD_wpPanel_dir_5"							 text="Ré entrada" />
+		<text name="AD_wpPanel_actions"							 text="Ações" />
+		<text name="AD_wpPanel_wait"							 text="Esperar" />
+		<text name="AD_wpPanel_horn"							 text="Buzina" />
+		<text name="AD_wpPanel_lights"							 text="Luzes" />
+		<text name="AD_wpPanel_unlock"							 text="Soltar a carga" />
+		<text name="AD_wpPanel_on"							 text="Ligar" />
+		<text name="AD_wpPanel_off"							 text="Desligar" />
+		<text name="AD_wpPanel_zone"							 text="Zona de velocidade" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Zona na via (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem nenhuma conexão" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há como seguir a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de mão única: %s waypoints onde é possível entrar, mas não sair" />

@@ -560,6 +560,33 @@
 		<text name="AD_loadFilter_nearby"							 text="%s піддонів поруч" />
 		<text name="AD_loadFilter_none"							 text="Немає піддонів поруч із технікою або її локацією завантаження" />
 		<text name="AD_vehicleMenu_load"							 text="Завантаження продуктів..." />
+		<text name="gui_ad_waypointPanel"							 text="Панель точки" />
+		<text name="gui_ad_waypointPanel_tooltip"							 text="У редакторі панель поруч із HUD для вибраної точки: локація, бічна дорога, з'єднання, дії та зона швидкості" />
+		<text name="AD_wpPanel_title"							 text="Точка %s" />
+		<text name="AD_wpPanel_info"							 text="Висота %s м, %s м звідси" />
+		<text name="AD_wpPanel_target"							 text="Локація: %s" />
+		<text name="AD_wpPanel_noTarget"							 text="Немає локації" />
+		<text name="AD_wpPanel_create"							 text="Створити" />
+		<text name="AD_wpPanel_rename"							 text="Перейменувати" />
+		<text name="AD_wpPanel_remove"							 text="Видалити" />
+		<text name="AD_wpPanel_sideRoad"							 text="Бічна дорога" />
+		<text name="AD_wpPanel_connections"							 text="З'єднання: %s вхід, %s вихід" />
+		<text name="AD_wpPanel_connection"							 text="Точка %s" />
+		<text name="AD_wpPanel_more"							 text="+ ще %s" />
+		<text name="AD_wpPanel_dir_1"							 text="Вихід" />
+		<text name="AD_wpPanel_dir_2"							 text="Вхід" />
+		<text name="AD_wpPanel_dir_3"							 text="В обидва боки" />
+		<text name="AD_wpPanel_dir_4"							 text="Задній хід вихід" />
+		<text name="AD_wpPanel_dir_5"							 text="Задній хід вхід" />
+		<text name="AD_wpPanel_actions"							 text="Дії" />
+		<text name="AD_wpPanel_wait"							 text="Чекати" />
+		<text name="AD_wpPanel_horn"							 text="Гудок" />
+		<text name="AD_wpPanel_lights"							 text="Світло" />
+		<text name="AD_wpPanel_unlock"							 text="Послабити вантаж" />
+		<text name="AD_wpPanel_on"							 text="Увімк." />
+		<text name="AD_wpPanel_off"							 text="Вимк." />
+		<text name="AD_wpPanel_zone"							 text="Зона швидкості" />
+		<text name="AD_wpPanel_zoneRoad"							 text="Зона на дорозі (%s)" />
 		<text name="AD_routeCheck_loose"								 text="Окрема точка шляху без з'єднань" />
 		<text name="AD_routeCheck_deadEnd"							 text="Глухий кут: від цієї точки шляху далі немає шляху" />
 		<text name="AD_routeCheck_trap"								 text="Одностороння пастка: точок шляху, куди можна заїхати, але не можна виїхати: %s" />
