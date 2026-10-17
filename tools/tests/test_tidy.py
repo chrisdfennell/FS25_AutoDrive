@@ -61,6 +61,17 @@ p = positions(5)
 assert p[0] == (0, 0) and p[4] == (40, 0)
 assert 0 < p[2][1] < 4, p
 
+# smooth with uneven spacing (a long connection at the end, normal in AutoDrive): nothing slides along the route.
+# The middle of the neighbours pulled the waypoint at 30 m out to about 100 m.
+s.execute("chainNetwork({{0,0},{10,0},{20,0},{30,0},{230,0}})")
+assert s.eval("#ADTidyTools.getMoves(ADTidyTools.SMOOTH, {1,2,3,4,5}, nil)") == 0
+s.execute("chainNetwork({{0,0},{10,0},{20,4},{30,0},{230,0}})")
+s.execute("ADGraphManager:moveWayPoints(ADTidyTools.getMoves(ADTidyTools.SMOOTH, {1,2,3,4,5}, nil))")
+p = positions(5)
+for (x, z), (ox, oz) in zip(p, [(0, 0), (10, 0), (20, 4), (30, 0), (230, 0)]):
+    assert ((x - ox) ** 2 + (z - oz) ** 2) ** 0.5 < 3, p   # only sideways out of the kink, a little
+assert p[2][1] < 4, p
+
 # heights follow the given height function
 s.execute("chainNetwork({{0,0},{3,2},{15,-3},{40,0}})")
 s.execute("ADGraphManager:moveWayPoints(ADTidyTools.getMoves(ADTidyTools.STRAIGHTEN, {1,2,3,4}, function(x, y, z) return x / 10 end))")
@@ -92,6 +103,15 @@ s.execute("""
 """)
 chain = list(s.eval("ADTidyTools.findChain(6, 1)").values())
 assert chain == [6, 5, 2, 1], chain
+# shortest by distance, not by number of waypoints: the road, not a detour with fewer, longer connections
+s.execute("""
+    chainNetwork({{0,0},{10,0},{20,0},{30,0},{40,0},{20,100}})
+    ADGraphManager.wayPoints[5].out = {}; ADGraphManager.wayPoints[6].incoming = {}
+    table.insert(ADGraphManager.wayPoints[1].out, 6); table.insert(ADGraphManager.wayPoints[6].incoming, 1)
+    table.insert(ADGraphManager.wayPoints[6].out, 5); table.insert(ADGraphManager.wayPoints[5].incoming, 6)
+""")
+chain = list(s.eval("ADTidyTools.findChain(1, 5)").values())
+assert chain == [1, 2, 3, 4, 5], chain
 s.execute("ADGraphManager.wayPoints[7] = {id = 7, x = 99, y = 0, z = 99, out = {}, incoming = {}, flags = 0}")
 assert s.eval("ADTidyTools.findChain(1, 7)") is None
 

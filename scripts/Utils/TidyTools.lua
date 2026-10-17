@@ -60,7 +60,11 @@ function ADTidyTools.straighten(points)
     return result
 end
 
--- removes kinks: each waypoint moves towards the middle of its neighbours, a few times
+-- removes kinks, a few times: each waypoint moves towards the line between its neighbours, to the point
+-- there that matches its own place along the route. So it only moves sideways out of a kink and never slides
+-- along the route towards a far neighbour (the middle of the neighbours did that when the spacing was uneven:
+-- next to a long connection a waypoint was pulled far away). A move is at most half the distance to the nearer
+-- neighbour.
 function ADTidyTools.smooth(points)
     local current = {}
     for i, p in ipairs(points) do
@@ -69,12 +73,23 @@ function ADTidyTools.smooth(points)
     for _ = 1, ADTidyTools.SMOOTH_ITERATIONS do
         local nextPoints = {current[1]}
         for i = 2, #current - 1 do
-            local midX = (current[i - 1].x + current[i + 1].x) / 2
-            local midZ = (current[i - 1].z + current[i + 1].z) / 2
-            nextPoints[i] = {
-                x = current[i].x + (midX - current[i].x) * ADTidyTools.SMOOTH_STRENGTH,
-                z = current[i].z + (midZ - current[i].z) * ADTidyTools.SMOOTH_STRENGTH
-            }
+            local a, p, b = current[i - 1], current[i], current[i + 1]
+            local toA = MathUtil.vector2Length(p.x - a.x, p.z - a.z)
+            local toB = MathUtil.vector2Length(b.x - p.x, b.z - p.z)
+            local x, z = p.x, p.z
+            if toA + toB > 0 then
+                local t = toA / (toA + toB)
+                local targetX, targetZ = a.x + (b.x - a.x) * t, a.z + (b.z - a.z) * t
+                local moveX = (targetX - p.x) * ADTidyTools.SMOOTH_STRENGTH
+                local moveZ = (targetZ - p.z) * ADTidyTools.SMOOTH_STRENGTH
+                local move = MathUtil.vector2Length(moveX, moveZ)
+                local maxMove = math.min(toA, toB) / 2
+                if move > maxMove and move > 0 then
+                    moveX, moveZ = moveX * maxMove / move, moveZ * maxMove / move
+                end
+                x, z = p.x + moveX, p.z + moveZ
+            end
+            nextPoints[i] = {x = x, z = z}
         end
         nextPoints[#current] = current[#current]
         current = nextPoints
@@ -129,28 +144,82 @@ end
 -- waypoints searched at most when looking for the route between two waypoints
 ADTidyTools.MAX_SEARCH = 20000
 
--- the shortest chain of connected waypoints from startId to endId (in either direction), or nil
+-- the shortest chain of connected waypoints from startId to endId (in either direction), or nil.
+-- Shortest by distance: by number of waypoints it could take a shortcut over another road with fewer,
+-- longer connections instead of the road between the two waypoints.
 function ADTidyTools.findChain(startId, endId)
+    local start = ADGraphManager:getWayPointById(startId)
+    if start == nil or ADGraphManager:getWayPointById(endId) == nil then
+        return nil
+    end
     local previous = {[startId] = startId}
-    local queue, head = {startId}, 1
-    while head <= #queue and #queue < ADTidyTools.MAX_SEARCH do
-        local id = queue[head]
-        head = head + 1
-        if id == endId then
-            local chain = {}
-            while id ~= startId do
-                table.insert(chain, 1, id)
-                id = previous[id]
+    local distance = {[startId] = 0}
+    local done = {}
+    -- binary heap of {distance, id}
+    local heap = {{0, startId}}
+    local function push(entry)
+        table.insert(heap, entry)
+        local i = #heap
+        while i > 1 do
+            local parent = math.floor(i / 2)
+            if heap[parent][1] <= heap[i][1] then
+                break
             end
-            table.insert(chain, 1, startId)
-            return chain
+            heap[parent], heap[i] = heap[i], heap[parent]
+            i = parent
         end
-        local wp = ADGraphManager:getWayPointById(id)
-        for _, list in ipairs({wp.out, wp.incoming}) do
-            for _, neighbourId in ipairs(list) do
-                if previous[neighbourId] == nil and ADGraphManager:getWayPointById(neighbourId) ~= nil then
-                    previous[neighbourId] = id
-                    queue[#queue + 1] = neighbourId
+    end
+    local function pop()
+        local top = heap[1]
+        local last = table.remove(heap)
+        if #heap > 0 then
+            heap[1] = last
+            local i = 1
+            while true do
+                local left, right, smallest = 2 * i, 2 * i + 1, i
+                if left <= #heap and heap[left][1] < heap[smallest][1] then
+                    smallest = left
+                end
+                if right <= #heap and heap[right][1] < heap[smallest][1] then
+                    smallest = right
+                end
+                if smallest == i then
+                    break
+                end
+                heap[smallest], heap[i] = heap[i], heap[smallest]
+                i = smallest
+            end
+        end
+        return top
+    end
+    local visited = 0
+    while #heap > 0 and visited < ADTidyTools.MAX_SEARCH do
+        local entry = pop()
+        local id = entry[2]
+        if not done[id] then
+            done[id] = true
+            visited = visited + 1
+            if id == endId then
+                local chain = {}
+                while id ~= startId do
+                    table.insert(chain, 1, id)
+                    id = previous[id]
+                end
+                table.insert(chain, 1, startId)
+                return chain
+            end
+            local wp = ADGraphManager:getWayPointById(id)
+            for _, list in ipairs({wp.out, wp.incoming}) do
+                for _, neighbourId in ipairs(list) do
+                    local neighbour = ADGraphManager:getWayPointById(neighbourId)
+                    if neighbour ~= nil and not done[neighbourId] then
+                        local d = entry[1] + MathUtil.vector2Length(neighbour.x - wp.x, neighbour.z - wp.z)
+                        if distance[neighbourId] == nil or d < distance[neighbourId] then
+                            distance[neighbourId] = d
+                            previous[neighbourId] = id
+                            push({d, neighbourId})
+                        end
+                    end
                 end
             end
         end
