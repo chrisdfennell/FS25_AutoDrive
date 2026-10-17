@@ -672,6 +672,8 @@ function AutoDrive:setALOn(object)
             AutoDrive.debugPrint(object, AutoDrive.DC_EXTERNALINTERFACEINFO, "AutoDrive:setALOn ualStartLoad")
             if object.ualSetMaterialTypeIndex and object.ualStartLoad then
                 local fillTypeID = rootVehicle.ad.stateModule:getFillType()
+                -- Overdrive: load products, Universal Autoload loads "all" and AutoDrive chooses the objects
+                fillTypeID = ADUnloadFilter.getLoadMaterial(object, rootVehicle, fillTypeID)
                 object:ualSetMaterialTypeIndex(fillTypeID)
                 -- need to set the fillType before ualStartLoad as it resets always to ALL
                 object:ualStartLoad()

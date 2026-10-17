@@ -1175,7 +1175,7 @@ function ADGraphManager:moveWayPoint(wayPointId, x, y, z, flags, sendEvent)
     end
 end
 
--- moves: list of {id, x, y, z}, all moved in one undo step (tidy-up tools)
+-- moves: list of {id, x, y, z, flags (nil: unchanged)}, all in one undo step (tidy-up tools, speed zones)
 function ADGraphManager:moveWayPoints(moves, sendEvent)
     if #moves == 0 then
         return
@@ -1188,7 +1188,7 @@ function ADGraphManager:moveWayPoints(moves, sendEvent)
     for _, move in ipairs(moves) do
         local wayPoint = self:getWayPointById(move.id)
         if wayPoint ~= nil then
-            self:moveWayPoint(move.id, move.x, move.y, move.z, wayPoint.flags, false)
+            self:moveWayPoint(move.id, move.x, move.y, move.z, move.flags or wayPoint.flags, false)
         end
     end
     ADUndoManager:endStep()

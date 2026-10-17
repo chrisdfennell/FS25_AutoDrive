@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Monter dans le véhicule" />
 		<text name="AD_fleet_unloadOnly"							 text="ne décharge que %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Palettes : dans les réglages du véhicule, mettez &quot;AutoLoad: Position de déchargement&quot; sur gauche, derrière ou droite, sinon le point de vente prend toutes les palettes" />
+		<text name="gui_ad_showFleetOnMap"							 text="Flotte sur la carte" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Affiche vos véhicules AutoDrive sur la grande carte : vert en route, jaune allumé mais à l'arrêt, rouge arrêté avec un problème, gris inactif" />
+		<text name="input_ADZone15"							 text="AD: Zone de vitesse 15 km/h (du point sélectionné au point visé)" />
+		<text name="input_ADZone30"							 text="AD: Zone de vitesse 30 km/h (du point sélectionné au point visé)" />
+		<text name="input_ADZone50"							 text="AD: Zone de vitesse 50 km/h (du point sélectionné au point visé)" />
+		<text name="input_ADZoneOff"							 text="AD: Supprimer la zone de vitesse (du point sélectionné au point visé)" />
+		<text name="AD_zone_text"							 text="zone %s" />
+		<text name="AD_zone_howTo"							 text="Zone de vitesse : dans l'éditeur, cliquez sur un point pour le sélectionner, visez un autre point du même itinéraire avec la souris et appuyez sur la touche (ou sélectionnez ou visez un seul point)" />
+		<text name="AD_zone_set"							 text="Zone de vitesse %s sur %s points (Ctrl+Z pour annuler)" />
+		<text name="AD_zone_cleared"							 text="Zone de vitesse supprimée de %s points" />
+		<text name="AD_undoStep_speedZone_1"							 text="zone de vitesse modifiée" />
+		<text name="AD_undoStep_speedZone"							 text="zone de vitesse modifiée sur %s points" />
+		<text name="input_ADLoadProducts"							 text="AD: Charger les produits (palettes que le véhicule charge)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Charger dans %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s palettes à proximité" />
+		<text name="AD_loadFilter_none"							 text="Aucune palette près du véhicule ou de sa destination de chargement" />
+		<text name="AD_vehicleMenu_load"							 text="Charger les produits..." />
 		<text name="AD_routeCheck_loose"								 text="Point de passage isolé sans aucune connexion" />
 		<text name="AD_routeCheck_deadEnd"							 text="Impasse : aucun chemin à partir de ce point de passage" />
 		<text name="AD_routeCheck_trap"								 text="Piège à sens unique : %s points de passage où l'on peut entrer mais d'où l'on ne peut pas sortir" />

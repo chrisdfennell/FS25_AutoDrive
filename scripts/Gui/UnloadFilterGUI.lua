@@ -14,13 +14,17 @@ function ADUnloadFilterGui.new(target)
     return self
 end
 
--- vehicle or marker (target)
-function ADUnloadFilterGui:setSubject(vehicle, marker)
+-- vehicle or marker (target); isLoad: the products the vehicle loads (pallets of Universal Autoload)
+function ADUnloadFilterGui:setSubject(vehicle, marker, isLoad)
     self.vehicle = vehicle
     self.marker = marker
+    self.isLoad = isLoad == true and marker == nil
 end
 
 function ADUnloadFilterGui:getSet()
+    if self.isLoad then
+        return self.vehicle ~= nil and self.vehicle.ad ~= nil and self.vehicle.ad.loadFilter or {}
+    end
     if self.marker ~= nil then
         return ADUnloadFilter.getTargetFilter(self.marker) or {}
     end
@@ -31,6 +35,9 @@ function ADUnloadFilterGui:getSet()
 end
 
 function ADUnloadFilterGui:getChoices()
+    if self.isLoad then
+        return ADUnloadFilter.getLoadChoices(self.vehicle)
+    end
     if self.marker ~= nil then
         return ADUnloadFilter.getTargetChoices(self.marker)
     end
@@ -40,7 +47,9 @@ end
 function ADUnloadFilterGui:onOpen()
     ADUnloadFilterGui:superClass().onOpen(self)
     if self.titleText ~= nil then
-        if self.marker ~= nil then
+        if self.isLoad and self.vehicle ~= nil and self.vehicle.ad ~= nil then
+            self.titleText:setText(string.format(g_i18n:getText("gui_ad_loadFilterTitle"), self.vehicle.ad.stateModule:getName()))
+        elseif self.marker ~= nil then
             self.titleText:setText(string.format(g_i18n:getText("gui_ad_unloadFilterTitleTarget"), self.marker.name))
         elseif self.vehicle ~= nil and self.vehicle.ad ~= nil then
             self.titleText:setText(string.format(g_i18n:getText("gui_ad_unloadFilterTitleVehicle"), self.vehicle.ad.stateModule:getName()))
@@ -53,7 +62,7 @@ end
 function ADUnloadFilterGui:refreshItems()
     self.rows = ADUnloadFilter.getRows(self:getChoices(), self:getSet())
     -- pallets can only be chosen when Universal Autoload sets them down (left / behind / right)
-    if self.marker == nil and self.vehicle ~= nil then
+    if self.marker == nil and self.vehicle ~= nil and not self.isLoad then
         local hasPallets, canChoose = ADUnloadFilter.getPalletState(self.vehicle)
         if hasPallets and not canChoose then
             table.insert(self.rows, 1, {note = "AD_unloadFilter_palletPosition"})
@@ -83,7 +92,9 @@ end
 
 function ADUnloadFilterGui.getRowText(row)
     local text = (row.selected and ADUnloadFilterGui.CHECKED or ADUnloadFilterGui.UNCHECKED) .. row.title
-    if row.litres > 0 then
+    if row.count ~= nil and row.count > 0 then
+        text = text .. "  (" .. string.format(g_i18n:getText("AD_loadFilter_nearby"), row.count) .. ")"
+    elseif row.litres > 0 then
         text = text .. "  (" .. string.format(g_i18n:getText("AD_unloadFilter_onBoard"), string.format("%d l", math.floor(row.litres + 0.5))) .. ")"
     end
     return text
@@ -98,7 +109,13 @@ function ADUnloadFilterGui:populateCellForItemInSection(list, section, index, ce
         elseif row == nil then
             -- nothing to choose from
             cell.attributes.listItemIcon:setImageSlice(nil, "ad_gui.warn_icon")
-            cell.attributes.listItemText:setText(g_i18n:getText(self.marker ~= nil and "AD_unloadFilter_noneTarget" or "AD_unloadFilter_noneVehicle"))
+            local note = "AD_unloadFilter_noneVehicle"
+            if self.isLoad then
+                note = "AD_loadFilter_none"
+            elseif self.marker ~= nil then
+                note = "AD_unloadFilter_noneTarget"
+            end
+            cell.attributes.listItemText:setText(g_i18n:getText(note))
         else
             cell.attributes.listItemIcon:setImageSlice(nil, "ad_gui.info_icon")
             cell.attributes.listItemText:setText(ADUnloadFilterGui.getRowText(row))
@@ -108,7 +125,10 @@ function ADUnloadFilterGui:populateCellForItemInSection(list, section, index, ce
 end
 
 function ADUnloadFilterGui:send(set)
-    if self.marker ~= nil then
+    if self.isLoad then
+        AutoDriveUnloadFilterEvent.setVehicleLoad(self.vehicle, set)
+        ADUnloadFilter.setVehicleLoadFilter(self.vehicle, set)
+    elseif self.marker ~= nil then
         AutoDriveUnloadFilterEvent.setTarget(self.marker.name, set)
         ADUnloadFilter.setTargetFilter(self.marker.name, set)
     elseif self.vehicle ~= nil then
@@ -150,7 +170,7 @@ end
 
 ADVehicleMenuGui = {}
 ADVehicleMenuGui.debug = false
-ADVehicleMenuGui.ITEMS = {"AD_vehicleMenu_sendTo", "AD_vehicleMenu_unload", "AD_vehicleMenu_enter"}
+ADVehicleMenuGui.ITEMS = {"AD_vehicleMenu_sendTo", "AD_vehicleMenu_load", "AD_vehicleMenu_unload", "AD_vehicleMenu_enter"}
 
 local ADVehicleMenuGui_mt = Class(ADVehicleMenuGui, DialogElement)
 
@@ -192,8 +212,10 @@ function ADVehicleMenuGui:choose(index)
     if index == 1 then
         AutoDrive.onOpenSendTo(vehicle)
     elseif index == 2 then
-        AutoDrive.onOpenUnloadFilter(vehicle, nil)
+        AutoDrive.onOpenUnloadFilter(vehicle, nil, true)
     elseif index == 3 then
+        AutoDrive.onOpenUnloadFilter(vehicle, nil)
+    elseif index == 4 then
         if AutoDrive.gui.ADFleetGui.isOpen then
             AutoDrive.gui.ADFleetGui:onClickBack()
         end

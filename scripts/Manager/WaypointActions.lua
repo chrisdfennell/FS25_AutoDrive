@@ -5,6 +5,7 @@
 --   bit  13      horn
 --   bits 14..15  lights: 0 unchanged, 1 on, 2 off
 --   bit  16      unlock load: open the tension belts there, close them again when driving on
+--   bits 17..18  speed zone: 0 none, 1 15 km/h, 2 30 km/h, 3 50 km/h (ADWaypointActions.ZONE_SPEEDS)
 
 ADWaypointActions = {}
 
@@ -12,8 +13,16 @@ ADWaypointActions.WAIT_SHIFT = 10
 ADWaypointActions.HORN_SHIFT = 13
 ADWaypointActions.LIGHTS_SHIFT = 14
 ADWaypointActions.UNLOCK_SHIFT = 16
-ADWaypointActions.ACTION_MASK_START = 2 ^ 10 -- all bits from here up to bit 16 are action bits
-ADWaypointActions.ACTION_BITS_END = 2 ^ 17
+ADWaypointActions.ZONE_SHIFT = 17
+ADWaypointActions.ACTION_MASK_START = 2 ^ 10 -- all bits from here up to bit 18 are action bits
+ADWaypointActions.ACTION_BITS_END = 2 ^ 19
+
+-- speed zones: km/h per zone value
+ADWaypointActions.ZONE_SPEEDS = {[1] = 15, [2] = 30, [3] = 50}
+ADWaypointActions.ZONE_COLORS = {[1] = {1, 0.2, 0.2}, [2] = {1, 0.75, 0.1}, [3] = {0.3, 0.6, 1}}
+-- braking towards a zone (m/s^2) and how far ahead (m) zones are looked for
+ADWaypointActions.ZONE_DECELERATION = 1.5
+ADWaypointActions.ZONE_LOOKAHEAD = 200
 
 ADWaypointActions.WAIT_TIMES = {[0] = 0, 5, 10, 20, 30, 60, 120, 300}
 ADWaypointActions.LIGHTS_UNCHANGED = 0
@@ -48,6 +57,31 @@ end
 
 function ADWaypointActions.getLights(flags)
     return getField(flags, ADWaypointActions.LIGHTS_SHIFT, 4)
+end
+
+function ADWaypointActions.getZone(flags)
+    return getField(flags, ADWaypointActions.ZONE_SHIFT, 4)
+end
+
+-- km/h of the waypoint's speed zone, nil without zone
+function ADWaypointActions.getZoneSpeed(flags)
+    return ADWaypointActions.ZONE_SPEEDS[ADWaypointActions.getZone(flags)]
+end
+
+function ADWaypointActions.setZone(flags, zone)
+    return setField(flags, ADWaypointActions.ZONE_SHIFT, 4, zone)
+end
+
+-- the action bits without the speed zone
+function ADWaypointActions.getOtherActionBits(flags)
+    return ADWaypointActions.getActionBits(flags) - ADWaypointActions.getZone(flags) * 2 ^ ADWaypointActions.ZONE_SHIFT
+end
+
+function ADWaypointActions.formatSpeed(kmh)
+    if g_i18n ~= nil and g_i18n.getSpeed ~= nil and g_i18n.getSpeedMeasuringUnit ~= nil then
+        return string.format("%d %s", math.floor(g_i18n:getSpeed(kmh) + 0.5), g_i18n:getSpeedMeasuringUnit())
+    end
+    return string.format("%d km/h", kmh)
 end
 
 function ADWaypointActions.hasUnlock(flags)
@@ -115,6 +149,10 @@ function ADWaypointActions.getText(flags)
     if ADWaypointActions.hasUnlock(flags) then
         table.insert(parts, g_i18n:getText("AD_action_unlock"))
     end
+    local zoneSpeed = ADWaypointActions.getZoneSpeed(flags)
+    if zoneSpeed ~= nil then
+        table.insert(parts, string.format(g_i18n:getText("AD_zone_text"), ADWaypointActions.formatSpeed(zoneSpeed)))
+    end
     if #parts == 0 then
         return nil
     end
@@ -167,10 +205,21 @@ function ADWaypointActions.drawEditor(vehicle)
     for _, entry in pairs(nearby) do
         local wp = entry.wayPoint or entry
         if wp ~= nil and wp.flags ~= nil and ADWaypointActions.hasActions(wp.flags) then
-            ADDrawingManager:addSphereTask(wp.x, wp.y + 1.5, wp.z, 1.5, 1, 0.6, 0.1, 0)
-            local sx, sy, sz = project(wp.x, wp.y + 2.5, wp.z)
-            if sz ~= nil and sz > 0 and sz < 1 and sx > 0 and sx < 1 and sy > 0 and sy < 1 then
-                renderText(sx, sy, 0.012, ADWaypointActions.getText(wp.flags))
+            local zone = ADWaypointActions.getZone(wp.flags)
+            local hasOther = ADWaypointActions.getOtherActionBits(wp.flags) ~= 0
+            if zone > 0 then
+                local r, g, b = unpack(ADWaypointActions.ZONE_COLORS[zone])
+                ADDrawingManager:addSphereTask(wp.x, wp.y + 0.6, wp.z, 0.8, r, g, b, 0)
+            end
+            if hasOther then
+                ADDrawingManager:addSphereTask(wp.x, wp.y + 1.5, wp.z, 1.5, 1, 0.6, 0.1, 0)
+            end
+            -- a label where other actions are, and where a speed zone starts (not on every waypoint of a zone)
+            if hasOther or (zone > 0 and ADWaypointActions.isZoneStart(wp)) then
+                local sx, sy, sz = project(wp.x, wp.y + 2.5, wp.z)
+                if sz ~= nil and sz > 0 and sz < 1 and sx > 0 and sx < 1 and sy > 0 and sy < 1 then
+                    renderText(sx, sy, 0.012, ADWaypointActions.getText(wp.flags))
+                end
             end
         end
     end
@@ -257,4 +306,100 @@ function ADWaypointActions.updateWaiting(vehicle, dt)
     end
     ADWaypointActions.relockWhenLeaving(vehicle)
     return false
+end
+
+-------------------------------------------------------------------------------
+-- speed zones
+-------------------------------------------------------------------------------
+
+-- does a zone start at this waypoint (a waypoint leading to it has another zone)?
+function ADWaypointActions.isZoneStart(wp)
+    local zone = ADWaypointActions.getZone(wp.flags)
+    for _, id in ipairs(wp.incoming or {}) do
+        local previous = ADGraphManager:getWayPointById(id)
+        if previous ~= nil and ADWaypointActions.getZone(previous.flags) ~= zone then
+            return true
+        end
+    end
+    return wp.incoming == nil or #wp.incoming == 0
+end
+
+-- editor keys: set the zone (0 = none) on the route between the selected waypoint and the one under the
+-- mouse, or on the one waypoint if only one is given; one undo step
+function ADWaypointActions.setZoneOnRoute(vehicle, zone)
+    if not AutoDrive.isEditorModeEnabled() or vehicle == nil or vehicle.ad == nil then
+        return
+    end
+    local startId, endId = vehicle.ad.selectedNodeId, vehicle.ad.hoveredNodeId
+    local chain
+    if startId ~= nil and endId ~= nil and startId ~= endId then
+        chain = ADTidyTools.findChain(startId, endId)
+    elseif startId ~= nil or endId ~= nil then
+        chain = {startId or endId}
+    end
+    if chain == nil then
+        ADMessagesManager:addMessage(nil, ADMessagesManager.messageTypes.WARN, g_i18n:getText("AD_zone_howTo"), 5000)
+        return
+    end
+    local moves = {}
+    for _, id in ipairs(chain) do
+        local wp = ADGraphManager:getWayPointById(id)
+        if wp ~= nil and ADWaypointActions.getZone(wp.flags) ~= zone then
+            table.insert(moves, {id = id, x = wp.x, y = wp.y, z = wp.z, flags = ADWaypointActions.setZone(wp.flags, zone)})
+        end
+    end
+    if #moves > 0 then
+        ADGraphManager:moveWayPoints(moves)
+    end
+    local text
+    if zone == 0 then
+        text = string.format(g_i18n:getText("AD_zone_cleared"), #chain)
+    else
+        text = string.format(g_i18n:getText("AD_zone_set"), ADWaypointActions.formatSpeed(ADWaypointActions.ZONE_SPEEDS[zone]), #chain)
+    end
+    ADMessagesManager:addMessage(nil, ADMessagesManager.messageTypes.INFO, text, 4000)
+end
+
+-- driving (ADDrivePathModule:followWaypoints, every frame): the highest speed in km/h that still lets the
+-- vehicle slow down to the zones ahead in time, and the zone speed while on a zone; math.huge without zones
+function ADWaypointActions.getZoneSpeedLimit(drivePathModule)
+    local wayPoints = drivePathModule.wayPoints
+    local current = drivePathModule.currentWayPoint
+    if wayPoints == nil or current == nil or wayPoints[current] == nil then
+        return math.huge
+    end
+    local limit = math.huge
+    -- on a zone: the waypoint behind and the one ahead
+    for _, index in ipairs({current - 1, current}) do
+        local wp = wayPoints[index]
+        if wp ~= nil and wp.flags ~= nil then
+            local speed = ADWaypointActions.getZoneSpeed(wp.flags)
+            if speed ~= nil and speed < limit then
+                limit = speed
+            end
+        end
+    end
+    -- zones ahead: v^2 = vz^2 + 2 a d
+    local vehicle = drivePathModule.vehicle
+    local x, _, z = getWorldTranslation(vehicle.components[1].node)
+    local distance = MathUtil.vector2Length(wayPoints[current].x - x, wayPoints[current].z - z)
+    local index = current
+    while wayPoints[index] ~= nil and distance <= ADWaypointActions.ZONE_LOOKAHEAD do
+        local wp = wayPoints[index]
+        if wp.flags ~= nil then
+            local speed = ADWaypointActions.getZoneSpeed(wp.flags)
+            if speed ~= nil then
+                local allowed = math.sqrt((speed / 3.6) ^ 2 + 2 * ADWaypointActions.ZONE_DECELERATION * distance) * 3.6
+                if allowed < limit then
+                    limit = allowed
+                end
+            end
+        end
+        local nextWp = wayPoints[index + 1]
+        if nextWp ~= nil then
+            distance = distance + MathUtil.vector2Length(nextWp.x - wp.x, nextWp.z - wp.z)
+        end
+        index = index + 1
+    end
+    return limit
 end

@@ -154,8 +154,8 @@ s.execute("""
 """)
 assert s.eval("UF.toText(SV.ad.unloadFilter)") == "BARLEY"
 assert s.eval("#BROADCAST") == 1 and s.eval("BROADCAST[1].products[1]") == "BARLEY"
-assert s.eval("#SENT") == 2 and s.eval("SENT[1].eventType") == 1 and s.eval("SENT[2].eventType") == 4
-assert s.eval("SENT[2].targets['Old Mill'][1]") == "BARLEY"
+assert s.eval("#SENT") == 3 and s.eval("SENT[1].eventType") == 1 and s.eval("SENT[2].eventType") == 5 and s.eval("SENT[3].eventType") == 4
+assert s.eval("SENT[3].targets['Old Mill'][1]") == "BARLEY"
 
 # --- dialog rows: on board first, then what the trailers can carry, chosen ones kept
 s.execute("""

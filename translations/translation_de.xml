@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Einsteigen" />
 		<text name="AD_fleet_unloadOnly"							 text="lädt nur %s ab" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Paletten: in den Fahrzeugeinstellungen &quot;Autoload: Abladeposition&quot; auf links, hinten oder rechts stellen, sonst nimmt die Verkaufsstelle alle Paletten" />
+		<text name="gui_ad_showFleetOnMap"							 text="Flotte auf der Karte" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Zeigt deine AutoDrive-Fahrzeuge auf der großen Karte: grün fährt, gelb eingeschaltet aber steht, rot mit Problem gestoppt, grau untätig" />
+		<text name="input_ADZone15"							 text="AD: Tempozone 15 km/h (vom ausgewählten bis zum gezeigten Wegpunkt)" />
+		<text name="input_ADZone30"							 text="AD: Tempozone 30 km/h (vom ausgewählten bis zum gezeigten Wegpunkt)" />
+		<text name="input_ADZone50"							 text="AD: Tempozone 50 km/h (vom ausgewählten bis zum gezeigten Wegpunkt)" />
+		<text name="input_ADZoneOff"							 text="AD: Tempozone entfernen (vom ausgewählten bis zum gezeigten Wegpunkt)" />
+		<text name="AD_zone_text"							 text="Zone %s" />
+		<text name="AD_zone_howTo"							 text="Tempozone: im Editor einen Wegpunkt anklicken, die Maus auf einen anderen Wegpunkt derselben Route richten und die Taste drücken (oder nur einen Wegpunkt auswählen oder zeigen)" />
+		<text name="AD_zone_set"							 text="Tempozone %s auf %s Wegpunkten (Strg+Z zum Rückgängigmachen)" />
+		<text name="AD_zone_cleared"							 text="Tempozone von %s Wegpunkten entfernt" />
+		<text name="AD_undoStep_speedZone_1"							 text="Tempozone geändert" />
+		<text name="AD_undoStep_speedZone"							 text="Tempozone auf %s Wegpunkten geändert" />
+		<text name="input_ADLoadProducts"							 text="AD: Produkte laden (Paletten, die das Fahrzeug lädt)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Laden in %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s Paletten in der Nähe" />
+		<text name="AD_loadFilter_none"							 text="Keine Paletten in der Nähe des Fahrzeugs oder seines Ladeziels" />
+		<text name="AD_vehicleMenu_load"							 text="Produkte laden..." />
 		<text name="AD_routeCheck_loose"								 text="Loser Wegpunkt ohne jede Verbindung" />
 		<text name="AD_routeCheck_deadEnd"							 text="Sackgasse: von diesem Wegpunkt geht es nicht weiter" />
 		<text name="AD_routeCheck_trap"								 text="Einbahn-Falle: %s Wegpunkte, in die man hinein-, aber nicht wieder herausfahren kann" />

@@ -76,6 +76,11 @@ ADInputManager.actionsToInputs = {
     {"ADActionLights", "input_actionLights", false, false},
     {"ADActionUnlock", "input_actionUnlock", false, false},
     {"ADUnloadProducts", "input_unloadProducts", false, false},
+    {"ADLoadProducts", "input_loadProducts", false, false},
+    {"ADZone15", "input_zone15", false, false},
+    {"ADZone30", "input_zone30", false, false},
+    {"ADZone50", "input_zone50", false, false},
+    {"ADZoneOff", "input_zoneOff", false, false},
     {"ADRoutePreview", "input_routePreview", false, false}
 }
 
@@ -240,6 +245,26 @@ function ADInputManager:input_unloadProducts(vehicle)
         end
     end
     AutoDrive.onOpenUnloadFilter(vehicle, nil)
+end
+
+function ADInputManager:input_loadProducts(vehicle)
+    AutoDrive.onOpenUnloadFilter(vehicle, nil, true)
+end
+
+function ADInputManager:input_zone15(vehicle)
+    ADWaypointActions.setZoneOnRoute(vehicle, 1)
+end
+
+function ADInputManager:input_zone30(vehicle)
+    ADWaypointActions.setZoneOnRoute(vehicle, 2)
+end
+
+function ADInputManager:input_zone50(vehicle)
+    ADWaypointActions.setZoneOnRoute(vehicle, 3)
+end
+
+function ADInputManager:input_zoneOff(vehicle)
+    ADWaypointActions.setZoneOnRoute(vehicle, 0)
 end
 
 function ADInputManager:input_routePreview(vehicle)

@@ -138,6 +138,11 @@ Changelog: Необходимые корректировки для FS25, нас
 		<action name="ADActionLights"/>
 		<action name="ADActionUnlock"/>
 		<action name="ADUnloadProducts"/>
+		<action name="ADLoadProducts"/>
+		<action name="ADZone15"/>
+		<action name="ADZone30"/>
+		<action name="ADZone50"/>
+		<action name="ADZoneOff"/>
 		<action name="ADRoutePreview"/>
 	</actions>
 
@@ -238,6 +243,21 @@ Changelog: Необходимые корректировки для FS25, нас
 		</actionBinding>
 		<actionBinding action="ADUnloadProducts">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_f" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADZone15">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_1" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADZone30">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_2" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADZone50">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_3" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADZoneOff">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_0" axisComponent="+" neutralInput="0" index="1" />
+		</actionBinding>
+		<actionBinding action="ADLoadProducts">
+			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_g" axisComponent="+" neutralInput="0" index="1" />
 		</actionBinding>
 		<actionBinding action="ADRoutePreview">
 			<binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lalt KEY_p" axisComponent="+" neutralInput="0" index="1" />

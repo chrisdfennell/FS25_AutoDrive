@@ -546,6 +546,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Enter vehicle" />
 		<text name="AD_fleet_unloadOnly"							 text="unloads only %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Pallets: set &quot;Autoload: Unload Position&quot; to left, behind or right in the vehicle settings, otherwise the selling point takes all pallets" />
+		<text name="gui_ad_showFleetOnMap"							 text="Fleet on the map" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Shows your AutoDrive vehicles on the big map: green driving, yellow switched on but standing, red stopped with a problem, grey idle" />
+		<text name="input_ADZone15"							 text="AD: Speed zone 15 km/h (selected to pointed waypoint)" />
+		<text name="input_ADZone30"							 text="AD: Speed zone 30 km/h (selected to pointed waypoint)" />
+		<text name="input_ADZone50"							 text="AD: Speed zone 50 km/h (selected to pointed waypoint)" />
+		<text name="input_ADZoneOff"							 text="AD: Remove speed zone (selected to pointed waypoint)" />
+		<text name="AD_zone_text"							 text="%s zone" />
+		<text name="AD_zone_howTo"							 text="Speed zone: in the editor, click a waypoint to select it, point the mouse at another waypoint on the same route and press the key (or only select or point at one waypoint)" />
+		<text name="AD_zone_set"							 text="Speed zone %s on %s waypoints (Ctrl+Z to undo)" />
+		<text name="AD_zone_cleared"							 text="Speed zone removed from %s waypoints" />
+		<text name="AD_undoStep_speedZone_1"							 text="speed zone changed" />
+		<text name="AD_undoStep_speedZone"							 text="speed zone changed on %s waypoints" />
+		<text name="input_ADLoadProducts"							 text="AD: Load products (pallets the vehicle loads)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Load into %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s pallets nearby" />
+		<text name="AD_loadFilter_none"							 text="No pallets near the vehicle or its load target" />
+		<text name="AD_vehicleMenu_load"							 text="Load products..." />
 		<text name="AD_routeCheck_loose"								 text="Loose waypoint without any connection" />
 		<text name="AD_routeCheck_deadEnd"							 text="Dead end: no way on from this waypoint" />
 		<text name="AD_routeCheck_trap"								 text="One-way trap: %s waypoints you can drive into but not out of" />

@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Сесть в технику" />
 		<text name="AD_fleet_unloadOnly"							 text="выгружает только %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Поддоны: в настройках техники установите &quot;Автозагрузка: положение разгрузки&quot; влево, сзади или вправо, иначе точка продажи заберёт все поддоны" />
+		<text name="gui_ad_showFleetOnMap"							 text="Техника на карте" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Показывает вашу технику AutoDrive на большой карте: зелёный едет, жёлтый включён, но стоит, красный остановлен из-за проблемы, серый простаивает" />
+		<text name="input_ADZone15"							 text="AD: Зона скорости 15 км/ч (от выбранной до указанной точки)" />
+		<text name="input_ADZone30"							 text="AD: Зона скорости 30 км/ч (от выбранной до указанной точки)" />
+		<text name="input_ADZone50"							 text="AD: Зона скорости 50 км/ч (от выбранной до указанной точки)" />
+		<text name="input_ADZoneOff"							 text="AD: Убрать зону скорости (от выбранной до указанной точки)" />
+		<text name="AD_zone_text"							 text="зона %s" />
+		<text name="AD_zone_howTo"							 text="Зона скорости: в редакторе щёлкните точку, чтобы выбрать её, наведите мышь на другую точку того же маршрута и нажмите клавишу (или только выберите или укажите одну точку)" />
+		<text name="AD_zone_set"							 text="Зона скорости %s на %s точках (Ctrl+Z для отмены)" />
+		<text name="AD_zone_cleared"							 text="Зона скорости убрана с %s точек" />
+		<text name="AD_undoStep_speedZone_1"							 text="зона скорости изменена" />
+		<text name="AD_undoStep_speedZone"							 text="зона скорости изменена на %s точках" />
+		<text name="input_ADLoadProducts"							 text="AD: Погрузка продуктов (поддоны, которые грузит техника)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Погрузка в %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s поддонов рядом" />
+		<text name="AD_loadFilter_none"							 text="Нет поддонов рядом с техникой или её локацией погрузки" />
+		<text name="AD_vehicleMenu_load"							 text="Погрузка продуктов..." />
 		<text name="AD_routeCheck_loose"								 text="Одиночная путевая точка без соединений" />
 		<text name="AD_routeCheck_deadEnd"							 text="Тупик: от этой путевой точки дальше пути нет" />
 		<text name="AD_routeCheck_trap"								 text="Односторонняя ловушка: путевых точек, куда можно въехать, но нельзя выехать: %s" />

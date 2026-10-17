@@ -1,4 +1,4 @@
--- moves several waypoints at once (tidy-up tools), as one undo step
+-- moves several waypoints at once (tidy-up tools), or changes their flags (speed zones), as one undo step
 AutoDriveMoveWayPointsEvent = {}
 AutoDriveMoveWayPointsEvent_mt = Class(AutoDriveMoveWayPointsEvent, Event)
 
@@ -9,7 +9,7 @@ function AutoDriveMoveWayPointsEvent.emptyNew()
     return self
 end
 
--- moves: list of {id, x, y, z}
+-- moves: list of {id, x, y, z, flags (nil: unchanged)}
 function AutoDriveMoveWayPointsEvent.new(moves)
     local self = AutoDriveMoveWayPointsEvent.emptyNew()
     self.moves = moves
@@ -23,6 +23,7 @@ function AutoDriveMoveWayPointsEvent:writeStream(streamId, connection)
         streamWriteFloat32(streamId, move.x)
         streamWriteFloat32(streamId, move.y)
         streamWriteFloat32(streamId, move.z)
+        streamWriteInt32(streamId, move.flags or -1)
     end
 end
 
@@ -34,7 +35,11 @@ function AutoDriveMoveWayPointsEvent:readStream(streamId, connection)
         local x = streamReadFloat32(streamId)
         local y = streamReadFloat32(streamId)
         local z = streamReadFloat32(streamId)
-        self.moves[i] = {id = id, x = x, y = y, z = z}
+        local flags = streamReadInt32(streamId)
+        if flags < 0 then
+            flags = nil
+        end
+        self.moves[i] = {id = id, x = x, y = y, z = z, flags = flags}
     end
     self:run(connection)
 end

@@ -238,6 +238,24 @@ function ADUnloadFilter.getPalletState(vehicle)
     return hasPallets, position >= 2
 end
 
+-- Universal Autoload's code table. Each mod has its own global variables, so it is found through the trailer:
+-- the trailer's specializations are the code tables of its specializations. The global name is the fallback.
+function ADUnloadFilter.getUAL(trailer)
+    for _, specialization in ipairs(trailer ~= nil and trailer.specializations or {}) do
+        if type(specialization) == "table" and specialization.isValidForLoading ~= nil and specialization.buildObjectsToUnloadTable ~= nil then
+            return specialization
+        end
+    end
+    if UniversalAutoload ~= nil then
+        return UniversalAutoload
+    end
+    local environment = _G ~= nil and _G.FS25_UniversalAutoload or nil
+    if type(environment) == "table" and environment.UniversalAutoload ~= nil then
+        return environment.UniversalAutoload
+    end
+    return nil
+end
+
 -- AutoDrive:unloadAL (Universal Autoload, unload position left / behind / right): like Universal Autoload's own
 -- unloading, but only the pallets of allowed products are set down; the rest stays and is strapped again.
 -- Returns true if it handled the unloading (a limit is set), false to let Universal Autoload unload everything.
@@ -245,7 +263,7 @@ function ADUnloadFilter.unloadALSelected(trailer, vehicle, unloadPosition)
     if vehicle == nil or vehicle.ad == nil or not ADUnloadFilter.isFiltering(vehicle) then
         return false
     end
-    local ual = UniversalAutoload
+    local ual = ADUnloadFilter.getUAL(trailer)
     local spec = trailer.spec_universalAutoload
     if ual == nil or spec == nil or spec.loadedObjects == nil or ual.buildObjectsToUnloadTable == nil or ual.unloadObject == nil then
         -- an unknown Universal Autoload version: better unload nothing than everything
@@ -338,11 +356,16 @@ end
 function ADUnloadFilter.getRows(choices, set)
     local rows = {}
     local listed = {}
-    for fillType, litres in pairs(choices) do
+    for fillType, choice in pairs(choices) do
         local name = g_fillTypeManager:getFillTypeNameByIndex(fillType)
         if name ~= nil then
             listed[name] = true
-            table.insert(rows, {fillType = fillType, name = name, title = g_fillTypeManager:getFillTypeTitleByIndex(fillType) or name, litres = litres, selected = set ~= nil and set[name] == true})
+            -- a choice is litres, or {litres, count} for pallets near the vehicle (load products)
+            local litres, count = choice, nil
+            if type(choice) == "table" then
+                litres, count = choice.litres, choice.count
+            end
+            table.insert(rows, {fillType = fillType, name = name, title = g_fillTypeManager:getFillTypeTitleByIndex(fillType) or name, litres = litres, count = count, selected = set ~= nil and set[name] == true})
         end
     end
     -- chosen products that are not on board / not taken nearby any more
@@ -367,15 +390,20 @@ end
 
 function ADUnloadFilter.registerSavegameKeys(schemaSavegame)
     schemaSavegame:register(XMLValueType.STRING, "vehicles.vehicle(?).AutoDrive#unloadFilter", "AutoDrive: products this vehicle unloads")
+    schemaSavegame:register(XMLValueType.STRING, "vehicles.vehicle(?).AutoDrive#loadFilter", "AutoDrive: pallets this vehicle loads")
 end
 
 function ADUnloadFilter.loadFromXML(vehicle, xmlFile, key)
     ADUnloadFilter.setVehicleFilter(vehicle, ADUnloadFilter.fromText(xmlFile:getValue(key .. "#unloadFilter")))
+    ADUnloadFilter.setVehicleLoadFilter(vehicle, ADUnloadFilter.fromText(xmlFile:getValue(key .. "#loadFilter")))
 end
 
 function ADUnloadFilter.saveToXML(vehicle, xmlFile, key)
     if not ADUnloadFilter.isEmpty(vehicle.ad.unloadFilter) then
         xmlFile:setValue(key .. "#unloadFilter", ADUnloadFilter.toText(vehicle.ad.unloadFilter))
+    end
+    if not ADUnloadFilter.isEmpty(vehicle.ad.loadFilter) then
+        xmlFile:setValue(key .. "#loadFilter", ADUnloadFilter.toText(vehicle.ad.loadFilter))
     end
 end
 
@@ -409,4 +437,129 @@ function ADUnloadFilter.saveTargetFilters(xmlFile)
         setXMLString(xmlFile, key .. "#name", name)
         setXMLString(xmlFile, key .. "#fillTypes", ADUnloadFilter.toText(ADUnloadFilter.targetFilters[name]))
     end
+end
+
+-------------------------------------------------------------------------------
+-- load products: which pallets / bales Universal Autoload loads while AutoDrive drives the vehicle
+-- (vehicle.ad.loadFilter, saved with the vehicle). Universal Autoload checks every object with
+-- isValidForLoading; an extra check is added in front of it once.
+-------------------------------------------------------------------------------
+
+-- pallets near the vehicle or its load target count as choices
+ADUnloadFilter.LOAD_CHOICE_DISTANCE = 60
+
+function ADUnloadFilter.setVehicleLoadFilter(vehicle, set)
+    if ADUnloadFilter.isEmpty(set) then
+        vehicle.ad.loadFilter = nil
+    else
+        vehicle.ad.loadFilter = ADUnloadFilter.copy(set)
+    end
+end
+
+function ADUnloadFilter.hasLoadFilter(vehicle)
+    return vehicle ~= nil and vehicle.ad ~= nil and not ADUnloadFilter.isEmpty(vehicle.ad.loadFilter)
+end
+
+-- may Universal Autoload load this object onto the trailer?
+function ADUnloadFilter.allowsLoad(trailer, object)
+    local spec = trailer.spec_universalAutoload
+    if spec ~= nil and spec.autoLoadingObjects ~= nil and spec.autoLoadingObjects[object] ~= nil then
+        -- put on by a forklift or by hand
+        return true
+    end
+    local vehicle = trailer.getRootVehicle ~= nil and trailer:getRootVehicle() or trailer
+    if not ADUnloadFilter.hasLoadFilter(vehicle) or vehicle.ad.stateModule == nil or not vehicle.ad.stateModule:isActive() then
+        return true
+    end
+    local fillType = ADUnloadFilter.getObjectProduct(object)
+    local name = fillType ~= nil and g_fillTypeManager:getFillTypeNameByIndex(fillType) or nil
+    return name ~= nil and vehicle.ad.loadFilter[name] == true
+end
+
+-- adds the check to Universal Autoload (once per code table)
+function ADUnloadFilter.installLoadHook(trailer)
+    local ual = ADUnloadFilter.getUAL(trailer)
+    if ual == nil or ual.isValidForLoading == nil or ual.adLoadFilterInstalled then
+        return ual ~= nil and ual.adLoadFilterInstalled == true
+    end
+    local original = ual.isValidForLoading
+    ual.isValidForLoading = function(self, object, ...)
+        if not original(self, object, ...) then
+            return false
+        end
+        local ok, allowed = pcall(ADUnloadFilter.allowsLoad, self, object)
+        return not ok or allowed
+    end
+    ual.adLoadFilterInstalled = true
+    return true
+end
+
+-- AutoDrive:setALOn: the material Universal Autoload is set to before loading. With load products the
+-- material is "all" and the check above chooses the objects (Universal Autoload takes one material only)
+function ADUnloadFilter.getLoadMaterial(trailer, vehicle, fillType)
+    if ADUnloadFilter.hasLoadFilter(vehicle) and ADUnloadFilter.installLoadHook(trailer) then
+        return AutoDrive.UAL_FILLTYPE_ALL
+    end
+    return fillType
+end
+
+-- choices for the dialog: pallets and bales near the vehicle or its load target, and what is loaded
+-- returns fillType -> {litres, count}
+function ADUnloadFilter.getLoadChoices(vehicle)
+    local places = {}
+    if vehicle.components ~= nil then
+        local x, _, z = getWorldTranslation(vehicle.components[1].node)
+        table.insert(places, {x = x, z = z})
+    end
+    local target = vehicle.ad.stateModule:getFirstMarker()
+    local wp = target ~= nil and ADGraphManager:getWayPointById(target.id) or nil
+    if wp ~= nil then
+        table.insert(places, {x = wp.x, z = wp.z})
+    end
+    local choices = {}
+    local function add(object)
+        local fillType, litres = ADUnloadFilter.getObjectProduct(object)
+        if fillType ~= nil and fillType ~= FillType.UNKNOWN then
+            local entry = choices[fillType] or {litres = 0, count = 0}
+            entry.litres = entry.litres + (litres or 0)
+            entry.count = entry.count + 1
+            choices[fillType] = entry
+        end
+    end
+    local function isNear(object)
+        local node = object.rootNode or (object.components ~= nil and object.components[1] ~= nil and object.components[1].node) or object.nodeId
+        if node == nil or node == 0 then
+            return false
+        end
+        local x, _, z = getWorldTranslation(node)
+        for _, place in ipairs(places) do
+            if MathUtil.vector2Length(x - place.x, z - place.z) <= ADUnloadFilter.LOAD_CHOICE_DISTANCE then
+                return true
+            end
+        end
+        return false
+    end
+    -- pallets are vehicles of their own, bales are items
+    for _, object in pairs(AutoDrive.getAllVehicles() or {}) do
+        if (object.isPallet or object.spec_pallet ~= nil) and isNear(object) then
+            add(object)
+        end
+    end
+    local itemSystem = g_currentMission ~= nil and g_currentMission.itemSystem or nil
+    for _, object in pairs(itemSystem ~= nil and itemSystem.itemsToSave or {}) do
+        local item = object.item or object
+        if type(item) == "table" and item.isa ~= nil and Bale ~= nil and item:isa(Bale) and isNear(item) then
+            add(item)
+        end
+    end
+    -- what the vehicle's trailers have in reach right now
+    for _, unit in ipairs(AutoDrive.getAllUnits(vehicle) or {}) do
+        local spec = unit.spec_universalAutoload
+        for object, _ in pairs(spec ~= nil and spec.availableObjects or {}) do
+            if not isNear(object) then
+                add(object)
+            end
+        end
+    end
+    return choices
 end

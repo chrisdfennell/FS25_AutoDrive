@@ -68,9 +68,11 @@ The route between the two waypoints is the shortest chain of connections. Only w
 ### Fleet overview
 **Ctrl+Alt+I** (in a vehicle or on foot) lists every AutoDrive vehicle of your farm: name, mode, destination, load, fuel, work schedule and what it is doing. A stopped vehicle shows its latest warning or error from the notifications. **Enter vehicle** takes you to it, **Start / stop** starts or stops its job.
 
-**Double click a vehicle** for its menu: **Send to...** (choose a destination: the vehicle switches to "drive to" with that destination and starts, without you getting in), **Unload products...** and **Enter vehicle**. The list updates every second.
+**Double click a vehicle** for its menu: **Send to...** (choose a destination: the vehicle switches to "drive to" with that destination and starts, without you getting in), **Load products...**, **Unload products...** and **Enter vehicle**. The list updates every second.
 
 **Statistics** switches the list to the driver statistics, counted while AutoDrive drives the vehicle: distance, time driving, time standing and waiting (with its share of the total), deliveries, the amount unloaded, the crops hauled most and their estimated value at today's best selling price. The button cycles through total, today, the last 7 in-game days and back to the status. A delivery is counted when the vehicle's load goes down by at least 500 l (or a quarter of a smaller trailer) and then stays. In this view, **Reset statistics** sets the selected vehicle back to zero. The numbers are saved with the savegame.
+
+**Fleet on the map:** the big map (ESC > Map) shows every AutoDrive vehicle of your farm as a coloured square with its name: green driving, yellow switched on but standing, red stopped with a problem, grey idle. Switch it off in the user settings (**Fleet on the map**).
 
 ### Waypoint actions
 In the editor, point the mouse at a waypoint (or select one) and press:
@@ -78,6 +80,15 @@ In the editor, point the mouse at a waypoint (or select one) and press:
 - **Ctrl+Alt+H**: vehicles sound the horn there
 - **Ctrl+Alt+L**: vehicles switch the lights on there, off there, or leave them (each press)
 - **Ctrl+Alt+B**: unlock load: the tension belts of the vehicle and its trailers open there (like the lock load key), and close again before the vehicle drives on. The vehicle has to stop there: use it on the selling target, or add a wait on the same waypoint
+
+### Speed zones
+In the editor, click a waypoint to select it, point the mouse at another waypoint further along the same route and press:
+- **Ctrl+Alt+1**: 15 km/h zone
+- **Ctrl+Alt+2**: 30 km/h zone
+- **Ctrl+Alt+3**: 50 km/h zone
+- **Ctrl+Alt+0**: remove the zone
+
+All waypoints of the route between the two get the zone (or just the one waypoint you select or point at). Vehicles never drive faster than the zone on it, and brake in time before it, so they enter at the zone speed. Use them for yards, villages, bridges or a tight farm gate. Zone waypoints get a small coloured ball (15 red, 30 orange, 50 blue); the speed is written above the first waypoint of a zone. One undo step per key press. Like the waypoint actions, zones are saved with the routes and sent to all players.
 
 Waypoints with actions get an orange marker with the actions written above it. Every change is one undo step. The actions are stored in the waypoint data, so they are saved, exported with the routes manager and sent to all players. The official AutoDrive ignores them.
 
@@ -92,6 +103,11 @@ Choose what is unloaded at the unload target, the rest stays on board:
 **Pallets (Universal Autoload):** the list shows the pallets on board. When AutoDrive unloads at the target, only the pallets of the chosen products are set down, the others stay on the trailer and are strapped again. This needs the vehicle setting **"Autoload: Unload Position"** on left, behind or right: with "center" Universal Autoload only opens the belts, and a selling point then takes every pallet it accepts (the dialog shows a hint). Best price counts the pallets too. AutoDrive's "what to load" list in the HUD shows what is on board first, with the amount and a loaded-trailer icon.
 
 A trailer only tips if its product is allowed by the vehicle, by the target, and by best price "each product". A stop with something left on board is done when nothing has been tipped for 3 seconds. Best price only plans with the products the vehicle unloads and only at targets that take them. This works per trailer (or per compartment that tips on its own).
+
+### Load products (pallets)
+Choose which pallets the vehicle picks up with **Universal Autoload**. Open it with **Ctrl+Alt+G** in the vehicle, with the HUD button for the automatic pickup target (pickup and deliver and load mode, while that upstream feature is off), or in the fleet overview: double click a vehicle > **Load products...**. The list shows the products of the pallets within 60 m of the vehicle or of its load target, with how many there are; click products to select them, **All products** removes the limit.
+
+When AutoDrive loads, Universal Autoload then picks up only pallets of the chosen products and leaves the others. Pallets you put on by hand or with a forklift are always accepted, and nothing changes while you drive yourself. The choice is saved with the vehicle and sent to all players. Bulk loading (silos, piles) is not affected.
 
 ### Best price unloading
 New vehicle setting **Best price unloading**, for pickup and deliver and for unload. Put all the selling points you want to use as targets into one folder and choose one of them as the unload target. When the vehicle is loaded and sets off to unload, it compares the current prices of the selling points next to these targets (within 60 m) and tells you where it goes:
@@ -122,7 +138,9 @@ New vehicle settings **Start work at** and **Stop work at** (in-game hours, `--:
 | Waypoint action: horn | Ctrl + Alt + H |
 | Waypoint action: lights | Ctrl + Alt + L |
 | Waypoint action: unlock load | Ctrl + Alt + B |
+| Speed zone 15 / 30 / 50 km/h, remove | Ctrl + Alt + 1 / 2 / 3 / 0 |
 | Unload products (vehicle, or the target under the mouse in the editor) | Ctrl + Alt + F |
+| Load products (pallets) | Ctrl + Alt + G |
 | Route preview | Ctrl + Alt + P |
 
 All key bindings can be changed in the game's control settings. Like AutoDrive's other keys, they work while you sit in a vehicle; the fleet overview also works on foot.

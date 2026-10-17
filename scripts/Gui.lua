@@ -203,9 +203,9 @@ function AutoDrive.onOpenSendTo(vehicle)
 end
 
 -- unload products of a vehicle, or of a target (marker) when given
-function AutoDrive.onOpenUnloadFilter(vehicle, marker)
+function AutoDrive.onOpenUnloadFilter(vehicle, marker, isLoad)
 	if not AutoDrive.gui.ADUnloadFilterGui.isOpen then
-		AutoDrive.gui.ADUnloadFilterGui:setSubject(vehicle, marker)
+		AutoDrive.gui.ADUnloadFilterGui:setSubject(vehicle, marker, isLoad)
 		AutoDriveUnloadFilterEvent.request(vehicle)
 		AutoDrive.gui.ADUnloadFilterGui.refreshTimer = 500
 		g_gui:showDialog("ADUnloadFilterGui")

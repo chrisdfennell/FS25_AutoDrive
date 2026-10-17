@@ -990,6 +990,19 @@ AutoDrive.settings.iconSetToUse = {
     isUserSpecific = true
 }
 
+-- Overdrive: AutoDrive vehicles on the big map (ADFleetMap)
+AutoDrive.settings.showFleetOnMap = {
+    values = {false, true},
+    texts = {"gui_ad_no", "gui_ad_yes"},
+    default = 2,
+    current = 2,
+    text = "gui_ad_showFleetOnMap",
+    tooltip = "gui_ad_showFleetOnMap_tooltip",
+    translate = true,
+    isVehicleSpecific = false,
+    isUserSpecific = true
+}
+
 AutoDrive.settings.wideHUD = {
     values = {false, true},
     texts = {"gui_ad_no", "gui_ad_yes"},

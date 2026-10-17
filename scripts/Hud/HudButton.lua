@@ -235,6 +235,12 @@ function ADHudButton:getNewState(vehicle)
     end
 
     if self.primaryAction == "input_toggleAutomaticPickupTarget" then
+        -- Overdrive: while the automatic pickup target is switched off, this button opens the load products
+        if ADHudButton.opensLoadProducts(self, vehicle) then
+            self.toolTip = "input_ADLoadProducts"
+        else
+            self.toolTip = "input_ADToggleAutomaticPickupTarget"
+        end
         if vehicle.ad.stateModule:getMode() == AutoDrive.MODE_LOAD
             or vehicle.ad.stateModule:getMode() == AutoDrive.MODE_UNLOAD
             or vehicle.ad.stateModule:getMode() == AutoDrive.MODE_DRIVETO
@@ -289,6 +295,10 @@ function ADHudButton:act(vehicle, posX, posY, isDown, isUp, button)
         -- Overdrive: unload products (see opensUnloadProducts)
         if button == 1 and isUp and ADHudButton.opensUnloadProducts(self, vehicle) then
             AutoDrive.onOpenUnloadFilter(vehicle, nil)
+            return true
+        end
+        if button == 1 and isUp and ADHudButton.opensLoadProducts(self, vehicle) then
+            AutoDrive.onOpenUnloadFilter(vehicle, nil, true)
             return true
         end
 
@@ -366,4 +376,11 @@ function ADHudButton.opensUnloadProducts(button, vehicle)
     local mode = vehicle.ad.stateModule:getMode()
     return button.primaryAction == "input_toggleAutomaticUnloadTarget" and not AutoDrive.automaticUnloadTarget
         and (mode == AutoDrive.MODE_PICKUPANDDELIVER or mode == AutoDrive.MODE_UNLOAD)
+end
+
+-- the automatic pickup target button opens the load products while that upstream feature is switched off
+function ADHudButton.opensLoadProducts(button, vehicle)
+    local mode = vehicle.ad.stateModule:getMode()
+    return button.primaryAction == "input_toggleAutomaticPickupTarget" and not AutoDrive.automaticPickupTarget
+        and (mode == AutoDrive.MODE_PICKUPANDDELIVER or mode == AutoDrive.MODE_LOAD)
 end

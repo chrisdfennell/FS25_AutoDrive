@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Beszállás a járműbe" />
 		<text name="AD_fleet_unloadOnly"							 text="csak ezt rakja le: %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Raklapok: a járműbeállításokban állítsd az &quot;Autoload: Kirakodási pozíció&quot; értékét balra, hátra vagy jobbra, különben az értékesítési pont minden raklapot átvesz" />
+		<text name="gui_ad_showFleetOnMap"							 text="Flotta a térképen" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Megmutatja az AutoDrive járműveidet a nagy térképen: zöld halad, sárga bekapcsolva, de áll, piros hiba miatt megállt, szürke tétlen" />
+		<text name="input_ADZone15"							 text="AD: 15 km/h sebességzóna (a kijelölt ponttól a mutatott pontig)" />
+		<text name="input_ADZone30"							 text="AD: 30 km/h sebességzóna (a kijelölt ponttól a mutatott pontig)" />
+		<text name="input_ADZone50"							 text="AD: 50 km/h sebességzóna (a kijelölt ponttól a mutatott pontig)" />
+		<text name="input_ADZoneOff"							 text="AD: Sebességzóna törlése (a kijelölt ponttól a mutatott pontig)" />
+		<text name="AD_zone_text"							 text="%s zóna" />
+		<text name="AD_zone_howTo"							 text="Sebességzóna: a szerkesztőben kattints egy pontra a kijelöléshez, mutass az egérrel egy másik pontra ugyanazon az útvonalon, és nyomd meg a gombot (vagy csak jelölj ki vagy mutass egy pontot)" />
+		<text name="AD_zone_set"							 text="%s sebességzóna %s ponton (Ctrl+Z a visszavonáshoz)" />
+		<text name="AD_zone_cleared"							 text="Sebességzóna törölve %s pontról" />
+		<text name="AD_undoStep_speedZone_1"							 text="sebességzóna módosítva" />
+		<text name="AD_undoStep_speedZone"							 text="sebességzóna módosítva %s ponton" />
+		<text name="input_ADLoadProducts"							 text="AD: Termékek rakodása (a jármű által felrakott raklapok)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Rakodás: %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s raklap a közelben" />
+		<text name="AD_loadFilter_none"							 text="Nincs raklap a jármű vagy a rakodási cél közelében" />
+		<text name="AD_vehicleMenu_load"							 text="Termékek rakodása..." />
 		<text name="AD_routeCheck_loose"								 text="Különálló útpont, semmilyen kapcsolat nélkül" />
 		<text name="AD_routeCheck_deadEnd"							 text="Zsákutca: ebből az útpontból nincs továbbhaladás" />
 		<text name="AD_routeCheck_trap"								 text="Egyirányú csapda: %s útpont, ahová be lehet hajtani, de kijutni nem" />

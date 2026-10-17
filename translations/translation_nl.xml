@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Voertuig instappen" />
 		<text name="AD_fleet_unloadOnly"							 text="lost alleen %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Pallets: zet &quot;Autoload: Los positie&quot; in de voertuiginstellingen op links, achter of rechts, anders neemt het verkooppunt alle pallets" />
+		<text name="gui_ad_showFleetOnMap"							 text="Vloot op de kaart" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Toont je AutoDrive-voertuigen op de grote kaart: groen rijdt, geel aan maar staat stil, rood gestopt met een probleem, grijs inactief" />
+		<text name="input_ADZone15"							 text="AD: Snelheidszone 15 km/h (van geselecteerd tot aangewezen punt)" />
+		<text name="input_ADZone30"							 text="AD: Snelheidszone 30 km/h (van geselecteerd tot aangewezen punt)" />
+		<text name="input_ADZone50"							 text="AD: Snelheidszone 50 km/h (van geselecteerd tot aangewezen punt)" />
+		<text name="input_ADZoneOff"							 text="AD: Snelheidszone verwijderen (van geselecteerd tot aangewezen punt)" />
+		<text name="AD_zone_text"							 text="zone %s" />
+		<text name="AD_zone_howTo"							 text="Snelheidszone: klik in de editor op een punt om het te selecteren, wijs met de muis een ander punt op dezelfde route aan en druk op de toets (of selecteer of wijs maar één punt aan)" />
+		<text name="AD_zone_set"							 text="Snelheidszone %s op %s punten (Ctrl+Z om ongedaan te maken)" />
+		<text name="AD_zone_cleared"							 text="Snelheidszone verwijderd van %s punten" />
+		<text name="AD_undoStep_speedZone_1"							 text="snelheidszone gewijzigd" />
+		<text name="AD_undoStep_speedZone"							 text="snelheidszone gewijzigd op %s punten" />
+		<text name="input_ADLoadProducts"							 text="AD: Producten laden (pallets die het voertuig laadt)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Laden in %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s pallets in de buurt" />
+		<text name="AD_loadFilter_none"							 text="Geen pallets bij het voertuig of zijn laadbestemming" />
+		<text name="AD_vehicleMenu_load"							 text="Producten laden..." />
 		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
 		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
 		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />

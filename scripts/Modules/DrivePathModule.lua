@@ -340,6 +340,9 @@ function ADDrivePathModule:followWaypoints(dt)
         end
     end
 
+    -- Overdrive: speed zones, every frame (the limits above are only computed every few frames)
+    self.speedLimit = math.min(self.speedLimit, ADWaypointActions.getZoneSpeedLimit(self))
+
     local maxAngle = 60
     if self.vehicle.maxRotation then
         if self.vehicle.maxRotation > (2 * math.pi) then

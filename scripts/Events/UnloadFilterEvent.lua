@@ -12,6 +12,7 @@ AutoDriveUnloadFilterEvent.TYPE_VEHICLE = 1
 AutoDriveUnloadFilterEvent.TYPE_TARGET = 2
 AutoDriveUnloadFilterEvent.TYPE_REQUEST = 3
 AutoDriveUnloadFilterEvent.TYPE_ALL_TARGETS = 4
+AutoDriveUnloadFilterEvent.TYPE_VEHICLE_LOAD = 5
 
 function AutoDriveUnloadFilterEvent.emptyNew()
     local self = Event.new(AutoDriveUnloadFilterEvent_mt)
@@ -46,13 +47,13 @@ end
 
 function AutoDriveUnloadFilterEvent:writeStream(streamId, connection)
     streamWriteUIntN(streamId, self.eventType, 3)
-    if self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE or self.eventType == AutoDriveUnloadFilterEvent.TYPE_REQUEST then
+    if self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE or self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE_LOAD or self.eventType == AutoDriveUnloadFilterEvent.TYPE_REQUEST then
         streamWriteBool(streamId, self.vehicle ~= nil)
         if self.vehicle ~= nil then
             NetworkUtil.writeNodeObjectId(streamId, NetworkUtil.getObjectId(self.vehicle))
         end
     end
-    if self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE then
+    if self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE or self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE_LOAD then
         writeList(streamId, self.products)
     elseif self.eventType == AutoDriveUnloadFilterEvent.TYPE_TARGET then
         streamWriteString(streamId, self.targetName)
@@ -74,12 +75,12 @@ function AutoDriveUnloadFilterEvent:readStream(streamId, connection)
     self.eventType = streamReadUIntN(streamId, 3)
     self.products = {}
     self.targets = {}
-    if self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE or self.eventType == AutoDriveUnloadFilterEvent.TYPE_REQUEST then
+    if self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE or self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE_LOAD or self.eventType == AutoDriveUnloadFilterEvent.TYPE_REQUEST then
         if streamReadBool(streamId) then
             self.vehicle = NetworkUtil.getObject(NetworkUtil.readNodeObjectId(streamId))
         end
     end
-    if self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE then
+    if self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE or self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE_LOAD then
         self.products = readList(streamId)
     elseif self.eventType == AutoDriveUnloadFilterEvent.TYPE_TARGET then
         self.targetName = streamReadString(streamId)
@@ -98,6 +99,10 @@ function AutoDriveUnloadFilterEvent:run(connection)
         if self.vehicle ~= nil and self.vehicle.ad ~= nil then
             ADUnloadFilter.setVehicleFilter(self.vehicle, ADUnloadFilter.fromList(self.products))
         end
+    elseif self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE_LOAD then
+        if self.vehicle ~= nil and self.vehicle.ad ~= nil then
+            ADUnloadFilter.setVehicleLoadFilter(self.vehicle, ADUnloadFilter.fromList(self.products))
+        end
     elseif self.eventType == AutoDriveUnloadFilterEvent.TYPE_TARGET then
         ADUnloadFilter.setTargetFilter(self.targetName, ADUnloadFilter.fromList(self.products))
     elseif self.eventType == AutoDriveUnloadFilterEvent.TYPE_ALL_TARGETS then
@@ -109,12 +114,13 @@ function AutoDriveUnloadFilterEvent:run(connection)
     if g_server == nil then
         return
     end
-    if self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE or self.eventType == AutoDriveUnloadFilterEvent.TYPE_TARGET then
+    if self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE or self.eventType == AutoDriveUnloadFilterEvent.TYPE_VEHICLE_LOAD or self.eventType == AutoDriveUnloadFilterEvent.TYPE_TARGET then
         -- changed on the server: all clients get the new list
         g_server:broadcastEvent(AutoDriveUnloadFilterEvent.new(self.eventType, self.vehicle, self.targetName, self.products), false)
     elseif self.eventType == AutoDriveUnloadFilterEvent.TYPE_REQUEST and connection ~= nil then
         if self.vehicle ~= nil and self.vehicle.ad ~= nil then
             connection:sendEvent(AutoDriveUnloadFilterEvent.new(AutoDriveUnloadFilterEvent.TYPE_VEHICLE, self.vehicle, nil, ADUnloadFilter.toList(self.vehicle.ad.unloadFilter)))
+            connection:sendEvent(AutoDriveUnloadFilterEvent.new(AutoDriveUnloadFilterEvent.TYPE_VEHICLE_LOAD, self.vehicle, nil, ADUnloadFilter.toList(self.vehicle.ad.loadFilter)))
         end
         local targets = {}
         for name, set in pairs(ADUnloadFilter.targetFilters) do
@@ -134,6 +140,10 @@ end
 
 function AutoDriveUnloadFilterEvent.setVehicle(vehicle, set)
     send(AutoDriveUnloadFilterEvent.new(AutoDriveUnloadFilterEvent.TYPE_VEHICLE, vehicle, nil, ADUnloadFilter.toList(set)))
+end
+
+function AutoDriveUnloadFilterEvent.setVehicleLoad(vehicle, set)
+    send(AutoDriveUnloadFilterEvent.new(AutoDriveUnloadFilterEvent.TYPE_VEHICLE_LOAD, vehicle, nil, ADUnloadFilter.toList(set)))
 end
 
 function AutoDriveUnloadFilterEvent.setTarget(name, set)

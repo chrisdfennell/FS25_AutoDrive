@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Wsiądź do pojazdu" />
 		<text name="AD_fleet_unloadOnly"							 text="rozładowuje tylko %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Palety: w ustawieniach pojazdu ustaw &quot;Auto Ładowanie: Pozycja rozładowywania&quot; na lewo, tył lub prawo, inaczej punkt sprzedaży zabierze wszystkie palety" />
+		<text name="gui_ad_showFleetOnMap"							 text="Flota na mapie" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Pokazuje twoje pojazdy AutoDrive na dużej mapie: zielony jedzie, żółty włączony, ale stoi, czerwony zatrzymany z problemem, szary bezczynny" />
+		<text name="input_ADZone15"							 text="AD: Strefa prędkości 15 km/h (od wybranego do wskazanego punktu)" />
+		<text name="input_ADZone30"							 text="AD: Strefa prędkości 30 km/h (od wybranego do wskazanego punktu)" />
+		<text name="input_ADZone50"							 text="AD: Strefa prędkości 50 km/h (od wybranego do wskazanego punktu)" />
+		<text name="input_ADZoneOff"							 text="AD: Usuń strefę prędkości (od wybranego do wskazanego punktu)" />
+		<text name="AD_zone_text"							 text="strefa %s" />
+		<text name="AD_zone_howTo"							 text="Strefa prędkości: w edytorze kliknij punkt, aby go wybrać, wskaż myszą inny punkt na tej samej trasie i naciśnij klawisz (albo tylko wybierz lub wskaż jeden punkt)" />
+		<text name="AD_zone_set"							 text="Strefa prędkości %s na %s punktach (Ctrl+Z, aby cofnąć)" />
+		<text name="AD_zone_cleared"							 text="Strefa prędkości usunięta z %s punktów" />
+		<text name="AD_undoStep_speedZone_1"							 text="zmieniono strefę prędkości" />
+		<text name="AD_undoStep_speedZone"							 text="zmieniono strefę prędkości na %s punktach" />
+		<text name="input_ADLoadProducts"							 text="AD: Załaduj produkty (palety, które ładuje pojazd)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Załadunek: %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s palet w pobliżu" />
+		<text name="AD_loadFilter_none"							 text="Brak palet w pobliżu pojazdu lub jego celu załadunku" />
+		<text name="AD_vehicleMenu_load"							 text="Załaduj produkty..." />
 		<text name="AD_routeCheck_loose"								 text="Luźny punkt trasy bez żadnego połączenia" />
 		<text name="AD_routeCheck_deadEnd"							 text="Ślepa uliczka: z tego punktu trasy nie ma dalszej drogi" />
 		<text name="AD_routeCheck_trap"								 text="Pułapka jednokierunkowa: punkty trasy, do których można wjechać, ale nie można wyjechać: %s" />

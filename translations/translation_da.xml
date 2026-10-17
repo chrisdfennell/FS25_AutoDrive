@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Stig ind i maskinen" />
 		<text name="AD_fleet_unloadOnly"							 text="aflæsser kun %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Paller: sæt &quot;AutoLoad: Aflæsposition&quot; til venstre, bagved eller højre i maskinindstillingerne, ellers tager salgsstedet alle paller" />
+		<text name="gui_ad_showFleetOnMap"							 text="Flåde på kortet" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Viser dine AutoDrive-maskiner på det store kort: grøn kører, gul tændt men holder stille, rød stoppet med et problem, grå inaktiv" />
+		<text name="input_ADZone15"							 text="AD: Hastighedszone 15 km/t (fra valgt til udpeget punkt)" />
+		<text name="input_ADZone30"							 text="AD: Hastighedszone 30 km/t (fra valgt til udpeget punkt)" />
+		<text name="input_ADZone50"							 text="AD: Hastighedszone 50 km/t (fra valgt til udpeget punkt)" />
+		<text name="input_ADZoneOff"							 text="AD: Fjern hastighedszone (fra valgt til udpeget punkt)" />
+		<text name="AD_zone_text"							 text="%s zone" />
+		<text name="AD_zone_howTo"							 text="Hastighedszone: klik i editoren på et punkt for at vælge det, peg med musen på et andet punkt på samme rute og tryk på tasten (eller vælg eller peg kun på ét punkt)" />
+		<text name="AD_zone_set"							 text="Hastighedszone %s på %s punkter (Ctrl+Z for at fortryde)" />
+		<text name="AD_zone_cleared"							 text="Hastighedszone fjernet fra %s punkter" />
+		<text name="AD_undoStep_speedZone_1"							 text="hastighedszone ændret" />
+		<text name="AD_undoStep_speedZone"							 text="hastighedszone ændret på %s punkter" />
+		<text name="input_ADLoadProducts"							 text="AD: Læs produkter (paller som maskinen læsser)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Læs i %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s paller i nærheden" />
+		<text name="AD_loadFilter_none"							 text="Ingen paller nær maskinen eller dens læssemål" />
+		<text name="AD_vehicleMenu_load"							 text="Læs produkter..." />
 		<text name="AD_routeCheck_loose"								 text="Løst vejpunkt uden nogen forbindelse" />
 		<text name="AD_routeCheck_deadEnd"							 text="Blindgyde: ingen vej videre fra dette vejpunkt" />
 		<text name="AD_routeCheck_trap"								 text="Ensrettet fælde: %s vejpunkter, man kan køre ind i, men ikke ud af" />

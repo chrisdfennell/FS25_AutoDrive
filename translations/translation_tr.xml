@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Araca bin" />
 		<text name="AD_fleet_unloadOnly"							 text="yalnızca %s boşaltıyor" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Paletler: araç ayarlarında &quot;AutoLoad: Unload Position&quot; seçeneğini sol, arka veya sağ yapın, yoksa satış noktası tüm paletleri alır" />
+		<text name="gui_ad_showFleetOnMap"							 text="Haritada filo" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="AutoDrive araçlarını büyük haritada gösterir: yeşil sürüyor, sarı açık ama duruyor, kırmızı bir sorun nedeniyle durdu, gri boşta" />
+		<text name="input_ADZone15"							 text="AD: 15 km/s hız bölgesi (seçili noktadan gösterilen noktaya)" />
+		<text name="input_ADZone30"							 text="AD: 30 km/s hız bölgesi (seçili noktadan gösterilen noktaya)" />
+		<text name="input_ADZone50"							 text="AD: 50 km/s hız bölgesi (seçili noktadan gösterilen noktaya)" />
+		<text name="input_ADZoneOff"							 text="AD: Hız bölgesini kaldır (seçili noktadan gösterilen noktaya)" />
+		<text name="AD_zone_text"							 text="%s bölgesi" />
+		<text name="AD_zone_howTo"							 text="Hız bölgesi: editörde bir noktaya tıklayarak seçin, fareyi aynı rotadaki başka bir noktaya getirin ve tuşa basın (ya da yalnızca bir nokta seçin veya gösterin)" />
+		<text name="AD_zone_set"							 text="%s hız bölgesi, %s noktada (geri almak için Ctrl+Z)" />
+		<text name="AD_zone_cleared"							 text="Hız bölgesi %s noktadan kaldırıldı" />
+		<text name="AD_undoStep_speedZone_1"							 text="hız bölgesi değiştirildi" />
+		<text name="AD_undoStep_speedZone"							 text="hız bölgesi %s noktada değiştirildi" />
+		<text name="input_ADLoadProducts"							 text="AD: Ürünleri yükle (aracın yüklediği paletler)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Yükleme: %s" />
+		<text name="AD_loadFilter_nearby"							 text="yakında %s palet" />
+		<text name="AD_loadFilter_none"							 text="Aracın veya yükleme hedefinin yakınında palet yok" />
+		<text name="AD_vehicleMenu_load"							 text="Ürünleri yükle..." />
 		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
 		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
 		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />

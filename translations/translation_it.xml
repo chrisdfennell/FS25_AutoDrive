@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Sali sul veicolo" />
 		<text name="AD_fleet_unloadOnly"							 text="scarica solo %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Pallet: nelle impostazioni del veicolo imposta &quot;Autoload: Posizione di scarico&quot; su sinistra, dietro o destra, altrimenti il punto vendita prende tutti i pallet" />
+		<text name="gui_ad_showFleetOnMap"							 text="Flotta sulla mappa" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Mostra i tuoi veicoli AutoDrive sulla mappa grande: verde in marcia, giallo acceso ma fermo, rosso fermo per un problema, grigio inattivo" />
+		<text name="input_ADZone15"							 text="AD: Zona di velocità 15 km/h (dal punto selezionato a quello puntato)" />
+		<text name="input_ADZone30"							 text="AD: Zona di velocità 30 km/h (dal punto selezionato a quello puntato)" />
+		<text name="input_ADZone50"							 text="AD: Zona di velocità 50 km/h (dal punto selezionato a quello puntato)" />
+		<text name="input_ADZoneOff"							 text="AD: Rimuovi zona di velocità (dal punto selezionato a quello puntato)" />
+		<text name="AD_zone_text"							 text="zona %s" />
+		<text name="AD_zone_howTo"							 text="Zona di velocità: nell'editor fai clic su un punto per selezionarlo, punta il mouse su un altro punto dello stesso percorso e premi il tasto (oppure seleziona o punta un solo punto)" />
+		<text name="AD_zone_set"							 text="Zona di velocità %s su %s punti (Ctrl+Z per annullare)" />
+		<text name="AD_zone_cleared"							 text="Zona di velocità rimossa da %s punti" />
+		<text name="AD_undoStep_speedZone_1"							 text="zona di velocità modificata" />
+		<text name="AD_undoStep_speedZone"							 text="zona di velocità modificata su %s punti" />
+		<text name="input_ADLoadProducts"							 text="AD: Carica prodotti (pallet che il veicolo carica)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Carica in %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s pallet nelle vicinanze" />
+		<text name="AD_loadFilter_none"							 text="Nessun pallet vicino al veicolo o alla sua destinazione di carico" />
+		<text name="AD_vehicleMenu_load"							 text="Carica prodotti..." />
 		<text name="AD_routeCheck_loose"								 text="Nodo isolato senza alcun collegamento" />
 		<text name="AD_routeCheck_deadEnd"							 text="Vicolo cieco: nessuna via per proseguire da questo nodo" />
 		<text name="AD_routeCheck_trap"								 text="Trappola a senso unico: %s nodi in cui si può entrare ma da cui non si può uscire" />

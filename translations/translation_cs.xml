@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="进入车辆" />
 		<text name="AD_fleet_unloadOnly"							 text="只卸载 %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="托盘：请在车辆设置中把“自动装载：卸载位置”设为左侧、后方或右侧，否则出售点会收走所有托盘" />
+		<text name="gui_ad_showFleetOnMap"							 text="地图上的车队" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="在大地图上显示你的 AutoDrive 车辆：绿色行驶中，黄色已开启但停着，红色因问题停止，灰色空闲" />
+		<text name="input_ADZone15"							 text="AD: 限速区 15 km/h（从选中的路点到指向的路点）" />
+		<text name="input_ADZone30"							 text="AD: 限速区 30 km/h（从选中的路点到指向的路点）" />
+		<text name="input_ADZone50"							 text="AD: 限速区 50 km/h（从选中的路点到指向的路点）" />
+		<text name="input_ADZoneOff"							 text="AD: 移除限速区（从选中的路点到指向的路点）" />
+		<text name="AD_zone_text"							 text="%s 区" />
+		<text name="AD_zone_howTo"							 text="限速区：在编辑器中点击一个路点将其选中，将鼠标指向同一路线上的另一个路点并按键（或只选中或指向一个路点）" />
+		<text name="AD_zone_set"							 text="限速区 %s，共 %s 个路点（Ctrl+Z 撤销）" />
+		<text name="AD_zone_cleared"							 text="已从 %s 个路点移除限速区" />
+		<text name="AD_undoStep_speedZone_1"							 text="已更改限速区" />
+		<text name="AD_undoStep_speedZone"							 text="已在 %s 个路点上更改限速区" />
+		<text name="input_ADLoadProducts"							 text="AD: 装载产品（车辆装载的托盘）" />
+		<text name="gui_ad_loadFilterTitle"							 text="装入 %s" />
+		<text name="AD_loadFilter_nearby"							 text="附近有 %s 个托盘" />
+		<text name="AD_loadFilter_none"							 text="车辆或其装载目标附近没有托盘" />
+		<text name="AD_vehicleMenu_load"							 text="装载产品..." />
 		<text name="AD_routeCheck_loose"								 text="没有任何连接的孤立航点" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：从此航点无法继续前进" />
 		<text name="AD_routeCheck_trap"								 text="单向陷阱：%s 个航点只能驶入无法驶出" />

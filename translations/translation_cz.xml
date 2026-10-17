@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Nastoupit do vozidla" />
 		<text name="AD_fleet_unloadOnly"							 text="vykládá jen %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Palety: v nastavení vozidla nastavte &quot;Automatické nakládání: Poloha vykládání&quot; na vlevo, vzadu nebo vpravo, jinak prodejní místo vezme všechny palety" />
+		<text name="gui_ad_showFleetOnMap"							 text="Flotila na mapě" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Ukazuje vaše vozidla AutoDrive na velké mapě: zelená jede, žlutá zapnutá, ale stojí, červená zastavená kvůli problému, šedá nečinná" />
+		<text name="input_ADZone15"							 text="AD: Rychlostní zóna 15 km/h (od vybraného k ukázanému bodu)" />
+		<text name="input_ADZone30"							 text="AD: Rychlostní zóna 30 km/h (od vybraného k ukázanému bodu)" />
+		<text name="input_ADZone50"							 text="AD: Rychlostní zóna 50 km/h (od vybraného k ukázanému bodu)" />
+		<text name="input_ADZoneOff"							 text="AD: Odstranit rychlostní zónu (od vybraného k ukázanému bodu)" />
+		<text name="AD_zone_text"							 text="zóna %s" />
+		<text name="AD_zone_howTo"							 text="Rychlostní zóna: v editoru klikněte na bod, abyste ho vybrali, ukažte myší na jiný bod na stejné trase a stiskněte klávesu (nebo jen vyberte či ukažte jeden bod)" />
+		<text name="AD_zone_set"							 text="Rychlostní zóna %s na %s bodech (Ctrl+Z pro zpět)" />
+		<text name="AD_zone_cleared"							 text="Rychlostní zóna odstraněna z %s bodů" />
+		<text name="AD_undoStep_speedZone_1"							 text="rychlostní zóna změněna" />
+		<text name="AD_undoStep_speedZone"							 text="rychlostní zóna změněna na %s bodech" />
+		<text name="input_ADLoadProducts"							 text="AD: Naložit produkty (palety, které vozidlo nakládá)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Nakládka: %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s palet poblíž" />
+		<text name="AD_loadFilter_none"							 text="Žádné palety u vozidla ani u jeho cíle nakládky" />
+		<text name="AD_vehicleMenu_load"							 text="Naložit produkty..." />
 		<text name="AD_routeCheck_loose"								 text="Osamocený bod trasy bez jakéhokoli spojení" />
 		<text name="AD_routeCheck_deadEnd"							 text="Slepá ulice: z tohoto bodu trasy nevede žádná cesta dál" />
 		<text name="AD_routeCheck_trap"								 text="Jednosměrná past: počet bodů trasy, do kterých lze vjet, ale ne vyjet: %s" />

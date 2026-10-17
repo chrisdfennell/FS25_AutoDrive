@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="Entrar no veículo" />
 		<text name="AD_fleet_unloadOnly"							 text="descarrega apenas %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="Paletes: nas definições do veículo, defina &quot;AutoLoad: Unload Position&quot; para esquerda, atrás ou direita, senão o ponto de venda leva todas as paletes" />
+		<text name="gui_ad_showFleetOnMap"							 text="Frota no mapa" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="Mostra os seus veículos AutoDrive no mapa grande: verde a conduzir, amarelo ligado mas parado, vermelho parado com problema, cinzento inativo" />
+		<text name="input_ADZone15"							 text="AD: Zona de velocidade 15 km/h (do ponto selecionado ao apontado)" />
+		<text name="input_ADZone30"							 text="AD: Zona de velocidade 30 km/h (do ponto selecionado ao apontado)" />
+		<text name="input_ADZone50"							 text="AD: Zona de velocidade 50 km/h (do ponto selecionado ao apontado)" />
+		<text name="input_ADZoneOff"							 text="AD: Remover zona de velocidade (do ponto selecionado ao apontado)" />
+		<text name="AD_zone_text"							 text="zona %s" />
+		<text name="AD_zone_howTo"							 text="Zona de velocidade: no editor, clique num ponto para o selecionar, aponte o rato para outro ponto da mesma rota e prima a tecla (ou apenas selecione ou aponte um ponto)" />
+		<text name="AD_zone_set"							 text="Zona de velocidade %s em %s pontos (Ctrl+Z para desfazer)" />
+		<text name="AD_zone_cleared"							 text="Zona de velocidade removida de %s pontos" />
+		<text name="AD_undoStep_speedZone_1"							 text="zona de velocidade alterada" />
+		<text name="AD_undoStep_speedZone"							 text="zona de velocidade alterada em %s pontos" />
+		<text name="input_ADLoadProducts"							 text="AD: Carregar produtos (paletes que o veículo carrega)" />
+		<text name="gui_ad_loadFilterTitle"							 text="Carregar em %s" />
+		<text name="AD_loadFilter_nearby"							 text="%s paletes por perto" />
+		<text name="AD_loadFilter_none"							 text="Nenhuma palete perto do veículo ou do seu destino de carga" />
+		<text name="AD_vehicleMenu_load"							 text="Carregar produtos..." />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem qualquer ligação" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há caminho a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de sentido único: %s waypoints onde se pode entrar mas não sair" />

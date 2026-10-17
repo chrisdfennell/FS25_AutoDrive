@@ -543,6 +543,23 @@
 		<text name="AD_vehicleMenu_enter"							 text="進入車輛" />
 		<text name="AD_fleet_unloadOnly"							 text="只卸載 %s" />
 		<text name="AD_unloadFilter_palletPosition"							 text="棧板：請在車輛設定中把「自動裝載：卸載位置」設為左側、後方或右側，否則出售點會收走所有棧板" />
+		<text name="gui_ad_showFleetOnMap"							 text="地圖上的車隊" />
+		<text name="gui_ad_showFleetOnMap_tooltip"							 text="在大地圖上顯示你的 AutoDrive 車輛：綠色行駛中，黃色已開啟但停著，紅色因問題停止，灰色閒置" />
+		<text name="input_ADZone15"							 text="AD: 限速區 15 km/h（從選取的路點到指向的路點）" />
+		<text name="input_ADZone30"							 text="AD: 限速區 30 km/h（從選取的路點到指向的路點）" />
+		<text name="input_ADZone50"							 text="AD: 限速區 50 km/h（從選取的路點到指向的路點）" />
+		<text name="input_ADZoneOff"							 text="AD: 移除限速區（從選取的路點到指向的路點）" />
+		<text name="AD_zone_text"							 text="%s 區" />
+		<text name="AD_zone_howTo"							 text="限速區：在編輯器中點擊一個路點將其選取，將滑鼠指向同一路線上的另一個路點並按鍵（或只選取或指向一個路點）" />
+		<text name="AD_zone_set"							 text="限速區 %s，共 %s 個路點（Ctrl+Z 復原）" />
+		<text name="AD_zone_cleared"							 text="已從 %s 個路點移除限速區" />
+		<text name="AD_undoStep_speedZone_1"							 text="已變更限速區" />
+		<text name="AD_undoStep_speedZone"							 text="已在 %s 個路點上變更限速區" />
+		<text name="input_ADLoadProducts"							 text="AD: 裝載產品（車輛裝載的棧板）" />
+		<text name="gui_ad_loadFilterTitle"							 text="裝入 %s" />
+		<text name="AD_loadFilter_nearby"							 text="附近有 %s 個棧板" />
+		<text name="AD_loadFilter_none"							 text="車輛或其裝載目標附近沒有棧板" />
+		<text name="AD_vehicleMenu_load"							 text="裝載產品..." />
 		<text name="AD_routeCheck_loose"								 text="沒有任何連接的孤立航點" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：從此航點無法繼續前進" />
 		<text name="AD_routeCheck_trap"								 text="單向陷阱：%s 個航點只能駛入無法駛出" />
