@@ -143,7 +143,9 @@ Run the same locally with `pip install lupa`, then `python tools/ci_checks.py` a
 
 **Releasing:** push a tag like `v3.0.1.4-od.2`, or start the [Release workflow](.github/workflows/release.yml) from the Actions tab and enter the version (with "dry run" it only builds). The workflow runs all checks, builds `FS25_AutoDrive.zip` with [tools/build_mod.py](tools/build_mod.py), writes the release notes and publishes the release. The version must start with the version in `modDesc.xml`.
 
-The mod zip contains `drawing`, `gui`, `scripts`, `sounds`, `textures`, `translations`, `icon_AutoDrive.dds`, `modDesc.xml`, `register.lua`, `LICENSE` and `credits.txt`. The `tools` and `.github` folders are for development and not part of the mod.
+The mod zip contains `drawing`, `gui`, `scripts`, `sounds`, `textures`, `translations`, `icon_AutoDrive.dds`, `modDesc.xml`, `register.lua`, `LICENSE` (as `LICENSE.txt`) and `credits.txt`. The `tools` and `.github` folders are for development and not part of the mod.
+
+GIANTS' mod checks allow at most 128 files in a mod, so the build joins the scripts that `register.lua` loads into `scripts/OverdriveBundle1.lua` (same order, each file in its own `do ... end` block) and the zip's `register.lua` loads that; the scripts the game loads itself as specializations stay separate. The source tree is unchanged. The build writes `FS25_AutoDrive.bundlemap.txt` next to the zip to find the source file of a bundle line in an error message.
 
 ---
 
