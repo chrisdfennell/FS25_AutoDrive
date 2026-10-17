@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Вкл." />
 		<text name="AD_wpPanel_off"							 text="Выкл." />
 		<text name="AD_wpPanel_zone"							 text="Зона скорости" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Зона на дороге (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Техника" />
+		<text name="AD_wpPanel_driveHere"							 text="Ехать сюда" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Отправить технику" />
+		<text name="AD_wpPanel_road"							 text="Дорога: %s точек" />
+		<text name="AD_wpPanel_direction"							 text="Направление" />
+		<text name="AD_wpPanel_oneWay"							 text="Одностороннее" />
+		<text name="AD_wpPanel_twoWay"							 text="В обе стороны" />
+		<text name="AD_wpPanel_flip"							 text="Развернуть" />
+		<text name="AD_wpPanel_tidy"							 text="Упорядочить" />
+		<text name="AD_wpPanel_even"							 text="Равномерно" />
+		<text name="AD_wpPanel_straight"							 text="Прямо" />
+		<text name="AD_wpPanel_smooth"							 text="Сгладить" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Отправить в %s" />
+		<text name="AD_sendTo_busy"							 text="занята" />
 		<text name="AD_routeCheck_loose"								 text="Одиночная путевая точка без соединений" />
 		<text name="AD_routeCheck_deadEnd"							 text="Тупик: от этой путевой точки дальше пути нет" />
 		<text name="AD_routeCheck_trap"								 text="Односторонняя ловушка: путевых точек, куда можно въехать, но нельзя выехать: %s" />

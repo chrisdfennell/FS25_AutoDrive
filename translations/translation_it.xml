@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Accese" />
 		<text name="AD_wpPanel_off"							 text="Spente" />
 		<text name="AD_wpPanel_zone"							 text="Zona di velocità" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Zona sulla strada (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Veicoli" />
+		<text name="AD_wpPanel_driveHere"							 text="Guida qui" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Invia veicolo" />
+		<text name="AD_wpPanel_road"							 text="Strada: %s nodi" />
+		<text name="AD_wpPanel_direction"							 text="Direzione" />
+		<text name="AD_wpPanel_oneWay"							 text="Senso unico" />
+		<text name="AD_wpPanel_twoWay"							 text="Doppio senso" />
+		<text name="AD_wpPanel_flip"							 text="Inverti" />
+		<text name="AD_wpPanel_tidy"							 text="Riordina" />
+		<text name="AD_wpPanel_even"							 text="Uniforme" />
+		<text name="AD_wpPanel_straight"							 text="Dritto" />
+		<text name="AD_wpPanel_smooth"							 text="Ammorbidisci" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Invia a %s" />
+		<text name="AD_sendTo_busy"							 text="occupato" />
 		<text name="AD_routeCheck_loose"								 text="Nodo isolato senza alcun collegamento" />
 		<text name="AD_routeCheck_deadEnd"							 text="Vicolo cieco: nessuna via per proseguire da questo nodo" />
 		<text name="AD_routeCheck_trap"								 text="Trappola a senso unico: %s nodi in cui si può entrare ma da cui non si può uscire" />

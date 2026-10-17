@@ -1,6 +1,7 @@
 -- Waypoint panel: while a waypoint is selected in the editor (left click), a panel next to the AutoDrive HUD
--- shows it and changes it: target (create / rename / remove), side road, the connections to its neighbours,
--- the waypoint actions and the speed zone (this waypoint or the road up to the next junctions).
+-- shows it and changes it: target (create / rename / remove, drive or send a vehicle there), side road, the
+-- connections to its neighbours (switch or remove), the waypoint actions and the speed zone, and for the road
+-- it is on (up to the next junctions): speed zone, side road, direction and the tidy-up tools.
 -- Every click is one undo step and goes through the same events as the editor keys. User setting waypointPanel.
 
 ADWaypointPanel = {}
@@ -118,39 +119,92 @@ local function linkedIds(wp)
     return ids
 end
 
+-- one side of the road: the waypoints from firstId on, and the junction it ends at (nil at a dead end or a loop)
+local function walkRoad(startId, firstId, visited)
+    local ids = {}
+    local previousId, id = startId, firstId
+    while id ~= nil and #ids < ADWaypointPanel.MAX_ROAD do
+        if visited[id] then
+            return ids, nil
+        end
+        local links = linkedIds(ADGraphManager:getWayPointById(id))
+        if #links > 2 then
+            return ids, id
+        end
+        visited[id] = true
+        table.insert(ids, id)
+        local nextId = nil
+        for _, linkId in ipairs(links) do
+            if linkId ~= previousId then
+                nextId = linkId
+            end
+        end
+        previousId, id = id, nextId
+    end
+    return ids, nil
+end
+
 -- the road the waypoint is on: along both sides until a junction (a waypoint linked to more than two others)
--- or a dead end. Junctions are not part of it. A junction on its own is its own road.
-function ADWaypointPanel.getRoad(startId)
+-- or a dead end. road: its waypoints (junctions are not part of it; a junction on its own is its own road);
+-- chain: the same in driving order along the road, with the junctions at both ends (for directions and tidying)
+function ADWaypointPanel.getRoadChain(startId)
     local start = ADGraphManager:getWayPointById(startId)
     if start == nil then
-        return {}
+        return {}, {}
     end
-    local road = {startId}
     local startLinks = linkedIds(start)
     if #startLinks > 2 then
-        return road
+        return {startId}, {startId}
     end
     local visited = {[startId] = true}
-    for _, firstId in ipairs(startLinks) do
-        local previousId, id = startId, firstId
-        while id ~= nil and not visited[id] and #road < ADWaypointPanel.MAX_ROAD do
-            local wp = ADGraphManager:getWayPointById(id)
-            local links = linkedIds(wp)
-            if #links > 2 then
-                break
-            end
-            visited[id] = true
-            table.insert(road, id)
-            local nextId = nil
-            for _, linkId in ipairs(links) do
-                if linkId ~= previousId then
-                    nextId = linkId
-                end
-            end
-            previousId, id = id, nextId
+    local sides = {}
+    for i, firstId in ipairs(startLinks) do
+        local ids, junction = walkRoad(startId, firstId, visited)
+        sides[i] = {ids = ids, junction = junction}
+    end
+    local road, chain = {}, {}
+    if sides[1] ~= nil then
+        if sides[1].junction ~= nil then
+            table.insert(chain, sides[1].junction)
+        end
+        for j = #sides[1].ids, 1, -1 do
+            table.insert(chain, sides[1].ids[j])
+            table.insert(road, sides[1].ids[j])
         end
     end
-    return road
+    table.insert(chain, startId)
+    table.insert(road, startId)
+    if sides[2] ~= nil then
+        for _, id in ipairs(sides[2].ids) do
+            table.insert(chain, id)
+            table.insert(road, id)
+        end
+        if sides[2].junction ~= nil then
+            table.insert(chain, sides[2].junction)
+        end
+    end
+    -- driving order: the way most one-way connections along it go
+    local forward, backward = 0, 0
+    for i = 1, #chain - 1 do
+        local direction = ADWaypointPanel.getDirection(ADGraphManager:getWayPointById(chain[i]), ADGraphManager:getWayPointById(chain[i + 1]))
+        if direction == ADWaypointPanel.OUT then
+            forward = forward + 1
+        elseif direction == ADWaypointPanel.IN then
+            backward = backward + 1
+        end
+    end
+    if backward > forward then
+        local reversed = {}
+        for i = #chain, 1, -1 do
+            table.insert(reversed, chain[i])
+        end
+        chain = reversed
+    end
+    return road, chain
+end
+
+function ADWaypointPanel.getRoad(startId)
+    return (ADWaypointPanel.getRoadChain(startId))
 end
 
 function ADWaypointPanel.getConnections(wp)
@@ -160,9 +214,9 @@ function ADWaypointPanel.getConnections(wp)
         cache.id = wp.id
         cache.time = now
         cache.connections = ADWaypointPanel.findConnections(wp)
-        cache.road = ADWaypointPanel.getRoad(wp.id)
+        cache.road, cache.chain = ADWaypointPanel.getRoadChain(wp.id)
     end
-    return cache.connections, cache.road
+    return cache.connections, cache.road, cache.chain
 end
 
 function ADWaypointPanel.invalidate()
@@ -190,6 +244,104 @@ function ADWaypointPanel.setZoneOnIds(ids, zone)
     end
 end
 
+function ADWaypointPanel.setSideRoadOnIds(ids, on)
+    local moves = {}
+    for _, id in ipairs(ids) do
+        local wp = ADGraphManager:getWayPointById(id)
+        if wp ~= nil and ADGraphManager:getIsPointSubPrio(id) ~= on then
+            local flags = on and (wp.flags + AutoDrive.FLAG_SUBPRIO) or (wp.flags - AutoDrive.FLAG_SUBPRIO)
+            table.insert(moves, {id = id, x = wp.x, y = wp.y, z = wp.z, flags = flags})
+        end
+    end
+    if #moves > 0 then
+        ADGraphManager:moveWayPoints(moves)
+    end
+end
+
+-- the connection between each two waypoints of the chain, seen from the first (getDirection)
+function ADWaypointPanel.getChainDirections(chain)
+    local directions = {}
+    for i = 1, #chain - 1 do
+        local a, b = ADGraphManager:getWayPointById(chain[i]), ADGraphManager:getWayPointById(chain[i + 1])
+        directions[i] = (a ~= nil and b ~= nil) and ADWaypointPanel.getDirection(a, b) or false
+    end
+    return directions
+end
+
+-- "oneWay" (along the chain), "twoWay", or nil when the road is mixed
+function ADWaypointPanel.getRoadDirection(chain)
+    local directions = ADWaypointPanel.getChainDirections(chain)
+    if #directions == 0 then
+        return nil
+    end
+    local first = directions[1]
+    for _, direction in ipairs(directions) do
+        if direction ~= first then
+            return nil
+        end
+    end
+    if first == ADWaypointPanel.OUT then
+        return "oneWay"
+    elseif first == ADWaypointPanel.DUAL then
+        return "twoWay"
+    end
+    return nil
+end
+
+-- the whole road one-way (in its driving order), two-way, or turned round; one undo step
+function ADWaypointPanel.setRoadDirection(chain, mode)
+    local links = {}
+    for i, direction in ipairs(ADWaypointPanel.getChainDirections(chain)) do
+        local a, b = chain[i], chain[i + 1]
+        if mode == "oneWay" and direction ~= ADWaypointPanel.OUT then
+            table.insert(links, {a, b, ADWaypointPanel.OUT})
+        elseif mode == "twoWay" and direction ~= ADWaypointPanel.DUAL then
+            table.insert(links, {a, b, ADWaypointPanel.DUAL})
+        elseif mode == "flip" then
+            if direction == ADWaypointPanel.OUT then
+                table.insert(links, {a, b, ADWaypointPanel.IN})
+            elseif direction == ADWaypointPanel.IN then
+                table.insert(links, {a, b, ADWaypointPanel.OUT})
+            elseif direction == ADWaypointPanel.REVERSE then
+                table.insert(links, {b, a, ADWaypointPanel.REVERSE})
+            elseif direction == ADWaypointPanel.REVERSE_IN then
+                table.insert(links, {a, b, ADWaypointPanel.REVERSE})
+            end
+        end
+    end
+    AutoDriveRoadEvent.sendEvent(links)
+end
+
+function ADWaypointPanel.removeConnection(wp, connection)
+    AutoDriveRoadEvent.sendEvent({{wp.id, connection.id, AutoDriveRoadEvent.REMOVE}})
+end
+
+function ADWaypointPanel.tidyRoad(chain, tool)
+    local moves = ADTidyTools.getMoves(tool, chain, ADTidyTools.groundHeight)
+    if moves == nil or #moves == 0 then
+        ADMessagesManager:addMessage(nil, ADMessagesManager.messageTypes.INFO, g_i18n:getText("AD_tidy_nothing"), 3000)
+        return
+    end
+    ADGraphManager:moveWayPoints(moves)
+    ADMessagesManager:addMessage(nil, ADMessagesManager.messageTypes.INFO, string.format(g_i18n:getText("AD_tidy_done"), #moves, #chain), 4000)
+end
+
+-- the index of the target on the waypoint in the list of targets (what the targets are known by)
+function ADWaypointPanel.getMarkerIndex(wayPointId)
+    for index, marker in pairs(ADGraphManager:getMapMarkers()) do
+        if marker.id == wayPointId and not marker.isADDebug then
+            return index
+        end
+    end
+    return nil
+end
+
+function ADWaypointPanel.driveHere(vehicle, markerIndex)
+    if vehicle ~= nil and vehicle.ad ~= nil and markerIndex ~= nil then
+        AutoDriveSendToEvent.sendEvent(vehicle, markerIndex)
+    end
+end
+
 function ADWaypointPanel.cycleConnection(wp, connection)
     local neighbour = ADGraphManager:getWayPointById(connection.id)
     if neighbour ~= nil then
@@ -202,8 +354,8 @@ function ADWaypointPanel.createTarget(wp)
     AutoDrive.onOpenEnterTargetName()
 end
 
-function ADWaypointPanel.renameTarget(marker)
-    AutoDrive.editMapMarkerId = marker.markerIndex
+function ADWaypointPanel.renameTarget(markerIndex)
+    AutoDrive.editMapMarkerId = markerIndex
     AutoDrive.onOpenEnterTargetName()
 end
 
@@ -216,8 +368,8 @@ local function text(key, ...)
     return g_i18n:getText(key)
 end
 
-local function choice(label, active, onClick)
-    return {text = label, active = active, onClick = onClick}
+local function choice(label, active, onClick, width)
+    return {text = label, active = active, onClick = onClick, width = width}
 end
 
 -- a row: label on the left, buttons on the right; title rows are bold
@@ -234,13 +386,17 @@ function ADWaypointPanel.getRows(vehicle, wp)
         local x, _, z = getWorldTranslation(vehicle.components[1].node)
         distance = MathUtil.vector2Length(wp.x - x, wp.z - z)
     end
-    table.insert(rows, {label = text("AD_wpPanel_info", string.format("%.1f", wp.y), string.format("%d", distance)), wide = true})
+    table.insert(rows, {label = text("AD_wpPanel_info", string.format("%.1f", wp.y), string.format("%d", math.floor(distance + 0.5))), wide = true})
 
-    local marker = ADGraphManager:getMapMarkerByWayPointId(wp.id)
-    if marker ~= nil and not marker.isADDebug then
+    local markerIndex = ADWaypointPanel.getMarkerIndex(wp.id)
+    local marker = markerIndex ~= nil and ADGraphManager:getMapMarkerById(markerIndex) or nil
+    if marker ~= nil then
         table.insert(rows, {label = text("AD_wpPanel_target", marker.name), buttons = {
-            choice(text("AD_wpPanel_rename"), false, function() ADWaypointPanel.renameTarget(marker) end),
+            choice(text("AD_wpPanel_rename"), false, function() ADWaypointPanel.renameTarget(markerIndex) end),
             choice(text("AD_wpPanel_remove"), false, function() ADGraphManager:removeMapMarkerByWayPoint(wp.id) end)}})
+        table.insert(rows, {label = text("AD_wpPanel_vehicles"), buttons = {
+            choice(text("AD_wpPanel_driveHere"), false, function() ADWaypointPanel.driveHere(vehicle, markerIndex) end),
+            choice(text("AD_wpPanel_sendVehicle"), false, function() AutoDrive.onOpenSendTo(nil, markerIndex) end)}})
     else
         table.insert(rows, {label = text("AD_wpPanel_noTarget"), buttons = {
             choice(text("AD_wpPanel_create"), false, function() ADWaypointPanel.createTarget(wp) end)}})
@@ -251,7 +407,7 @@ function ADWaypointPanel.getRows(vehicle, wp)
         choice(text("gui_ad_no"), not subPrio, function() if subPrio then ADGraphManager:toggleWayPointAsSubPrio(wp.id) end end),
         choice(text("gui_ad_yes"), subPrio, function() if not subPrio then ADGraphManager:toggleWayPointAsSubPrio(wp.id) end end)}})
 
-    local connections, road = ADWaypointPanel.getConnections(wp)
+    local connections, road, chain = ADWaypointPanel.getConnections(wp)
     local numIn, numOut = 0, 0
     for _, connection in ipairs(connections) do
         local d = connection.direction
@@ -269,7 +425,8 @@ function ADWaypointPanel.getRows(vehicle, wp)
             break
         end
         table.insert(rows, {label = text("AD_wpPanel_connection", tostring(connection.id)), highlight = connection.id, buttons = {
-            choice(text("AD_wpPanel_dir_" .. connection.direction) .. "  >", false, function() ADWaypointPanel.cycleConnection(wp, connection) end)}})
+            choice(text("AD_wpPanel_dir_" .. connection.direction) .. "  >", false, function() ADWaypointPanel.cycleConnection(wp, connection) end, 4),
+            choice("X", false, function() ADWaypointPanel.removeConnection(wp, connection) end, 1)}})
     end
 
     table.insert(rows, {label = text("AD_wpPanel_actions"), bold = true, wide = true})
@@ -312,16 +469,38 @@ function ADWaypointPanel.getRows(vehicle, wp)
         return buttons
     end
     table.insert(rows, {label = text("AD_wpPanel_zone"), buttons = zoneButtons({wp.id}, zone)})
-    -- the road: a zone button is lit when the whole road has that zone
-    local roadZone = zone
+
+    -- the road up to the junctions: a button is lit when the whole road is like that
+    table.insert(rows, {label = text("AD_wpPanel_road", #road), bold = true, wide = true})
+    local roadZone, roadSide, roadNormal = zone, true, true
     for _, id in ipairs(road) do
         local other = ADGraphManager:getWayPointById(id)
         if other == nil or A.getZone(other.flags) ~= zone then
             roadZone = -1
-            break
+        end
+        if ADGraphManager:getIsPointSubPrio(id) then
+            roadNormal = false
+        else
+            roadSide = false
         end
     end
-    table.insert(rows, {label = text("AD_wpPanel_zoneRoad", #road), buttons = zoneButtons(road, roadZone)})
+    table.insert(rows, {label = text("AD_wpPanel_zone"), section = "road", buttons = zoneButtons(road, roadZone)})
+    table.insert(rows, {label = text("AD_wpPanel_sideRoad"), section = "road", buttons = {
+        choice(text("gui_ad_no"), roadNormal, function() ADWaypointPanel.setSideRoadOnIds(road, false) end),
+        choice(text("gui_ad_yes"), roadSide, function() ADWaypointPanel.setSideRoadOnIds(road, true) end)}})
+    if #chain >= 2 then
+        local roadDirection = ADWaypointPanel.getRoadDirection(chain)
+        table.insert(rows, {label = text("AD_wpPanel_direction"), section = "road", buttons = {
+            choice(text("AD_wpPanel_oneWay"), roadDirection == "oneWay", function() ADWaypointPanel.setRoadDirection(chain, "oneWay") end),
+            choice(text("AD_wpPanel_twoWay"), roadDirection == "twoWay", function() ADWaypointPanel.setRoadDirection(chain, "twoWay") end),
+            choice(text("AD_wpPanel_flip"), false, function() ADWaypointPanel.setRoadDirection(chain, "flip") end)}})
+    end
+    if #chain >= 3 then
+        table.insert(rows, {label = text("AD_wpPanel_tidy"), section = "road", buttons = {
+            choice(text("AD_wpPanel_even"), false, function() ADWaypointPanel.tidyRoad(chain, ADTidyTools.EVEN) end),
+            choice(text("AD_wpPanel_straight"), false, function() ADWaypointPanel.tidyRoad(chain, ADTidyTools.STRAIGHTEN) end),
+            choice(text("AD_wpPanel_smooth"), false, function() ADWaypointPanel.tidyRoad(chain, ADTidyTools.SMOOTH) end)}})
+    end
     return rows
 end
 
@@ -348,6 +527,9 @@ function ADWaypointPanel.layout(hud, numRows, uiScale)
     end
     local top = (hud.rowHeader or hud.posY) + (hud.headerHeight or 0)
     local y = math.max(0, math.min(top, 1) - height)
+    if y + height > 1 then
+        y = math.max(0, 1 - height)
+    end
     return {x = x, y = y, width = width, height = height, rowHeight = rowHeight, gapX = gapX, gapY = gapY}
 end
 
@@ -399,9 +581,16 @@ function ADWaypointPanel:draw(vehicle, hud)
                 areaWidth = l.rowHeight * g_screenHeight / g_screenWidth
                 areaX = innerX + innerWidth - areaWidth
             end
-            local buttonWidth = (areaWidth - (#row.buttons - 1) * l.gapX) / #row.buttons
-            for j, button in ipairs(row.buttons) do
-                local rect = {x = areaX + (j - 1) * (buttonWidth + l.gapX), y = rowY + l.gapY / 2, width = buttonWidth, height = l.rowHeight - l.gapY}
+            local weights = 0
+            for _, button in ipairs(row.buttons) do
+                weights = weights + (button.width or 1)
+            end
+            local unit = (areaWidth - (#row.buttons - 1) * l.gapX) / weights
+            local buttonX = areaX
+            for _, button in ipairs(row.buttons) do
+                local buttonWidth = unit * (button.width or 1)
+                local rect = {x = buttonX, y = rowY + l.gapY / 2, width = buttonWidth, height = l.rowHeight - l.gapY}
+                buttonX = buttonX + buttonWidth + l.gapX
                 local hovered = inside(rect, mouseX, mouseY)
                 local color = ADWaypointPanel.COLOR_BUTTON
                 if button.active then
@@ -426,7 +615,7 @@ function ADWaypointPanel:draw(vehicle, hud)
                 renderText(rect.x + rect.width / 2, textY, fontSize, fitText(fontSize, button.text, rect.width - l.gapX))
                 setTextAlignment(RenderText.ALIGN_LEFT)
                 rect.onClick = button.onClick
-                rect.text, rect.row, rect.active = button.text, row.label, button.active
+                rect.text, rect.row, rect.active, rect.section = button.text, row.label, button.active, row.section
                 table.insert(self.buttons, rect)
             end
         end

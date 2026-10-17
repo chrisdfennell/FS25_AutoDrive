@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Ligar" />
 		<text name="AD_wpPanel_off"							 text="Desligar" />
 		<text name="AD_wpPanel_zone"							 text="Zona de velocidade" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Zona na estrada (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Veículos" />
+		<text name="AD_wpPanel_driveHere"							 text="Conduzir até aqui" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Enviar veículo" />
+		<text name="AD_wpPanel_road"							 text="Estrada: %s waypoints" />
+		<text name="AD_wpPanel_direction"							 text="Direção" />
+		<text name="AD_wpPanel_oneWay"							 text="Sentido único" />
+		<text name="AD_wpPanel_twoWay"							 text="Dois sentidos" />
+		<text name="AD_wpPanel_flip"							 text="Inverter" />
+		<text name="AD_wpPanel_tidy"							 text="Arrumar" />
+		<text name="AD_wpPanel_even"							 text="Uniforme" />
+		<text name="AD_wpPanel_straight"							 text="Reta" />
+		<text name="AD_wpPanel_smooth"							 text="Suavizar" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Enviar para %s" />
+		<text name="AD_sendTo_busy"							 text="ocupado" />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem qualquer ligação" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há caminho a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de sentido único: %s waypoints onde se pode entrar mas não sair" />

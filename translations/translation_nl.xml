@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Aan" />
 		<text name="AD_wpPanel_off"							 text="Uit" />
 		<text name="AD_wpPanel_zone"							 text="Snelheidszone" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Zone op weg (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Voertuigen" />
+		<text name="AD_wpPanel_driveHere"							 text="Hierheen rijden" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Voertuig sturen" />
+		<text name="AD_wpPanel_road"							 text="Weg: %s routepunten" />
+		<text name="AD_wpPanel_direction"							 text="Richting" />
+		<text name="AD_wpPanel_oneWay"							 text="Eenrichting" />
+		<text name="AD_wpPanel_twoWay"							 text="Tweerichting" />
+		<text name="AD_wpPanel_flip"							 text="Omdraaien" />
+		<text name="AD_wpPanel_tidy"							 text="Opruimen" />
+		<text name="AD_wpPanel_even"							 text="Gelijkmatig" />
+		<text name="AD_wpPanel_straight"							 text="Recht" />
+		<text name="AD_wpPanel_smooth"							 text="Gladmaken" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Sturen naar %s" />
+		<text name="AD_sendTo_busy"							 text="bezig" />
 		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
 		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
 		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />

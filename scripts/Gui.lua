@@ -195,9 +195,14 @@ function AutoDrive.onOpenRouteCheck()
 	end
 end
 
-function AutoDrive.onOpenSendTo(vehicle)
+-- markerIndex (waypoint panel): choose a vehicle for this target instead of a target for the vehicle
+function AutoDrive.onOpenSendTo(vehicle, markerIndex)
 	if not AutoDrive.gui.ADSendToGui.isOpen then
-		AutoDrive.gui.ADSendToGui:setVehicle(vehicle)
+		if markerIndex ~= nil then
+			AutoDrive.gui.ADSendToGui:setTarget(markerIndex)
+		else
+			AutoDrive.gui.ADSendToGui:setVehicle(vehicle)
+		end
 		g_gui:showDialog("ADSendToGui")
 	end
 end

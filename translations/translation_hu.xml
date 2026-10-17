@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Be" />
 		<text name="AD_wpPanel_off"							 text="Ki" />
 		<text name="AD_wpPanel_zone"							 text="Sebességzóna" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Zóna az úton (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Járművek" />
+		<text name="AD_wpPanel_driveHere"							 text="Ide menj" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Jármű küldése" />
+		<text name="AD_wpPanel_road"							 text="Út: %s útpont" />
+		<text name="AD_wpPanel_direction"							 text="Irány" />
+		<text name="AD_wpPanel_oneWay"							 text="Egyirányú" />
+		<text name="AD_wpPanel_twoWay"							 text="Kétirányú" />
+		<text name="AD_wpPanel_flip"							 text="Megfordítás" />
+		<text name="AD_wpPanel_tidy"							 text="Rendezés" />
+		<text name="AD_wpPanel_even"							 text="Egyenletes" />
+		<text name="AD_wpPanel_straight"							 text="Egyenes" />
+		<text name="AD_wpPanel_smooth"							 text="Simítás" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Küldés ide: %s" />
+		<text name="AD_sendTo_busy"							 text="foglalt" />
 		<text name="AD_routeCheck_loose"								 text="Különálló útpont, semmilyen kapcsolat nélkül" />
 		<text name="AD_routeCheck_deadEnd"							 text="Zsákutca: ebből az útpontból nincs továbbhaladás" />
 		<text name="AD_routeCheck_trap"								 text="Egyirányú csapda: %s útpont, ahová be lehet hajtani, de kijutni nem" />

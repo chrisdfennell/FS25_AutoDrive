@@ -57,6 +57,7 @@ source(Utils.getFilename("scripts/Events/StatisticsEvent.lua", g_currentModDirec
 source(Utils.getFilename("scripts/Events/SendToEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/UnloadFilterEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/RouteFixEvent.lua", g_currentModDirectory))
+source(Utils.getFilename("scripts/Events/Graph/RoadEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/RoutesUploadEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/SectionEvent.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Events/Graph/SetConnectionEvent.lua", g_currentModDirectory))

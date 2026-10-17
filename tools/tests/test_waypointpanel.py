@@ -18,7 +18,7 @@ s.execute("""
     end
 """)
 for f in [("Utils", "TidyTools.lua"), ("Events", "Graph", "MoveWayPointEvent.lua"), ("Events", "Graph", "MoveWayPointsEvent.lua"),
-          ("Events", "Graph", "SetConnectionEvent.lua"), ("Gui", "WaypointPanel.lua")]:
+          ("Events", "Graph", "SetConnectionEvent.lua"), ("Events", "Graph", "RoadEvent.lua"), ("Gui", "WaypointPanel.lua")]:
     s.execute(t.read(os.path.join(t.MOD, "scripts", *f)))
 s.globals().setupNetwork(10, 2)
 s.execute("""
@@ -59,14 +59,15 @@ s.execute("""
     V = {ad = {selectedNodeId = 3}, components = {{node = 1}}}
     P = ADWaypointPanel
     function draw() TEXTS_DRAWN = {}; g_time = g_time + 1000; P.safeDraw(V, HUD) end
-    function find(row, text)
+    -- section nil: the rows of the waypoint, "road": the rows of the road
+    function find(row, text, section)
         for _, b in ipairs(P.buttons) do
-            if (row == nil or b.row:find(row, 1, true)) and b.text:find(text, 1, true) == 1 then return b end
+            if (row == nil or b.row:find(row, 1, true)) and b.text:find(text, 1, true) == 1 and b.section == section then return b end
         end
     end
-    function click(row, text)
+    function click(row, text, section)
         draw()
-        local b = find(row, text)
+        local b = find(row, text, section)
         assert(b ~= nil, "no button " .. tostring(row) .. " / " .. text)
         local used = P:mouseEvent(V, b.x + b.width / 2, b.y + b.height / 2, false, true, 1)
         draw()
@@ -98,7 +99,10 @@ assert s.eval("P.cache.connections[2].direction") == s.eval("P.OUT")
 assert s.eval("P.cache.connections[3].id") == 8 and s.eval("P.cache.connections[3].direction") == s.eval("P.REVERSE_IN")
 assert sorted(s.eval("P.getRoad(3)").values()) == [1, 2, 3, 4]
 assert list(s.eval("P.getRoad(5)").values()) == [5]   # a junction is a road on its own
-assert s.eval("shown('Zone on road (4)')")
+assert s.eval("shown('Road: 4 waypoints')")
+# the road in driving order with the junction at the end
+assert list(s.eval("P.cache.chain").values()) == [1, 2, 3, 4, 5]
+assert s.eval("find('Direction', 'One-way', 'road').active")
 
 # --- mouse: over the panel everything is used, outside nothing
 assert s.eval("P:mouseEvent(V, P.rect.x + 0.001, P.rect.y + 0.001, true, false, 1)")
@@ -108,9 +112,9 @@ assert s.eval("#ADUndoManager.undoStack") == 0
 
 # --- each button is one undo step
 steps = 0
-def step(row, text):
+def step(row, text, section=None):
     global steps
-    assert s.eval("click(%r, %r)" % (row, text))
+    assert s.eval("click(%r, %r, %s)" % (row, text, "'road'" if section else "nil"))
     steps += 1
     assert s.eval("#ADUndoManager.undoStack") == steps, (row, text, s.eval("#ADUndoManager.undoStack"))
 
@@ -125,12 +129,30 @@ step("Unlock", "Yes")
 assert s.eval(A + ".hasUnlock(ADGraphManager.wayPoints[3].flags)")
 step("Side road", "Yes")
 assert s.eval("ADGraphManager:getIsPointSubPrio(3)") and s.eval(A + ".hasHorn(ADGraphManager.wayPoints[3].flags)")
-step("Zone on road", "30")
+step("Speed zone", "30", "road")
 assert [s.eval(A + ".getZone(ADGraphManager.wayPoints[%d].flags)" % i) for i in range(1, 9)] == [2, 2, 2, 2, 0, 0, 0, 0]
-assert s.eval("find('Zone on road', '30').active") and s.eval("find('Speed zone', '30').active")
+assert s.eval("find('Speed zone', '30', 'road').active") and s.eval("find('Speed zone', '30').active")
 step("Speed zone", "15")
 assert [s.eval(A + ".getZone(ADGraphManager.wayPoints[%d].flags)" % i) for i in range(1, 5)] == [2, 2, 1, 2]
-assert not s.eval("find('Zone on road', '30').active")   # the road is mixed now
+assert not s.eval("find('Speed zone', '30', 'road').active")   # the road is mixed now
+# side road for the whole road (not the junction), keeping the actions
+step("Side road", "Yes", "road")
+assert [s.eval("ADGraphManager:getIsPointSubPrio(%d)" % i) for i in range(1, 6)] == [True, True, True, True, False]
+assert s.eval("find('Side road', 'Yes', 'road').active") and s.eval(A + ".hasHorn(ADGraphManager.wayPoints[3].flags)")
+step("Side road", "No", "road")
+assert not any(s.eval("ADGraphManager:getIsPointSubPrio(%d)" % i) for i in range(1, 6))
+# direction of the whole road, up to the junction: two-way, back to one-way, turned round
+step("Direction", "Two-way", "road")
+assert all(s.eval("ADWaypointPanel.getDirection(ADGraphManager.wayPoints[%d], ADGraphManager.wayPoints[%d])" % (i, i + 1)) == 3 for i in range(1, 5))
+assert s.eval("find('Direction', 'Two-way', 'road').active")
+step("Direction", "One-way", "road")
+assert all(s.eval("ADWaypointPanel.getDirection(ADGraphManager.wayPoints[%d], ADGraphManager.wayPoints[%d])" % (i, i + 1)) == 1 for i in range(1, 5))
+step("Direction", "Flip", "road")
+assert all(s.eval("ADWaypointPanel.getDirection(ADGraphManager.wayPoints[%d], ADGraphManager.wayPoints[%d])" % (i, i + 1)) == 2 for i in range(1, 5))
+assert s.eval("table.contains(ADGraphManager.wayPoints[5].out, 6)")    # the other roads of the junction stay
+s.execute("ADUndoManager:undo(nil)")
+steps -= 1
+assert all(s.eval("ADWaypointPanel.getDirection(ADGraphManager.wayPoints[%d], ADGraphManager.wayPoints[%d])" % (i, i + 1)) == 1 for i in range(1, 5))
 # a lit button does nothing
 s.execute("click('Horn', 'Yes')")
 assert s.eval("#ADUndoManager.undoStack") == steps
@@ -144,6 +166,26 @@ s.execute("local b = find('Waypoint 4', 'In'); g_lastMousePosX, g_lastMousePosY 
 assert s.eval("LINES") == 1
 s.execute("g_lastMousePosX, g_lastMousePosY = nil, nil")
 
+# remove a connection: no link left in either direction, one undo step
+step("Waypoint 4", "X")
+assert not any(s.eval("table.contains(ADGraphManager.wayPoints[%d].%s, %d)" % (a, l, b)) for a, b in [(3, 4), (4, 3)] for l in ["out", "incoming"])
+s.execute("ADUndoManager:undo(nil)")
+steps -= 1
+assert s.eval("table.contains(ADGraphManager.wayPoints[4].out, 3)")
+
+# tidy the road: a waypoint pulled off the line is straightened back, one undo step
+s.execute("""
+    AutoDrive.getTerrainHeightAtWorldPos = function(self, x, z, y) return 5 end
+    ADGraphManager.wayPoints[3].z = 4
+""")
+step("Tidy", "Straight", "road")
+assert abs(s.eval("ADGraphManager.wayPoints[3].z")) < 0.01
+s.execute("MESSAGES = {}; click('Tidy', 'Straight', 'road')")   # already straight: nothing to do, no step
+assert s.eval("#ADUndoManager.undoStack") == steps and s.eval("MESSAGES[1]") == "This route is already tidy"
+s.execute("ADUndoManager:undo(nil)"); steps -= 1
+assert s.eval("ADGraphManager.wayPoints[3].z") == 4
+s.execute("ADGraphManager.wayPoints[3].z = 0")
+
 # --- target: create on this waypoint (not the closest), rename, remove
 assert s.eval("click(nil, 'Create')") and s.eval("OPENED") == 1 and s.eval("AutoDrive.createMapMarkerWayPointId") == 3
 s.execute("""
@@ -153,11 +195,20 @@ s.execute("""
 """)
 assert s.eval("shown('Target: Grain Mill')")
 assert s.eval("click('Target', 'Rename')") and s.eval("AutoDrive.editMapMarkerId") == 1 and s.eval("OPENED") == 2
+# drive here: this vehicle, to this target; send vehicle: the list of vehicles for this target
+s.execute("""
+    AutoDriveSendToEvent = {sendEvent = function(vehicle, markerIndex) SENT_TO = {vehicle, markerIndex} end}
+    AutoDrive.onOpenSendTo = function(vehicle, markerIndex) SEND_DIALOG = {vehicle, markerIndex} end
+""")
+assert s.eval("click('Vehicles', 'Drive here')") and s.eval("SENT_TO[1] == V") and s.eval("SENT_TO[2]") == 1
+assert s.eval("click('Vehicles', 'Send vehicle')") and s.eval("SEND_DIALOG[1]") is None and s.eval("SEND_DIALOG[2]") == 1
+assert s.eval("#ADUndoManager.undoStack") == 0
 
 # --- undo everything: back to the start
 steps = 0
 step("Horn", "No")
-step("Zone on road", "-")
+step("Speed zone", "-", "road")
+step("Direction", "Two-way", "road")
 s.execute("for i = 1, #ADUndoManager.undoStack do ADUndoManager:undo(nil) end")
 assert s.globals().snapshot() == s.eval("BEFORE")
 
@@ -200,7 +251,37 @@ s.execute("""
 assert s.eval("V.ad.selectedNodeId") is None
 s.execute("REALHUD.hudElements = {}; HUD = REALHUD")
 
+# --- the road event: through the stream, and a client applies it without asking the server again
+s.execute("""
+    STREAM = {}; POS = 0
+    streamWriteUIntN = function(id, v) table.insert(STREAM, v) end
+    streamReadUIntN = function() POS = POS + 1; return STREAM[POS] end
+    AutoDriveRoadEvent.new({{1, 2, 3}, {3, 4, AutoDriveRoadEvent.REMOVE}}):writeStream(1, nil)
+    RECEIVED = AutoDriveRoadEvent.emptyNew()
+    RECEIVED.run = function() end
+    RECEIVED:readStream(1, nil)
+""")
+assert [list(l.values()) for l in s.eval("RECEIVED.links").values()] == [[1, 2, 3], [3, 4, 5]]
+
+# --- send to: the vehicles of the farm for a target, nearest first, and sending one
+s.execute(t.read(os.path.join(t.MOD, "scripts", "Gui", "SendToGUI.lua")))
+s.execute("""
+    ADGraphManager.mapMarkers = {{id = 5, markerIndex = 1, name = "Grain Mill", group = "All"}}
+    local function car(name, x, active) return {components = {{node = name}}, ad = {stateModule = {getName = function() return name end, isActive = function() return active end}}} end
+    FAR, NEAR = car("Far", 900, false), car("Near", 60, true)
+    POSITIONS = {Far = 900, Near = 60}
+    getWorldTranslation = function(node) return POSITIONS[node] or 0, 0, 0 end
+    ADFleetMap = {getVehicles = function() return {FAR, NEAR} end}
+    LIST = ADSendToGui.getVehicles(1)
+    GUI = setmetatable({targets = LIST, markerIndex = 1, onClickBack = function() CLOSED = true end}, {__index = ADSendToGui})
+    SENT_TO = nil
+    GUI:send(1)
+""")
+assert s.eval("LIST[1].name") == "Near" and s.eval("LIST[2].name") == "Far"
+assert s.eval("ADSendToGui.getVehicleRowText(LIST[1])") == "Near  (0.0 km)  - busy"
+assert s.eval("SENT_TO[1] == NEAR") and s.eval("SENT_TO[2]") == 1 and s.eval("CLOSED")
+
 # --- an error switches the panel off instead of breaking the HUD
 s.execute("V.ad.selectedNodeId = 3; local orig = P.getRows; P.getRows = function() error('boom') end; Logging = {error = function() LOGGED = true end}; draw(); P.getRows = orig")
 assert s.eval("P.failed") and s.eval("LOGGED") and s.eval("P.rect == nil")
-print("OK: waypoint panel (shown when, stays while the mouse is on it, layout, connections incl. reverse in, road to junction, every button one undo step, target, close, error guard)")
+print("OK: waypoint panel (shown when, stays while the mouse is on it, road: zone, side road, direction, tidy; remove connection, drive here, send vehicle, layout, connections incl. reverse in, road to junction, every button one undo step, target, close, error guard)")

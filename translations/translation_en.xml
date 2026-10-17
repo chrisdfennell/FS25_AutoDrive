@@ -589,7 +589,20 @@
 		<text name="AD_wpPanel_on"							 text="On" />
 		<text name="AD_wpPanel_off"							 text="Off" />
 		<text name="AD_wpPanel_zone"							 text="Speed zone" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Zone on road (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Vehicles" />
+		<text name="AD_wpPanel_driveHere"							 text="Drive here" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Send vehicle" />
+		<text name="AD_wpPanel_road"							 text="Road: %s waypoints" />
+		<text name="AD_wpPanel_direction"							 text="Direction" />
+		<text name="AD_wpPanel_oneWay"							 text="One-way" />
+		<text name="AD_wpPanel_twoWay"							 text="Two-way" />
+		<text name="AD_wpPanel_flip"							 text="Flip" />
+		<text name="AD_wpPanel_tidy"							 text="Tidy up" />
+		<text name="AD_wpPanel_even"							 text="Even" />
+		<text name="AD_wpPanel_straight"							 text="Straight" />
+		<text name="AD_wpPanel_smooth"							 text="Smooth" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Send to %s" />
+		<text name="AD_sendTo_busy"							 text="busy" />
 		<text name="AD_routeCheck_loose"								 text="Loose waypoint without any connection" />
 		<text name="AD_routeCheck_deadEnd"							 text="Dead end: no way on from this waypoint" />
 		<text name="AD_routeCheck_trap"								 text="One-way trap: %s waypoints you can drive into but not out of" />

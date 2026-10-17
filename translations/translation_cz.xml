@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Zap." />
 		<text name="AD_wpPanel_off"							 text="Vyp." />
 		<text name="AD_wpPanel_zone"							 text="Rychlostní zóna" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Zóna na silnici (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Vozidla" />
+		<text name="AD_wpPanel_driveHere"							 text="Jet sem" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Poslat vozidlo" />
+		<text name="AD_wpPanel_road"							 text="Silnice: %s bodů" />
+		<text name="AD_wpPanel_direction"							 text="Směr" />
+		<text name="AD_wpPanel_oneWay"							 text="Jednosměrná" />
+		<text name="AD_wpPanel_twoWay"							 text="Obousměrná" />
+		<text name="AD_wpPanel_flip"							 text="Otočit" />
+		<text name="AD_wpPanel_tidy"							 text="Uklidit" />
+		<text name="AD_wpPanel_even"							 text="Rovnoměrně" />
+		<text name="AD_wpPanel_straight"							 text="Rovně" />
+		<text name="AD_wpPanel_smooth"							 text="Vyhladit" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Poslat do %s" />
+		<text name="AD_sendTo_busy"							 text="zaneprázdněno" />
 		<text name="AD_routeCheck_loose"								 text="Osamocený bod trasy bez jakéhokoli spojení" />
 		<text name="AD_routeCheck_deadEnd"							 text="Slepá ulice: z tohoto bodu trasy nevede žádná cesta dál" />
 		<text name="AD_routeCheck_trap"								 text="Jednosměrná past: počet bodů trasy, do kterých lze vjet, ale ne vyjet: %s" />

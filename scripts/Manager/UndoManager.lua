@@ -299,6 +299,7 @@ function ADUndoManager.installActorHooks()
         AutoDriveMoveWayPointEvent,
         AutoDriveMoveWayPointsEvent,
         AutoDriveRouteFixEvent,
+        AutoDriveRoadEvent,
         AutoDriveRenameMapMarkerEvent,
         AutoDriveRoutesUploadEvent,
         AutoDriveSectionEvent,

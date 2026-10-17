@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="An" />
 		<text name="AD_wpPanel_off"							 text="Aus" />
 		<text name="AD_wpPanel_zone"							 text="Tempozone" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Zone auf Strecke (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Fahrzeuge" />
+		<text name="AD_wpPanel_driveHere"							 text="Hierher fahren" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Fahrzeug schicken" />
+		<text name="AD_wpPanel_road"							 text="Strecke: %s Wegpunkte" />
+		<text name="AD_wpPanel_direction"							 text="Richtung" />
+		<text name="AD_wpPanel_oneWay"							 text="Einbahn" />
+		<text name="AD_wpPanel_twoWay"							 text="Beide Richtungen" />
+		<text name="AD_wpPanel_flip"							 text="Umdrehen" />
+		<text name="AD_wpPanel_tidy"							 text="Aufräumen" />
+		<text name="AD_wpPanel_even"							 text="Gleichmäßig" />
+		<text name="AD_wpPanel_straight"							 text="Gerade" />
+		<text name="AD_wpPanel_smooth"							 text="Glätten" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Schicken zu %s" />
+		<text name="AD_sendTo_busy"							 text="beschäftigt" />
 		<text name="AD_routeCheck_loose"								 text="Loser Wegpunkt ohne jede Verbindung" />
 		<text name="AD_routeCheck_deadEnd"							 text="Sackgasse: von diesem Wegpunkt geht es nicht weiter" />
 		<text name="AD_routeCheck_trap"								 text="Einbahn-Falle: %s Wegpunkte, in die man hinein-, aber nicht wieder herausfahren kann" />

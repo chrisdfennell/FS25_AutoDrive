@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="开" />
 		<text name="AD_wpPanel_off"							 text="关" />
 		<text name="AD_wpPanel_zone"							 text="限速区" />
-		<text name="AD_wpPanel_zoneRoad"							 text="整段道路限速 (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="车辆" />
+		<text name="AD_wpPanel_driveHere"							 text="开到这里" />
+		<text name="AD_wpPanel_sendVehicle"							 text="派出车辆" />
+		<text name="AD_wpPanel_road"							 text="道路：%s 个航点" />
+		<text name="AD_wpPanel_direction"							 text="方向" />
+		<text name="AD_wpPanel_oneWay"							 text="单向" />
+		<text name="AD_wpPanel_twoWay"							 text="双向" />
+		<text name="AD_wpPanel_flip"							 text="反转" />
+		<text name="AD_wpPanel_tidy"							 text="整理" />
+		<text name="AD_wpPanel_even"							 text="均匀" />
+		<text name="AD_wpPanel_straight"							 text="拉直" />
+		<text name="AD_wpPanel_smooth"							 text="平滑" />
+		<text name="gui_ad_sendToTitleTarget"							 text="派往 %s" />
+		<text name="AD_sendTo_busy"							 text="忙碌" />
 		<text name="AD_routeCheck_loose"								 text="没有任何连接的孤立航点" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：从此航点无法继续前进" />
 		<text name="AD_routeCheck_trap"								 text="单向陷阱：%s 个航点只能驶入无法驶出" />

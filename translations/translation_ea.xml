@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Encender" />
 		<text name="AD_wpPanel_off"							 text="Apagar" />
 		<text name="AD_wpPanel_zone"							 text="Zona de velocidad" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Zona en el tramo (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Vehículos" />
+		<text name="AD_wpPanel_driveHere"							 text="Conducir aquí" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Enviar vehículo" />
+		<text name="AD_wpPanel_road"							 text="Tramo: %s puntos" />
+		<text name="AD_wpPanel_direction"							 text="Dirección" />
+		<text name="AD_wpPanel_oneWay"							 text="Un sentido" />
+		<text name="AD_wpPanel_twoWay"							 text="Doble sentido" />
+		<text name="AD_wpPanel_flip"							 text="Invertir" />
+		<text name="AD_wpPanel_tidy"							 text="Ordenar" />
+		<text name="AD_wpPanel_even"							 text="Uniforme" />
+		<text name="AD_wpPanel_straight"							 text="Recto" />
+		<text name="AD_wpPanel_smooth"							 text="Suavizar" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Enviar a %s" />
+		<text name="AD_sendTo_busy"							 text="ocupado" />
 		<text name="AD_routeCheck_loose"								 text="Punto de ruta suelto sin ninguna conexión" />
 		<text name="AD_routeCheck_deadEnd"							 text="Callejón sin salida: no hay forma de seguir desde este punto de ruta" />
 		<text name="AD_routeCheck_trap"								 text="Trampa de sentido único: %s puntos de ruta en los que se puede entrar pero no salir" />

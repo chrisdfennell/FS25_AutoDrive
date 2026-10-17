@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Wł." />
 		<text name="AD_wpPanel_off"							 text="Wył." />
 		<text name="AD_wpPanel_zone"							 text="Strefa prędkości" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Strefa na drodze (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Pojazdy" />
+		<text name="AD_wpPanel_driveHere"							 text="Jedź tutaj" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Wyślij pojazd" />
+		<text name="AD_wpPanel_road"							 text="Droga: %s punktów" />
+		<text name="AD_wpPanel_direction"							 text="Kierunek" />
+		<text name="AD_wpPanel_oneWay"							 text="Jednokierunkowa" />
+		<text name="AD_wpPanel_twoWay"							 text="Dwukierunkowa" />
+		<text name="AD_wpPanel_flip"							 text="Odwróć" />
+		<text name="AD_wpPanel_tidy"							 text="Uporządkuj" />
+		<text name="AD_wpPanel_even"							 text="Równo" />
+		<text name="AD_wpPanel_straight"							 text="Prosto" />
+		<text name="AD_wpPanel_smooth"							 text="Wygładź" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Wyślij do %s" />
+		<text name="AD_sendTo_busy"							 text="zajęty" />
 		<text name="AD_routeCheck_loose"								 text="Luźny punkt trasy bez żadnego połączenia" />
 		<text name="AD_routeCheck_deadEnd"							 text="Ślepa uliczka: z tego punktu trasy nie ma dalszej drogi" />
 		<text name="AD_routeCheck_trap"								 text="Pułapka jednokierunkowa: punkty trasy, do których można wjechać, ale nie można wyjechać: %s" />

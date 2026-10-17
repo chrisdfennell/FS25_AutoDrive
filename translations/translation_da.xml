@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Tænd" />
 		<text name="AD_wpPanel_off"							 text="Sluk" />
 		<text name="AD_wpPanel_zone"							 text="Hastighedszone" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Zone på vejen (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Maskiner" />
+		<text name="AD_wpPanel_driveHere"							 text="Kør hertil" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Send maskine" />
+		<text name="AD_wpPanel_road"							 text="Vej: %s vejpunkter" />
+		<text name="AD_wpPanel_direction"							 text="Retning" />
+		<text name="AD_wpPanel_oneWay"							 text="Ensrettet" />
+		<text name="AD_wpPanel_twoWay"							 text="Begge veje" />
+		<text name="AD_wpPanel_flip"							 text="Vend" />
+		<text name="AD_wpPanel_tidy"							 text="Ryd op" />
+		<text name="AD_wpPanel_even"							 text="Jævnt" />
+		<text name="AD_wpPanel_straight"							 text="Lige" />
+		<text name="AD_wpPanel_smooth"							 text="Udglat" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Send til %s" />
+		<text name="AD_sendTo_busy"							 text="optaget" />
 		<text name="AD_routeCheck_loose"								 text="Løst vejpunkt uden nogen forbindelse" />
 		<text name="AD_routeCheck_deadEnd"							 text="Blindgyde: ingen vej videre fra dette vejpunkt" />
 		<text name="AD_routeCheck_trap"								 text="Ensrettet fælde: %s vejpunkter, man kan køre ind i, men ikke ud af" />

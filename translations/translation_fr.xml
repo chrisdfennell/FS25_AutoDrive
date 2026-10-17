@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Allumer" />
 		<text name="AD_wpPanel_off"							 text="Éteindre" />
 		<text name="AD_wpPanel_zone"							 text="Zone de vitesse" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Zone sur la route (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Véhicules" />
+		<text name="AD_wpPanel_driveHere"							 text="Rouler ici" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Envoyer un véhicule" />
+		<text name="AD_wpPanel_road"							 text="Route : %s points" />
+		<text name="AD_wpPanel_direction"							 text="Sens" />
+		<text name="AD_wpPanel_oneWay"							 text="Sens unique" />
+		<text name="AD_wpPanel_twoWay"							 text="Double sens" />
+		<text name="AD_wpPanel_flip"							 text="Inverser" />
+		<text name="AD_wpPanel_tidy"							 text="Ranger" />
+		<text name="AD_wpPanel_even"							 text="Régulier" />
+		<text name="AD_wpPanel_straight"							 text="Droit" />
+		<text name="AD_wpPanel_smooth"							 text="Lisser" />
+		<text name="gui_ad_sendToTitleTarget"							 text="Envoyer vers %s" />
+		<text name="AD_sendTo_busy"							 text="occupé" />
 		<text name="AD_routeCheck_loose"								 text="Point de passage isolé sans aucune connexion" />
 		<text name="AD_routeCheck_deadEnd"							 text="Impasse : aucun chemin à partir de ce point de passage" />
 		<text name="AD_routeCheck_trap"								 text="Piège à sens unique : %s points de passage où l'on peut entrer mais d'où l'on ne peut pas sortir" />

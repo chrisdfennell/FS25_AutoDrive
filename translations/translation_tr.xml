@@ -586,7 +586,20 @@
 		<text name="AD_wpPanel_on"							 text="Açık" />
 		<text name="AD_wpPanel_off"							 text="Kapalı" />
 		<text name="AD_wpPanel_zone"							 text="Hız bölgesi" />
-		<text name="AD_wpPanel_zoneRoad"							 text="Yolda bölge (%s)" />
+		<text name="AD_wpPanel_vehicles"							 text="Araçlar" />
+		<text name="AD_wpPanel_driveHere"							 text="Buraya sür" />
+		<text name="AD_wpPanel_sendVehicle"							 text="Araç gönder" />
+		<text name="AD_wpPanel_road"							 text="Yol: %s nokta" />
+		<text name="AD_wpPanel_direction"							 text="Yön" />
+		<text name="AD_wpPanel_oneWay"							 text="Tek yön" />
+		<text name="AD_wpPanel_twoWay"							 text="Çift yön" />
+		<text name="AD_wpPanel_flip"							 text="Ters çevir" />
+		<text name="AD_wpPanel_tidy"							 text="Düzenle" />
+		<text name="AD_wpPanel_even"							 text="Eşit" />
+		<text name="AD_wpPanel_straight"							 text="Düz" />
+		<text name="AD_wpPanel_smooth"							 text="Yumuşat" />
+		<text name="gui_ad_sendToTitleTarget"							 text="%s hedefine gönder" />
+		<text name="AD_sendTo_busy"							 text="meşgul" />
 		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
 		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
 		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />

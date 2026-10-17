@@ -77,10 +77,16 @@ The route between the two waypoints is the shortest chain of connections. Only w
 ### Waypoint panel
 In the editor, **left-click a waypoint** to select it: a panel opens next to the AutoDrive HUD with everything about that waypoint, as buttons:
 - **Target:** its name with **Rename** and **Remove**, or **Create** a target right on this waypoint
-- **Side road:** no / yes
-- **Connections:** every neighbouring waypoint with the kind of connection (out, in, both ways, reverse out, reverse in). Click it to switch to the next kind; pointing at it draws a line to that waypoint
+- **Vehicles** (on a target): **Drive here** sends the vehicle you are in to this target (drive to, and it starts); **Send vehicle** lists the AutoDrive vehicles of your farm, nearest first (busy ones are marked), and sends the one you pick
+- **Side road:** no / yes for this waypoint
+- **Connections:** every neighbouring waypoint with the kind of connection (out, in, both ways, reverse out, reverse in). Click it to switch to the next kind, **X** removes the connection; pointing at a row draws a line to that waypoint
 - **Actions:** wait (each click: next time), horn, lights, unlock load
-- **Speed zone** for this waypoint, and **Zone on road** for the whole road it is on, up to the next junctions in both directions (the number of waypoints is shown)
+- **Speed zone** for this waypoint
+
+**Road** is the stretch the waypoint is on, up to the next junction in both directions (the number of waypoints is shown):
+- **Speed zone** and **Side road** for the whole road
+- **Direction:** **One-way** (the way most of it already goes), **Two-way**, or **Flip** to turn it round. The junctions at both ends are connected the same way; their other roads stay as they are
+- **Tidy up:** **Even**, **Straight** or **Smooth**, like Ctrl+Alt+J / K / U, without pointing at a second waypoint. The junctions stay where they are
 
 Every click is one undo step and works in multiplayer like the keys. The panel stays while the waypoint is selected; **X**, clicking the waypoint again, or connecting it to another waypoint closes it. It moves to the left of the HUD when there is no room on the right. Switch it off in the user settings (**Waypoint panel**).
 
