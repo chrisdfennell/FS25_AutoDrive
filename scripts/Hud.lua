@@ -432,10 +432,6 @@ end
 
 function AutoDriveHud:mouseEventOnHudElements(vehicle, posX, posY, isDown, isUp, button)
 	-- returns "handled"
-	-- Overdrive: the waypoint panel next to the HUD uses the mouse over it
-	if not self.isMoving and ADWaypointPanel:mouseEvent(vehicle, posX, posY, isDown, isUp, button) then
-		return true
-	end
 	if self.hudElements ~= nil then
 		-- Start with highest layer value (last in array), and then iterate backwards.
 		for i = #self.hudElements, 1, -1 do
@@ -858,8 +854,11 @@ function AutoDriveHud:mouseEvent(vehicle, posX, posY, isDown, isUp, button)
 		end
 		AutoDrive.mouseWheelActive = false
 
+		-- Overdrive: the waypoint panel next to the HUD uses the mouse over it, but keeps the selected waypoint
+		local usedByWaypointPanel = false
         if AutoDrive.isMouseActiveForHud() then
-    		mouseEventHandled = self:mouseEventOnHudElements(vehicle, posX, posY, isDown, isUp, button)
+			usedByWaypointPanel = not self.isMoving and ADWaypointPanel:mouseEvent(vehicle, posX, posY, isDown, isUp, button)
+			mouseEventHandled = usedByWaypointPanel or self:mouseEventOnHudElements(vehicle, posX, posY, isDown, isUp, button)
         end
 
         if not AutoDrive.isMouseActiveForEditor() then
@@ -893,7 +892,7 @@ function AutoDriveHud:mouseEvent(vehicle, posX, posY, isDown, isUp, button)
                 self:mouseEventDeleteWaypoint(vehicle, isUp, button, adjustedPaths)
                 AutoDrive.handleWayPointSection(vehicle, button, isUp)
             end
-		else
+		elseif not usedByWaypointPanel then
 			AutoDrive.resetMouseSelections(vehicle)
 		end
 	else

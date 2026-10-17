@@ -165,7 +165,42 @@ assert s.globals().snapshot() == s.eval("BEFORE")
 s.execute("click(nil, 'X')")
 assert s.eval("V.ad.selectedNodeId") is None and s.eval("P.rect == nil")
 
+# --- through the HUD's own mouse handling: moving onto the panel and clicking it keeps the selected waypoint
+# (a HUD element that uses a click still clears the selection, as in AutoDrive)
+s.execute(t.read(os.path.join(t.MOD, "scripts", "Hud.lua")))
+s.execute("""
+    AutoDrive.isMouseActiveForHud = function() return true end
+    AutoDrive.isMouseActiveForEditor = function() return true end
+    AutoDrive.isInExtendedEditorMode = function() return true end
+    AutoDrive.leftLSHIFTmodifierKeyPressed, AutoDrive.leftCTRLmodifierKeyPressed = false, false
+    AutoDrive.leftALTmodifierKeyPressed, AutoDrive.rightSHIFTmodifierKeyPressed = false, false
+    AutoDrive.mouseIsAtPos = function() return false end
+    g_inputBinding = {getShowMouseCursor = function() return true end}
+    V.getWayPointsInRange = function() return {} end
+    V.ad.selectedNodeId = 3
+    REALHUD = setmetatable({hudElements = {}, posX = 0.1, posY = 0.3, width = 0.2, height = 0.25, rowHeader = 0.52, headerHeight = 0.03}, {__index = AutoDriveHud})
+    HUD = REALHUD
+    draw()
+    function hudMouse(x, y, isDown, isUp, button) REALHUD:mouseEvent(V, x, y, isDown, isUp, button); draw() end
+""")
+assert s.eval("P.rect ~= nil")
+# mouse moves across the world to the panel, then over it
+s.execute("hudMouse(0.5, 0.5, false, false, 0); hudMouse(P.rect.x + 0.002, P.rect.y + 0.002, false, false, 0)")
+assert s.eval("V.ad.selectedNodeId") == 3 and s.eval("P.rect ~= nil")
+# a click on a panel button: the action happens and the panel stays
+s.execute("local b = find('Horn', 'Yes'); hudMouse(b.x + 0.001, b.y + 0.001, true, false, 1); hudMouse(b.x + 0.001, b.y + 0.001, false, true, 1)")
+assert s.eval("V.ad.selectedNodeId") == 3 and s.eval("P.rect ~= nil")
+assert s.eval("ADWaypointActions.hasHorn(ADGraphManager.wayPoints[3].flags)")
+# a HUD element that uses a click still clears the selection
+s.execute("""
+    REALHUD.hudElements = {{layer = 1, mouseEvent = function(self, v, x, y, isDown, isUp, button) return button == 1 and isUp end}}
+    REALHUD.refreshHudElementsLayerSequence = function() end
+    hudMouse(0.15, 0.4, false, true, 1)
+""")
+assert s.eval("V.ad.selectedNodeId") is None
+s.execute("REALHUD.hudElements = {}; HUD = REALHUD")
+
 # --- an error switches the panel off instead of breaking the HUD
 s.execute("V.ad.selectedNodeId = 3; local orig = P.getRows; P.getRows = function() error('boom') end; Logging = {error = function() LOGGED = true end}; draw(); P.getRows = orig")
 assert s.eval("P.failed") and s.eval("LOGGED") and s.eval("P.rect == nil")
-print("OK: waypoint panel (shown when, layout, connections incl. reverse in, road to junction, every button one undo step, target, close, error guard)")
+print("OK: waypoint panel (shown when, stays while the mouse is on it, layout, connections incl. reverse in, road to junction, every button one undo step, target, close, error guard)")
