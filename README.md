@@ -145,7 +145,7 @@ Run the same locally with `pip install lupa`, then `python tools/ci_checks.py` a
 
 The mod zip contains `drawing`, `gui`, `scripts`, `sounds`, `textures`, `translations`, `icon_AutoDrive.dds`, `modDesc.xml`, `register.lua`, `LICENSE` (as `LICENSE.txt`) and `credits.txt`. The `tools` and `.github` folders are for development and not part of the mod.
 
-GIANTS' mod checks allow at most 128 files in a mod, so the build joins the scripts that `register.lua` loads into `scripts/OverdriveBundle1.lua` (same order, each file in its own `do ... end` block) and the zip's `register.lua` loads that; the scripts the game loads itself as specializations stay separate. The source tree is unchanged. The build writes `FS25_AutoDrive.bundlemap.txt` next to the zip to find the source file of a bundle line in an error message.
+GIANTS' mod checks allow at most 128 files in a mod and Lua files of at most 0.5 MB, so the build joins the scripts that `register.lua` loads into `scripts/OverdriveBundle1.lua`, `OverdriveBundle2.lua`, ... (same order, each file in its own `do ... end` block, each bundle below 450 KB) and the zip's `register.lua` loads them one after another; the scripts the game loads itself as specializations stay separate. The source tree is unchanged. The build writes `FS25_AutoDrive.bundlemap.txt` next to the zip to find the source file of a bundle line in an error message.
 
 ---
 

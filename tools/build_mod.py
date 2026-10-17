@@ -6,11 +6,12 @@ settings and other mods (Courseplay, placeables with AutoDrive routes) depend on
 --version stamps the full version (e.g. 3.0.1.4-od.1) into AutoDrive.version, which the HUD shows.
 Only the copy in the zip is changed. The part before "-" must match the version in modDesc.xml.
 
-GIANTS' mod checks (TestRunner / ModHub) allow at most 128 files and only known file types, so the zip
-differs from the source tree in two ways (the source stays as it is):
+GIANTS' mod checks (TestRunner / ModHub) allow at most 128 files, Lua files of at most 0.5 MB and only
+known file types, so the zip differs from the source tree in two ways (the source stays as it is):
   - the scripts that register.lua loads one after another are joined into bundle files, in the same
-    order, each file in its own do ... end block so its local variables stay its own. Scripts that the
-    game loads itself as specializations stay separate files. register.lua in the zip loads the bundles.
+    order, each file in its own do ... end block so its local variables stay its own. A bundle is
+    filled up to BUNDLE_MAX_BYTES, then the next one starts. Scripts that the game loads itself as
+    specializations stay separate files. register.lua in the zip loads the bundles one after another.
     A map of bundle line -> source file and line is written next to the zip (not into it).
   - LICENSE is packed as LICENSE.txt
 Scripts that register.lua does not load are not packed.
@@ -38,6 +39,9 @@ VERSION_PATTERN = re.compile(r'^AutoDrive\.version = "[^"]*"', re.MULTILINE)
 SOURCE_LINE = re.compile(r'^source\(Utils\.getFilename\("(scripts/[^"]+\.lua)", g_currentModDirectory\)\)\s*$')
 BUNDLE_NAME = "scripts/OverdriveBundle%d.lua"
 MAX_FILES = 128
+MAX_LUA_BYTES = 512 * 1024
+# a bundle is closed before it gets bigger than this (some room below the limit)
+BUNDLE_MAX_BYTES = 450 * 1024
 
 
 def read(path):
@@ -77,15 +81,22 @@ def bundle(version):
     keep = specialization_files(register)
     out_lines, bundles, bundled, line_map = [], {}, set(), []
     current = None
+    sizes = {}
     for line in register.splitlines(keepends=True):
         match = SOURCE_LINE.match(line.strip())
         name = match.group(1) if match else None
         if name is not None and name not in keep:
+            size = len(read(os.path.join(ROOT, name)).encode("utf-8")) + 64
+            if current is not None and sizes[current] + size > BUNDLE_MAX_BYTES:
+                # full: the next bundle continues, loaded right after this one
+                current = None
             if current is None:
                 current = BUNDLE_NAME % (len(bundles) + 1)
                 bundles[current] = []
+                sizes[current] = 0
                 out_lines.append('source(Utils.getFilename("%s", g_currentModDirectory))\n' % current)
             bundles[current].append(name)
+            sizes[current] += size
             bundled.add(name)
         elif line.strip() == "" or line.strip().startswith("--"):
             # blank lines and comments do not end a run of bundled scripts
@@ -165,6 +176,10 @@ def main():
 
     if count > MAX_FILES:
         sys.exit("%d files in the zip, GIANTS' mod checks allow %d" % (count, MAX_FILES))
+    with zipfile.ZipFile(args.out) as zf:
+        for info in zf.infolist():
+            if info.filename.endswith(".lua") and info.file_size > MAX_LUA_BYTES:
+                sys.exit("%s is %.2f MB, GIANTS' mod checks allow %.2f MB per Lua file" % (info.filename, info.file_size / 1048576, MAX_LUA_BYTES / 1048576))
     map_path = os.path.splitext(args.out)[0] + ".bundlemap.txt"
     with open(map_path, "w", encoding="utf-8") as f:
         f.write("bundle line of the first source line -> source file (line numbers in the game log minus this, plus 1)\n")
