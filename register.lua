@@ -90,6 +90,7 @@ source(Utils.getFilename("scripts/Manager/GraphManager.lua", g_currentModDirecto
 source(Utils.getFilename("scripts/Manager/UndoManager.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Manager/RouteCheck.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Manager/BestPrice.lua", g_currentModDirectory))
+source(Utils.getFilename("scripts/Manager/GroundUnload.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Manager/WorkSchedule.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Manager/Statistics.lua", g_currentModDirectory))
 source(Utils.getFilename("scripts/Manager/WaypointActions.lua", g_currentModDirectory))

@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Gladmaken" />
 		<text name="gui_ad_sendToTitleTarget"							 text="Sturen naar %s" />
 		<text name="AD_sendTo_busy"							 text="bezig" />
+		<text name="gui_ad_groundUnload"							 text="Lossen op de grond" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="In een sleufsilo of op een hoop: langzaam doorrijden om de lading te verdelen, of stilstaan op de eerste plek waar het kan (rijdt een stukje door als de hoop vol is)" />
+		<text name="gui_ad_groundUnload_drive"							 text="Doorrijden" />
+		<text name="gui_ad_groundUnload_still"							 text="Stilstaan" />
 		<text name="AD_routeCheck_loose"								 text="Los routepunt zonder enige verbinding" />
 		<text name="AD_routeCheck_deadEnd"							 text="Doodlopend: vanaf dit routepunt kun je nergens verder" />
 		<text name="AD_routeCheck_trap"								 text="Eenrichtingsval: %s routepunten waar je in kunt rijden maar niet meer uit" />

@@ -603,6 +603,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Smooth" />
 		<text name="gui_ad_sendToTitleTarget"							 text="Send to %s" />
 		<text name="AD_sendTo_busy"							 text="busy" />
+		<text name="gui_ad_groundUnload"							 text="Tipping on the ground" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="In a bunker silo or on a heap: drive slowly through to spread the load, or stand still at the first place it can tip (moves on a little when the heap is full)" />
+		<text name="gui_ad_groundUnload_drive"							 text="Drive through" />
+		<text name="gui_ad_groundUnload_still"							 text="Stand still" />
 		<text name="AD_routeCheck_loose"								 text="Loose waypoint without any connection" />
 		<text name="AD_routeCheck_deadEnd"							 text="Dead end: no way on from this waypoint" />
 		<text name="AD_routeCheck_trap"								 text="One-way trap: %s waypoints you can drive into but not out of" />

@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Yumuşat" />
 		<text name="gui_ad_sendToTitleTarget"							 text="%s hedefine gönder" />
 		<text name="AD_sendTo_busy"							 text="meşgul" />
+		<text name="gui_ad_groundUnload"							 text="Yere boşaltma" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="Silaj çukurunda veya yığında: yükü yaymak için yavaşça geç, ya da boşaltabileceği ilk yerde dur (yığın dolunca biraz ilerler)" />
+		<text name="gui_ad_groundUnload_drive"							 text="İçinden geç" />
+		<text name="gui_ad_groundUnload_still"							 text="Yerinde dur" />
 		<text name="AD_routeCheck_loose"								 text="Hiçbir bağlantısı olmayan serbest ara nokta" />
 		<text name="AD_routeCheck_deadEnd"							 text="Çıkmaz: bu ara noktadan devam yolu yok" />
 		<text name="AD_routeCheck_trap"								 text="Tek yön tuzağı: girilebilen ama çıkılamayan %s ara nokta" />

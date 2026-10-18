@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Згладити" />
 		<text name="gui_ad_sendToTitleTarget"							 text="Відправити до %s" />
 		<text name="AD_sendTo_busy"							 text="зайнята" />
+		<text name="gui_ad_groundUnload"							 text="Вивантаження на землю" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="У силосній траншеї або в купу: повільно проїжджати, розподіляючи вантаж, або стояти на першому можливому місці (трохи проїжджає, коли купа заповнена)" />
+		<text name="gui_ad_groundUnload_drive"							 text="Проїжджати" />
+		<text name="gui_ad_groundUnload_still"							 text="Стояти" />
 		<text name="AD_routeCheck_loose"								 text="Окрема точка шляху без з'єднань" />
 		<text name="AD_routeCheck_deadEnd"							 text="Глухий кут: від цієї точки шляху далі немає шляху" />
 		<text name="AD_routeCheck_trap"								 text="Одностороння пастка: точок шляху, куди можна заїхати, але не можна виїхати: %s" />

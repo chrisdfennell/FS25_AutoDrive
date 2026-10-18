@@ -132,6 +132,11 @@ New vehicle setting **Best price unloading**, for pickup and deliver and for unl
 
 The vehicle's own tanks (diesel, DEF, ...) are never counted as load. A stop is done when the selling point takes nothing more, so a vehicle never waits forever for a product the point does not buy. It needs "use folders", does nothing while target rotation for unloading is on, and the target must be in a folder, not in "All".
 
+### Tipping on the ground
+New vehicle setting **Tipping on the ground**, for bunker silos and heaps (unloading onto the ground, not into a tip trigger):
+- **Drive through** (as before): the vehicle drives slowly through while tipping, to spread the load along the silo.
+- **Stand still:** the vehicle stops at the first place where it can tip and stays there. When nothing comes out for 4 seconds (the heap is as high as it gets), it moves on slowly until the load runs again, and stops again. Reversing into a silo works as before.
+
 ### Work schedule
 New vehicle settings **Start work at** and **Stop work at** (in-game hours, `--:--` = off).
 - At the start hour the driver starts its job, with the mode and targets set in the HUD.

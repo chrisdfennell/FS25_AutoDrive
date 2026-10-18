@@ -528,7 +528,7 @@ function ADTrailerModule:updateUnload(dt)
                     self.isUnloadingWithTrailer:setDischargeState(Dischargeable.DISCHARGE_STATE_OBJECT)
                 end
                 self.unloadRetryTimer:timer(false)      -- clear timer
-            elseif not (self.vehicle.ad.drivePathModule:getIsReversing()) and self.unloadingToBunkerSilo and self.stuckInBunkerTimer:done() then
+            elseif not (self.vehicle.ad.drivePathModule:getIsReversing()) and self.unloadingToBunkerSilo and self.stuckInBunkerTimer:done() and not ADGroundUnload.isStandStill(self.vehicle) then
                 -- stuck in silo bunker
                 AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_TRAILERINFO, "ADTrailerModule:updateUnload unloadDelayTimer:done 5")
                 if self.isUnloadingWithTrailer ~= nil and self.isUnloadingWithTrailer.setDischargeState then
@@ -699,7 +699,8 @@ function ADTrailerModule:startUnloadingIntoTrigger(trailer, trigger)
         self.isUnloadingWithFillUnit = trailer:getCurrentDischargeNode().fillUnitIndex
     elseif trigger.bunkerSiloArea ~= nil then
         -- bunker silo
-        if (not self.vehicle.ad.drivePathModule:getIsReversing() and not (self.vehicle.lastSpeedReal * 3600 < 1)) -- forward through bunker silo
+        -- Overdrive: standing still while tipping on the ground (vehicle setting), it also starts again from a stop
+        if (not self.vehicle.ad.drivePathModule:getIsReversing() and (not (self.vehicle.lastSpeedReal * 3600 < 1) or ADGroundUnload.isStandStill(self.vehicle))) -- forward through bunker silo
             or (self.vehicle.ad.drivePathModule:getIsReversing() and self.vehicle:getLastSpeed() < 0.5) then -- reverse into bunker silo
             AutoDrive.debugPrint(trailer, AutoDrive.DC_TRAILERINFO, "Start unloading into bunkersilo - fillUnitIndex: %s", tostring(trailer:getCurrentDischargeNode().fillUnitIndex))
             trailer:setDischargeState(Dischargeable.DISCHARGE_STATE_GROUND)

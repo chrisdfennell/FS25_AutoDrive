@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Suavizar" />
 		<text name="gui_ad_sendToTitleTarget"							 text="Enviar a %s" />
 		<text name="AD_sendTo_busy"							 text="ocupado" />
+		<text name="gui_ad_groundUnload"							 text="Descargar en el suelo" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="En un silo búnker o un montón: atravesar despacio para repartir la carga, o quedarse quieto en el primer sitio posible (avanza un poco cuando el montón está lleno)" />
+		<text name="gui_ad_groundUnload_drive"							 text="Atravesar" />
+		<text name="gui_ad_groundUnload_still"							 text="Quedarse quieto" />
 		<text name="AD_routeCheck_loose"								 text="Punto de ruta suelto sin ninguna conexión" />
 		<text name="AD_routeCheck_deadEnd"							 text="Callejón sin salida: no hay forma de seguir desde este punto de ruta" />
 		<text name="AD_routeCheck_trap"								 text="Trampa de sentido único: %s puntos de ruta en los que se puede entrar pero no salir" />

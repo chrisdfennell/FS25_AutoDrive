@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Simítás" />
 		<text name="gui_ad_sendToTitleTarget"							 text="Küldés ide: %s" />
 		<text name="AD_sendTo_busy"							 text="foglalt" />
+		<text name="gui_ad_groundUnload"							 text="Billentés a földre" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="Silóárokban vagy kupacra: lassan áthajt, hogy elterítse a rakományt, vagy megáll az első lehetséges helyen (kicsit továbbmegy, ha a kupac megtelt)" />
+		<text name="gui_ad_groundUnload_drive"							 text="Áthajtás" />
+		<text name="gui_ad_groundUnload_still"							 text="Megállás" />
 		<text name="AD_routeCheck_loose"								 text="Különálló útpont, semmilyen kapcsolat nélkül" />
 		<text name="AD_routeCheck_deadEnd"							 text="Zsákutca: ebből az útpontból nincs továbbhaladás" />
 		<text name="AD_routeCheck_trap"								 text="Egyirányú csapda: %s útpont, ahová be lehet hajtani, de kijutni nem" />

@@ -50,6 +50,7 @@ def main():
         run("test_waypointpanel.py"),
         run("test_actor_deferred.py"),
         run("test_drag_ground.py"),
+        run("test_groundunload.py"),
     ]
     if not all(results):
         sys.exit(1)

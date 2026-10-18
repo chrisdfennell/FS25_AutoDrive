@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Ammorbidisci" />
 		<text name="gui_ad_sendToTitleTarget"							 text="Invia a %s" />
 		<text name="AD_sendTo_busy"							 text="occupato" />
+		<text name="gui_ad_groundUnload"							 text="Scarico a terra" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="In un silo a trincea o su un cumulo: attraversare lentamente per distribuire il carico, o restare fermo nel primo punto possibile (avanza un po' quando il cumulo è pieno)" />
+		<text name="gui_ad_groundUnload_drive"							 text="Attraversa" />
+		<text name="gui_ad_groundUnload_still"							 text="Resta fermo" />
 		<text name="AD_routeCheck_loose"								 text="Nodo isolato senza alcun collegamento" />
 		<text name="AD_routeCheck_deadEnd"							 text="Vicolo cieco: nessuna via per proseguire da questo nodo" />
 		<text name="AD_routeCheck_trap"								 text="Trappola a senso unico: %s nodi in cui si può entrare ma da cui non si può uscire" />

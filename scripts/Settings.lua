@@ -789,6 +789,19 @@ AutoDrive.settings.bestPriceUnload = {
     isCopyPaste = true
 }
 
+-- tipping on the ground (bunker silo / heap): drive through to spread it, or stand still (ADGroundUnload)
+AutoDrive.settings.groundUnload = {
+    values = {1, 2},
+    texts = {"gui_ad_groundUnload_drive", "gui_ad_groundUnload_still"},
+    default = 1,
+    current = 1,
+    text = "gui_ad_groundUnload",
+    tooltip = "gui_ad_groundUnload_tooltip",
+    translate = true,
+    isVehicleSpecific = true,
+    isCopyPaste = true
+}
+
 -- work schedule: start and stop hour (-1 = not set), see ADWorkSchedule
 AutoDrive.settings.scheduleStart = {
     values = {-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23},

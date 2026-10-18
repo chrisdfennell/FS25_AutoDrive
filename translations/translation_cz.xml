@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Vyhladit" />
 		<text name="gui_ad_sendToTitleTarget"							 text="Poslat do %s" />
 		<text name="AD_sendTo_busy"							 text="zaneprázdněno" />
+		<text name="gui_ad_groundUnload"							 text="Vysypání na zem" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="V žlabovém silu nebo na hromadu: pomalu projíždět a rozprostřít náklad, nebo stát na prvním možném místě (popojede, když je hromada plná)" />
+		<text name="gui_ad_groundUnload_drive"							 text="Projet" />
+		<text name="gui_ad_groundUnload_still"							 text="Stát na místě" />
 		<text name="AD_routeCheck_loose"								 text="Osamocený bod trasy bez jakéhokoli spojení" />
 		<text name="AD_routeCheck_deadEnd"							 text="Slepá ulice: z tohoto bodu trasy nevede žádná cesta dál" />
 		<text name="AD_routeCheck_trap"								 text="Jednosměrná past: počet bodů trasy, do kterých lze vjet, ale ne vyjet: %s" />

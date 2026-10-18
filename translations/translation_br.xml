@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Suavizar" />
 		<text name="gui_ad_sendToTitleTarget"							 text="Enviar para %s" />
 		<text name="AD_sendTo_busy"							 text="ocupado" />
+		<text name="gui_ad_groundUnload"							 text="Descarregar no chão" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="Em um silo trincheira ou monte: atravessar devagar para espalhar a carga, ou ficar parado no primeiro lugar possível (avança um pouco quando o monte está cheio)" />
+		<text name="gui_ad_groundUnload_drive"							 text="Atravessar" />
+		<text name="gui_ad_groundUnload_still"							 text="Ficar parado" />
 		<text name="AD_routeCheck_loose"								 text="Waypoint solto sem nenhuma conexão" />
 		<text name="AD_routeCheck_deadEnd"							 text="Beco sem saída: não há como seguir a partir deste waypoint" />
 		<text name="AD_routeCheck_trap"								 text="Armadilha de mão única: %s waypoints onde é possível entrar, mas não sair" />

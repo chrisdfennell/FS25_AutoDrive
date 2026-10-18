@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Lisser" />
 		<text name="gui_ad_sendToTitleTarget"							 text="Envoyer vers %s" />
 		<text name="AD_sendTo_busy"							 text="occupé" />
+		<text name="gui_ad_groundUnload"							 text="Déversement au sol" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="Dans un silo couloir ou sur un tas : traverser lentement pour répartir le chargement, ou rester immobile au premier endroit possible (avance un peu quand le tas est plein)" />
+		<text name="gui_ad_groundUnload_drive"							 text="Traverser" />
+		<text name="gui_ad_groundUnload_still"							 text="Rester immobile" />
 		<text name="AD_routeCheck_loose"								 text="Point de passage isolé sans aucune connexion" />
 		<text name="AD_routeCheck_deadEnd"							 text="Impasse : aucun chemin à partir de ce point de passage" />
 		<text name="AD_routeCheck_trap"								 text="Piège à sens unique : %s points de passage où l'on peut entrer mais d'où l'on ne peut pas sortir" />

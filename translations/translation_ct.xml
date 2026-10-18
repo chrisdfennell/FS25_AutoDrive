@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="平滑" />
 		<text name="gui_ad_sendToTitleTarget"							 text="派往 %s" />
 		<text name="AD_sendTo_busy"							 text="忙碌" />
+		<text name="gui_ad_groundUnload"							 text="卸到地面" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="在青貯窖或料堆：慢慢駛過以鋪開貨物，或停在第一個可卸貨的位置（料堆滿了會稍微往前開）" />
+		<text name="gui_ad_groundUnload_drive"							 text="駛過" />
+		<text name="gui_ad_groundUnload_still"							 text="原地停住" />
 		<text name="AD_routeCheck_loose"								 text="沒有任何連接的孤立航點" />
 		<text name="AD_routeCheck_deadEnd"							 text="死路：從此航點無法繼續前進" />
 		<text name="AD_routeCheck_trap"								 text="單向陷阱：%s 個航點只能駛入無法駛出" />

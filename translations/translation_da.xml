@@ -600,6 +600,10 @@
 		<text name="AD_wpPanel_smooth"							 text="Udglat" />
 		<text name="gui_ad_sendToTitleTarget"							 text="Send til %s" />
 		<text name="AD_sendTo_busy"							 text="optaget" />
+		<text name="gui_ad_groundUnload"							 text="Tipning på jorden" />
+		<text name="gui_ad_groundUnload_tooltip"							 text="I en plansilo eller på en bunke: kør langsomt igennem for at fordele læsset, eller hold stille på det første mulige sted (kører lidt videre, når bunken er fuld)" />
+		<text name="gui_ad_groundUnload_drive"							 text="Kør igennem" />
+		<text name="gui_ad_groundUnload_still"							 text="Hold stille" />
 		<text name="AD_routeCheck_loose"								 text="Løst vejpunkt uden nogen forbindelse" />
 		<text name="AD_routeCheck_deadEnd"							 text="Blindgyde: ingen vej videre fra dette vejpunkt" />
 		<text name="AD_routeCheck_trap"								 text="Ensrettet fælde: %s vejpunkter, man kan køre ind i, men ikke ud af" />

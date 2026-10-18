@@ -149,7 +149,8 @@ function UnloadAtDestinationTask:update(dt)
                 --AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_PATHINFO, "UnloadAtDestinationTask:update isTargetReached NOT isActiveAtTrigger")
                 if self.vehicle.ad.trailerModule:isUnloadingToBunkerSilo() then
                     --AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_PATHINFO, "UnloadAtDestinationTask:update isTargetReached NOT isActiveAtTrigger isUnloadingToBunkerSilo")
-                    self.vehicle.ad.drivePathModule:update(dt)
+                    -- Overdrive: stand still while tipping on the ground (vehicle setting), else drive through
+                    ADGroundUnload.drive(self, dt)
                 else
                     --AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_PATHINFO, "UnloadAtDestinationTask:update isTargetReached NOT isActiveAtTrigger stopVehicle")
                     self.vehicle.ad.specialDrivingModule.motorShouldNotBeStopped = true
@@ -162,7 +163,8 @@ function UnloadAtDestinationTask:update(dt)
                 --AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_PATHINFO, "UnloadAtDestinationTask:update isActiveAtTrigger")
                 if self.vehicle.ad.trailerModule:isUnloadingToBunkerSilo() then
                     --AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_PATHINFO, "UnloadAtDestinationTask:update isActiveAtTrigger isUnloadingToBunkerSilo")
-                    self.vehicle.ad.drivePathModule:update(dt)
+                    -- Overdrive: stand still while tipping on the ground (vehicle setting), else drive through
+                    ADGroundUnload.drive(self, dt)
                 else
                     --AutoDrive.debugPrint(self.vehicle, AutoDrive.DC_PATHINFO, "UnloadAtDestinationTask:update isActiveAtTrigger stopVehicle")
                     self.isReverseTriggerReached = self.vehicle.ad.drivePathModule:getIsReversing()
