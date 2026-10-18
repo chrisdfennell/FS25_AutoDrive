@@ -870,6 +870,17 @@ function AutoDriveHud:mouseEvent(vehicle, posX, posY, isDown, isUp, button)
         vehicle.ad.sectionWayPoints = {}
         
         local adjustedPaths = false
+        -- Overdrive: on the construction screen (landscaping) the left mouse button paints and shapes the ground:
+        -- it must not select, connect, create or drag waypoints there (moving with the right / middle button stays).
+        -- The move key (Left Shift) is not reliable there: opening the screen with Shift + P switches the vehicle's
+        -- keys off before the key is let go, so it would stay "held" the whole time.
+        if g_gui ~= nil and g_gui:getIsGuiVisible() then
+            AutoDrive.moveNodeKeyPressed = false
+            vehicle.ad.keyDragNodeId = nil
+            if button == 1 then
+                button = 0
+            end
+        end
         if not mouseEventHandled and AutoDrive.isInExtendedEditorMode() and AutoDrive.isMouseActiveForEditor() then
             self:mouseEventHandleSelection(vehicle, isUp, button)
             self:mouseEventResetSelectedNode(vehicle)

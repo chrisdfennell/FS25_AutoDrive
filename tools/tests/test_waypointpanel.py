@@ -251,6 +251,41 @@ s.execute("""
 assert s.eval("V.ad.selectedNodeId") is None
 s.execute("REALHUD.hudElements = {}; HUD = REALHUD")
 
+# --- construction screen (landscaping): the left button paints there. A move key "held" since Shift + P opened
+# the screen must not drag waypoints, and left clicks must not select or connect them
+s.execute("""
+    GUI_VISIBLE = true
+    g_gui = {getIsGuiVisible = function() return GUI_VISIBLE end}
+    AutoDrive.isMouseActiveForHud = function() return not GUI_VISIBLE end
+    WP3 = ADGraphManager.wayPoints[3]
+    V.getWayPointsInRange = function() return {WP3, ADGraphManager.wayPoints[4]} end
+    POINTED = 3
+    AutoDrive.mouseIsAtPos = function(point) return point.id == POINTED end
+    AutoDrive.moveNodeToMousePos = function(id) MOVED = id end
+    AutoDrive.playSample = function() end
+    V.ad.selectedNodeId = nil
+    AutoDrive.moveNodeKeyPressed = true
+    g_lastMousePosX, g_lastMousePosY = 0.5, 0.5
+    BEFORE_LINKS = snapshot()
+    REALHUD:mouseEvent(V, 0.5, 0.5, true, false, 1)            -- left down on waypoint 3
+    g_lastMousePosX = 0.6
+    REALHUD:mouseEvent(V, 0.6, 0.5, false, false, 0)           -- drag
+    REALHUD:mouseEvent(V, 0.6, 0.5, false, true, 1)            -- left up
+    POINTED = 4
+    REALHUD:mouseEvent(V, 0.6, 0.5, false, true, 1)            -- a click on waypoint 4
+""")
+assert s.eval("MOVED") is None and s.eval("V.ad.keyDragNodeId") is None and s.eval("V.ad.nodeToMoveId") is None
+assert s.eval("V.ad.selectedNodeId") is None and not s.eval("AutoDrive.moveNodeKeyPressed")
+assert s.globals().snapshot() == s.eval("BEFORE_LINKS")
+# back in the game the editor clicks work as before
+s.execute("""
+    GUI_VISIBLE = false
+    POINTED = 3
+    REALHUD:mouseEvent(V, 0.5, 0.5, false, true, 1)
+""")
+assert s.eval("V.ad.selectedNodeId") == 3
+s.execute("V.ad.selectedNodeId = 3; g_lastMousePosX, g_lastMousePosY = nil, nil; draw()")
+
 # --- the road event: through the stream, and a client applies it without asking the server again
 s.execute("""
     STREAM = {}; POS = 0
@@ -284,4 +319,4 @@ assert s.eval("SENT_TO[1] == NEAR") and s.eval("SENT_TO[2]") == 1 and s.eval("CL
 # --- an error switches the panel off instead of breaking the HUD
 s.execute("V.ad.selectedNodeId = 3; local orig = P.getRows; P.getRows = function() error('boom') end; Logging = {error = function() LOGGED = true end}; draw(); P.getRows = orig")
 assert s.eval("P.failed") and s.eval("LOGGED") and s.eval("P.rect == nil")
-print("OK: waypoint panel (shown when, stays while the mouse is on it, road: zone, side road, direction, tidy; remove connection, drive here, send vehicle, layout, connections incl. reverse in, road to junction, every button one undo step, target, close, error guard)")
+print("OK: waypoint panel (shown when, stays while the mouse is on it, construction screen ignores left clicks, road: zone, side road, direction, tidy; remove connection, drive here, send vehicle, layout, connections incl. reverse in, road to junction, every button one undo step, target, close, error guard)")
