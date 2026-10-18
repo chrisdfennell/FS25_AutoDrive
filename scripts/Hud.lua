@@ -989,12 +989,107 @@ function AutoDrive.moveNodeToMousePos(nodeID, alwaysFollowTerrain)
 			-- position before the drag, needed by the undo history as the node is moved locally before the move event is sent
 			node.undoOrigin = {x = node.x, y = node.y, z = node.z}
 		end
-		node.x, _, node.z = unProject(g_lastMousePosX, g_lastMousePosY, depth)
 		if alwaysFollowTerrain or not AutoDrive.leftLSHIFTmodifierKeyPressed then
-			node.y = AutoDrive:getTerrainHeightAtWorldPos(node.x, node.z)
+			-- Overdrive: where the mouse points at the ground or road. The position at the same distance from the
+			-- camera (below) is somewhere else on a slope: the waypoint ended up above or below the road surface.
+			local x, y, z = AutoDrive.getGroundUnderMouse(g_lastMousePosX, g_lastMousePosY)
+			if x ~= nil then
+				node.x, node.y, node.z = x, y, z
+			else
+				node.x, _, node.z = unProject(g_lastMousePosX, g_lastMousePosY, depth)
+				node.y = AutoDrive:getTerrainHeightAtWorldPos(node.x, node.z)
+			end
+		else
+			-- keep the height: same distance from the camera
+			node.x, _, node.z = unProject(g_lastMousePosX, g_lastMousePosY, depth)
 		end
 		ADGraphManager:markChanges()
 	end
+end
+
+-- Overdrive: the ray from the camera through the mouse
+AutoDrive.MOUSE_RAY_LENGTH = 1500
+AutoDrive.MOUSE_RAY_STEP = 1
+
+function AutoDrive:getGroundUnderMouse_Callback(hitObjectId, x, y, z, distance)
+	if hitObjectId ~= nil and hitObjectId ~= 0 and y ~= nil then
+		self.mouseRayHit = {x, y, z}
+	end
+end
+
+-- the point where the line from the camera through the mouse meets the road or the ground, or nil.
+-- A raycast finds roads and bridges; without a hit the ray is followed over the terrain.
+function AutoDrive.getGroundUnderMouse(mouseX, mouseY)
+	if mouseX == nil or mouseY == nil then
+		return nil
+	end
+	local nearX, nearY, nearZ = unProject(mouseX, mouseY, 0)
+	local farX, farY, farZ = unProject(mouseX, mouseY, 1)
+	if nearX == nil or farX == nil then
+		return nil
+	end
+	-- from the camera, whichever way round the depth goes
+	local camera = getCamera ~= nil and getCamera() or nil
+	if camera ~= nil and camera ~= 0 then
+		local camX, camY, camZ = getWorldTranslation(camera)
+		local function distance(x, y, z)
+			return (x - camX) ^ 2 + (y - camY) ^ 2 + (z - camZ) ^ 2
+		end
+		if distance(nearX, nearY, nearZ) > distance(farX, farY, farZ) then
+			farX, farY, farZ = nearX, nearY, nearZ
+		end
+		nearX, nearY, nearZ = camX, camY, camZ
+	end
+	local dx, dy, dz = farX - nearX, farY - nearY, farZ - nearZ
+	local length = math.sqrt(dx * dx + dy * dy + dz * dz)
+	if length < 0.001 then
+		return nil
+	end
+	dx, dy, dz = dx / length, dy / length, dz / length
+	local maxDistance = math.min(length, AutoDrive.MOUSE_RAY_LENGTH)
+
+	AutoDrive.mouseRayHit = nil
+	if raycastClosest ~= nil and CollisionFlag ~= nil then
+		raycastClosest(nearX, nearY, nearZ, dx, dy, dz, maxDistance, "getGroundUnderMouse_Callback", AutoDrive, CollisionFlag.TERRAIN + CollisionFlag.ROAD)
+		local hit = AutoDrive.mouseRayHit
+		AutoDrive.mouseRayHit = nil
+		if hit ~= nil then
+			return hit[1], hit[2], hit[3]
+		end
+	end
+
+	-- the terrain: the first point of the ray below the ground, then halving the step
+	local terrain = g_currentMission ~= nil and g_currentMission.terrainRootNode or nil
+	if terrain == nil then
+		return nil
+	end
+	local function below(t)
+		local x, y, z = nearX + dx * t, nearY + dy * t, nearZ + dz * t
+		return y <= getTerrainHeightAtWorldPos(terrain, x, 0, z)
+	end
+	if below(0) then
+		return nil
+	end
+	local previous, t = 0, AutoDrive.MOUSE_RAY_STEP
+	while t <= maxDistance do
+		if below(t) then
+			local low, high = previous, t
+			for _ = 1, 16 do
+				local middle = (low + high) / 2
+				if below(middle) then
+					high = middle
+				else
+					low = middle
+				end
+			end
+			local x, z = nearX + dx * high, nearZ + dz * high
+			return x, AutoDrive:getTerrainHeightAtWorldPos(x, z), z
+		end
+		previous = t
+		-- longer steps further away, the waypoint is moved near the camera most of the time
+		t = t + math.max(AutoDrive.MOUSE_RAY_STEP, t / 50)
+	end
+	return nil
 end
 
 function AutoDriveHud:startMovingHud(mouseX, mouseY)
