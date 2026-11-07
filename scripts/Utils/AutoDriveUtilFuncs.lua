@@ -712,6 +712,10 @@ end
 
 -- set or delete park destination for selected vehicle, tool from user input action, client mode!
 function AutoDrive.setActualParkDestination(vehicle)
+    Logging.info("[ADParkDebug] setActualParkDestination reached, lCtrl=%s extended=%s firstMarker=%s tool=%s",
+        tostring(AutoDrive.leftCTRLmodifierKeyPressed), tostring(AutoDrive.isInExtendedEditorMode()),
+        tostring(vehicle ~= nil and vehicle.ad ~= nil and vehicle.ad.stateModule:getFirstMarkerId()),
+        tostring(vehicle ~= nil and AutoDrive.getSelectedWorkTool(vehicle) ~= nil and AutoDrive.getSelectedWorkTool(vehicle):getName()))
     local actualParkDestination = -1
     local selectedWorkTool = nil
 

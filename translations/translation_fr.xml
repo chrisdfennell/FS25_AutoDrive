@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="gêne la moissonneuse : traverse jusqu'au bord du champ" />
 		<text name="AD_escape_stuck"							 text="est bloqué contre un véhicule : traverse jusqu'au bord du champ" />
 		<text name="AD_task_escape"							 text="Se dégage vers le bord du champ" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="Supprimer le point" />
 		<text name="AD_wpPanel_height"							 text="Hauteur %s m" />
 		<text name="AD_wpPanel_away"							 text="à %s m" />

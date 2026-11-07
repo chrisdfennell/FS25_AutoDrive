@@ -12,9 +12,45 @@ EmptyHarvesterTask.REVERSE_TIME = 30000
 EmptyHarvesterTask.MAX_STUCK_TIME = 60000
 EmptyHarvesterTask.WAITING_TIME = 7000
 EmptyHarvesterTask.WAITING_FOR_PIPE = 1000
+-- PropaineX edit: start following a combine that drives off after this long (ms; was 4000), in every stage of the
+-- task; also how long it must have stood before that counts
+EmptyHarvesterTask.FOLLOW_AFTER = 500
+
+-- PropaineX edit: hand over to FollowCombineTask (active unloading), as AutoDrive did after 4 s
+function EmptyHarvesterTask:switchToFollow()
+    local mode = self.vehicle.ad.modes[AutoDrive.MODE_UNLOAD]
+    mode.state = CombineUnloaderMode.STATE_ACTIVE_UNLOAD_COMBINE
+    mode.breadCrumbs = Queue:new()
+    mode.lastBreadCrumb = nil
+    local followTask = FollowCombineTask:new(self.vehicle, self.combine)
+    -- PropaineX edit (3.2.0.4): this unloader was called to a standing combine (see FollowCombineTask, standingCall)
+    followTask.standingCall = true
+    self.vehicle.ad.taskModule:addTask(followTask)
+    self.vehicle.ad.taskModule:setCurrentTaskFinished(ADTaskModule.DONT_PROPAGATE)
+end
+
+-- PropaineX edit (3.2.0.4): arrived under the pipe of a standing combine. With Active unloading it goes straight
+-- into chase mode (holding still while the combine stands), so there is no hand-over when the combine drives off.
+-- Otherwise the old standing unload.
+function EmptyHarvesterTask:startUnloading()
+    if self:shouldStayWithCombine() then
+        EmptyHarvesterTask.debugMsg(self.vehicle, "EmptyHarvesterTask: arrived, active unloading -> chase mode")
+        self:switchToFollow()
+    else
+        self.state = EmptyHarvesterTask.STATE_UNLOADING
+    end
+end
+
+-- PropaineX edit: a combine (not a chopper) set to Active unloading, not turning or in a Courseplay pocket
+function EmptyHarvesterTask:shouldStayWithCombine()
+    local root = self.combine.getRootVehicle ~= nil and self.combine:getRootVehicle() or self.combine
+    return self.combine.ad.isHarvester and AutoDrive.getSetting("activeUnloading", root) == true
+        and not AutoDrive.combineIsTurning(self.combine) and not AutoDrive:getIsCPCombineInPocket(self.combine)
+end
 
 function EmptyHarvesterTask:new(vehicle, combine)
     local o = EmptyHarvesterTask:create()
+    o.taskType = "EmptyHarvesterTask" -- PropaineX edit (3.6.1.4): ADUnloaderClear.isPlanning
     o.vehicle = vehicle
     o.combine = combine
     o.state = EmptyHarvesterTask.STATE_PATHPLANNING
@@ -67,6 +103,38 @@ function EmptyHarvesterTask:update(dt)
         self.state = EmptyHarvesterTask.STATE_REVERSING
     end
 
+    -- PropaineX edit: the standing combine drives off -> chase it right away, whatever stage we are in (planning,
+    -- driving up, waiting for the pipe, unloading). Was only checked while unloading, after 4 s, standing still
+    -- meanwhile, and it gave up when next to crop. Only once the combine has been seen standing in this task, as a
+    -- moving combine that is nearly full is also sent here (it is about to stop).
+    if self.combine.ad.noMovementTimer.elapsedTime > EmptyHarvesterTask.FOLLOW_AFTER then
+        self.combineStood = true
+    end
+    if self.combineStood and self.combine.ad.driveForwardTimer.elapsedTime > EmptyHarvesterTask.FOLLOW_AFTER
+        and (self.state == EmptyHarvesterTask.STATE_PATHPLANNING or self.state == EmptyHarvesterTask.STATE_DRIVING
+            or self.state == EmptyHarvesterTask.STATE_UNLOADING) then
+        EmptyHarvesterTask.debugMsg(self.vehicle, "EmptyHarvesterTask:update combine drives off -> follow now (%s)", tostring(self:getStateName()))
+        if self.state == EmptyHarvesterTask.STATE_PATHPLANNING then
+            self.vehicle.ad.pathFinderModule:abort()
+        end
+        self:switchToFollow()
+        return
+    end
+
+    -- PropaineX edit (3.6.0.4): no path to the pipe within PATH_TIMEOUT (searching plus the waits after a failed
+    -- search) -> hand the job off or move aside and plan again (CombineUnloaderMode:onPathTimeout)
+    if self.state == EmptyHarvesterTask.STATE_PATHPLANNING then
+        self.pathWait = (self.pathWait or 0) + dt
+        if self.pathWait > CombineUnloaderMode.PATH_TIMEOUT then
+            self.pathWait = 0
+            self.vehicle.ad.pathFinderModule:abort()
+            self.vehicle.ad.modes[AutoDrive.MODE_UNLOAD]:onPathTimeout()
+            return
+        end
+    else
+        self.pathWait = 0
+    end
+
     if self.state == EmptyHarvesterTask.STATE_PATHPLANNING then
         if self.vehicle.ad.pathFinderModule:hasFinished() then
             self.wayPoints = self.vehicle.ad.pathFinderModule:getPath()
@@ -111,10 +179,10 @@ function EmptyHarvesterTask:update(dt)
                 self.waitTimer:timer(self.combine:getDischargeState() ~= Dischargeable.DISCHARGE_STATE_OFF, EmptyHarvesterTask.WAITING_FOR_PIPE, dt)
                 if self.waitTimer:done() then
                     self.waitTimer:timer(false)
-                    self.state = EmptyHarvesterTask.STATE_UNLOADING
+                    self:startUnloading()
                 end
             else
-                self.state = EmptyHarvesterTask.STATE_UNLOADING
+                self:startUnloading()
             end
             return
         else
@@ -124,22 +192,7 @@ function EmptyHarvesterTask:update(dt)
         self.vehicle.ad.specialDrivingModule.motorShouldNotBeStopped = true
         -- Stopping CP drivers for now
         AutoDrive:holdCPCombine(self.combine)
-        --Check if the combine is moving / has already moved away and we are supposed to actively unload
-        if self.combine.ad.driveForwardTimer.elapsedTime > 100 then
-            EmptyHarvesterTask.debugMsg(self.vehicle, "EmptyHarvesterTask:update driveForwardTimer.elapsedTime > 100")
-            if AutoDrive.isVehicleOrTrailerInCrop(self.vehicle, true) then
-                EmptyHarvesterTask.debugMsg(self.vehicle, "EmptyHarvesterTask:update isVehicleOrTrailerInCrop")
-                self:finished()
-                return
-            elseif self.combine.ad.driveForwardTimer.elapsedTime > 4000 then
-                EmptyHarvesterTask.debugMsg(self.vehicle, "EmptyHarvesterTask:update driveForwardTimer.elapsedTime > 4000")
-                self.vehicle.ad.modes[AutoDrive.MODE_UNLOAD].state = CombineUnloaderMode.STATE_ACTIVE_UNLOAD_COMBINE
-                self.vehicle.ad.modes[AutoDrive.MODE_UNLOAD].breadCrumbs = Queue:new()
-                self.vehicle.ad.modes[AutoDrive.MODE_UNLOAD].lastBreadCrumb = nil
-                self.vehicle.ad.taskModule:addTask(FollowCombineTask:new(self.vehicle, self.combine))
-                self.vehicle.ad.taskModule:setCurrentTaskFinished(ADTaskModule.DONT_PROPAGATE)
-            end
-        end
+        -- (PropaineX edit: the check for the combine driving off is now at the top of update, for every stage)
 
         local combineFillLevel, _, _ = AutoDrive.getObjectFillLevels(self.combine)
 
@@ -155,6 +208,13 @@ function EmptyHarvesterTask:update(dt)
             local _, _, filledToUnload = AutoDrive.getAllFillLevels(self.trailers)
             local distanceToCombine = AutoDrive.getDistanceBetween(self.vehicle, self.combine)
 
+            -- PropaineX edit: combine emptied while standing, it unloads on the move (Active unloading) and we have
+            -- room left: stay with it, so we are under the pipe when it fills again
+            if combineFillLevel <= 0.1 and not filledToUnload and self:shouldStayWithCombine() then
+                EmptyHarvesterTask.debugMsg(self.vehicle, "EmptyHarvesterTask:update combine empty, active unloading -> follow")
+                self:switchToFollow()
+                return
+            end
             if combineFillLevel <= 0.1 or filledToUnload then
                 EmptyHarvesterTask.debugMsg(self.vehicle, "EmptyHarvesterTask:update STATE_UNLOADING_FINISHED")
                 self.state = EmptyHarvesterTask.STATE_UNLOADING_FINISHED

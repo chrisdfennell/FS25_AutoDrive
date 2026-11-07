@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="заважає комбайну: проїжджає до краю поля" />
 		<text name="AD_escape_stuck"							 text="застряг біля техніки: проїжджає до краю поля" />
 		<text name="AD_task_escape"							 text="Виїжджає до краю поля" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="Видалити точку" />
 		<text name="AD_wpPanel_height"							 text="Висота %s м" />
 		<text name="AD_wpPanel_away"							 text="%s м звідси" />

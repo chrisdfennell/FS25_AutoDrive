@@ -622,6 +622,7 @@
 		<text name="AD_escape_harvester"							 text="is in the way of the harvester: drives through to the field edge" />
 		<text name="AD_escape_stuck"							 text="is stuck against a vehicle: drives through to the field edge" />
 		<text name="AD_task_escape"							 text="Driving clear to the field edge" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="Delete waypoint" />
 		<text name="AD_wpPanel_height"							 text="Height %s m" />
 		<text name="AD_wpPanel_away"							 text="%s m away" />

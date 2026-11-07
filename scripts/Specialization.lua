@@ -777,6 +777,8 @@ function AutoDrive:onPreDetachImplement(implement)
         ADHarvestManager:unregisterHarvester(attachable)
         attachable.isTrailedHarvester = false
         attachable.trailingVehicle = nil
+        attachable.adSideways = nil -- PropaineX edit (3.10.0.0): Nexat
+        attachable.adNexatSensors = nil
         self.ad.isRegisterdHarvester = nil
     end
     if self.ad ~= nil then

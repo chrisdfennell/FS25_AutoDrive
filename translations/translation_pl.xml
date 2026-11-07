@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="blokuje kombajn: przejeżdża do krawędzi pola" />
 		<text name="AD_escape_stuck"							 text="utknął na pojeździe: przejeżdża do krawędzi pola" />
 		<text name="AD_task_escape"							 text="Wyjeżdża na krawędź pola" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="Usuń punkt" />
 		<text name="AD_wpPanel_height"							 text="Wysokość %s m" />
 		<text name="AD_wpPanel_away"							 text="%s m stąd" />

@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="estorba a la cosechadora: atraviesa hasta el borde del campo" />
 		<text name="AD_escape_stuck"							 text="está atascado contra un vehículo: atraviesa hasta el borde del campo" />
 		<text name="AD_task_escape"							 text="Saliendo al borde del campo" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="Borrar punto" />
 		<text name="AD_wpPanel_height"							 text="Altura %s m" />
 		<text name="AD_wpPanel_away"							 text="a %s m" />

@@ -15,14 +15,18 @@ function ReverseFromBadLocationTask:setUp()
     self.timeOut = AutoDriveTON:new()
     self.frontFreeTimer = AutoDriveTON:new()
     self.trailers, _ = AutoDrive.getAllUnits(self.vehicle)
-    AutoDrive.setTrailerCoverOpen(self.vehicle, self.trailers, false)
+    -- PropaineX edit (3.8.1.4): it backs out in the field while unloading combines: the cover stays open (it was closed
+    -- here; CombineUnloaderMode:keepCoverOpen keeps it open in the field, the road tasks close it)
 end
+
+-- PropaineX edit (3.8.1.4): crop is never a reason to back up (no fruit sensors, only objects), and at most this far
+ReverseFromBadLocationTask.MAX_DISTANCE = 10
 
 function ReverseFromBadLocationTask:update(dt)
     local timedOut = self.timeOut:timer(true, 20000, dt)
-    local frontBlocked = self.vehicle.ad.sensors.frontSensorLong:pollInfo() or self.vehicle.ad.sensors.frontSensorLongFruit:pollInfo()
-    local leftFrontBlocked = self.vehicle.ad.sensors.leftFrontSensorFruit:pollInfo() or self.vehicle.ad.sensors.leftFrontSensor:pollInfo()
-    local rightFrontBlocked = self.vehicle.ad.sensors.rightFrontSensorFruit:pollInfo() or self.vehicle.ad.sensors.rightFrontSensor:pollInfo()
+    local frontBlocked = self.vehicle.ad.sensors.frontSensorLong:pollInfo()
+    local leftFrontBlocked = self.vehicle.ad.sensors.leftFrontSensor:pollInfo()
+    local rightFrontBlocked = self.vehicle.ad.sensors.rightFrontSensor:pollInfo()
     local frontCleared = self.frontFreeTimer:timer(not frontBlocked, 4000, dt)
 
     if frontBlocked or (self.frontFreeTimer.elapsedTime > 0 and not frontCleared) then
@@ -62,7 +66,7 @@ function ReverseFromBadLocationTask:update(dt)
     end
 
     local vehicleX, _, vehicleZ = getWorldTranslation(self.vehicle.components[1].node)
-    if timedOut or MathUtil.vector2Length(vehicleX - self.startLocation.x, vehicleZ - self.startLocation.z) > 30 then
+    if timedOut or MathUtil.vector2Length(vehicleX - self.startLocation.x, vehicleZ - self.startLocation.z) > ReverseFromBadLocationTask.MAX_DISTANCE then
         --print("ReverseTask timed out or went too far from start")
         self:finished()
     end

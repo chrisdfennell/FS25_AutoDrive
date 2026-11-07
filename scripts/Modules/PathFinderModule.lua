@@ -258,14 +258,16 @@ function PathFinderModule:startPathPlanningToPipe(combine, chasing)
     -- the trailer.
     -- 2*math.sin(math.pi/8)) is the third side of a 45-67.5-67.5 isosceles triangle with the
     -- equal sides being the length of the tractor train
-    local lengthOffset = combine.size.length / 2 +
-                            AutoDrive.getTractorTrainLength(self.vehicle, true, false) * (2 * math.sin(math.pi / 8))
+    -- PropaineX edit: run-up 50% longer (incl. the minimum) so the trailer has more straight to line up
+    local runUpFactor = 1.5
+    local lengthOffset = (combine.size.length / 2 +
+                            AutoDrive.getTractorTrainLength(self.vehicle, true, false) * (2 * math.sin(math.pi / 8))) * runUpFactor
     -- A bit of a sanity check, in case the vehicle is absurdly long.
     --if lengthOffset > self.PATHFINDER_FOLLOW_DISTANCE then
     --    lengthOffset = self.PATHFINDER_FOLLOW_DISTANCE
     --elseif
-    if lengthOffset <= self.PATHFINDER_TARGET_DISTANCE then
-        lengthOffset = self.PATHFINDER_TARGET_DISTANCE
+    if lengthOffset <= self.PATHFINDER_TARGET_DISTANCE * runUpFactor then
+        lengthOffset = self.PATHFINDER_TARGET_DISTANCE * runUpFactor
     end
 
     --local target = {x = pipeChasePos.x, y = worldY, z = pipeChasePos.z}
@@ -287,7 +289,7 @@ function PathFinderModule:startPathPlanningToPipe(combine, chasing)
         local pathFinderTarget = {x = pipeChasePos.x, y = worldY, z = pipeChasePos.z}
         -- only append target points / try to straighten the driver/trailer combination if we are driving up to the pipe not the rear end
         if pipeChaseSide ~= AutoDrive.CHASEPOS_REAR then
-            pathFinderTarget = {x = pipeChasePos.x - (combine.size.length) * rx, y = worldY, z = pipeChasePos.z - (combine.size.length) * rz}
+            pathFinderTarget = {x = pipeChasePos.x - (combine.size.length * runUpFactor) * rx, y = worldY, z = pipeChasePos.z - (combine.size.length * runUpFactor) * rz}
         end
         local appendedNode = {x = pipeChasePos.x - (combine.size.length / 2 * rx), y = worldY, z = pipeChasePos.z - (combine.size.length / 2 * rz)}
 

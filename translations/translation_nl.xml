@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="staat de maaidorser in de weg: rijdt door naar de veldrand" />
 		<text name="AD_escape_stuck"							 text="zit vast tegen een voertuig: rijdt door naar de veldrand" />
 		<text name="AD_task_escape"							 text="Rijdt vrij naar de veldrand" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="Routepunt verwijderen" />
 		<text name="AD_wpPanel_height"							 text="Hoogte %s m" />
 		<text name="AD_wpPanel_away"							 text="%s m verderop" />

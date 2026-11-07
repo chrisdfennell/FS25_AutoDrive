@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="steht dem Drescher im Weg: fährt durch zum Feldrand" />
 		<text name="AD_escape_stuck"							 text="hängt an einem Fahrzeug fest: fährt durch zum Feldrand" />
 		<text name="AD_task_escape"							 text="Fährt frei zum Feldrand" />
+		<text name="AD_task_move_clear"							 text="F&#228;hrt dem Drescher aus dem Weg" />
 		<text name="AD_wpPanel_delete"							 text="Wegpunkt löschen" />
 		<text name="AD_wpPanel_height"							 text="Höhe %s m" />
 		<text name="AD_wpPanel_away"							 text="%s m entfernt" />

@@ -179,6 +179,16 @@ function ADUnloaderEscape.getHarvesterFrontBox(harvester)
     local dirX, _, dirZ = AutoDrive.localDirectionToWorld(harvester, 0, 0, 1)
     local length = AutoDrive.getVehicleDimensions ~= nil and select(2, AutoDrive.getVehicleDimensions(harvester)) or 10
     local width = math.max(select(1, AutoDrive.getVehicleDimensions(harvester)) or 0, ADUnloaderEscape.FRONT_MIN_WIDTH)
+    -- PropaineX edit (3.10.0.0): Nexat: the carrier drives crab-wise, so the front is the harvester module's front and
+    -- the carrier's length is the width
+    local module = AutoDrive.getSidewaysHarvester(harvester)
+    if module ~= nil then
+        x, y, z = getWorldTranslation(module.components[1].node)
+        dirX, _, dirZ = AutoDrive.localDirectionToWorld(module, 0, 0, 1)
+        local halfW, halfL = AutoDrive.getHarvesterHalfSize(module)
+        length = halfL * 2
+        width = math.max(halfW * 2, AutoDrive.getFrontToolWidth ~= nil and AutoDrive.getFrontToolWidth(module) or 0, ADUnloaderEscape.FRONT_MIN_WIDTH)
+    end
     local ahead = length / 2 + ADUnloaderEscape.FRONT_LENGTH / 2
     return ADUnloaderEscape.makeBox(x + dirX * ahead, y, z + dirZ * ahead, dirX, dirZ, width / 2, ADUnloaderEscape.FRONT_LENGTH / 2)
 end

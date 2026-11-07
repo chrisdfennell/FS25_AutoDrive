@@ -58,11 +58,11 @@ function ClearCropTask:setUp()
         )
     end
     if self.harvester and AutoDrive.getDistanceBetween(self.vehicle, self.harvester) < ClearCropTask.MAX_HARVESTER_DISTANCE then
-        local leftSensorFruit = self.harvester.ad.sensors.leftSensorFruit:pollInfo()
-        local leftFrontSensorFruit = self.harvester.ad.sensors.leftFrontSensorFruit:pollInfo()
+        local leftSensorFruit = AutoDrive.getCombineSensors(self.harvester, self.harvester:getRootVehicle()).leftSensorFruit:pollInfo()
+        local leftFrontSensorFruit = AutoDrive.getCombineSensors(self.harvester, self.harvester:getRootVehicle()).leftFrontSensorFruit:pollInfo()
         local leftFree = not (leftSensorFruit or leftFrontSensorFruit)
-        local rightFrontSensorFruit = self.harvester.ad.sensors.rightFrontSensorFruit:pollInfo()
-        local rightSensorFruit = self.harvester.ad.sensors.rightSensorFruit:pollInfo()
+        local rightFrontSensorFruit = AutoDrive.getCombineSensors(self.harvester, self.harvester:getRootVehicle()).rightFrontSensorFruit:pollInfo()
+        local rightSensorFruit = AutoDrive.getCombineSensors(self.harvester, self.harvester:getRootVehicle()).rightSensorFruit:pollInfo()
         local rightFree = not (rightSensorFruit or rightFrontSensorFruit)
         local offfsetX = 0
         if leftFree then

@@ -15,6 +15,8 @@ CombineUnloaderMode.STATE_EXIT_FIELD = {}
 CombineUnloaderMode.STATE_REVERSE_FROM_BAD_LOCATION = {}
 -- Overdrive: drive clear when blocked (ADUnloaderEscape)
 CombineUnloaderMode.STATE_ESCAPE = {}
+-- PropaineX edit: moving out of the harvesters' way while waiting (ADUnloaderClear)
+CombineUnloaderMode.STATE_MOVE_CLEAR = {}
 
 CombineUnloaderMode.MAX_COMBINE_FILLLEVEL_CHASING = 101
 CombineUnloaderMode.STATIC_X_OFFSET_FROM_HEADER = 0
@@ -68,7 +70,57 @@ function CombineUnloaderMode:start(user)
     CombineUnloaderMode.debugMsg(self.vehicle, "CombineUnloaderMode:start end self.state %s", tostring(self:getStateName()))
 end
 
+-- PropaineX edit (3.8.0.4): while it works combines in the field, keep the trailer cover open (respects the 'auto
+-- trailer cover' setting). Covers were only opened when a task started, and some tasks (backing out of a bad spot,
+-- ...) close them, so midway through a field they stayed shut.
+CombineUnloaderMode.COVER_CHECK_INTERVAL = 1000
+AutoDrive.COVER_COMBINE_RANGE = 50 -- m (3.9.1.4)
+
+-- PropaineX edit (3.9.1.4): true (and the combine) while the unloader works combines in the field
+function AutoDrive.isCombineFieldWork(vehicle)
+    if vehicle == nil or vehicle.ad == nil or vehicle.ad.stateModule == nil or vehicle.ad.modes == nil then
+        return false
+    end
+    if vehicle.ad.stateModule:getMode() ~= AutoDrive.MODE_UNLOAD then
+        return false
+    end
+    local m = vehicle.ad.modes[AutoDrive.MODE_UNLOAD]
+    if m == nil then
+        return false
+    end
+    local s = m.state
+    if s == m.STATE_WAIT_TO_BE_CALLED or s == m.STATE_DRIVE_TO_COMBINE or s == m.STATE_DRIVE_TO_PIPE
+        or s == m.STATE_FOLLOW_COMBINE or s == m.STATE_ACTIVE_UNLOAD_COMBINE or s == m.STATE_REVERSE_FROM_BAD_LOCATION
+        or s == m.STATE_ESCAPE or s == m.STATE_MOVE_CLEAR or s == m.STATE_LEAVE_CROP then
+        return true, m.combine
+    end
+    return false
+end
+function CombineUnloaderMode:keepCoverOpen(dt)
+    self.coverCheckTimer = (self.coverCheckTimer or 0) + dt
+    if self.coverCheckTimer < CombineUnloaderMode.COVER_CHECK_INTERVAL then
+        return
+    end
+    self.coverCheckTimer = 0
+    local s = self.state
+    -- PropaineX edit (3.8.6.4): open only while working a combine (on the way to it, chasing it, under the pipe, getting
+    -- out of a bad spot meanwhile); shut while it waits to be called, moves aside or leaves the crop
+    if s == self.STATE_DRIVE_TO_COMBINE or s == self.STATE_DRIVE_TO_PIPE
+        or s == self.STATE_FOLLOW_COMBINE or s == self.STATE_ACTIVE_UNLOAD_COMBINE
+        or s == self.STATE_REVERSE_FROM_BAD_LOCATION or s == self.STATE_ESCAPE then
+        local trailers, _ = AutoDrive.getAllUnits(self.vehicle)
+        -- 3.9.1.4: setTrailerCoverOpen keeps it shut until within 50 m of the combine
+        AutoDrive.setTrailerCoverOpen(self.vehicle, trailers, true)
+    elseif s == self.STATE_WAIT_TO_BE_CALLED or s == self.STATE_MOVE_CLEAR or s == self.STATE_LEAVE_CROP then
+        local trailers, _ = AutoDrive.getAllUnits(self.vehicle)
+        AutoDrive.setTrailerCoverOpen(self.vehicle, trailers, false)
+    end
+end
+
 function CombineUnloaderMode:monitorTasks(dt)
+    if g_server ~= nil then
+        self:keepCoverOpen(dt)
+    end
     if self.combine ~= nil and (self.state == self.STATE_DRIVE_TO_START or self.state == self.STATE_DRIVE_TO_UNLOAD or self.state == self.STATE_EXIT_FIELD) then
         if AutoDrive.getDistanceBetween(self.vehicle, self.combine) > 25 then
             CombineUnloaderMode.debugMsg(self.vehicle, "CombineUnloaderMode:monitorTasks -> unregisterAsUnloader")
@@ -86,8 +138,19 @@ function CombineUnloaderMode:monitorTasks(dt)
     if ADUnloaderEscape.monitor(self, dt, isStuck) then
         return
     end
+    -- PropaineX edit: waiting where a harvester will drive: move to a clear spot
+    if ADUnloaderClear.monitor(self, dt) then
+        return
+    end
     if isStuck then
         CombineUnloaderMode.debugMsg(self.vehicle, "CombineUnloaderMode:monitorTasks() - detected stuck vehicle - try reversing out of it now")
+        -- PropaineX edit (3.8.1.4): say why, every time
+        local task = self.vehicle.ad.taskModule:getActiveTask()
+        local taskName = task ~= nil and (task.taskType or (task.getStateName ~= nil and "task state " .. tostring(task:getStateName())) or "task") or "no task"
+        local why = self.failedPathFinder >= 5 and string.format("%d failed path searches", self.failedPathFinder)
+            or "stood still 15 s, driving blocked"
+        Logging.info("[AD] %s: stuck (%s, %s, unloader state %s), backing out up to %d m", ADDiag.name(self.vehicle), why,
+            taskName, tostring(self:getStateName()), ReverseFromBadLocationTask.MAX_DISTANCE)
         self.vehicle.ad.specialDrivingModule:releaseVehicle()
         self.vehicle.ad.taskModule:abortAllTasks()
         self.activeTask = ReverseFromBadLocationTask:new(self.vehicle)
@@ -251,6 +314,10 @@ function CombineUnloaderMode:getNextTask()
         CombineUnloaderMode.debugMsg(self.vehicle, "CombineUnloaderMode:getNextTask - STATE_DRIVE_TO_PIPE | STATE_REVERSE_FROM_BAD_LOCATION")
         --Drive to pipe can be finished when combine is emptied or when vehicle has reached 'old' pipe position and should switch to active mode
         nextTask = self:getTaskAfterUnload(filledToUnload)
+    elseif self.state == self.STATE_MOVE_CLEAR then
+        -- PropaineX edit: moved out of the harvesters' way (ADUnloaderClear): wait for a call again
+        CombineUnloaderMode.debugMsg(self.vehicle, "CombineUnloaderMode:getNextTask - STATE_MOVE_CLEAR")
+        self:setToWaitForCall()
     elseif self.state == self.STATE_LEAVE_CROP then
         CombineUnloaderMode.debugMsg(self.vehicle, "CombineUnloaderMode:getNextTask - STATE_LEAVE_CROP")
         self:setToWaitForCall()
@@ -335,6 +402,79 @@ function CombineUnloaderMode:setToWaitForCall(keepCombine)
     CombineUnloaderMode.debugMsg(self.vehicle, "CombineUnloaderMode:setToWaitForCall end self.state %s self.combine %s", tostring(self:getStateName()), tostring(self.combine))
 end
 
+-- PropaineX edit (3.6.0.4): no path to the harvester within PATH_TIMEOUT (CatchCombinePipeTask, EmptyHarvesterTask).
+-- Another free unloader on the same pins (first marker): hand the job off; 50 % or more in the trailer: go unload,
+-- less: move aside and wait for a call. The only one: move aside (closest safe spot at least MOVE_ASIDE_DISTANCE away,
+-- else that far straight ahead) and plan again (the harvest manager calls it again once it waits).
+CombineUnloaderMode.PATH_TIMEOUT = 10000      -- ms
+CombineUnloaderMode.MOVE_ASIDE_DISTANCE = 25  -- m
+function CombineUnloaderMode:onPathTimeout()
+    local marker = self.vehicle.ad.stateModule:getFirstMarker()
+    local other = false
+    for _, unloader in pairs(ADHarvestManager.idleUnloaders or {}) do
+        if unloader ~= self.vehicle and unloader.ad ~= nil and unloader.ad.stateModule ~= nil
+            and unloader.ad.stateModule:getFirstMarker() == marker then
+            other = true
+            break
+        end
+    end
+    local harvesterName = self.combine ~= nil and ADDiag.name(self.combine) or "?"
+    Logging.info("[AD] %s: no path to %s within %d s, %s", ADDiag.name(self.vehicle), harvesterName,
+        CombineUnloaderMode.PATH_TIMEOUT / 1000, other and "handing the job to the next unloader" or "moving aside to plan again")
+    -- let go of the harvester (a queued follower takes over); the harvest manager sends the closest free unloader
+    ADHarvestManager:unregisterAsUnloader(self.vehicle)
+    if other then
+        local trailers, _ = AutoDrive.getAllUnits(self.vehicle)
+        local fillLevel, _, _, fillFreeCapacity = AutoDrive.getAllFillLevels(trailers)
+        local capacity = fillLevel + fillFreeCapacity
+        if capacity > 0 and fillLevel / capacity >= CombineUnloaderMode.LEAVE_UNLOAD_LEVEL then
+            self:onHarvesterLeft() -- drives off to unload
+            return
+        end
+    end
+    self.vehicle.ad.taskModule:abortAllTasks()
+    self.followingUnloader = nil
+    self.targetUnloader = nil
+    self.combine = nil
+    ADUnloaderClear.moveAside(self, CombineUnloaderMode.MOVE_ASIDE_DISTANCE)
+end
+
+-- PropaineX edit (3.4.0.4): our harvester stopped working (ADHarvestManager:fireUnloader). 50 % or more in the
+-- trailer: drive off to unload (leaving the field first, as for a full trailer); less: wait for the next call here
+CombineUnloaderMode.LEAVE_UNLOAD_LEVEL = 0.5
+function CombineUnloaderMode:onHarvesterLeft()
+    self.vehicle.ad.taskModule:abortAllTasks()
+    self.followingUnloader = nil
+    self.targetUnloader = nil
+    self.combine = nil
+    local trailers, _ = AutoDrive.getAllUnits(self.vehicle)
+    local fillLevel, _, _, fillFreeCapacity = AutoDrive.getAllFillLevels(trailers)
+    local capacity = fillLevel + fillFreeCapacity
+    local ratio = capacity > 0 and fillLevel / capacity or 0
+    CombineUnloaderMode.debugMsg(self.vehicle, "CombineUnloaderMode:onHarvesterLeft trailer %.0f %%", ratio * 100)
+    if ratio >= CombineUnloaderMode.LEAVE_UNLOAD_LEVEL then
+        local x, y, z = getWorldTranslation(self.vehicle.components[1].node)
+        local distanceToStart = 0
+        local firstMarker = self.vehicle.ad.stateModule:getFirstMarker()
+        if firstMarker ~= nil and firstMarker ~= 0 and firstMarker.id ~= nil then
+            local point = ADGraphManager:getWayPointById(firstMarker.id)
+            if point ~= nil then
+                distanceToStart = MathUtil.vector2Length(x - point.x, z - point.z)
+            end
+        end
+        if AutoDrive.checkIsOnField(x, y, z) and distanceToStart > 30 then
+            self.vehicle.ad.taskModule:addTask(ExitFieldTask:new(self.vehicle))
+            self.state = self.STATE_EXIT_FIELD
+        else
+            self.vehicle.ad.taskModule:addTask(UnloadAtDestinationTask:new(self.vehicle, self.vehicle.ad.stateModule:getSecondMarker().id))
+            self.state = self.STATE_DRIVE_TO_UNLOAD
+        end
+    else
+        self.state = self.STATE_WAIT_TO_BE_CALLED
+        self.vehicle.ad.taskModule:addTask(WaitForCallTask:new(self.vehicle))
+    end
+end
+
 function CombineUnloaderMode:assignToHarvester(harvester)
     if self.state == self.STATE_WAIT_TO_BE_CALLED then
 
@@ -350,7 +490,10 @@ function CombineUnloaderMode:assignToHarvester(harvester)
             local cFillRatio = cfillCapacity > 0 and cfillLevel / cfillCapacity or 0
 
             if (self.combine.ad.isHarvester) 
-                and (self.combine.ad.noMovementTimer.elapsedTime > 500 or cleftCapacity < 0.1 or cFillRatio > 0.945)
+                -- PropaineX edit (3.2.1.4): with Active unloading on, a moving combine that is almost full is chased
+                -- (CatchCombinePipeTask), not driven to as if it stood
+                and (self.combine.ad.noMovementTimer.elapsedTime > 500
+                    or ((cleftCapacity < 0.1 or cFillRatio > 0.945) and AutoDrive.getSetting("activeUnloading", self.combine:getRootVehicle()) ~= true))
             then
                 -- default unloading - no movement
                 self.state = self.STATE_DRIVE_TO_PIPE
@@ -724,7 +867,7 @@ function CombineUnloaderMode:getRearChaseOffsetZ(planningPhase)
         if self.combine.ad.isSugarcaneHarvester then
             rearChaseOffset = -self.combine.size.length / 2 - self.tractorTrainLength * math.sqrt(2)
         else
-            local combineSensors = self.combine.ad.sensors or self.combineRootVehicle.ad.sensors
+            local combineSensors = AutoDrive.getCombineSensors(self.combine, self.combineRootVehicle) -- PropaineX edit (3.10.0.0): Nexat
             if self.combine.lastSpeedReal > 0.002 and combineSensors.frontSensorFruit:pollInfo() then
                 rearChaseOffset = -10
             else
@@ -743,7 +886,7 @@ function CombineUnloaderMode:getPipeChasePosition(planningPhase)
     local sideIndex = AutoDrive.CHASEPOS_REAR
 
     -- in case of rotated attached combine use the trailing vehicle sensors
-    local combineSensors = self.combine.ad.sensors or self.combineRootVehicle.ad.sensors
+    local combineSensors = AutoDrive.getCombineSensors(self.combine, self.combineRootVehicle) -- PropaineX edit (3.10.0.0): Nexat
 
     local swathDetection =  AutoDrive.getSetting("detectSwath", self.vehicle) or false
 

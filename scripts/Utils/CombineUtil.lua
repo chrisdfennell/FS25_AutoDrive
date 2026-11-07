@@ -32,6 +32,90 @@ function AutoDrive.setCombineType(vehicle)
     return rootVehicle.ad.hasCombine
 end
 
+-- PropaineX edit (3.10.0.0): NEXAT. The Nexat's harvester module (nexco) sits on the carrier (widespanVehicle) turned
+-- 90 deg: the module faces the way it harvests, the carrier drives crab-wise. AutoDrive only knew "same way" or
+-- "reversed" (> 100 deg) trailed harvesters, so everything read from the carrier (its heading, size, sensors) was
+-- 90 deg off. A harvester module mounted 45-135 deg to its carrier counts as sideways; for it the module's own frame
+-- is the travel frame, and the carrier's length is the rig's width.
+function AutoDrive.isSidewaysHarvester(combine)
+    if combine == nil or not combine.isTrailedHarvester or combine.trailingVehicle == nil
+        or combine.components == nil or (combine.ad ~= nil and combine.ad.isReverseAttached) then
+        return false
+    end
+    if combine.adSideways == nil then
+        local carrier = combine.trailingVehicle
+        if carrier.components == nil then
+            return false
+        end
+        local vx, _, vz = localDirectionToWorld(carrier.components[1].node, 0, 0, 1)
+        local cx, _, cz = localDirectionToWorld(combine.components[1].node, 0, 0, 1)
+        combine.adSideways = math.abs(vx * cx + vz * cz) < 0.7071 -- cos 45 deg
+        if combine.adSideways then
+            Logging.info("[AD] %s: harvester module mounted sideways on %s (Nexat), using the module's heading",
+                tostring(combine.getName ~= nil and combine:getName() or "?"), tostring(carrier.getName ~= nil and carrier:getName() or "?"))
+        end
+    end
+    return combine.adSideways
+end
+
+-- the sideways harvester module of a harvester or its carrier, nil when it isn't one
+function AutoDrive.getSidewaysHarvester(vehicle)
+    if vehicle == nil then
+        return nil
+    end
+    if AutoDrive.isSidewaysHarvester(vehicle) then
+        return vehicle
+    end
+    local module = vehicle.ad ~= nil and vehicle.ad.attachableCombine or nil
+    if module ~= nil and module ~= vehicle and AutoDrive.isSidewaysHarvester(module) then
+        return module
+    end
+    return nil
+end
+
+-- the vehicle whose own frame (z = forward) is the harvester's direction of travel: the module on a Nexat, else as given
+function AutoDrive.getHarvesterFrameVehicle(vehicle)
+    return AutoDrive.getSidewaysHarvester(vehicle) or vehicle
+end
+
+-- half width, half length of the whole harvester in its travel frame (Nexat: carrier and module together)
+function AutoDrive.getHarvesterHalfSize(combine)
+    local w = combine.size ~= nil and combine.size.width or 3
+    local l = combine.size ~= nil and combine.size.length or 10
+    local module = AutoDrive.getSidewaysHarvester(combine)
+    if module ~= nil then
+        local carrier = module.trailingVehicle
+        w = math.max(module.size.width or 0, carrier.size ~= nil and carrier.size.length or 0)
+        l = math.max(module.size.length or 0, carrier.size ~= nil and carrier.size.width or 0)
+    end
+    return w / 2, l / 2
+end
+
+-- the combine's sensors (left/right/front... of the way it harvests). Nexat: the carrier's sensors face 90 deg off, so
+-- the module gets its own set, the side ones moved out past the carrier's wheel units.
+function AutoDrive.getCombineSensors(combine, rootVehicle)
+    local module = AutoDrive.getSidewaysHarvester(combine)
+    if module == nil then
+        return combine.ad.sensors or rootVehicle.ad.sensors
+    end
+    if module.adNexatSensors == nil then
+        local shared = module.ad -- the carrier's ad table (shared with the module)
+        local saved = shared.sensors
+        shared.sensors = nil
+        ADSensor:addSensorsToVehicle(module)
+        module.adNexatSensors = shared.sensors
+        shared.sensors = saved
+        local halfW = AutoDrive.getHarvesterHalfSize(module)
+        for name, sign in pairs({leftSensor = 1, leftSensorFruit = 1, leftSensorField = 1, rightSensor = -1, rightSensorFruit = -1, rightSensorField = -1}) do
+            local sensor = module.adNexatSensors[name]
+            if sensor ~= nil and sensor.location ~= nil then
+                sensor.location.x = sign * (halfW + 1 + sensor.width / 2)
+            end
+        end
+    end
+    return module.adNexatSensors
+end
+
 
 function AutoDrive.getDischargeNode(combine)
     local dischargeNode = nil

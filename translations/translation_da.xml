@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="står i vejen for mejetærskeren: kører igennem til markkanten" />
 		<text name="AD_escape_stuck"							 text="sidder fast mod et køretøj: kører igennem til markkanten" />
 		<text name="AD_task_escape"							 text="Kører fri til markkanten" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="Slet vejpunkt" />
 		<text name="AD_wpPanel_height"							 text="Højde %s m" />
 		<text name="AD_wpPanel_away"							 text="%s m væk" />

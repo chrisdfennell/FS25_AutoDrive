@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="está no caminho da colheitadeira: atravessa até a borda do campo" />
 		<text name="AD_escape_stuck"							 text="está preso em um veículo: atravessa até a borda do campo" />
 		<text name="AD_task_escape"							 text="Indo para a borda do campo" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="Apagar waypoint" />
 		<text name="AD_wpPanel_height"							 text="Altura %s m" />
 		<text name="AD_wpPanel_away"							 text="a %s m" />

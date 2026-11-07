@@ -613,6 +613,14 @@ function AutoDrive.setTrailerCoverOpen(vehicle, trailers, open)
     if (AutoDrive.getSetting("autoTrailerCover", vehicle) ~= true) then
         return
     end
+    -- PropaineX edit (3.9.1.4): unloading combines in the field: open only within COVER_COMBINE_RANGE of the combine
+    -- (it opened the moment the harvester called him, still far away), shut otherwise. Silo/road trips unchanged.
+    if open and AutoDrive.isCombineFieldWork ~= nil then
+        local working, combine = AutoDrive.isCombineFieldWork(vehicle)
+        if working and (combine == nil or AutoDrive.getDistanceBetween(vehicle, combine) > AutoDrive.COVER_COMBINE_RANGE) then
+            open = false
+        end
+    end
 
     for _, trailer in pairs(trailers) do
         local targetState = 0

@@ -34,6 +34,32 @@ CatchCombinePipeTask.DELAY_COMBINE_ALMOST_FULL = "AD_task_catch_combine_almost_f
 CatchCombinePipeTask.DELAY_PAUSED = "AD_task_catch_paused"
 CatchCombinePipeTask.DELAY_NO_WAY_AROUND_CROP = "AD_task_catch_no_way_around_crop"
 
+-- PropaineX edit (3.7.1.4): an Active unloading harvester (not a forage harvester) that is driving
+function CatchCombinePipeTask.isActiveMoving(combine)
+    return combine ~= nil and combine.ad ~= nil and combine.ad.isHarvester and not combine.ad.isChopper
+        and combine.lastSpeedReal ~= nil and combine.lastSpeedReal > 0.0004
+        and AutoDrive.getSetting("activeUnloading", combine:getRootVehicle()) == true
+end
+
+-- PropaineX edit (3.7.1.4): the unloader is ahead of the combine (chasing from there would aim at the header)
+function CatchCombinePipeTask.isInFront(vehicle)
+    local mode = vehicle.ad.modes[AutoDrive.MODE_UNLOAD]
+    local _, frontBack = mode:getUnloaderOnSide()
+    return frontBack == AutoDrive.CHASEPOS_FRONT
+end
+
+-- PropaineX edit (3.7.1.4): skip the catch-up route and chase straight away: combine moving (Active unloading),
+-- unloader on the combine's field (farmland) and beside or behind it. A route was planned, driven and thrown away every
+-- ~20 s ("combine moved on", 85 m), standing ~7 s each time, 8 in a row -> 30 s wait.
+function CatchCombinePipeTask:shouldChaseDirectly()
+    if not CatchCombinePipeTask.isActiveMoving(self.combine) or CatchCombinePipeTask.isInFront(self.vehicle) then
+        return false
+    end
+    local vx, _, vz = getWorldTranslation(self.vehicle.components[1].node)
+    local cx, _, cz = getWorldTranslation(self.combine.components[1].node)
+    return g_farmlandManager:getFarmlandIdAtWorldPosition(vx, vz) == g_farmlandManager:getFarmlandIdAtWorldPosition(cx, cz)
+end
+
 function CatchCombinePipeTask:new(vehicle, combine)
     local o = CatchCombinePipeTask:create()
     o.vehicle = vehicle
@@ -78,6 +104,20 @@ function CatchCombinePipeTask:update(dt)
         self:resetAllTimers()
     end
 
+    -- PropaineX edit (3.7.1.4): chase straight away (see shouldChaseDirectly); finishing hands over to FollowCombineTask
+    if (self.state == CatchCombinePipeTask.STATE_DELAY_PATHPLANNING or self.state == CatchCombinePipeTask.STATE_PATHPLANNING
+        or self.state == CatchCombinePipeTask.STATE_DRIVING) and self:shouldChaseDirectly() then
+        if self.state == CatchCombinePipeTask.STATE_PATHPLANNING then
+            self.vehicle.ad.pathFinderModule:abort()
+        end
+        self.pauseTimer = 0
+        self.vehicle.ad.catchReplans = 0
+        CatchCombinePipeTask.debugMsg(self.vehicle, "CatchCombinePipeTask:update - combine moving, chase directly")
+        self.state = CatchCombinePipeTask.STATE_FINISHED
+        self:finished()
+        return
+    end
+
     local checkForStuck = (self.vehicle.lastSpeedReal <= 0.0002) and (
         self.state == CatchCombinePipeTask.STATE_DRIVING
     )
@@ -93,6 +133,24 @@ function CatchCombinePipeTask:update(dt)
         self.reverseStartLocation = {x = x, y = y, z = z}
         self.state = CatchCombinePipeTask.STATE_REVERSING
         return
+    end
+
+    -- PropaineX edit (3.6.0.4): no path within PATH_TIMEOUT -> hand the job off or move aside and plan again
+    -- (CombineUnloaderMode:onPathTimeout). The clock runs while the path finder searches and during the waits after a
+    -- failed search; not during the path finder's start delay or the deliberate waits (almost full, not lined up, ...).
+    -- (3.7.1.4: not during the 30 s wait after too many new paths, DELAY_PAUSED; it fired 11 s into it and moved it aside)
+    local failedWait = self.state == CatchCombinePipeTask.STATE_DELAY_PATHPLANNING and (self.delayReason == CatchCombinePipeTask.DELAY_NO_PATH
+        or self.delayReason == CatchCombinePipeTask.DELAY_NO_WAY_AROUND_CROP)
+    if (self.state == CatchCombinePipeTask.STATE_PATHPLANNING and (self.vehicle.ad.pathFinderModule.delayTime or 0) <= 0) or failedWait then
+        self.pathWait = (self.pathWait or 0) + dt
+        if self.pathWait > CombineUnloaderMode.PATH_TIMEOUT then
+            self.pathWait = 0
+            self.vehicle.ad.pathFinderModule:abort()
+            self.vehicle.ad.modes[AutoDrive.MODE_UNLOAD]:onPathTimeout()
+            return
+        end
+    elseif self.state == CatchCombinePipeTask.STATE_DRIVING then
+        self.pathWait = 0
     end
 
     if self.state == CatchCombinePipeTask.STATE_PATHPLANNING then
@@ -260,7 +318,10 @@ function CatchCombinePipeTask:startNewPathFinding()
     local cfillLevel, cfillCapacity, _, cfillFreeCapacity = AutoDrive.getObjectFillLevels(self.combine)
     local cFillRatio = cfillCapacity > 0 and cfillLevel / cfillCapacity or 0
 
-    if cFillRatio > 0.91 or cfillFreeCapacity < 0.1 then
+    -- PropaineX edit (3.2.1.4): with Active unloading on, a harvester that is almost full is still chased (it is about
+    -- to stop; we want to be under the pipe then), not given up on
+    local activeUnloadingOn = self.combine.ad.isHarvester and AutoDrive.getSetting("activeUnloading", self.combine:getRootVehicle()) == true
+    if (cFillRatio > 0.91 or cfillFreeCapacity < 0.1) and not activeUnloadingOn then
         CatchCombinePipeTask.debugMsg(self.vehicle, "CatchCombinePipeTask:startNewPathFinding() - Combine is almost full - dont chase for active unloading anymore")
         self:finished(ADTaskModule.DONT_PROPAGATE)
         self.vehicle.ad.modes[AutoDrive.MODE_UNLOAD]:setToWaitForCall()
@@ -269,7 +330,8 @@ function CatchCombinePipeTask:startNewPathFinding()
 
     self.newPathFindingCounter = self.newPathFindingCounter + 1 -- used to prevent deadlock
 
-    if self.combine.ad.isChopper or (pipeChaseSide ~= AutoDrive.CHASEPOS_REAR or (targetFieldId == combineFieldId and cFillRatio <= 0.85)) then
+    if self.combine.ad.isChopper or (pipeChaseSide ~= AutoDrive.CHASEPOS_REAR or (targetFieldId == combineFieldId and (cFillRatio <= 0.85 or activeUnloadingOn))) then
+    -- PropaineX edit (3.3.0.4): with Active unloading on, the rear chase doesn't wait above 85 % (pipe over crop is fine)
     -- if self.combine:getIsBufferCombine() or (pipeChaseSide ~= AutoDrive.CHASEPOS_REAR and targetFieldId == combineFieldId and cFillRatio <= 0.85) then
         -- is chopper or chase not rear and harvester on correct field and filled < 85% - i.e. combine pipe not in fruit
         CatchCombinePipeTask.debugMsg(self.vehicle, "CatchCombinePipeTask:startNewPathFinding() - chase pos looks good - calculate path to it...")

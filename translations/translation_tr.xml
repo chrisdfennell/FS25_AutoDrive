@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="biçerdöverin yolunu kesiyor: tarla kenarına geçiyor" />
 		<text name="AD_escape_stuck"							 text="bir araca takıldı: tarla kenarına geçiyor" />
 		<text name="AD_task_escape"							 text="Tarla kenarına çıkıyor" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="Noktayı sil" />
 		<text name="AD_wpPanel_height"							 text="Yükseklik %s m" />
 		<text name="AD_wpPanel_away"							 text="%s m uzakta" />

@@ -326,6 +326,12 @@ function ADHudButton:act(vehicle, posX, posY, isDown, isUp, button)
         vehicle.ad.toolTipIsSetting = false
 
         if self.primaryAction == "input_parkVehicle" then
+            if isUp and button > 0 then
+                Logging.info("[ADParkDebug] P click button=%s lCtrl=%s lShift=%s lAlt=%s editorMode=%s controlled=%s focus=%s firstMarker=%s",
+                    tostring(button), tostring(AutoDrive.leftCTRLmodifierKeyPressed), tostring(AutoDrive.leftLSHIFTmodifierKeyPressed), tostring(AutoDrive.leftALTmodifierKeyPressed),
+                    tostring(AutoDrive.getSetting("EditorMode")), tostring(AutoDrive.getControlledVehicle() ~= nil and AutoDrive.getControlledVehicle():getName()), tostring(vehicle:getName()),
+                    tostring(vehicle.ad.stateModule:getFirstMarkerId()))
+            end
             local actualParkDestination = vehicle.ad.stateModule:getParkDestinationAtJobFinished()
             if actualParkDestination >= 1 and ADGraphManager:getMapMarkerById(actualParkDestination) ~= nil then
                 vehicle.ad.sToolTipInfo = ADGraphManager:getMapMarkerById(actualParkDestination).name

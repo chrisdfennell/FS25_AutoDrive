@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="a kombájn útjában áll: áthajt a táblaszélig" />
 		<text name="AD_escape_stuck"							 text="elakadt egy járműben: áthajt a táblaszélig" />
 		<text name="AD_task_escape"							 text="Kiáll a táblaszélre" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="Útpont törlése" />
 		<text name="AD_wpPanel_height"							 text="Magasság %s m" />
 		<text name="AD_wpPanel_away"							 text="%s m-re" />

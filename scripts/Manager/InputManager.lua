@@ -53,7 +53,7 @@ ADInputManager.actionsToInputs = {
     -- {"AD_open_colorSettings", "input_openColorSettings", false},
     {"AD_continue", "input_continue", true, true},
     {"ADParkVehicle", "input_parkVehicle", true, true},
-    {"ADSetParkDestination", "input_setParkDestination", false, false},
+    {"ADSetParkDestination", "input_setParkDestination", true, false},
     {"AD_devAction", "input_devAction", false, false},
     {"ADRefuelVehicle", "input_refuelVehicle", false, true},
     {"ADToggleHudExtension", "input_toggleHudExtension", true, false, true, 1},

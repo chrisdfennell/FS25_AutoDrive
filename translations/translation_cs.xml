@@ -619,6 +619,7 @@
 		<text name="AD_escape_harvester"							 text="挡住了收割机：穿行到田地边缘" />
 		<text name="AD_escape_stuck"							 text="被车辆卡住：穿行到田地边缘" />
 		<text name="AD_task_escape"							 text="驶向田地边缘" />
+		<text name="AD_task_move_clear"							 text="Moving out of the harvester&apos;s way" />
 		<text name="AD_wpPanel_delete"							 text="删除航点" />
 		<text name="AD_wpPanel_height"							 text="高度 %s 米" />
 		<text name="AD_wpPanel_away"							 text="距离 %s 米" />
