@@ -12,12 +12,26 @@ Newest first. "Untested" means it has not been tried in the game yet.
   obstacle for the collision sensors or the path finder. Vehicles always still count, also an unloader that
   "Unloader escape" has made passable for a moment.
 - With the sensor debug channel on, the log names each such object once ("ignoring pass-through collision ...").
+- Also in this build: Steve's (PropaineX) thin keep-out strip on the pipe side (see his od.59 below), which was
+  already live but not yet in main.
 
-## 3.0.1.4-od.59 (2026-11-13): author name, HUD above the ticker bar
+## 3.0.1.4-od.59 (2026-11-13, main): author name, HUD above the ticker bar
 
 - The author now shows as **DTM Mods, Fennell** in the mod list, with credit to the AutoDrive Team, who made the original mod.
 - The HUD, the waypoint panel and the selection menu stay above the ticker bar when it is on.
 - The English mod description lists what Overdrive adds.
+
+## 3.0.1.4-od.59 (2026-11-11, PropaineX, branch unloader-pipe-side-gap): thin keep-out strip on the pipe side, no second try up the same line
+*Untested in the game; unloader simulator sweep passes (60 runs, no contact).*
+
+- The keep-out strip round the harvester is now thin (0.5 m) on its PIPE side, so a truck gets in under the pipe
+  instead of turning away before it gets there. The other side, the front and the back keep the wide strip (1 m).
+  The pipe side is taken from the spot under the pipe, so left or right pipes both work.
+- While the harvester turns in toward the pipe side (more than about 2 deg/s), the pipe side gets the full gap again.
+- A truck pushed out of the strip on the side WITHOUT the pipe remembers it. Next time it is beside the harvester on
+  that side it stops at once, lets the harvester pass, then comes up the pipe side from behind the tail. No more
+  coming up the same line again and again. Forgotten once it is under the pipe. Logged: "pushed out on the side of
+  <harvester> without the pipe, next try comes up its pipe side".
 
 ## 3.0.1.4-od.58 (2026-11-11): unloader waits at the end of a row
 *Untested in the game; tested with mock vehicles (tools/tests/test_end_of_row_wait.py).*

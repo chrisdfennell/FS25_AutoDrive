@@ -57,6 +57,7 @@ end
 function FollowCombineTask:setUp()
     FollowCombineTask.debugMsg(self.vehicle, "FollowCombineTask setUp")
     self.lastChaseSide = self.chaseSide
+    self.pushedOutSide = nil -- PropaineX edit (od.59)
     self.trailers, _ = AutoDrive.getAllUnits(self.vehicle)
     self.activeUnloading = AutoDrive.getSetting("activeUnloading", self.combineRootVehicle)
     AutoDrive.setTrailerCoverOpen(self.vehicle, self.trailers, true)
@@ -572,6 +573,7 @@ function FollowCombineTask:updateStates(dt)
     self.angleToCombine = self.vehicle.ad.modes[AutoDrive.MODE_UNLOAD]:getAngleToCombine()
 
     self.lastChaseSide = self.chaseSide
+    self.pushedOutSide = nil -- PropaineX edit (od.59)
 
     self.distanceToCombine = MathUtil.vector2Length(x - cx, z - cz)
 
@@ -1033,6 +1035,14 @@ function FollowCombineTask:updatePipeLock(dt)
     -- 3.9.1.4: only when actually BESIDE it on the other side; from behind its tail it just comes up the pipe side
     local clearlyWrong = tx * cxl < 0 and math.abs(tx) > halfW and tz > -halfL and math.abs(self.combineTurnRate or 0) < 0.05
     self.wrongSideTime = clearlyWrong and (self.wrongSideTime or 0) + dt or 0
+    -- PropaineX edit (od.59): already pushed out once on this (no-pipe) side: no second try up the same line, stop at
+    -- once and let it pass, then the lane approach brings it up the pipe side. Forgotten once under the pipe.
+    if self.pushedOutSide ~= nil and tx * cxl > 0 and math.abs(tx - cxl) <= FollowCombineTask.LANE_TOLERANCE then
+        self.pushedOutSide = nil
+    end
+    if clearlyWrong and self.pushedOutSide ~= nil and tx * self.pushedOutSide > 0 then
+        self.wrongSideTime = math.max(self.wrongSideTime, 1001)
+    end
     -- PropaineX edit (od.56): beside it on the wrong side: STOP and let it drive past (was: drive to a spot behind it,
     -- which swung the semi round in an arc into the harvester). Once our front is behind its tail, the lane approach
     -- below brings it up the pipe side. (A standing harvester: the go-around above takes over after GO_AROUND_TIME.)
@@ -1207,6 +1217,9 @@ end
 -- steers away. Result: the steering can never close in on the harvester, whatever the chase maths says.
 FollowCombineTask.KEEP_OUT_GAP = 1.0    -- m between the truck's side and the harvester's side
 FollowCombineTask.KEEP_OUT_MIN = 0.4    -- m: the lane is never closer than this, even for a short pipe
+-- PropaineX edit (od.59): on the PIPE side the strip is thin, so a truck gets in under the pipe instead of turning away
+FollowCombineTask.KEEP_OUT_PIPE_GAP = 0.5 -- m between the truck's side and the harvester's side, pipe side only
+FollowCombineTask.PIPE_GAP_TURN = 0.03  -- rad/s (~2 deg/s): turning toward the pipe side faster than this = full gap
 FollowCombineTask.KEEP_OUT_LENGTH = 2   -- m before its front and behind its tail that count too
 FollowCombineTask.AGAINST_COS = math.cos(math.rad(110)) -- facing more than 110 deg off the harvester's heading
 FollowCombineTask.PARALLEL_ANGLE = 30   -- deg: pulling ahead out of a tail swing only when this close to its heading
@@ -1247,11 +1260,32 @@ function FollowCombineTask:getOwnHalfWidth()
     return w / 2
 end
 
+-- PropaineX edit (od.59): the harvester's pipe side (1 / -1, from the spot under the pipe), nil when unknown or behind
+function FollowCombineTask:getPipeSide()
+    if self.chasePos == nil or self.chaseSide == AutoDrive.CHASEPOS_REAR then
+        return nil
+    end
+    local c = self.combine
+    local cxl = AutoDrive.worldToLocal(c, self.chasePos.x, self.chasePos.y, self.chasePos.z, c.ad.ADRootNode)
+    return cxl >= 0 and 1 or -1
+end
+
+-- PropaineX edit (od.59): keep-out gap on the given side: thin on the pipe side, wide everywhere else
+function FollowCombineTask:getKeepOutGap(side)
+    local w = self.combineTurnRate or 0
+    local turningToward = w * (side or 0) > 0 and math.abs(w) >= FollowCombineTask.PIPE_GAP_TURN
+    -- turning in toward the pipe side: it closes in on us, so the full gap there too while it turns
+    if side ~= nil and side == self:getPipeSide() and not turningToward then
+        return FollowCombineTask.KEEP_OUT_PIPE_GAP
+    end
+    return FollowCombineTask.KEEP_OUT_GAP
+end
+
 -- lane distance from the harvester's centre line
-function FollowCombineTask:getKeepOutLane()
+function FollowCombineTask:getKeepOutLane(side)
     local c = self.combine
     local halfW = AutoDrive.getHarvesterHalfSize(c)
-    local lane = halfW + self:getOwnHalfWidth() + FollowCombineTask.KEEP_OUT_GAP
+    local lane = halfW + self:getOwnHalfWidth() + self:getKeepOutGap(side) -- PropaineX edit (od.59)
     if self.chasePos ~= nil and self.chaseSide ~= AutoDrive.CHASEPOS_REAR then
         local cxl = AutoDrive.worldToLocal(c, self.chasePos.x, self.chasePos.y, self.chasePos.z, c.ad.ADRootNode)
         lane = math.min(lane, math.abs(cxl))
@@ -1268,7 +1302,7 @@ function FollowCombineTask:getKeepOutIntrusion(side)
     local c = self.combine
     local halfW, halfL = AutoDrive.getHarvesterHalfSize(c)
     local reach = halfL + FollowCombineTask.KEEP_OUT_LENGTH
-    local edge = halfW + FollowCombineTask.KEEP_OUT_GAP
+    local edge = halfW + self:getKeepOutGap(side) -- PropaineX edit (od.59)
     local worst, worstIsTrailer = nil, false
     local units = {self.vehicle}
     for _, trailer in pairs(self.trailers or {}) do
@@ -1302,23 +1336,33 @@ function FollowCombineTask:keepOffHarvester(point, isSteer)
     local c = self.combine
     local _, halfL = AutoDrive.getHarvesterHalfSize(c)
     local px, _, pz = AutoDrive.worldToLocal(c, point.x, point.y or 0, point.z, c.ad.ADRootNode)
-    local lane = self:getKeepOutLane()
     local vx, vy, vz = getWorldTranslation(self.vehicle.components[1].node)
     local tx = AutoDrive.worldToLocal(c, vx, vy, vz, c.ad.ADRootNode)
     local side = tx >= 0 and 1 or -1
+    local lane = self:getKeepOutLane(side) -- PropaineX edit (od.59)
+    local pipeSide = self:getPipeSide()
+    -- PropaineX edit (od.59): on the pipe side only steer away once actually in the thin strip
+    local driftIn = side == pipeSide and 0 or FollowCombineTask.DRIFT_IN
     local minX = lane
     local reach = halfL + FollowCombineTask.KEEP_OUT_LENGTH
     if isSteer then
         local inside = self:getKeepOutIntrusion(side)
-        if inside ~= nil and inside > -FollowCombineTask.DRIFT_IN then
+        if inside ~= nil and inside > -driftIn then
             -- a corner closer than KEEP_OUT_GAP + DRIFT_IN to its side: steer out, further the deeper it is
             minX = math.max(minX, math.abs(px)) + FollowCombineTask.STEER_AWAY + math.max(inside, 0) * 2
             if not self.keepOutLogged then
                 self.keepOutLogged = true
                 Logging.info("[AD] %s: %.1f m from %s's side, steering away", ADDiag.name(self.vehicle),
-                    math.max(FollowCombineTask.KEEP_OUT_GAP - inside, 0), ADDiag.name(c))
+                    math.max(self:getKeepOutGap(side) - inside, 0), ADDiag.name(c))
             end
-        elseif inside == nil or inside < -FollowCombineTask.DRIFT_IN - 0.5 then
+            -- PropaineX edit (od.59): pushed out on the side WITHOUT the pipe: remember it, so the next try drops
+            -- behind the tail and comes up the pipe side instead of the same line again
+            if pipeSide ~= nil and side ~= pipeSide and self.pushedOutSide ~= side then
+                self.pushedOutSide = side
+                Logging.info("[AD] %s: pushed out on the side of %s without the pipe, next try comes up its pipe side",
+                    ADDiag.name(self.vehicle), ADDiag.name(c))
+            end
+        elseif inside == nil or inside < -driftIn - 0.5 then
             self.keepOutLogged = nil
         end
         -- the steer point lies ahead but decides the steering beside the harvester: it counts at any distance
