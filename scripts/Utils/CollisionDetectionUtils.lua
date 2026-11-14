@@ -359,3 +359,63 @@ function AutoDrive.getAllVehicleDimensions(vehicle, force)
         end
     end
 end
+
+--[[
+    Pass-through collisions (Overdrive)
+
+    Some objects have a collision that vehicles never hit: the physics only lets two shapes collide when each one's
+    collision group is in the other's collision mask. The Beans & Alpacas "Banana Transport Rail" is such an object
+    (the shop says "not obstacles for vehicles, you can drive through them"): its shape has no VEHICLE bit in its mask.
+    The overlap boxes of the sensors and the path finder still find it, so AutoDrive stopped in front of every rail.
+
+    isPassThroughCollision(nodeId, vehicle, object) is true when the shape's collision mask has no VEHICLE bit, so no
+    vehicle can hit it. (Not checked against the vehicle's own mask: that may leave out bits AutoDrive watches on
+    purpose, e.g. heaps or traffic blockers.) Never the terrain, and never for vehicles (object is a Vehicle, or the shape is in the VEHICLE / TRAFFIC_VEHICLE group): an unloader
+    ghosted by ADUnloaderEscape loses VEHICLE from its mask on purpose and must still be seen by the others.
+]]
+local function hasAnyCommonBit(a, b)
+    a = math.floor(a)
+    b = math.floor(b)
+    while a > 0 and b > 0 do
+        if a % 2 == 1 and b % 2 == 1 then
+            return true
+        end
+        a = math.floor(a / 2)
+        b = math.floor(b / 2)
+    end
+    return false
+end
+
+function AutoDrive.isPassThroughCollision(nodeId, vehicle, object)
+    if nodeId == nil or nodeId == 0 or CollisionFlag == nil or CollisionFlag.VEHICLE == nil
+        or getCollisionFilterMask == nil or getCollisionFilterGroup == nil then
+        return false
+    end
+    if g_currentMission ~= nil and nodeId == g_currentMission.terrainRootNode then
+        return false
+    end
+    if object ~= nil and Vehicle ~= nil and type(object.isa) == "function" and object:isa(Vehicle) then
+        return false
+    end
+    local group = getCollisionFilterGroup(nodeId)
+    local mask = getCollisionFilterMask(nodeId)
+    if group == nil or mask == nil then
+        return false
+    end
+    local vehicleFlags = CollisionFlag.VEHICLE + (CollisionFlag.TRAFFIC_VEHICLE or 0)
+    if hasAnyCommonBit(group, vehicleFlags) then
+        return false
+    end
+
+    local passThrough = not hasAnyCommonBit(mask, CollisionFlag.VEHICLE)
+    if passThrough then
+        AutoDrive.passThroughLogged = AutoDrive.passThroughLogged or {}
+        if not AutoDrive.passThroughLogged[nodeId] then
+            AutoDrive.passThroughLogged[nodeId] = true
+            AutoDrive.debugPrint(vehicle, AutoDrive.DC_SENSORINFO, "ignoring pass-through collision %s (%s) group %s mask %s",
+                tostring(getName(nodeId)), tostring(I3DUtil ~= nil and I3DUtil.getNodePath(nodeId) or ""),
+                tostring(group), tostring(mask))
+        end
+    end
+    return passThrough
+end

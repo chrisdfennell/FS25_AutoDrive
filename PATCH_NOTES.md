@@ -3,6 +3,16 @@
 Changes made on top of AutoDrive Overdrive (by chrisdfennell, based on AutoDrive by the AutoDrive Team).
 Newest first. "Untested" means it has not been tried in the game yet.
 
+## 3.0.1.4-od.60 (2026-11-14): drive through banana transport rails
+*Untested in the game; tested with stubs.*
+
+- Vehicles no longer stop in front of the Beans & Alpacas **Banana Transport Rails**. The game lets vehicles drive
+  through them, but AutoDrive's collision sensors still saw them as an obstacle.
+- In general: anything whose collision vehicles can't hit (no "vehicle" bit in its collision mask) is no longer an
+  obstacle for the collision sensors or the path finder. Vehicles always still count, also an unloader that
+  "Unloader escape" has made passable for a moment.
+- With the sensor debug channel on, the log names each such object once ("ignoring pass-through collision ...").
+
 ## 3.0.1.4-od.59 (2026-11-13): author name, HUD above the ticker bar
 
 - The author now shows as **DTM Mods, Fennell** in the mod list, with credit to the AutoDrive Team, who made the original mod.

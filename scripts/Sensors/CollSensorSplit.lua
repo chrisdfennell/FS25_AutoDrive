@@ -75,6 +75,11 @@ function ADCollSensorSplit:collisionTestCallbackSplit(transformId)
         end
     end
 
+    -- vehicles drive through it (e.g. banana transport rails): not an obstacle
+    if AutoDrive.isPassThroughCollision(transformId, self.vehicle, collisionObject) then
+        return
+    end
+
     if collisionObject ~= nil then
         if collisionObject ~= self and collisionObject ~= self.vehicle and not AutoDrive:checkIsConnected(self.vehicle:getRootVehicle(), collisionObject) then
             if unloadDriver == nil or (collisionObject ~= unloadDriver and (not AutoDrive:checkIsConnected(unloadDriver:getRootVehicle(), collisionObject))) then

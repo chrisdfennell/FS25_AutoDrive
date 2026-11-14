@@ -3094,6 +3094,9 @@ end
 function PathFinderModule:collisionTestCallback(transformId)
     if transformId ~= 0 and transformId ~= g_currentMission.terrainRootNode then
         local collisionObject = g_currentMission:getNodeObject(transformId)
+        if AutoDrive.isPassThroughCollision(transformId, self.vehicle, collisionObject) then
+            return  -- vehicles drive through it (e.g. banana transport rails)
+        end
         if (collisionObject == nil) or (collisionObject ~= nil and not (collisionObject.rootVehicle == self.vehicle)) then
             self.collisionhits = self.collisionhits + 1
             if PathFinderModule.debug == true then
